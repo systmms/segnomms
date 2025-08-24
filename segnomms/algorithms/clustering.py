@@ -16,10 +16,11 @@ This approach significantly reduces the number of SVG elements needed
 for complex QR codes, improving both file size and rendering performance.
 """
 
-from typing import Any, Dict, List, Set, Tuple
+from typing import Any, Dict, List, Literal, Optional, Set, Tuple
 
 from ..core.detector import ModuleDetector
 from ..core.interfaces import AlgorithmProcessor, Matrix
+from .models import ClusteringConfig
 
 
 class ConnectedComponentAnalyzer(AlgorithmProcessor):
@@ -40,19 +41,41 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         >>> print(f"Found {len(clusters)} clusters")
     """
 
-    def __init__(self, min_cluster_size: int = 3, density_threshold: float = 0.5):
+    def __init__(
+        self,
+        min_cluster_size: int = 3,
+        density_threshold: float = 0.5,
+        connectivity_mode: Literal["4-way", "8-way"] = "4-way",
+    ):
         """Initialize the connected component analyzer.
 
         Args:
             min_cluster_size: Minimum number of modules to form a cluster
             density_threshold: Minimum density ratio (0.0-1.0) for valid clusters
+            connectivity_mode: '4-way' or '8-way' connectivity
+
+        Example:
+            >>> analyzer = ConnectedComponentAnalyzer(min_cluster_size=5)
+            >>> # Or using Pydantic model
+            >>> config = ClusteringConfig(min_cluster_size=5, density_threshold=0.7)
+            >>> analyzer = ConnectedComponentAnalyzer(**config.model_dump())
         """
-        self.min_cluster_size = min_cluster_size
-        self.density_threshold = density_threshold
+        # Validate inputs using Pydantic
+        config = ClusteringConfig(
+            min_cluster_size=min_cluster_size,
+            density_threshold=density_threshold,
+            connectivity_mode=connectivity_mode,
+        )
+
+        # Use validated values
+        self.min_cluster_size = config.min_cluster_size
+        self.density_threshold = config.density_threshold
+        self.connectivity_mode = config.connectivity_mode
         self.visited: Set[Tuple[int, int]] = set()
+        self.config = config
 
     def process(
-        self, matrix: Matrix, detector: ModuleDetector, **kwargs
+        self, matrix: Matrix, detector: ModuleDetector, **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """Process the QR matrix to find connected components.
 
@@ -98,6 +121,42 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
                                 clusters.append(cluster_info)
 
         return clusters
+
+    def cluster_modules(self, modules, **kwargs):
+        """Alias for process() method for backward compatibility.
+        
+        Args:
+            modules: Either a 2D matrix or list of (row, col, active) tuples
+            **kwargs: Additional parameters passed to process()
+            
+        Returns:
+            List of cluster dictionaries
+        """
+        # Convert list of tuples to matrix format if needed
+        if isinstance(modules, list) and modules and len(modules[0]) == 3:
+            # Convert (row, col, active) tuples to matrix
+            if not modules:
+                return []
+            
+            max_row = max(pos[0] for pos in modules)
+            max_col = max(pos[1] for pos in modules)
+            matrix = [[False for _ in range(max_col + 1)] for _ in range(max_row + 1)]
+            
+            for row, col, active in modules:
+                if active:
+                    matrix[row][col] = True
+        else:
+            matrix = modules
+            
+        # Use a mock detector for compatibility
+        from ..core.detector import ModuleDetector
+        from unittest.mock import Mock
+        
+        mock_detector = Mock(spec=ModuleDetector)
+        mock_detector.get_module_type.return_value = "data"
+        mock_detector.get_neighbors.return_value = []
+        
+        return self.process(matrix, mock_detector, **kwargs)
 
     def _find_connected_component(
         self,
@@ -147,8 +206,14 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
             self.visited.add((row, col))
             positions.append((row, col))
 
-            # Add neighbors to stack (4-connected)
-            neighbors = detector.get_neighbors(row, col, "von_neumann")
+            # Add neighbors to stack based on connectivity mode
+            if self.connectivity_mode == "8-way":
+                # 8-way connectivity (Moore neighborhood)
+                neighbors = detector.get_neighbors(row, col, "moore")
+            else:
+                # 4-way connectivity (von Neumann neighborhood)
+                neighbors = detector.get_neighbors(row, col, "von_neumann")
+
             for nr, nc in neighbors:
                 if (nr, nc) not in self.visited:
                     stack.append((nr, nc))
@@ -362,7 +427,7 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
                 - roundness: Corner rounding factor
                 - merge_strategy: How to combine modules
         """
-        hints = {
+        hints: Dict[str, Any] = {
             "render_as_single_shape": False,
             "preferred_shape": "rounded_rectangle",
             "roundness": 0.2,
@@ -391,7 +456,13 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
 
         return hints
 
-    def get_cluster_svg_path(self, cluster: Dict[str, Any], scale: int = 8) -> str:
+    def get_cluster_svg_path(
+        self,
+        cluster: Dict[str, Any],
+        scale: int = 8,
+        border: int = 0,
+        path_clipper: Optional[Any] = None,
+    ) -> str:
         """Generate SVG path for rendering cluster as a single shape.
 
         Creates an SVG path string that represents the entire cluster
@@ -400,6 +471,8 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         Args:
             cluster: Cluster data with positions and rendering hints
             scale: Module size in pixels
+            border: Border size in modules
+            path_clipper: Optional PathClipper instance for frame-aware clipping
 
         Returns:
             str: SVG path data string for the cluster shape
@@ -416,10 +489,18 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         # For now, use bounding box approach
         min_row, min_col, max_row, max_col = cluster["bounding_box"]
 
-        x = min_col * scale
-        y = min_row * scale
+        x = (min_col + border) * scale
+        y = (min_row + border) * scale
         width = (max_col - min_col + 1) * scale
         height = (max_row - min_row + 1) * scale
+
+        # If path clipper is provided, check if cluster is within frame
+        if path_clipper:
+            clipped_path = path_clipper.clip_rectangle_to_frame(x, y, width, height)
+            if not clipped_path:
+                return ""  # Cluster is entirely outside frame
+            # For non-square frames, we might need to adjust the path
+            # For now, continue with standard path generation
 
         roundness = cluster["rendering_hints"]["roundness"]
         rx = width * roundness
@@ -442,5 +523,9 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         else:
             # Simple rectangle
             path = f"M {x} {y} L {x + width} {y} L {x + width} {y + height} L {x} {y + height} Z"
+
+        # Apply frame clipping if needed
+        if path_clipper and path_clipper.frame_shape != "square":
+            path = path_clipper.adjust_cluster_path(path, scale)
 
         return path

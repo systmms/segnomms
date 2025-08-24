@@ -15,9 +15,10 @@ The detector analyzes QR code matrices to classify each module as:
 
 """
 
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Union
 
 from .interfaces import QRCodeAnalyzer
+from .models import ModuleDetectorConfig, NeighborAnalysis
 
 #: Positions of finder patterns (top-left, top-right, bottom-left)
 FINDER_PATTERN_POSITIONS = [(0, 0), (0, -7), (-7, 0)]
@@ -42,22 +43,43 @@ class ModuleDetector(QRCodeAnalyzer):
         alignment_positions: Calculated alignment pattern positions
 
     Example:
-        >>> detector = ModuleDetector(qr_matrix, version=3)
+        >>> # Create a minimal valid matrix (21x21 for version 1)
+        >>> matrix = [[True] * 21 for _ in range(21)]
+        >>> detector = ModuleDetector(matrix, version=1)
         >>> module_type = detector.get_module_type(10, 10)
         >>> print(module_type)  # 'data'
     """
 
-    def __init__(self, matrix: List[List[bool]], version: Optional[object] = None):
-        self.matrix = matrix
-        self.size = len(matrix)
-        # Parse version from segno format (e.g., 'M3', '4', 4)
-        if version is not None:
-            self.version = self._parse_version(version)
+    def __init__(self, matrix: List[List[bool]], version: Optional[Union[int, str]] = None):
+        """Initialize the detector with QR code matrix and optional version.
+
+        Args:
+            matrix: The QR code matrix as a 2D boolean list
+            version: QR code version (1-40, 'M1'-'M4', or None for auto-detection)
+
+        Example:
+            >>> # Create a valid matrix for version 1 QR code (21x21)
+            >>> matrix = [[True] * 21 for _ in range(21)]
+            >>> detector = ModuleDetector(matrix, version=1)
+            >>> # Or using Pydantic model
+            >>> config = ModuleDetectorConfig(matrix=matrix, version=1)
+            >>> detector = ModuleDetector(**config.model_dump())
+        """
+        # Validate inputs using Pydantic
+        config = ModuleDetectorConfig(matrix=matrix, version=version)
+
+        # Use validated values
+        self.matrix = config.matrix
+        self.size = len(config.matrix)
+
+        # Parse version from validated format
+        if config.version is not None:
+            self.version = self._parse_version(config.version)
         else:
             self.version = self._estimate_version()
         self.alignment_positions = self._get_alignment_positions()
 
-    def _parse_version(self, version) -> int:
+    def _parse_version(self, version: Union[int, str, None]) -> int:
         """Parse version from various formats.
 
         Args:
@@ -111,7 +133,7 @@ class ModuleDetector(QRCodeAnalyzer):
             return [(self.size - 7, self.size - 7)]
         else:
             # More complex calculation for higher versions
-            positions = []
+            positions: List[Tuple[int, int]] = []
             # Add positions based on version...
             return positions
 
@@ -132,7 +154,16 @@ class ModuleDetector(QRCodeAnalyzer):
                 - 'format': Format information module
                 - 'version': Version information module
                 - 'data': Data or error correction module
+
+        Raises:
+            IndexError: If row or col is out of bounds
         """
+        # Validate bounds
+        if not (0 <= row < self.size and 0 <= col < self.size):
+            raise IndexError(
+                f"Position ({row}, {col}) out of bounds for {self.size}x{self.size} matrix"
+            )
+
         size = self.size
 
         # Finder patterns
@@ -269,13 +300,30 @@ class ModuleDetector(QRCodeAnalyzer):
 
     def get_weighted_neighbor_analysis(
         self, row: int, col: int, module_type: str = "data"
-    ) -> dict:
+    ) -> NeighborAnalysis:
         """
         Enhanced neighbor analysis using Moore neighborhood (8-connected) with weighted connectivity.
 
         Returns comprehensive neighbor analysis including connectivity strength,
         flow direction, and shape hints for advanced rendering.
+
+        Args:
+            row: Row position
+            col: Column position
+            module_type: Type of module for weighting
+
+        Returns:
+            NeighborAnalysis model with comprehensive neighbor data
+
+        Raises:
+            IndexError: If row or col is out of bounds
         """
+        # Validate bounds
+        if not (0 <= row < self.size and 0 <= col < self.size):
+            raise IndexError(
+                f"Position ({row}, {col}) out of bounds for {self.size}x{self.size} matrix"
+            )
+
         neighbors = self.get_neighbors(row, col, "moore")
 
         # Separate cardinal and diagonal neighbors
@@ -312,8 +360,8 @@ class ModuleDetector(QRCodeAnalyzer):
         weighted_strength = connectivity_strength * flow_weights.get(module_type, 1.0)
 
         # Determine flow direction (for pill shapes, etc.)
-        horizontal_flow = 0
-        vertical_flow = 0
+        horizontal_flow = 0.0
+        vertical_flow = 0.0
 
         if len(cardinal_neighbors) >= 4:
             horizontal_flow = (
@@ -323,17 +371,22 @@ class ModuleDetector(QRCodeAnalyzer):
                 cardinal_neighbors[0] + cardinal_neighbors[1]
             ) / 2  # up + down
 
-        return {
-            "cardinal_count": cardinal_count,
-            "diagonal_count": diagonal_count,
-            "connectivity_strength": connectivity_strength,
-            "weighted_strength": weighted_strength,
-            "horizontal_flow": horizontal_flow,
-            "vertical_flow": vertical_flow,
-            "flow_direction": (
+        # Get active neighbor positions
+        active_neighbors = [
+            (nr, nc) for nr, nc in neighbors if self.is_module_active(nr, nc)
+        ]
+
+        return NeighborAnalysis(
+            cardinal_count=cardinal_count,
+            diagonal_count=diagonal_count,
+            connectivity_strength=connectivity_strength,
+            weighted_strength=weighted_strength,
+            horizontal_flow=horizontal_flow,
+            vertical_flow=vertical_flow,
+            flow_direction=(
                 "horizontal" if horizontal_flow > vertical_flow else "vertical"
             ),
-            "isolation_level": 4 - cardinal_count,  # How isolated the module is
-            "corner_connections": diagonal_count,
-            "active_neighbors": neighbors,  # For advanced shape calculations
-        }
+            isolation_level=4 - cardinal_count,
+            corner_connections=diagonal_count,
+            active_neighbors=active_neighbors,
+        )

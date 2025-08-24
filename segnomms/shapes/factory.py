@@ -23,7 +23,7 @@ Example:
 
 """
 
-from typing import Any, Dict, List, Type
+from typing import Any, Dict, List, Type, cast, Optional
 
 from ..core.interfaces import RendererFactory, ShapeRenderer
 from .basic import (
@@ -34,6 +34,7 @@ from .basic import (
     HexagonRenderer,
     RoundedRenderer,
     SquareRenderer,
+    SquircleRenderer,
     StarRenderer,
     TriangleRenderer,
 )
@@ -66,12 +67,13 @@ class ShapeRendererFactory(RendererFactory):
         This method is called during initialization to register
         all built-in shape renderers with the factory.
         """
-        renderers = [
+        renderers: List[Type[ShapeRenderer]] = [
             SquareRenderer,
             CircleRenderer,
             RoundedRenderer,
             DotRenderer,
             DiamondRenderer,
+            SquircleRenderer,
             StarRenderer,
             TriangleRenderer,
             HexagonRenderer,
@@ -84,9 +86,14 @@ class ShapeRendererFactory(RendererFactory):
         ]
 
         for renderer_class in renderers:
-            renderer_instance = renderer_class()
-            for shape_type in self._get_supported_types(renderer_instance):
-                self._renderers[shape_type] = renderer_class
+            # Create instance only for introspection
+            try:
+                renderer_instance = renderer_class()
+                for shape_type in self._get_supported_types(renderer_instance):
+                    self._renderers[shape_type] = renderer_class
+            except TypeError:
+                # Skip if cannot instantiate
+                pass
 
     def _get_supported_types(self, renderer: ShapeRenderer) -> List[str]:
         """Get all shape types supported by a renderer.
@@ -112,6 +119,7 @@ class ShapeRendererFactory(RendererFactory):
             "triangle",
             "hexagon",
             "cross",
+            "squircle",
             "connected",
             "connected-extra-rounded",
             "connected-classy",
@@ -148,11 +156,21 @@ class ShapeRendererFactory(RendererFactory):
             ShapeRenderer: Instance of appropriate renderer
 
         Note:
-            Falls back to 'square' renderer if shape type is not found.
+            Falls back to 'square' renderer if shape type is not found,
+            but logs a warning with available options.
         """
+        import logging
+
+        logger = logging.getLogger(__name__)
+
         shape_type_lower = shape_type.lower()
 
         if shape_type_lower not in self._renderers:
+            available_shapes = sorted(self._renderers.keys())
+            logger.warning(
+                f"Unknown shape type '{shape_type}'. Available shapes are: "
+                f"{', '.join(available_shapes)}. Using 'square' as fallback."
+            )
             # Default to square renderer if shape type not found
             shape_type_lower = "square"
 
@@ -252,7 +270,7 @@ def register_custom_renderer(shape_type: str, renderer_class: Type[ShapeRenderer
 
 
 def create_shape_renderer(
-    shape_type: str, config: Dict[str, Any] = None
+    shape_type: str, config: Optional[Dict[str, Any]] = None
 ) -> ShapeRenderer:
     """Create a shape renderer using the global factory.
 

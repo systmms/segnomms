@@ -1,20 +1,24 @@
-"""Utility components for SVG generation and manipulation.
+"""SVG generation and manipulation subsystem.
 
-This package provides essential utilities for creating interactive
-SVG documents with proper structure, styling, and metadata.
+This package provides comprehensive SVG document creation, styling,
+and manipulation capabilities for QR code generation.
 
 Key Components:
 
     :class:`InteractiveSVGBuilder`: Main builder for creating SVG documents
         with support for CSS styling, backgrounds, and interactive features.
 
-The utilities handle:
+    :class:`PathClipper`: Utilities for clipping SVG paths to frame boundaries.
+
+The SVG subsystem handles:
 
 * SVG document structure and namespaces
 * CSS style injection and management
 * Background and foreground layering
 * Interactive hover effects and tooltips
 * Proper XML formatting and encoding
+* Path manipulation and clipping
+* Frame boundary enforcement
 
 Example:
     Basic usage of the SVG builder::
@@ -27,11 +31,18 @@ Example:
         builder.add_background(svg_root, 200, 200, 'white')
 
 See Also:
-    :mod:`segnomms.svg`: SVG building implementation
+    :mod:`segnomms.svg.core`: Core SVG building implementation
+    :mod:`segnomms.svg.interactivity`: Interactive features
+    :mod:`segnomms.svg.path_clipper`: Path clipping utilities
 """
 
-from ..svg import InteractiveSVGBuilder
-from ..svg.models import (
+from .accessibility import AccessibilityBuilder
+from .composite import InteractiveSVGBuilder
+from .core import CoreSVGBuilder
+from .definitions import DefinitionsBuilder
+from .frame_visual import FrameVisualBuilder
+from .interactivity import InteractivityBuilder
+from .models import (
     BackgroundConfig,
     CenterpieceMetadataConfig,
     FrameDefinitionConfig,
@@ -41,9 +52,17 @@ from ..svg.models import (
     SVGElementConfig,
     TitleDescriptionConfig,
 )
+from .path_clipper import PathClipper
 
 __all__ = [
-    "InteractiveSVGBuilder",
+    "InteractiveSVGBuilder",  # Main composite builder
+    "CoreSVGBuilder",
+    "DefinitionsBuilder",
+    "InteractivityBuilder",
+    "FrameVisualBuilder",
+    "AccessibilityBuilder",
+    "PathClipper",
+    # SVG Models
     "SVGElementConfig",
     "BackgroundConfig",
     "GradientConfig",

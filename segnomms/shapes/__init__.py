@@ -56,12 +56,13 @@ See Also:
     - :mod:`segnomms.shapes.factory`: Factory system details
 """
 
-from .basic import CrossRenderer  # RoundedRenderer removed
 from .basic import (
     CircleRenderer,
+    CrossRenderer,
     DiamondRenderer,
     DotRenderer,
     HexagonRenderer,
+    RoundedRenderer,
     SquareRenderer,
     StarRenderer,
     TriangleRenderer,
@@ -92,7 +93,7 @@ __all__ = [
     # Basic renderers
     "SquareRenderer",
     "CircleRenderer",
-    # 'RoundedRenderer', removed
+    "RoundedRenderer",
     "DotRenderer",
     "DiamondRenderer",
     "StarRenderer",

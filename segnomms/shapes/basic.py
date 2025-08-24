@@ -21,7 +21,266 @@ import xml.etree.ElementTree as ET
 from ..core.interfaces import ShapeRenderer
 
 
-class SquareRenderer(ShapeRenderer):
+class BaseShapeRenderer(ShapeRenderer):
+    """Abstract base class for basic shape renderers with common functionality.
+    
+    Provides standardized implementations of common methods like supports_type()
+    and shared constants. Subclasses should define shape_names to specify
+    which shape types they support.
+    """
+    
+    # Subclasses should override this with their supported shape names
+    shape_names: list[str] = []
+    
+    def supports_type(self, shape_type: str) -> bool:
+        """Check if this renderer supports the given shape type.
+        
+        Args:
+            shape_type: Name of the shape type to check
+            
+        Returns:
+            bool: True if shape_type is in the renderer's shape_names list
+        """
+        return shape_type.lower() in self.shape_names
+
+
+def apply_element_attributes(element: ET.Element, kwargs: dict) -> None:
+    """Apply common attributes to an SVG element.
+
+    This helper function applies standard attributes like id, data-* attributes,
+    and other interactive properties to SVG elements.
+
+    Args:
+        element: SVG element to modify
+        kwargs: Dictionary of attributes, may include:
+            - id: Element ID
+            - data-row: Row position data attribute
+            - data-col: Column position data attribute
+            - data-type: Module type data attribute
+            - Any other attribute to be applied
+    """
+    # Apply common attributes
+    if "id" in kwargs:
+        element.set("id", kwargs["id"])
+
+    # Apply data attributes for interactivity
+    for key, value in kwargs.items():
+        if key.startswith("data-"):
+            element.set(key, str(value))
+
+
+def create_svg_element(tag: str, attributes: dict, kwargs: dict) -> ET.Element:
+    """Create an SVG element with common attributes applied.
+    
+    This helper function combines element creation with common attribute
+    application, reducing boilerplate code across all renderers.
+    
+    Args:
+        tag: SVG element tag name (e.g., 'rect', 'circle', 'polygon')
+        attributes: Dictionary of SVG-specific attributes
+        kwargs: Additional parameters including css_class, id, data-* attributes
+        
+    Returns:
+        ET.Element: SVG element with all attributes applied
+    """
+    # Ensure css_class is always set to default if not provided
+    attributes.setdefault("class", kwargs.get("css_class", "qr-module"))
+    
+    # Convert all attribute values to strings for XML
+    str_attributes = {k: str(v) for k, v in attributes.items()}
+    
+    # Create element and apply additional attributes
+    element = ET.Element(tag, str_attributes)
+    apply_element_attributes(element, kwargs)
+    
+    return element
+
+
+# Geometry utility functions
+def get_module_center(x: float, y: float, size: float) -> tuple[float, float]:
+    """Calculate the center point of a module.
+    
+    Args:
+        x: Module's top-left x coordinate
+        y: Module's top-left y coordinate  
+        size: Module size
+        
+    Returns:
+        tuple[float, float]: Center coordinates (cx, cy)
+    """
+    return x + size / 2, y + size / 2
+
+
+def apply_size_ratio(size: float, kwargs: dict, default: float = 1.0) -> float:
+    """Apply size ratio from kwargs to a base size.
+    
+    Args:
+        size: Base size value
+        kwargs: Parameters dictionary that may contain 'size_ratio'
+        default: Default ratio if not specified in kwargs
+        
+    Returns:
+        float: Size multiplied by the ratio
+    """
+    return size * kwargs.get("size_ratio", default)
+
+
+def get_corner_radius(size: float, kwargs: dict, param_name: str = "roundness", default: float = 0.3) -> float:
+    """Calculate corner radius from size and roundness parameter.
+    
+    Args:
+        size: Base size value
+        kwargs: Parameters dictionary 
+        param_name: Name of the parameter to look for (default: 'roundness')
+        default: Default roundness ratio if not specified
+        
+    Returns:
+        float: Corner radius value
+    """
+    ratio = kwargs.get(param_name, default)
+    return size * ratio
+
+
+# Polygon generation utilities
+def generate_regular_polygon(center_x: float, center_y: float, radius: float, 
+                           sides: int, start_angle: float = 0.0) -> list[str]:
+    """Generate points for a regular polygon.
+    
+    Args:
+        center_x: X coordinate of polygon center
+        center_y: Y coordinate of polygon center  
+        radius: Distance from center to vertices
+        sides: Number of polygon sides (must be >= 3)
+        start_angle: Starting angle in radians (default: 0.0)
+        
+    Returns:
+        list[str]: List of point strings in "x,y" format for SVG polygon
+        
+    Raises:
+        ValueError: If sides < 3
+    """
+    if sides < 3:
+        raise ValueError("Polygon must have at least 3 sides")
+        
+    import math
+    points = []
+    angle_step = 2 * math.pi / sides
+    
+    for i in range(sides):
+        angle = start_angle + i * angle_step
+        px = center_x + radius * math.cos(angle)
+        py = center_y + radius * math.sin(angle)
+        points.append(f"{px:.2f},{py:.2f}")
+    
+    return points
+
+
+def generate_star_polygon(center_x: float, center_y: float, outer_radius: float,
+                         inner_radius: float, points: int, start_angle: float = -3.141592653589793/2) -> list[str]:
+    """Generate points for a star polygon.
+    
+    Args:
+        center_x: X coordinate of star center
+        center_y: Y coordinate of star center
+        outer_radius: Distance from center to outer points
+        inner_radius: Distance from center to inner points  
+        points: Number of star points (must be >= 3)
+        start_angle: Starting angle in radians (default: -π/2 for upward point)
+        
+    Returns:
+        list[str]: List of point strings in "x,y" format for SVG polygon
+        
+    Raises:
+        ValueError: If points < 3
+    """
+    if points < 3:
+        raise ValueError("Star must have at least 3 points")
+        
+    import math
+    star_points = []
+    angle_step = math.pi / points  # Half the angle between outer points
+    
+    for i in range(points * 2):
+        angle = start_angle + i * angle_step
+        if i % 2 == 0:
+            # Outer point
+            px = center_x + outer_radius * math.cos(angle)
+            py = center_y + outer_radius * math.sin(angle)
+        else:
+            # Inner point
+            px = center_x + inner_radius * math.cos(angle)
+            py = center_y + inner_radius * math.sin(angle)
+        star_points.append(f"{px:.2f},{py:.2f}")
+    
+    return star_points
+
+
+def generate_diamond_points(x: float, y: float, size: float) -> list[str]:
+    """Generate points for a diamond (rotated square) shape.
+    
+    Args:
+        x: Top-left x coordinate of bounding box
+        y: Top-left y coordinate of bounding box
+        size: Size of the bounding box
+        
+    Returns:
+        list[str]: List of point strings for diamond polygon
+    """
+    half = size / 2
+    return [
+        f"{x + half},{y}",          # Top
+        f"{x + size},{y + half}",   # Right  
+        f"{x + half},{y + size}",   # Bottom
+        f"{x},{y + half}",          # Left
+    ]
+
+
+def generate_triangle_points(x: float, y: float, size: float, direction: str = "up") -> list[str]:
+    """Generate points for a triangle in the specified direction.
+    
+    Args:
+        x: Top-left x coordinate of bounding box
+        y: Top-left y coordinate of bounding box
+        size: Size of the bounding box
+        direction: Triangle direction ('up', 'down', 'left', 'right')
+        
+    Returns:
+        list[str]: List of point strings for triangle polygon
+        
+    Raises:
+        ValueError: If direction is not valid
+    """
+    direction = direction.lower()
+    
+    if direction == "up":
+        return [
+            f"{x + size / 2},{y}",
+            f"{x + size},{y + size}",
+            f"{x},{y + size}",
+        ]
+    elif direction == "down":
+        return [
+            f"{x},{y}",
+            f"{x + size},{y}",
+            f"{x + size / 2},{y + size}",
+        ]
+    elif direction == "left":
+        return [
+            f"{x},{y + size / 2}",
+            f"{x + size},{y}",
+            f"{x + size},{y + size}",
+        ]
+    elif direction == "right":
+        return [
+            f"{x},{y}",
+            f"{x},{y + size}",
+            f"{x + size},{y + size / 2}",
+        ]
+    else:
+        raise ValueError(f"Invalid direction '{direction}'. Must be 'up', 'down', 'left', or 'right'")
+
+
+class SquareRenderer(BaseShapeRenderer):
     """Renders traditional square QR code modules.
 
     The most basic shape renderer, creating perfect squares for each module.
@@ -33,6 +292,8 @@ class SquareRenderer(ShapeRenderer):
         >>> square = renderer.render(0, 0, 10)
         >>> # Creates a 10x10 square at position (0,0)
     """
+    
+    shape_names = ["square"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a square module.
@@ -48,33 +309,19 @@ class SquareRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG rect element
         """
-        rect = ET.Element(
+        return create_svg_element(
             "rect",
             {
-                "x": str(x),
-                "y": str(y),
-                "width": str(size),
-                "height": str(size),
-                "class": kwargs.get("css_class", "qr-module"),
+                "x": x,
+                "y": y,
+                "width": size,
+                "height": size,
             },
+            kwargs
         )
-        if "id" in kwargs:
-            rect.set("id", kwargs["id"])
-        return rect
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'square'
-        """
-        return shape_type.lower() in ["square"]
 
 
-class CircleRenderer(ShapeRenderer):
+class CircleRenderer(BaseShapeRenderer):
     """Renders circular QR code modules.
 
     Creates perfect circles that fit within the module grid. This shape
@@ -86,6 +333,8 @@ class CircleRenderer(ShapeRenderer):
         >>> circle = renderer.render(5, 5, 10)
         >>> # Creates a circle with radius 5 centered at (10,10)
     """
+    
+    shape_names = ["circle"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a circular module.
@@ -101,35 +350,17 @@ class CircleRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG circle element centered in the module
         """
-        circle = ET.Element(
+        cx, cy = get_module_center(x, y, size)
+        radius = apply_size_ratio(size / 2, kwargs, 0.9)
+        
+        return create_svg_element(
             "circle",
-            {
-                "cx": str(x + size / 2),
-                "cy": str(y + size / 2),
-                "r": str(size / 2 * kwargs.get("size_ratio", 0.9)),
-                "class": kwargs.get("css_class", "qr-module"),
-            },
+            {"cx": cx, "cy": cy, "r": radius},
+            kwargs
         )
-        if "id" in kwargs:
-            circle.set("id", kwargs["id"])
-        return circle
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'circle'
-        """
-        return shape_type.lower() in ["circle"]
 
 
-# RoundedRenderer removed - shapes 'rounded', 'rounded_square', 'rounded_rect' no longer supported
-
-
-class RoundedRenderer(ShapeRenderer):
+class RoundedRenderer(BaseShapeRenderer):
     """Renders square modules with rounded corners.
 
     Creates modules with softly rounded corners for a more friendly,
@@ -141,6 +372,8 @@ class RoundedRenderer(ShapeRenderer):
         >>> rounded_rect = renderer.render(0, 0, 10, roundness=0.3)
         >>> # Creates a square with 30% corner radius
     """
+    
+    shape_names = ["rounded"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a rounded square module.
@@ -157,38 +390,23 @@ class RoundedRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG rect element with rounded corners
         """
-        roundness = kwargs.get("roundness", 0.3)
-        radius = size * roundness
+        radius = get_corner_radius(size, kwargs)
 
-        rect = ET.Element(
+        return create_svg_element(
             "rect",
             {
-                "x": str(x),
-                "y": str(y),
-                "width": str(size),
-                "height": str(size),
-                "rx": str(radius),
-                "ry": str(radius),
-                "class": kwargs.get("css_class", "qr-module"),
+                "x": x,
+                "y": y,
+                "width": size,
+                "height": size,
+                "rx": radius,
+                "ry": radius,
             },
+            kwargs
         )
-        if "id" in kwargs:
-            rect.set("id", kwargs["id"])
-        return rect
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'rounded'
-        """
-        return shape_type.lower() in ["rounded"]
 
 
-class DotRenderer(ShapeRenderer):
+class DotRenderer(BaseShapeRenderer):
     """Renders small dot modules for a minimalist QR code style.
 
     Creates smaller circles that leave more whitespace between modules,
@@ -200,6 +418,8 @@ class DotRenderer(ShapeRenderer):
         >>> dot = renderer.render(0, 0, 10, size_ratio=0.5)
         >>> # Creates a 5-pixel diameter dot in a 10x10 module
     """
+    
+    shape_names = ["dot"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a small dot module.
@@ -216,33 +436,17 @@ class DotRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG circle element smaller than the module size
         """
-        dot_size = size * kwargs.get("size_ratio", 0.6)
-        circle = ET.Element(
+        cx, cy = get_module_center(x, y, size)
+        dot_size = apply_size_ratio(size, kwargs, 0.6)
+        
+        return create_svg_element(
             "circle",
-            {
-                "cx": str(x + size / 2),
-                "cy": str(y + size / 2),
-                "r": str(dot_size / 2),
-                "class": kwargs.get("css_class", "qr-module"),
-            },
+            {"cx": cx, "cy": cy, "r": dot_size / 2},
+            kwargs
         )
-        if "id" in kwargs:
-            circle.set("id", kwargs["id"])
-        return circle
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'dot'
-        """
-        return shape_type.lower() in ["dot"]
 
 
-class DiamondRenderer(ShapeRenderer):
+class DiamondRenderer(BaseShapeRenderer):
     """Renders diamond (rhombus) shaped modules.
 
     Creates 45-degree rotated squares that form diamond patterns.
@@ -254,6 +458,8 @@ class DiamondRenderer(ShapeRenderer):
         >>> diamond = renderer.render(0, 0, 10)
         >>> # Creates a diamond touching all edges of the 10x10 module
     """
+    
+    shape_names = ["diamond"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a diamond shape module.
@@ -269,37 +475,15 @@ class DiamondRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG polygon element forming a diamond
         """
-        half = size / 2
-        points = [
-            f"{x + half},{y}",
-            f"{x + size},{y + half}",
-            f"{x + half},{y + size}",
-            f"{x},{y + half}",
-        ]
-        polygon = ET.Element(
+        points = generate_diamond_points(x, y, size)
+        return create_svg_element(
             "polygon",
-            {
-                "points": " ".join(points),
-                "class": kwargs.get("css_class", "qr-module"),
-            },
+            {"points": " ".join(points)},
+            kwargs
         )
-        if "id" in kwargs:
-            polygon.set("id", kwargs["id"])
-        return polygon
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'diamond'
-        """
-        return shape_type.lower() in ["diamond"]
 
 
-class StarRenderer(ShapeRenderer):
+class StarRenderer(BaseShapeRenderer):
     """Renders star-shaped modules with configurable points.
 
     Creates multi-pointed star shapes that add a decorative flair to QR codes.
@@ -311,6 +495,8 @@ class StarRenderer(ShapeRenderer):
         >>> star = renderer.render(0, 0, 10, star_points=6, inner_ratio=0.4)
         >>> # Creates a 6-pointed star with sharp points
     """
+    
+    shape_names = ["star"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a star shape module.
@@ -328,52 +514,22 @@ class StarRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG polygon element forming a star
         """
-        import math
-
         points = kwargs.get("star_points", 5)
         inner_ratio = kwargs.get("inner_ratio", 0.5)
-        center_x = x + size / 2
-        center_y = y + size / 2
+        center_x, center_y = get_module_center(x, y, size)
         outer_radius = size / 2
         inner_radius = outer_radius * inner_ratio
 
-        star_points = []
-        for i in range(points * 2):
-            angle = i * math.pi / points
-            if i % 2 == 0:
-                # Outer point
-                px = center_x + outer_radius * math.cos(angle - math.pi / 2)
-                py = center_y + outer_radius * math.sin(angle - math.pi / 2)
-            else:
-                # Inner point
-                px = center_x + inner_radius * math.cos(angle - math.pi / 2)
-                py = center_y + inner_radius * math.sin(angle - math.pi / 2)
-            star_points.append(f"{px:.2f},{py:.2f}")
+        star_points = generate_star_polygon(center_x, center_y, outer_radius, inner_radius, points)
 
-        polygon = ET.Element(
+        return create_svg_element(
             "polygon",
-            {
-                "points": " ".join(star_points),
-                "class": kwargs.get("css_class", "qr-module"),
-            },
+            {"points": " ".join(star_points)},
+            kwargs
         )
-        if "id" in kwargs:
-            polygon.set("id", kwargs["id"])
-        return polygon
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'star'
-        """
-        return shape_type.lower() in ["star"]
 
 
-class TriangleRenderer(ShapeRenderer):
+class TriangleRenderer(BaseShapeRenderer):
     """Renders triangular modules with directional orientation.
 
     Creates equilateral triangles that can point in different directions.
@@ -385,6 +541,8 @@ class TriangleRenderer(ShapeRenderer):
         >>> triangle = renderer.render(0, 0, 10, direction='up')
         >>> # Creates an upward-pointing triangle
     """
+    
+    shape_names = ["triangle"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a triangle shape module.
@@ -401,57 +559,17 @@ class TriangleRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG polygon element forming a triangle
         """
-        direction = kwargs.get("direction", "up")  # up, down, left, right
+        direction = kwargs.get("direction", "up")
+        points = generate_triangle_points(x, y, size, direction)
 
-        if direction == "up":
-            points = [
-                f"{x + size / 2},{y}",
-                f"{x + size},{y + size}",
-                f"{x},{y + size}",
-            ]
-        elif direction == "down":
-            points = [
-                f"{x},{y}",
-                f"{x + size},{y}",
-                f"{x + size / 2},{y + size}",
-            ]
-        elif direction == "left":
-            points = [
-                f"{x},{y + size / 2}",
-                f"{x + size},{y}",
-                f"{x + size},{y + size}",
-            ]
-        else:  # right
-            points = [
-                f"{x},{y}",
-                f"{x},{y + size}",
-                f"{x + size},{y + size / 2}",
-            ]
-
-        polygon = ET.Element(
+        return create_svg_element(
             "polygon",
-            {
-                "points": " ".join(points),
-                "class": kwargs.get("css_class", "qr-module"),
-            },
+            {"points": " ".join(points)},
+            kwargs
         )
-        if "id" in kwargs:
-            polygon.set("id", kwargs["id"])
-        return polygon
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'triangle'
-        """
-        return shape_type.lower() in ["triangle"]
 
 
-class HexagonRenderer(ShapeRenderer):
+class HexagonRenderer(BaseShapeRenderer):
     """Renders hexagonal modules for a honeycomb-like appearance.
 
     Creates regular hexagons that can tessellate beautifully when
@@ -463,6 +581,8 @@ class HexagonRenderer(ShapeRenderer):
         >>> hexagon = renderer.render(0, 0, 10, size_ratio=0.95)
         >>> # Creates a hexagon slightly smaller than the module
     """
+    
+    shape_names = ["hexagon"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a hexagon shape module.
@@ -479,43 +599,19 @@ class HexagonRenderer(ShapeRenderer):
         Returns:
             ET.Element: SVG polygon element forming a regular hexagon
         """
-        import math
+        center_x, center_y = get_module_center(x, y, size)
+        radius = apply_size_ratio(size / 2, kwargs, 0.9)
 
-        center_x = x + size / 2
-        center_y = y + size / 2
-        radius = size / 2 * kwargs.get("size_ratio", 0.9)
+        hex_points = generate_regular_polygon(center_x, center_y, radius, 6)
 
-        hex_points = []
-        for i in range(6):
-            angle = i * math.pi / 3
-            px = center_x + radius * math.cos(angle)
-            py = center_y + radius * math.sin(angle)
-            hex_points.append(f"{px:.2f},{py:.2f}")
-
-        polygon = ET.Element(
+        return create_svg_element(
             "polygon",
-            {
-                "points": " ".join(hex_points),
-                "class": kwargs.get("css_class", "qr-module"),
-            },
+            {"points": " ".join(hex_points)},
+            kwargs
         )
-        if "id" in kwargs:
-            polygon.set("id", kwargs["id"])
-        return polygon
-
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
-
-        Args:
-            shape_type: Name of the shape type to check
-
-        Returns:
-            bool: True if shape_type is 'hexagon'
-        """
-        return shape_type.lower() in ["hexagon"]
 
 
-class CrossRenderer(ShapeRenderer):
+class CrossRenderer(BaseShapeRenderer):
     """Renders cross (plus sign) shaped modules.
 
     Creates cross or plus sign shapes that can vary in thickness
@@ -528,6 +624,8 @@ class CrossRenderer(ShapeRenderer):
         >>> cross = renderer.render(0, 0, 10, thickness=0.25, sharp=True)
         >>> # Creates a sharp cross with tapered arms
     """
+    
+    shape_names = ["cross"]
 
     def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
         """Render a cross shape module.
@@ -549,9 +647,11 @@ class CrossRenderer(ShapeRenderer):
         thickness = kwargs.get("thickness", 0.2)  # Reduced from 0.3 to 0.2
         arm_width = size * thickness
 
+        # Debug: Add thickness info as data attribute
+        debug_thickness = thickness
+
         # Create cross using path
-        center_x = x + size / 2
-        center_y = y + size / 2
+        center_x, center_y = get_module_center(x, y, size)
         half_arm = arm_width / 2
 
         # For extra sharp crosses, we can make the arms taper
@@ -599,21 +699,78 @@ class CrossRenderer(ShapeRenderer):
                 f"Z"
             )
 
-        path = ET.Element(
+        return create_svg_element(
             "path",
-            {"d": path_data, "class": kwargs.get("css_class", "qr-module")},
+            {
+                "d": path_data,
+                "data-thickness": debug_thickness,
+                "data-arm-width": arm_width,
+            },
+            kwargs
         )
-        if "id" in kwargs:
-            path.set("id", kwargs["id"])
-        return path
 
-    def supports_type(self, shape_type: str) -> bool:
-        """Check if this renderer supports the given shape type.
+
+class SquircleRenderer(BaseShapeRenderer):
+    """Renders superellipse (squircle) shaped QR code modules.
+
+    A squircle is a mathematical shape that's between a square and a circle,
+    providing a modern, smooth appearance while maintaining good scannability.
+    The shape is defined by the superellipse equation with n=4.
+
+    Example:
+        >>> renderer = SquircleRenderer()
+        >>> squircle = renderer.render(0, 0, 10)
+        >>> # Creates a 10x10 squircle at position (0,0)
+    """
+    
+    shape_names = ["squircle"]
+
+    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+        """Render a squircle module.
 
         Args:
-            shape_type: Name of the shape type to check
+            x: X coordinate of the top-left corner
+            y: Y coordinate of the top-left corner
+            size: Width and height of the module
+            **kwargs: Additional parameters including:
+                css_class: CSS class for styling (default: 'qr-module')
+                id: Optional element ID
+                corner_radius: Override corner radius (0.0-1.0)
 
         Returns:
-            bool: True if shape_type is 'cross'
+            ET.Element: SVG path element forming a squircle
         """
-        return shape_type.lower() in ["cross"]
+        # Get corner radius from kwargs or use default
+        corner_radius = get_corner_radius(1.0, kwargs, "corner_radius", 0.35)
+
+        # Calculate control point offset for cubic bezier curves
+        # This approximates a superellipse with n=4
+        cp_offset = size * corner_radius * 0.447  # Magic number for squircle
+
+        # Create path data for squircle using cubic bezier curves
+        path_data = (
+            f"M {x + size * corner_radius} {y} "
+            f"L {x + size - size * corner_radius} {y} "
+            f"C {x + size - size * corner_radius + cp_offset} {y} "
+            f"{x + size} {y + size * corner_radius - cp_offset} "
+            f"{x + size} {y + size * corner_radius} "
+            f"L {x + size} {y + size - size * corner_radius} "
+            f"C {x + size} {y + size - size * corner_radius + cp_offset} "
+            f"{x + size - size * corner_radius + cp_offset} {y + size} "
+            f"{x + size - size * corner_radius} {y + size} "
+            f"L {x + size * corner_radius} {y + size} "
+            f"C {x + size * corner_radius - cp_offset} {y + size} "
+            f"{x} {y + size - size * corner_radius + cp_offset} "
+            f"{x} {y + size - size * corner_radius} "
+            f"L {x} {y + size * corner_radius} "
+            f"C {x} {y + size * corner_radius - cp_offset} "
+            f"{x + size * corner_radius - cp_offset} {y} "
+            f"{x + size * corner_radius} {y} "
+            f"Z"
+        )
+
+        return create_svg_element(
+            "path",
+            {"d": path_data},
+            kwargs
+        )

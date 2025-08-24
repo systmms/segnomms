@@ -20,6 +20,7 @@ from enum import Enum, auto
 from typing import Callable, Optional
 
 from ..core.interfaces import ShapeRenderer
+from .basic import apply_element_attributes
 
 
 class Corner(Enum):
@@ -173,8 +174,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
                 "class": kwargs.get("css_class", "qr-module"),
             },
         )
-        if "id" in kwargs:
-            circle.set("id", kwargs["id"])
+        apply_element_attributes(circle, kwargs)
         return circle
 
     def _basic_square(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
@@ -189,8 +189,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
                 "class": kwargs.get("css_class", "qr-module"),
             },
         )
-        if "id" in kwargs:
-            rect.set("id", kwargs["id"])
+        apply_element_attributes(rect, kwargs)
         return rect
 
     def _side_rounded(
@@ -293,11 +292,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
             "path",
             {"d": path_data, "class": kwargs.get("css_class", "qr-module")},
         )
-        if "id" in kwargs:
-            path.set("id", kwargs["id"])
-        for attr in ["data-row", "data-col", "data-type"]:
-            if attr in kwargs:
-                path.set(attr, kwargs[attr])
+        apply_element_attributes(path, kwargs)
         return path
 
     def supports_type(self, shape_type: str) -> bool:
@@ -335,8 +330,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
                 "class": kwargs.get("css_class", "qr-module"),
             },
         )
-        if "id" in kwargs:
-            circle.set("id", kwargs["id"])
+        apply_element_attributes(circle, kwargs)
         return circle
 
     def _basic_square(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
@@ -356,8 +350,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
                 "class": kwargs.get("css_class", "qr-module"),
             },
         )
-        if "id" in kwargs:
-            rect.set("id", kwargs["id"])
+        apply_element_attributes(rect, kwargs)
         return rect
 
     def _side_rounded(

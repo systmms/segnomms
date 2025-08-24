@@ -40,7 +40,6 @@ class ModuleAnalyzer(ABC):
         Returns:
             Analysis results specific to the analyzer implementation
         """
-        pass
 
 
 class ShapeRenderer(ABC):
@@ -70,7 +69,6 @@ class ShapeRenderer(ABC):
         Returns:
             SVG element representing the rendered shape
         """
-        pass
 
     @abstractmethod
     def supports_type(self, shape_type: str) -> bool:
@@ -83,7 +81,6 @@ class ShapeRenderer(ABC):
         Returns:
             True if this renderer can handle the shape type
         """
-        pass
 
 
 class AlgorithmProcessor(ABC):
@@ -108,7 +105,6 @@ class AlgorithmProcessor(ABC):
         Returns:
             List of processing results (clusters, contours, etc.)
         """
-        pass
 
 
 class ConfigurationProvider(ABC):
@@ -125,7 +121,6 @@ class ConfigurationProvider(ABC):
         Returns:
             Dict[str, Any]: Default configuration values
         """
-        pass
 
     @abstractmethod
     def validate_config(self, config: Dict[str, Any]) -> bool:
@@ -140,7 +135,6 @@ class ConfigurationProvider(ABC):
         Raises:
             ValueError: If configuration is invalid with details
         """
-        pass
 
 
 class RendererFactory(ABC):
@@ -161,7 +155,6 @@ class RendererFactory(ABC):
         Returns:
             Appropriate shape renderer
         """
-        pass
 
     @abstractmethod
     def list_supported_types(self) -> List[str]:
@@ -170,7 +163,6 @@ class RendererFactory(ABC):
         Returns:
             List[str]: Supported shape type names
         """
-        pass
 
 
 class SVGBuilder(ABC):
@@ -192,7 +184,6 @@ class SVGBuilder(ABC):
         Returns:
             ET.Element: Root SVG element
         """
-        pass
 
     @abstractmethod
     def add_styles(self, svg: ET.Element, interactive: bool = False) -> None:
@@ -202,7 +193,6 @@ class SVGBuilder(ABC):
             svg: SVG root element
             interactive: Whether to include interactive styles
         """
-        pass
 
     @abstractmethod
     def add_background(
@@ -216,7 +206,6 @@ class SVGBuilder(ABC):
             height: Background height
             color: Background color (CSS color string)
         """
-        pass
 
 
 class QRCodeAnalyzer(ABC):
@@ -237,7 +226,6 @@ class QRCodeAnalyzer(ABC):
         Returns:
             str: Module type identifier
         """
-        pass
 
     @abstractmethod
     def get_version(self) -> int:
@@ -246,7 +234,6 @@ class QRCodeAnalyzer(ABC):
         Returns:
             int: QR code version (1-40)
         """
-        pass
 
     @abstractmethod
     def get_size(self) -> int:
@@ -255,7 +242,6 @@ class QRCodeAnalyzer(ABC):
         Returns:
             int: Number of modules per side
         """
-        pass
 
 
 #: Type alias for QR code matrix (2D list of booleans)

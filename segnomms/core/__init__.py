@@ -15,6 +15,7 @@ from .interfaces import (
     ShapeRenderer,
     SVGBuilder,
 )
+from .models import ModuleDetectorConfig, NeighborAnalysis
 
 __all__ = [
     "ModuleAnalyzer",
@@ -25,4 +26,6 @@ __all__ = [
     "SVGBuilder",
     "QRCodeAnalyzer",
     "ModuleDetector",
+    "ModuleDetectorConfig",
+    "NeighborAnalysis",
 ]

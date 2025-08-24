@@ -39,5 +39,11 @@ See Also:
 """
 
 from .clustering import ConnectedComponentAnalyzer
+from .models import ClusterInfo, ClusteringConfig, ClusteringResult
 
-__all__ = ["ConnectedComponentAnalyzer"]
+__all__ = [
+    "ConnectedComponentAnalyzer",
+    "ClusteringConfig",
+    "ClusterInfo",
+    "ClusteringResult",
+]

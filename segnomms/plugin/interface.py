@@ -29,7 +29,7 @@ def write(
 
     Args:
         qr_code: Segno QR code object to render
-        out: Output destination - can be a file path (str), text stream, or binary stream
+        out: Output destination - file path (str), text stream, or binary stream
         **kwargs: Rendering options including:
 
             Basic parameters:
