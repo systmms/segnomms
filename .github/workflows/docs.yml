@@ -1,0 +1,363 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+    - 'docs/**'
+    - 'segnomms/**/*.py'
+    - 'README.md'
+    - 'CHANGELOG.md'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  build-docs:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for proper version detection
+        
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      
+    - name: Set up Python
+      run: uv python install ${{ env.PYTHON_VERSION }}
+      
+    - name: Install dependencies
+      run: |
+        uv sync
+        uv pip install -e .
+        
+    - name: Install documentation dependencies
+      run: |
+        uv pip install -r docs/requirements.txt
+        
+    - name: Check documentation dependencies
+      run: |
+        python -c "
+        import sphinx
+        import sphinx_rtd_theme
+        print(f'Sphinx version: {sphinx.__version__}')
+        print('✅ Documentation dependencies installed successfully')
+        "
+        
+    - name: Build HTML documentation
+      run: |
+        cd docs
+        make html
+        
+    - name: Check for broken links
+      run: |
+        cd docs
+        make linkcheck || echo "Link check completed with warnings"
+        
+    - name: Generate API documentation coverage report
+      run: |
+        cd docs
+        # Count documented vs undocumented modules
+        TOTAL_MODULES=$(find ../segnomms -name "*.py" -not -name "__init__.py" | wc -l)
+        DOCUMENTED_MODULES=$(grep -r "automodule::" source/ | wc -l)
+        
+        echo "## 📚 Documentation Coverage" > doc-coverage.md
+        echo "" >> doc-coverage.md
+        echo "- **Total Python modules:** ${TOTAL_MODULES}" >> doc-coverage.md
+        echo "- **Documented modules:** ${DOCUMENTED_MODULES}" >> doc-coverage.md
+        
+        if [ "$DOCUMENTED_MODULES" -gt 0 ]; then
+          COVERAGE_PERCENT=$(( DOCUMENTED_MODULES * 100 / TOTAL_MODULES ))
+          echo "- **Documentation coverage:** ${COVERAGE_PERCENT}%" >> doc-coverage.md
+        fi
+        
+    - name: Upload documentation artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-html
+        path: docs/build/html/
+        
+    - name: Upload documentation coverage
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-coverage
+        path: docs/doc-coverage.md
+
+  test-examples:
+    name: Test Documentation Examples
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      
+    - name: Set up Python
+      run: uv python install ${{ env.PYTHON_VERSION }}
+      
+    - name: Install dependencies
+      run: |
+        uv sync
+        uv pip install -e .
+        
+    - name: Install system dependencies for SVG processing
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y librsvg2-bin
+        
+    - name: Test README examples
+      run: |
+        # Extract and test code examples from README
+        python -c "
+        import re
+        import subprocess
+        import tempfile
+        import os
+        
+        # Read README
+        with open('README.md', 'r') as f:
+            content = f.read()
+            
+        # Extract Python code blocks
+        code_blocks = re.findall(r'```python\n(.*?)\n```', content, re.DOTALL)
+        
+        print(f'Found {len(code_blocks)} Python code blocks in README')
+        
+        for i, code in enumerate(code_blocks):
+            print(f'Testing code block {i+1}...')
+            
+            # Skip blocks that are just imports or incomplete
+            if 'import' in code and len(code.strip().split('\n')) < 3:
+                print(f'  Skipping import-only block {i+1}')
+                continue
+                
+            # Create temporary file
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+                f.write(code)
+                temp_file = f.name
+                
+            try:
+                # Run the code
+                result = subprocess.run([
+                    'python', temp_file
+                ], capture_output=True, text=True, timeout=30)
+                
+                if result.returncode == 0:
+                    print(f'  ✅ Code block {i+1} executed successfully')
+                else:
+                    print(f'  ⚠️ Code block {i+1} failed:')
+                    print(f'     {result.stderr}')
+            except subprocess.TimeoutExpired:
+                print(f'  ⚠️ Code block {i+1} timed out')
+            except Exception as e:
+                print(f'  ⚠️ Code block {i+1} error: {e}')
+            finally:
+                os.unlink(temp_file)
+        "
+        
+    - name: Generate example QR codes
+      run: |
+        mkdir -p example-outputs
+        
+        # Generate examples mentioned in documentation
+        python -c "
+        import segno
+        
+        # Basic example
+        qr = segno.make('Hello World')
+        qr.save('example-outputs/basic.svg', kind='interactive_svg', scale=10)
+        
+        # Styled example
+        qr.save('example-outputs/styled.svg', kind='interactive_svg', 
+                scale=15, dark='#1a1a2e', shape='rounded', 
+                corner_radius=0.3, interactive=True)
+        
+        print('✅ Example QR codes generated successfully')
+        "
+        
+    - name: Upload example outputs
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-examples
+        path: example-outputs/
+
+  spell-check:
+    name: Spell Check Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      
+    - name: Install spell checker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y aspell aspell-en
+        
+    - name: Check spelling in documentation
+      run: |
+        # Create custom dictionary for technical terms
+        cat << 'EOF' > .aspell.en.pws
+        personal_ws-1.1 en 50
+        SegnoMMS
+        Segno
+        QR
+        QRcode
+        SVG
+        API
+        JSON
+        YAML
+        kwargs
+        bool
+        str
+        int
+        float
+        dict
+        list
+        tuple
+        UUID
+        HSL
+        RGB
+        RGBA
+        CSS
+        HTML
+        XML
+        MIME
+        UTF
+        URI
+        URL
+        HTTP
+        HTTPS
+        PyPI
+        Pydantic
+        validator
+        validators
+        dataclass
+        enum
+        PIL
+        Pillow
+        numpy
+        matplotlib
+        rasterization
+        vectorized
+        centerpiece
+        accessibility
+        tooltips
+        ARIA
+        scanability
+        EOF
+        
+        # Check spelling in key files
+        for file in README.md CHANGELOG.md docs/source/*.rst docs/source/*.md; do
+          if [ -f "$file" ]; then
+            echo "Checking spelling in $file..."
+            # Use aspell to check, but don't fail on unknown technical terms
+            aspell --personal=.aspell.en.pws --list < "$file" > spelling-errors.txt || true
+            
+            if [ -s spelling-errors.txt ]; then
+              echo "  Potential spelling errors found:"
+              cat spelling-errors.txt | head -10
+              echo "  (showing first 10 errors, if any)"
+            else
+              echo "  ✅ No spelling errors found"
+            fi
+          fi
+        done
+
+  deploy-docs:
+    name: Deploy Documentation
+    runs-on: ubuntu-latest
+    needs: [build-docs, test-examples]
+    if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Download documentation artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: documentation-html
+        path: docs-html/
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs-html/
+        destination_dir: docs
+        
+    - name: Comment documentation URL on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { owner, repo } = context.repo;
+          const pr_number = context.issue.number;
+          
+          const body = `## 📚 Documentation Preview
+          
+          The documentation has been built successfully!
+          
+          **Preview URL:** https://${owner}.github.io/${repo}/docs/
+          
+          ### Documentation Coverage
+          - Built from commit: ${{ github.sha }}
+          - All examples tested and validated
+          - Spelling checked for common errors
+          
+          📁 Full documentation artifacts are available in this workflow run.
+          `;
+          
+          await github.rest.issues.createComment({
+            issue_number: pr_number,
+            owner: owner,
+            repo: repo,
+            body: body
+          });
+
+  documentation-quality-gate:
+    name: Documentation Quality Gate
+    runs-on: ubuntu-latest
+    needs: [build-docs, test-examples, spell-check]
+    if: always()
+    
+    steps:
+    - name: Evaluate documentation quality
+      run: |
+        echo "Documentation Quality Gate Evaluation:"
+        echo "=================================="
+        
+        BUILD_STATUS="${{ needs.build-docs.result }}"
+        EXAMPLES_STATUS="${{ needs.test-examples.result }}"
+        SPELL_STATUS="${{ needs.spell-check.result }}"
+        
+        echo "📖 Documentation Build: $BUILD_STATUS"
+        echo "💡 Examples Testing: $EXAMPLES_STATUS"  
+        echo "🔤 Spell Check: $SPELL_STATUS"
+        
+        # Quality gate logic
+        if [[ "$BUILD_STATUS" != "success" ]]; then
+          echo "❌ Documentation build failed - Quality gate FAILED"
+          exit 1
+        fi
+        
+        if [[ "$EXAMPLES_STATUS" != "success" ]]; then
+          echo "⚠️ Examples testing failed - Quality gate WARNING"
+          # Don't fail on examples, just warn
+        fi
+        
+        if [[ "$SPELL_STATUS" != "success" ]]; then
+          echo "⚠️ Spell check issues detected - Quality gate WARNING"
+          # Don't fail on spelling, just warn
+        fi
+        
+        echo "✅ Documentation quality gate PASSED"

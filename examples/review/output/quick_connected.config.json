@@ -1,0 +1,7 @@
+{
+  "border": 4,
+  "connectivity": "8-way",
+  "merge": "soft",
+  "scale": 10,
+  "shape": "connected"
+}

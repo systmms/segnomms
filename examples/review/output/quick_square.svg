@@ -1,0 +1,201 @@
+<svg width="250" height="250" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4382212960">
+<title>Interactive QR Code</title><desc>QR Code with 17x17 modules</desc>  <rect x="0" y="0" width="250" height="250" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" id="qr-finder-79-1" role="group" aria-label="Finder pattern 80">
+    <rect x="40" y="40" width="10" height="10" class="qr-module" id="qr-finder-1" title="Finder pattern module" />
+  <rect x="50" y="40" width="10" height="10" class="qr-module" id="qr-finder-2" title="Finder pattern module" />
+  <rect x="60" y="40" width="10" height="10" class="qr-module" id="qr-finder-3" title="Finder pattern module" />
+  <rect x="70" y="40" width="10" height="10" class="qr-module" id="qr-finder-4" title="Finder pattern module" />
+  <rect x="80" y="40" width="10" height="10" class="qr-module" id="qr-finder-5" title="Finder pattern module" />
+  <rect x="90" y="40" width="10" height="10" class="qr-module" id="qr-finder-6" title="Finder pattern module" />
+  <rect x="100" y="40" width="10" height="10" class="qr-module" id="qr-finder-7" title="Finder pattern module" />
+  <rect x="140" y="40" width="10" height="10" class="qr-module" id="qr-finder-9" title="Finder pattern module" />
+  <rect x="160" y="40" width="10" height="10" class="qr-module" id="qr-finder-10" title="Finder pattern module" />
+  <rect x="180" y="40" width="10" height="10" class="qr-module" id="qr-finder-11" title="Finder pattern module" />
+  <rect x="200" y="40" width="10" height="10" class="qr-module" id="qr-finder-12" title="Finder pattern module" />
+  <rect x="40" y="50" width="10" height="10" class="qr-module" id="qr-finder-13" title="Finder pattern module" />
+  <rect x="100" y="50" width="10" height="10" class="qr-module" id="qr-finder-14" title="Finder pattern module" />
+  <rect x="170" y="50" width="10" height="10" class="qr-module" id="qr-finder-15" title="Finder pattern module" />
+  <rect x="40" y="60" width="10" height="10" class="qr-module" id="qr-finder-16" title="Finder pattern module" />
+  <rect x="60" y="60" width="10" height="10" class="qr-module" id="qr-finder_inner-17" title="Finder_Inner pattern module" />
+  <rect x="70" y="60" width="10" height="10" class="qr-module" id="qr-finder_inner-18" title="Finder_Inner pattern module" />
+  <rect x="80" y="60" width="10" height="10" class="qr-module" id="qr-finder_inner-19" title="Finder_Inner pattern module" />
+  <rect x="100" y="60" width="10" height="10" class="qr-module" id="qr-finder-20" title="Finder pattern module" />
+  <rect x="140" y="60" width="10" height="10" class="qr-module" id="qr-finder-22" title="Finder pattern module" />
+  <rect x="160" y="60" width="10" height="10" class="qr-module" id="qr-finder_inner-23" title="Finder_Inner pattern module" />
+  <rect x="170" y="60" width="10" height="10" class="qr-module" id="qr-finder_inner-24" title="Finder_Inner pattern module" />
+  <rect x="40" y="70" width="10" height="10" class="qr-module" id="qr-finder-25" title="Finder pattern module" />
+  <rect x="60" y="70" width="10" height="10" class="qr-module" id="qr-finder_inner-26" title="Finder_Inner pattern module" />
+  <rect x="70" y="70" width="10" height="10" class="qr-module" id="qr-finder_inner-27" title="Finder_Inner pattern module" />
+  <rect x="80" y="70" width="10" height="10" class="qr-module" id="qr-finder_inner-28" title="Finder_Inner pattern module" />
+  <rect x="100" y="70" width="10" height="10" class="qr-module" id="qr-finder-29" title="Finder pattern module" />
+  <rect x="160" y="70" width="10" height="10" class="qr-module" id="qr-finder_inner-30" title="Finder_Inner pattern module" />
+  <rect x="170" y="70" width="10" height="10" class="qr-module" id="qr-finder_inner-31" title="Finder_Inner pattern module" />
+  <rect x="180" y="70" width="10" height="10" class="qr-module" id="qr-finder_inner-32" title="Finder_Inner pattern module" />
+  <rect x="200" y="70" width="10" height="10" class="qr-module" id="qr-finder-33" title="Finder pattern module" />
+  <rect x="40" y="80" width="10" height="10" class="qr-module" id="qr-finder-34" title="Finder pattern module" />
+  <rect x="60" y="80" width="10" height="10" class="qr-module" id="qr-finder_inner-35" title="Finder_Inner pattern module" />
+  <rect x="70" y="80" width="10" height="10" class="qr-module" id="qr-finder_inner-36" title="Finder_Inner pattern module" />
+  <rect x="80" y="80" width="10" height="10" class="qr-module" id="qr-finder_inner-37" title="Finder_Inner pattern module" />
+  <rect x="100" y="80" width="10" height="10" class="qr-module" id="qr-finder-38" title="Finder pattern module" />
+  <rect x="140" y="80" width="10" height="10" class="qr-module" id="qr-finder-41" title="Finder pattern module" />
+  <rect x="160" y="80" width="10" height="10" class="qr-module" id="qr-finder_inner-42" title="Finder_Inner pattern module" />
+  <rect x="170" y="80" width="10" height="10" class="qr-module" id="qr-finder_inner-43" title="Finder_Inner pattern module" />
+  <rect x="180" y="80" width="10" height="10" class="qr-module" id="qr-finder_inner-44" title="Finder_Inner pattern module" />
+  <rect x="200" y="80" width="10" height="10" class="qr-module" id="qr-finder-45" title="Finder pattern module" />
+  <rect x="40" y="90" width="10" height="10" class="qr-module" id="qr-finder-46" title="Finder pattern module" />
+  <rect x="100" y="90" width="10" height="10" class="qr-module" id="qr-finder-47" title="Finder pattern module" />
+  <rect x="170" y="90" width="10" height="10" class="qr-module" id="qr-finder-48" title="Finder pattern module" />
+  <rect x="190" y="90" width="10" height="10" class="qr-module" id="qr-finder-49" title="Finder pattern module" />
+  <rect x="40" y="100" width="10" height="10" class="qr-module" id="qr-finder-50" title="Finder pattern module" />
+  <rect x="50" y="100" width="10" height="10" class="qr-module" id="qr-finder-51" title="Finder pattern module" />
+  <rect x="60" y="100" width="10" height="10" class="qr-module" id="qr-finder-52" title="Finder pattern module" />
+  <rect x="70" y="100" width="10" height="10" class="qr-module" id="qr-finder-53" title="Finder pattern module" />
+  <rect x="80" y="100" width="10" height="10" class="qr-module" id="qr-finder-54" title="Finder pattern module" />
+  <rect x="90" y="100" width="10" height="10" class="qr-module" id="qr-finder-55" title="Finder pattern module" />
+  <rect x="100" y="100" width="10" height="10" class="qr-module" id="qr-finder-56" title="Finder pattern module" />
+  <rect x="140" y="100" width="10" height="10" class="qr-module" id="qr-finder-58" title="Finder pattern module" />
+  <rect x="170" y="100" width="10" height="10" class="qr-module" id="qr-finder-59" title="Finder pattern module" />
+  <rect x="200" y="100" width="10" height="10" class="qr-module" id="qr-finder-60" title="Finder pattern module" />
+  <rect x="40" y="140" width="10" height="10" class="qr-module" id="qr-finder-78" title="Finder pattern module" />
+  <rect x="50" y="140" width="10" height="10" class="qr-module" id="qr-finder-79" title="Finder pattern module" />
+  <rect x="60" y="140" width="10" height="10" class="qr-module" id="qr-finder-80" title="Finder pattern module" />
+  <rect x="100" y="140" width="10" height="10" class="qr-module" id="qr-finder-81" title="Finder pattern module" />
+  <rect x="50" y="150" width="10" height="10" class="qr-module" id="qr-finder-89" title="Finder pattern module" />
+  <rect x="70" y="150" width="10" height="10" class="qr-module" id="qr-finder-90" title="Finder pattern module" />
+  <rect x="90" y="150" width="10" height="10" class="qr-module" id="qr-finder-91" title="Finder pattern module" />
+  <rect x="100" y="150" width="10" height="10" class="qr-module" id="qr-finder-92" title="Finder pattern module" />
+  <rect x="40" y="160" width="10" height="10" class="qr-module" id="qr-finder-97" title="Finder pattern module" />
+  <rect x="60" y="170" width="10" height="10" class="qr-module" id="qr-finder_inner-104" title="Finder_Inner pattern module" />
+  <rect x="70" y="170" width="10" height="10" class="qr-module" id="qr-finder_inner-105" title="Finder_Inner pattern module" />
+  <rect x="40" y="180" width="10" height="10" class="qr-module" id="qr-finder-115" title="Finder pattern module" />
+  <rect x="50" y="180" width="10" height="10" class="qr-module" id="qr-finder-116" title="Finder pattern module" />
+  <rect x="60" y="180" width="10" height="10" class="qr-module" id="qr-finder_inner-117" title="Finder_Inner pattern module" />
+  <rect x="70" y="180" width="10" height="10" class="qr-module" id="qr-finder_inner-118" title="Finder_Inner pattern module" />
+  <rect x="80" y="180" width="10" height="10" class="qr-module" id="qr-finder_inner-119" title="Finder_Inner pattern module" />
+  <rect x="100" y="180" width="10" height="10" class="qr-module" id="qr-finder-120" title="Finder pattern module" />
+  <rect x="60" y="190" width="10" height="10" class="qr-module" id="qr-finder-126" title="Finder pattern module" />
+  <rect x="80" y="190" width="10" height="10" class="qr-module" id="qr-finder-127" title="Finder pattern module" />
+  <rect x="100" y="190" width="10" height="10" class="qr-module" id="qr-finder-128" title="Finder pattern module" />
+  <rect x="40" y="200" width="10" height="10" class="qr-module" id="qr-finder-134" title="Finder pattern module" />
+  <rect x="50" y="200" width="10" height="10" class="qr-module" id="qr-finder-135" title="Finder pattern module" />
+  <rect x="70" y="200" width="10" height="10" class="qr-module" id="qr-finder-136" title="Finder pattern module" />
+  <rect x="80" y="200" width="10" height="10" class="qr-module" id="qr-finder-137" title="Finder pattern module" />
+
+</g><g class="qr-pattern-timing" data-pattern-type="timing" id="qr-timing-2" role="group" aria-label="Timing pattern">
+    <rect x="130" y="100" width="10" height="10" class="qr-module" id="qr-timing-57" title="Timing pattern module" />
+  <rect x="100" y="130" width="10" height="10" class="qr-module" id="qr-timing-75" title="Timing pattern module" />
+
+</g><g class="qr-pattern-alignment" data-pattern-type="alignment" id="qr-alignment-12" role="group" aria-label="Alignment pattern 13">
+    <rect x="130" y="120" width="10" height="10" class="qr-module" id="qr-alignment-69" title="Alignment pattern module" />
+  <rect x="140" y="120" width="10" height="10" class="qr-module" id="qr-alignment-70" title="Alignment pattern module" />
+  <rect x="160" y="120" width="10" height="10" class="qr-module" id="qr-alignment-71" title="Alignment pattern module" />
+  <rect x="160" y="130" width="10" height="10" class="qr-module" id="qr-alignment-77" title="Alignment pattern module" />
+  <rect x="120" y="140" width="10" height="10" class="qr-module" id="qr-alignment-83" title="Alignment pattern module" />
+  <rect x="150" y="140" width="10" height="10" class="qr-module" id="qr-alignment-85" title="Alignment pattern module" />
+  <rect x="160" y="140" width="10" height="10" class="qr-module" id="qr-alignment-86" title="Alignment pattern module" />
+  <rect x="120" y="150" width="10" height="10" class="qr-module" id="qr-alignment-94" title="Alignment pattern module" />
+  <rect x="150" y="150" width="10" height="10" class="qr-module" id="qr-alignment-95" title="Alignment pattern module" />
+  <rect x="160" y="150" width="10" height="10" class="qr-module" id="qr-alignment-96" title="Alignment pattern module" />
+  <rect x="140" y="160" width="10" height="10" class="qr-module" id="qr-alignment-99" title="Alignment pattern module" />
+  <rect x="160" y="160" width="10" height="10" class="qr-module" id="qr-alignment-100" title="Alignment pattern module" />
+
+</g><g class="qr-pattern-format" data-pattern-type="format" id="qr-format-9" role="group" aria-label="Format information">
+    <rect x="120" y="40" width="10" height="10" class="qr-module" id="qr-format-8" title="Format pattern module" />
+  <rect x="120" y="80" width="10" height="10" class="qr-module" id="qr-format-39" title="Format pattern module" />
+  <rect x="40" y="120" width="10" height="10" class="qr-module" id="qr-format-65" title="Format pattern module" />
+  <rect x="60" y="120" width="10" height="10" class="qr-module" id="qr-format-66" title="Format pattern module" />
+  <rect x="90" y="120" width="10" height="10" class="qr-module" id="qr-format-67" title="Format pattern module" />
+  <rect x="110" y="120" width="10" height="10" class="qr-module" id="qr-format-68" title="Format pattern module" />
+  <rect x="200" y="120" width="10" height="10" class="qr-module" id="qr-format-72" title="Format pattern module" />
+  <rect x="120" y="170" width="10" height="10" class="qr-module" id="qr-format-107" title="Format pattern module" />
+  <rect x="120" y="180" width="10" height="10" class="qr-module" id="qr-format-122" title="Format pattern module" />
+
+</g><g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" id="qr-data-39" role="group" aria-label="Data modules">
+    <rect x="130" y="60" width="10" height="10" class="qr-module" id="qr-data-21" />
+  <rect x="130" y="80" width="10" height="10" class="qr-module" id="qr-data-40" />
+  <rect x="160" y="110" width="10" height="10" class="qr-module" id="qr-separator-61" title="Separator pattern module" />
+  <rect x="170" y="110" width="10" height="10" class="qr-module" id="qr-separator-62" title="Separator pattern module" />
+  <rect x="180" y="110" width="10" height="10" class="qr-module" id="qr-separator-63" title="Separator pattern module" />
+  <rect x="200" y="110" width="10" height="10" class="qr-module" id="qr-separator-64" title="Separator pattern module" />
+  <rect x="80" y="130" width="10" height="10" class="qr-module" id="qr-data-73" />
+  <rect x="90" y="130" width="10" height="10" class="qr-module" id="qr-data-74" />
+  <rect x="110" y="130" width="10" height="10" class="qr-module" id="qr-data-76" />
+  <rect x="110" y="140" width="10" height="10" class="qr-module" id="qr-separator-82" title="Separator pattern module" />
+  <rect x="140" y="140" width="10" height="10" class="qr-module" id="qr-alignment_center-84" title="Alignment_Center pattern module" />
+  <rect x="170" y="140" width="10" height="10" class="qr-module" id="qr-data-87" />
+  <rect x="190" y="140" width="10" height="10" class="qr-module" id="qr-data-88" />
+  <rect x="110" y="150" width="10" height="10" class="qr-module" id="qr-separator-93" title="Separator pattern module" />
+  <rect x="110" y="160" width="10" height="10" class="qr-module" id="qr-separator-98" title="Separator pattern module" />
+  <rect x="170" y="160" width="10" height="10" class="qr-module" id="qr-data-101" />
+  <rect x="180" y="160" width="10" height="10" class="qr-module" id="qr-data-102" />
+  <rect x="200" y="160" width="10" height="10" class="qr-module" id="qr-data-103" />
+  <rect x="110" y="170" width="10" height="10" class="qr-module" id="qr-separator-106" title="Separator pattern module" />
+  <rect x="130" y="170" width="10" height="10" class="qr-module" id="qr-data-108" />
+  <rect x="140" y="170" width="10" height="10" class="qr-module" id="qr-data-109" />
+  <rect x="150" y="170" width="10" height="10" class="qr-module" id="qr-data-110" />
+  <rect x="160" y="170" width="10" height="10" class="qr-module" id="qr-data-111" />
+  <rect x="170" y="170" width="10" height="10" class="qr-module" id="qr-data-112" />
+  <rect x="190" y="170" width="10" height="10" class="qr-module" id="qr-data-113" />
+  <rect x="200" y="170" width="10" height="10" class="qr-module" id="qr-data-114" />
+  <rect x="110" y="180" width="10" height="10" class="qr-module" id="qr-separator-121" title="Separator pattern module" />
+  <rect x="130" y="180" width="10" height="10" class="qr-module" id="qr-data-123" />
+  <rect x="180" y="180" width="10" height="10" class="qr-module" id="qr-data-124" />
+  <rect x="190" y="180" width="10" height="10" class="qr-module" id="qr-data-125" />
+  <rect x="110" y="190" width="10" height="10" class="qr-module" id="qr-separator-129" title="Separator pattern module" />
+  <rect x="130" y="190" width="10" height="10" class="qr-module" id="qr-data-130" />
+  <rect x="140" y="190" width="10" height="10" class="qr-module" id="qr-data-131" />
+  <rect x="160" y="190" width="10" height="10" class="qr-module" id="qr-data-132" />
+  <rect x="170" y="190" width="10" height="10" class="qr-module" id="qr-data-133" />
+  <rect x="110" y="200" width="10" height="10" class="qr-module" id="qr-separator-138" title="Separator pattern module" />
+  <rect x="130" y="200" width="10" height="10" class="qr-module" id="qr-data-139" />
+  <rect x="160" y="200" width="10" height="10" class="qr-module" id="qr-data-140" />
+  <rect x="200" y="200" width="10" height="10" class="qr-module" id="qr-data-141" />
+
+</g>
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>

@@ -1,0 +1,52 @@
+# Example workflow showing the complete release process
+# This is for documentation purposes - actual releases use release-please.yml
+
+name: Example Release Process
+
+on:
+  workflow_dispatch:
+
+jobs:
+  show-process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Process Overview
+        run: |
+          echo "=== SegnoMMS Release Process Overview ==="
+          echo ""
+          echo "1. Development Phase:"
+          echo "   - Make changes following conventional commits"
+          echo "   - Push to feature branch and create PR"
+          echo "   - Tests run automatically (Python + Pyodide)"
+          echo ""
+          echo "2. Release Please Automation:"
+          echo "   - When PR merges to main, Release Please creates/updates release PR"
+          echo "   - Version bumps based on commit types:"
+          echo "     * feat: minor version bump (0.1.0 → 0.2.0)"
+          echo "     * fix: patch version bump (0.1.0 → 0.1.1)"
+          echo "     * feat!: major version bump (0.1.0 → 1.0.0)"
+          echo ""
+          echo "3. Release Validation (validate-release.yml):"
+          echo "   - Tests on Python 3.8-3.12 across Linux/Mac/Windows"
+          echo "   - Pyodide compatibility testing"
+          echo "   - Package build validation"
+          echo "   - Security and quality checks"
+          echo ""
+          echo "4. Publishing (automatic when Release PR merges):"
+          echo "   - Build wheel and source distributions"
+          echo "   - Validate with twine"
+          echo "   - Test in Pyodide environment"
+          echo "   - Publish to PyPI using trusted publishing"
+          echo "   - Create GitHub release with artifacts"
+          echo "   - Test installation from PyPI"
+          echo ""
+          echo "=== Configuration Files ==="
+          echo ".github/release-please-config.json - Release Please settings"
+          echo ".github/.release-please-manifest.json - Current version tracking"
+          echo ""
+          echo "=== Key Features ==="
+          echo "✓ Fully automated releases"
+          echo "✓ Pyodide compatibility testing before publish"
+          echo "✓ Multi-platform validation"
+          echo "✓ Semantic versioning"
+          echo "✓ Trusted PyPI publishing (no tokens needed)"

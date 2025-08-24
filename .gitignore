@@ -1,0 +1,154 @@
+# SegnoMMS - Advanced QR Code Generation Plugin
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+# Standard Python packaging artifacts and build directories
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.whl
+MANIFEST
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Test outputs and artifacts
+test-output/
+tests/visual/output/
+tests/visual/output.png/
+tests/visual/diff/
+tests/coverage/
+.playwright-mcp
+
+# Temporary example outputs in root
+example_*.svg
+example_*.py
+
+# Test SVG files in root directory  
+test_*.svg
+test_coordinates*.svg
+test_coordinates*.json
+
+# Visual regression test artifacts in root
+*.actual.svg
+*.diff.svg
+# Note: Don't ignore *.baseline.svg globally - we want tests/visual/baseline/ in git
+
+# Generated comprehensive examples
+examples-generated/
+visual-test-results/
+examples/output/
+
+# Review and deployment artifacts
+deployment-review/
+tests/review/output/
+test-report.json
+coverage.json
+*.log
+
+# Virtual environments and version managers
+.venv/
+venv/
+env/
+.tool-versions
+.python-version.local
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE, editors, and code formatting tools
+.vscode/
+.idea/
+*.swp
+*.swo
+.ruff_cache/
+
+# Operating system files
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Distribution files are in dist/ which is already ignored above
+
+# Nix development environment and direnv
+.direnv/
+.envrc.local
+result
+result-*
+
+# act (GitHub Actions local runner)
+.secrets
+.env.act
+*.act.yml
+.github/workflows/act/
+act-runner/
+
+# Pre-commit
+.pre-commit-config.yaml.bak
+
+# Documentation build artifacts
+docs/_build/
+docs/build/
+site/
+
+# Temporary analysis files (per CLAUDE.md documentation policy)
+# These prevent documentation sprawl by excluding temporary analysis files
+*_ANALYSIS.md
+*_IMPLEMENTATION.md
+*_PLAN.md
+REQUIREMENTS_*.md
+
+# Performance profiling
+*.prof
+*.pstats
+profile_*.txt
+
+# Additional security patterns
+.env.local
+.env.development
+.env.test
+.env.production
+secrets.json

@@ -1,0 +1,19 @@
+{
+  "border": 3,
+  "centerpiece_enabled": true,
+  "centerpiece_shape": "circle",
+  "centerpiece_size": 0.15,
+  "connectivity": "8-way",
+  "corner_radius": 0.3,
+  "dark": "#1a1a2e",
+  "finder_inner_scale": 0.4,
+  "finder_shape": "rounded",
+  "frame_clip_mode": "fade",
+  "frame_shape": "circle",
+  "interactive": true,
+  "light": "#f5f5f5",
+  "merge": "soft",
+  "safe_mode": false,
+  "scale": 15,
+  "shape": "squircle"
+}

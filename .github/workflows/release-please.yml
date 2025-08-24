@@ -1,0 +1,123 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: .github/release-please-config.json
+          manifest-file: .github/.release-please-manifest.json
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  # Run full validation suite after release PR is created/updated
+  validate-pr:
+    if: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'release-please--branches')) }}
+    uses: ./.github/workflows/validate-release.yml
+    permissions:
+      contents: read
+      pull-requests: write
+
+  # Build and publish to PyPI when a release is created
+  build-and-publish:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write  # Required for trusted publishing
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Check package with twine
+        run: twine check dist/*
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          verbose: true
+
+  # Test installation from PyPI after publishing
+  test-pypi-install:
+    needs: [release-please, build-and-publish]
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Wait for PyPI availability
+        run: |
+          echo "Waiting for package to be available on PyPI..."
+          sleep 60
+
+      - name: Install from PyPI
+        run: |
+          python -m pip install --upgrade pip
+          pip install segnomms==${{ needs.release-please.outputs.version }}
+
+      - name: Verify installation
+        run: |
+          python -c "import segnomms; print(f'Successfully installed segnomms version {segnomms.__version__}')"
+          python -c "import segno; qr = segno.make('Test'); print('Plugin integration successful')"
+
+  # Create GitHub Release assets
+  upload-release-assets:
+    needs: [release-please, build-and-publish]
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Upload Release Assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ needs.release-please.outputs.tag_name }} dist/* --clobber

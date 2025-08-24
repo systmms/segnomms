@@ -1,0 +1,788 @@
+<svg width="450" height="450" viewBox="0 0 450 450" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4370676240">
+<title>Interactive QR Code</title><desc>QR Code with 37x37 modules</desc>  <rect x="0" y="0" width="450" height="450" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" id="qr-finder-99-1" role="group" aria-label="Finder pattern 100">
+    <rect x="40" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-1" title="Finder pattern module" />
+  <rect x="50" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-2" title="Finder pattern module" />
+  <rect x="60" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-3" title="Finder pattern module" />
+  <rect x="70" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-4" title="Finder pattern module" />
+  <rect x="80" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-5" title="Finder pattern module" />
+  <rect x="90" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-6" title="Finder pattern module" />
+  <rect x="100" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-7" title="Finder pattern module" />
+  <rect x="340" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-15" title="Finder pattern module" />
+  <rect x="350" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-16" title="Finder pattern module" />
+  <rect x="360" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-17" title="Finder pattern module" />
+  <rect x="370" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-18" title="Finder pattern module" />
+  <rect x="380" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-19" title="Finder pattern module" />
+  <rect x="390" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-20" title="Finder pattern module" />
+  <rect x="400" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-21" title="Finder pattern module" />
+  <rect x="40" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-22" title="Finder pattern module" />
+  <rect x="100" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-23" title="Finder pattern module" />
+  <rect x="340" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-32" title="Finder pattern module" />
+  <rect x="400" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-33" title="Finder pattern module" />
+  <rect x="40" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-34" title="Finder pattern module" />
+  <rect x="60" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-35" title="Finder_Inner pattern module" />
+  <rect x="70" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-36" title="Finder_Inner pattern module" />
+  <rect x="80" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-37" title="Finder_Inner pattern module" />
+  <rect x="100" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-38" title="Finder pattern module" />
+  <rect x="340" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-51" title="Finder pattern module" />
+  <rect x="360" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-52" title="Finder_Inner pattern module" />
+  <rect x="370" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-53" title="Finder_Inner pattern module" />
+  <rect x="380" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-54" title="Finder_Inner pattern module" />
+  <rect x="400" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-55" title="Finder pattern module" />
+  <rect x="40" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-56" title="Finder pattern module" />
+  <rect x="60" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-57" title="Finder_Inner pattern module" />
+  <rect x="70" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-58" title="Finder_Inner pattern module" />
+  <rect x="80" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-59" title="Finder_Inner pattern module" />
+  <rect x="100" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-60" title="Finder pattern module" />
+  <rect x="340" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-75" title="Finder pattern module" />
+  <rect x="360" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-76" title="Finder_Inner pattern module" />
+  <rect x="370" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-77" title="Finder_Inner pattern module" />
+  <rect x="380" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-78" title="Finder_Inner pattern module" />
+  <rect x="400" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-79" title="Finder pattern module" />
+  <rect x="40" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-80" title="Finder pattern module" />
+  <rect x="60" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-81" title="Finder_Inner pattern module" />
+  <rect x="70" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-82" title="Finder_Inner pattern module" />
+  <rect x="80" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-83" title="Finder_Inner pattern module" />
+  <rect x="100" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-84" title="Finder pattern module" />
+  <rect x="340" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-95" title="Finder pattern module" />
+  <rect x="360" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-96" title="Finder_Inner pattern module" />
+  <rect x="370" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-97" title="Finder_Inner pattern module" />
+  <rect x="380" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-98" title="Finder_Inner pattern module" />
+  <rect x="400" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-99" title="Finder pattern module" />
+  <rect x="40" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-100" title="Finder pattern module" />
+  <rect x="100" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-101" title="Finder pattern module" />
+  <rect x="340" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-112" title="Finder pattern module" />
+  <rect x="400" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-113" title="Finder pattern module" />
+  <rect x="40" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-114" title="Finder pattern module" />
+  <rect x="50" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-115" title="Finder pattern module" />
+  <rect x="60" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-116" title="Finder pattern module" />
+  <rect x="70" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-117" title="Finder pattern module" />
+  <rect x="80" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-118" title="Finder pattern module" />
+  <rect x="90" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-119" title="Finder pattern module" />
+  <rect x="100" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-120" title="Finder pattern module" />
+  <rect x="340" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-132" title="Finder pattern module" />
+  <rect x="350" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-133" title="Finder pattern module" />
+  <rect x="360" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-134" title="Finder pattern module" />
+  <rect x="370" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-135" title="Finder pattern module" />
+  <rect x="380" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-136" title="Finder pattern module" />
+  <rect x="390" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-137" title="Finder pattern module" />
+  <rect x="400" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-138" title="Finder pattern module" />
+  <rect x="40" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-576" title="Finder pattern module" />
+  <rect x="50" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-577" title="Finder pattern module" />
+  <rect x="60" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-578" title="Finder pattern module" />
+  <rect x="70" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-579" title="Finder pattern module" />
+  <rect x="80" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-580" title="Finder pattern module" />
+  <rect x="90" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-581" title="Finder pattern module" />
+  <rect x="100" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-582" title="Finder pattern module" />
+  <rect x="40" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-599" title="Finder pattern module" />
+  <rect x="100" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-600" title="Finder pattern module" />
+  <rect x="40" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-619" title="Finder pattern module" />
+  <rect x="60" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-620" title="Finder_Inner pattern module" />
+  <rect x="70" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-621" title="Finder_Inner pattern module" />
+  <rect x="80" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-622" title="Finder_Inner pattern module" />
+  <rect x="100" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-623" title="Finder pattern module" />
+  <rect x="40" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-643" title="Finder pattern module" />
+  <rect x="60" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-644" title="Finder_Inner pattern module" />
+  <rect x="70" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-645" title="Finder_Inner pattern module" />
+  <rect x="80" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-646" title="Finder_Inner pattern module" />
+  <rect x="100" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-647" title="Finder pattern module" />
+  <rect x="40" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-666" title="Finder pattern module" />
+  <rect x="60" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-667" title="Finder_Inner pattern module" />
+  <rect x="70" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-668" title="Finder_Inner pattern module" />
+  <rect x="80" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder_inner-669" title="Finder_Inner pattern module" />
+  <rect x="100" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-670" title="Finder pattern module" />
+  <rect x="40" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-687" title="Finder pattern module" />
+  <rect x="100" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-688" title="Finder pattern module" />
+  <rect x="40" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-705" title="Finder pattern module" />
+  <rect x="50" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-706" title="Finder pattern module" />
+  <rect x="60" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-707" title="Finder pattern module" />
+  <rect x="70" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-708" title="Finder pattern module" />
+  <rect x="80" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-709" title="Finder pattern module" />
+  <rect x="90" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-710" title="Finder pattern module" />
+  <rect x="100" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-finder-711" title="Finder pattern module" />
+
+</g><g class="qr-pattern-timing" data-pattern-type="timing" id="qr-timing-22" role="group" aria-label="Timing pattern">
+    <rect x="120" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-121" title="Timing pattern module" />
+  <rect x="140" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-122" title="Timing pattern module" />
+  <rect x="160" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-123" title="Timing pattern module" />
+  <rect x="180" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-124" title="Timing pattern module" />
+  <rect x="200" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-125" title="Timing pattern module" />
+  <rect x="220" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-126" title="Timing pattern module" />
+  <rect x="240" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-127" title="Timing pattern module" />
+  <rect x="260" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-128" title="Timing pattern module" />
+  <rect x="280" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-129" title="Timing pattern module" />
+  <rect x="300" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-130" title="Timing pattern module" />
+  <rect x="320" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-131" title="Timing pattern module" />
+  <rect x="100" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-156" title="Timing pattern module" />
+  <rect x="100" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-193" title="Timing pattern module" />
+  <rect x="100" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-236" title="Timing pattern module" />
+  <rect x="100" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-276" title="Timing pattern module" />
+  <rect x="100" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-310" title="Timing pattern module" />
+  <rect x="100" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-350" title="Timing pattern module" />
+  <rect x="100" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-388" title="Timing pattern module" />
+  <rect x="100" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-425" title="Timing pattern module" />
+  <rect x="100" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-465" title="Timing pattern module" />
+  <rect x="100" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-506" title="Timing pattern module" />
+  <rect x="100" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-timing-541" title="Timing pattern module" />
+
+</g><g class="qr-pattern-alignment" data-pattern-type="alignment" id="qr-alignment-16" role="group" aria-label="Alignment pattern 17">
+    <rect x="320" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-555" title="Alignment pattern module" />
+  <rect x="330" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-556" title="Alignment pattern module" />
+  <rect x="340" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-557" title="Alignment pattern module" />
+  <rect x="350" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-558" title="Alignment pattern module" />
+  <rect x="360" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-559" title="Alignment pattern module" />
+  <rect x="320" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-572" title="Alignment pattern module" />
+  <rect x="360" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-573" title="Alignment pattern module" />
+  <rect x="320" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-594" title="Alignment pattern module" />
+  <rect x="360" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-596" title="Alignment pattern module" />
+  <rect x="320" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-615" title="Alignment pattern module" />
+  <rect x="360" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-616" title="Alignment pattern module" />
+  <rect x="320" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-636" title="Alignment pattern module" />
+  <rect x="330" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-637" title="Alignment pattern module" />
+  <rect x="340" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-638" title="Alignment pattern module" />
+  <rect x="350" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-639" title="Alignment pattern module" />
+  <rect x="360" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment-640" title="Alignment pattern module" />
+
+</g><g class="qr-pattern-format" data-pattern-type="format" id="qr-format-20" role="group" aria-label="Format information">
+    <rect x="120" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-39" title="Format pattern module" />
+  <rect x="120" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-61" title="Format pattern module" />
+  <rect x="120" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-85" title="Format pattern module" />
+  <rect x="120" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-102" title="Format pattern module" />
+  <rect x="120" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-139" title="Format pattern module" />
+  <rect x="40" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-151" title="Format pattern module" />
+  <rect x="60" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-152" title="Format pattern module" />
+  <rect x="70" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-153" title="Format pattern module" />
+  <rect x="80" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-154" title="Format pattern module" />
+  <rect x="90" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-155" title="Format pattern module" />
+  <rect x="340" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-165" title="Format pattern module" />
+  <rect x="350" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-166" title="Format pattern module" />
+  <rect x="360" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-167" title="Format pattern module" />
+  <rect x="370" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-168" title="Format pattern module" />
+  <rect x="380" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-169" title="Format pattern module" />
+  <rect x="120" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-601" title="Format pattern module" />
+  <rect x="120" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-624" title="Format pattern module" />
+  <rect x="120" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-648" title="Format pattern module" />
+  <rect x="120" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-671" title="Format pattern module" />
+  <rect x="120" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-format-712" title="Format pattern module" />
+
+</g><g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" id="qr-data-571-1" role="group" aria-label="Data modules">
+    <rect x="150" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-8" />
+  <rect x="160" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-9" />
+  <rect x="170" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-10" />
+  <rect x="180" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-11" />
+  <rect x="220" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-12" />
+  <rect x="270" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-13" />
+  <rect x="320" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-14" />
+  <rect x="130" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-24" />
+  <rect x="160" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-25" />
+  <rect x="180" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-26" />
+  <rect x="190" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-27" />
+  <rect x="250" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-28" />
+  <rect x="260" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-29" />
+  <rect x="290" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-30" />
+  <rect x="310" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-31" />
+  <rect x="140" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-40" />
+  <rect x="150" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-41" />
+  <rect x="180" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-42" />
+  <rect x="190" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-43" />
+  <rect x="200" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-44" />
+  <rect x="220" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-45" />
+  <rect x="230" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-46" />
+  <rect x="240" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-47" />
+  <rect x="250" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-48" />
+  <rect x="300" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-49" />
+  <rect x="320" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-50" />
+  <rect x="140" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-62" />
+  <rect x="150" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-63" />
+  <rect x="180" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-64" />
+  <rect x="190" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-65" />
+  <rect x="210" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-66" />
+  <rect x="220" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-67" />
+  <rect x="230" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-68" />
+  <rect x="240" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-69" />
+  <rect x="260" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-70" />
+  <rect x="280" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-71" />
+  <rect x="290" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-72" />
+  <rect x="300" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-73" />
+  <rect x="310" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-74" />
+  <rect x="130" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-86" />
+  <rect x="180" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-87" />
+  <rect x="200" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-88" />
+  <rect x="220" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-89" />
+  <rect x="230" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-90" />
+  <rect x="240" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-91" />
+  <rect x="270" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-92" />
+  <rect x="290" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-93" />
+  <rect x="320" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-94" />
+  <rect x="150" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-103" />
+  <rect x="160" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-104" />
+  <rect x="180" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-105" />
+  <rect x="190" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-106" />
+  <rect x="220" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-107" />
+  <rect x="240" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-108" />
+  <rect x="260" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-109" />
+  <rect x="280" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-110" />
+  <rect x="310" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-111" />
+  <rect x="150" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-140" />
+  <rect x="160" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-141" />
+  <rect x="170" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-142" />
+  <rect x="190" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-143" />
+  <rect x="200" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-144" />
+  <rect x="220" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-145" />
+  <rect x="230" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-146" />
+  <rect x="250" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-147" />
+  <rect x="280" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-148" />
+  <rect x="300" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-149" />
+  <rect x="320" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-150" />
+  <rect x="140" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-157" />
+  <rect x="150" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-158" />
+  <rect x="180" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-159" />
+  <rect x="190" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-160" />
+  <rect x="220" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-161" />
+  <rect x="280" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-162" />
+  <rect x="290" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-163" />
+  <rect x="300" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-164" />
+  <rect x="60" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-170" />
+  <rect x="70" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-171" />
+  <rect x="90" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-172" />
+  <rect x="110" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-173" />
+  <rect x="130" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-174" />
+  <rect x="140" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-175" />
+  <rect x="150" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-176" />
+  <rect x="180" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-177" />
+  <rect x="190" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-178" />
+  <rect x="200" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-179" />
+  <rect x="210" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-180" />
+  <rect x="220" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-181" />
+  <rect x="230" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-182" />
+  <rect x="240" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-183" />
+  <rect x="250" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-184" />
+  <rect x="270" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-185" />
+  <rect x="290" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-186" />
+  <rect x="320" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-187" />
+  <rect x="330" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-188" />
+  <rect x="370" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-189" />
+  <rect x="390" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-190" />
+  <rect x="40" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-191" />
+  <rect x="70" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-192" />
+  <rect x="110" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-194" />
+  <rect x="120" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-195" />
+  <rect x="130" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-196" />
+  <rect x="140" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-197" />
+  <rect x="150" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-198" />
+  <rect x="160" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-199" />
+  <rect x="180" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-200" />
+  <rect x="210" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-201" />
+  <rect x="240" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-202" />
+  <rect x="250" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-203" />
+  <rect x="260" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-204" />
+  <rect x="280" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-205" />
+  <rect x="290" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-206" />
+  <rect x="300" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-207" />
+  <rect x="310" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-208" />
+  <rect x="330" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-209" />
+  <rect x="340" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-210" />
+  <rect x="350" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-211" />
+  <rect x="380" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-212" />
+  <rect x="390" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-213" />
+  <rect x="400" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-214" />
+  <rect x="50" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-215" />
+  <rect x="60" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-216" />
+  <rect x="70" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-217" />
+  <rect x="90" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-218" />
+  <rect x="110" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-219" />
+  <rect x="120" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-220" />
+  <rect x="150" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-221" />
+  <rect x="200" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-222" />
+  <rect x="230" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-223" />
+  <rect x="240" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-224" />
+  <rect x="250" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-225" />
+  <rect x="260" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-226" />
+  <rect x="280" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-227" />
+  <rect x="300" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-228" />
+  <rect x="320" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-229" />
+  <rect x="330" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-230" />
+  <rect x="360" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-231" />
+  <rect x="370" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-232" />
+  <rect x="400" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-233" />
+  <rect x="40" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-234" />
+  <rect x="80" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-235" />
+  <rect x="110" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-237" />
+  <rect x="120" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-238" />
+  <rect x="130" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-239" />
+  <rect x="150" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-240" />
+  <rect x="160" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-241" />
+  <rect x="170" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-242" />
+  <rect x="180" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-243" />
+  <rect x="210" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-244" />
+  <rect x="230" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-245" />
+  <rect x="290" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-246" />
+  <rect x="300" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-247" />
+  <rect x="310" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-248" />
+  <rect x="330" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-249" />
+  <rect x="340" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-250" />
+  <rect x="360" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-251" />
+  <rect x="380" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-252" />
+  <rect x="390" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-253" />
+  <rect x="400" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-254" />
+  <rect x="40" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-255" />
+  <rect x="50" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-256" />
+  <rect x="80" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-257" />
+  <rect x="90" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-258" />
+  <rect x="130" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-259" />
+  <rect x="140" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-260" />
+  <rect x="160" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-261" />
+  <rect x="210" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-262" />
+  <rect x="220" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-263" />
+  <rect x="230" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-264" />
+  <rect x="240" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-265" />
+  <rect x="250" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-266" />
+  <rect x="270" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-267" />
+  <rect x="290" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-268" />
+  <rect x="350" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-269" />
+  <rect x="390" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-270" />
+  <rect x="40" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-271" />
+  <rect x="50" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-272" />
+  <rect x="60" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-273" />
+  <rect x="80" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-274" />
+  <rect x="90" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-275" />
+  <rect x="110" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-277" />
+  <rect x="150" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-278" />
+  <rect x="160" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-279" />
+  <rect x="170" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-280" />
+  <rect x="190" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-281" />
+  <rect x="200" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-282" />
+  <rect x="210" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-283" />
+  <rect x="240" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-284" />
+  <rect x="300" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-285" />
+  <rect x="310" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-286" />
+  <rect x="330" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-287" />
+  <rect x="350" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-288" />
+  <rect x="360" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-289" />
+  <rect x="370" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-290" />
+  <rect x="400" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-291" />
+  <rect x="40" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-292" />
+  <rect x="120" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-293" />
+  <rect x="140" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-294" />
+  <rect x="170" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-295" />
+  <rect x="210" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-296" />
+  <rect x="220" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-297" />
+  <rect x="240" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-298" />
+  <rect x="250" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-299" />
+  <rect x="260" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-300" />
+  <rect x="330" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-301" />
+  <rect x="340" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-302" />
+  <rect x="350" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-303" />
+  <rect x="360" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-304" />
+  <rect x="40" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-305" />
+  <rect x="50" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-306" />
+  <rect x="60" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-307" />
+  <rect x="80" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-308" />
+  <rect x="90" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-309" />
+  <rect x="130" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-311" />
+  <rect x="150" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-312" />
+  <rect x="170" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-313" />
+  <rect x="180" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-314" />
+  <rect x="190" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-315" />
+  <rect x="200" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-316" />
+  <rect x="260" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-317" />
+  <rect x="270" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-318" />
+  <rect x="290" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-319" />
+  <rect x="300" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-320" />
+  <rect x="310" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-321" />
+  <rect x="330" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-322" />
+  <rect x="340" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-323" />
+  <rect x="350" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-324" />
+  <rect x="360" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-325" />
+  <rect x="380" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-326" />
+  <rect x="400" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-327" />
+  <rect x="40" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-328" />
+  <rect x="80" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-329" />
+  <rect x="90" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-330" />
+  <rect x="120" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-331" />
+  <rect x="130" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-332" />
+  <rect x="140" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-333" />
+  <rect x="170" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-334" />
+  <rect x="190" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-335" />
+  <rect x="210" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-336" />
+  <rect x="220" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-337" />
+  <rect x="230" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-338" />
+  <rect x="240" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-339" />
+  <rect x="260" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-340" />
+  <rect x="270" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-341" />
+  <rect x="290" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-342" />
+  <rect x="300" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-343" />
+  <rect x="330" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-344" />
+  <rect x="350" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-345" />
+  <rect x="380" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-346" />
+  <rect x="390" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-347" />
+  <rect x="50" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-348" />
+  <rect x="70" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-349" />
+  <rect x="110" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-351" />
+  <rect x="140" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-352" />
+  <rect x="150" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-353" />
+  <rect x="160" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-354" />
+  <rect x="180" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-355" />
+  <rect x="190" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-356" />
+  <rect x="200" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-357" />
+  <rect x="220" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-358" />
+  <rect x="240" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-359" />
+  <rect x="260" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-360" />
+  <rect x="300" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-361" />
+  <rect x="310" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-362" />
+  <rect x="360" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-363" />
+  <rect x="380" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-364" />
+  <rect x="390" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-365" />
+  <rect x="400" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-366" />
+  <rect x="40" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-367" />
+  <rect x="60" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-368" />
+  <rect x="80" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-369" />
+  <rect x="110" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-370" />
+  <rect x="130" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-371" />
+  <rect x="140" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-372" />
+  <rect x="160" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-373" />
+  <rect x="180" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-374" />
+  <rect x="190" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-375" />
+  <rect x="250" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-376" />
+  <rect x="260" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-377" />
+  <rect x="270" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-378" />
+  <rect x="300" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-379" />
+  <rect x="310" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-380" />
+  <rect x="320" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-381" />
+  <rect x="330" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-382" />
+  <rect x="340" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-383" />
+  <rect x="400" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-384" />
+  <rect x="50" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-385" />
+  <rect x="70" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-386" />
+  <rect x="80" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-387" />
+  <rect x="110" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-389" />
+  <rect x="120" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-390" />
+  <rect x="130" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-391" />
+  <rect x="170" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-392" />
+  <rect x="180" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-393" />
+  <rect x="190" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-394" />
+  <rect x="200" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-395" />
+  <rect x="210" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-396" />
+  <rect x="230" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-397" />
+  <rect x="260" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-398" />
+  <rect x="270" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-399" />
+  <rect x="280" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-400" />
+  <rect x="290" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-401" />
+  <rect x="310" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-402" />
+  <rect x="330" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-403" />
+  <rect x="340" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-404" />
+  <rect x="360" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-405" />
+  <rect x="380" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-406" />
+  <rect x="60" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-407" />
+  <rect x="80" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-408" />
+  <rect x="130" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-409" />
+  <rect x="170" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-410" />
+  <rect x="180" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-411" />
+  <rect x="200" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-412" />
+  <rect x="230" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-413" />
+  <rect x="240" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-414" />
+  <rect x="250" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-415" />
+  <rect x="260" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-416" />
+  <rect x="270" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-417" />
+  <rect x="320" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-418" />
+  <rect x="330" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-419" />
+  <rect x="370" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-420" />
+  <rect x="390" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-421" />
+  <rect x="40" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-422" />
+  <rect x="70" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-423" />
+  <rect x="80" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-424" />
+  <rect x="120" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-426" />
+  <rect x="130" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-427" />
+  <rect x="150" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-428" />
+  <rect x="170" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-429" />
+  <rect x="180" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-430" />
+  <rect x="190" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-431" />
+  <rect x="200" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-432" />
+  <rect x="220" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-433" />
+  <rect x="300" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-434" />
+  <rect x="310" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-435" />
+  <rect x="320" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-436" />
+  <rect x="330" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-437" />
+  <rect x="340" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-438" />
+  <rect x="350" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-439" />
+  <rect x="360" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-440" />
+  <rect x="370" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-441" />
+  <rect x="400" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-442" />
+  <rect x="40" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-443" />
+  <rect x="50" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-444" />
+  <rect x="130" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-445" />
+  <rect x="150" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-446" />
+  <rect x="160" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-447" />
+  <rect x="170" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-448" />
+  <rect x="190" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-449" />
+  <rect x="200" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-450" />
+  <rect x="230" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-451" />
+  <rect x="250" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-452" />
+  <rect x="260" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-453" />
+  <rect x="280" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-454" />
+  <rect x="310" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-455" />
+  <rect x="320" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-456" />
+  <rect x="340" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-457" />
+  <rect x="350" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-458" />
+  <rect x="360" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-459" />
+  <rect x="390" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-460" />
+  <rect x="400" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-461" />
+  <rect x="40" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-462" />
+  <rect x="50" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-463" />
+  <rect x="70" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-464" />
+  <rect x="130" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-466" />
+  <rect x="150" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-467" />
+  <rect x="180" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-468" />
+  <rect x="190" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-469" />
+  <rect x="220" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-470" />
+  <rect x="230" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-471" />
+  <rect x="260" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-472" />
+  <rect x="280" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-473" />
+  <rect x="290" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-474" />
+  <rect x="300" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-475" />
+  <rect x="310" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-476" />
+  <rect x="320" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-477" />
+  <rect x="330" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-478" />
+  <rect x="340" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-479" />
+  <rect x="350" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-480" />
+  <rect x="360" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-481" />
+  <rect x="380" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-482" />
+  <rect x="400" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-483" />
+  <rect x="40" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-484" />
+  <rect x="50" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-485" />
+  <rect x="60" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-486" />
+  <rect x="70" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-487" />
+  <rect x="110" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-488" />
+  <rect x="120" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-489" />
+  <rect x="130" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-490" />
+  <rect x="150" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-491" />
+  <rect x="170" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-492" />
+  <rect x="180" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-493" />
+  <rect x="190" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-494" />
+  <rect x="200" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-495" />
+  <rect x="230" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-496" />
+  <rect x="240" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-497" />
+  <rect x="250" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-498" />
+  <rect x="270" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-499" />
+  <rect x="290" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-500" />
+  <rect x="320" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-501" />
+  <rect x="350" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-502" />
+  <rect x="370" y="290" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-503" />
+  <rect x="40" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-504" />
+  <rect x="90" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-505" />
+  <rect x="110" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-507" />
+  <rect x="120" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-508" />
+  <rect x="140" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-509" />
+  <rect x="150" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-510" />
+  <rect x="210" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-511" />
+  <rect x="220" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-512" />
+  <rect x="250" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-513" />
+  <rect x="290" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-514" />
+  <rect x="300" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-515" />
+  <rect x="310" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-516" />
+  <rect x="320" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-517" />
+  <rect x="330" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-518" />
+  <rect x="340" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-519" />
+  <rect x="350" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-520" />
+  <rect x="390" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-521" />
+  <rect x="400" y="300" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-522" />
+  <rect x="40" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-523" />
+  <rect x="80" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-524" />
+  <rect x="90" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-525" />
+  <rect x="120" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-526" />
+  <rect x="140" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-527" />
+  <rect x="150" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-528" />
+  <rect x="160" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-529" />
+  <rect x="200" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-530" />
+  <rect x="240" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-531" />
+  <rect x="250" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-532" />
+  <rect x="300" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-533" />
+  <rect x="340" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-534" />
+  <rect x="350" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-535" />
+  <rect x="400" y="310" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-536" />
+  <rect x="40" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-537" />
+  <rect x="70" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-538" />
+  <rect x="80" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-539" />
+  <rect x="90" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-540" />
+  <rect x="110" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-542" />
+  <rect x="120" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-543" />
+  <rect x="140" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-544" />
+  <rect x="160" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-545" />
+  <rect x="170" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-546" />
+  <rect x="180" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-547" />
+  <rect x="210" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-548" />
+  <rect x="260" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-549" />
+  <rect x="270" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-550" />
+  <rect x="280" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-551" />
+  <rect x="290" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-552" />
+  <rect x="300" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-553" />
+  <rect x="310" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-554" />
+  <rect x="380" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-560" />
+  <rect x="390" y="320" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-561" />
+  <rect x="120" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-dark-562" title="Dark pattern module" />
+  <rect x="140" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-563" />
+  <rect x="180" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-564" />
+  <rect x="200" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-565" />
+  <rect x="210" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-566" />
+  <rect x="230" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-567" />
+  <rect x="240" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-568" />
+  <rect x="250" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-569" />
+  <rect x="260" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-570" />
+  <rect x="270" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-571" />
+  <rect x="370" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-574" />
+  <rect x="390" y="330" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-575" />
+  <rect x="130" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-583" />
+  <rect x="160" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-584" />
+  <rect x="170" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-585" />
+  <rect x="190" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-586" />
+  <rect x="200" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-587" />
+  <rect x="210" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-588" />
+  <rect x="240" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-589" />
+  <rect x="250" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-590" />
+  <rect x="260" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-591" />
+  <rect x="280" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-592" />
+  <rect x="300" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-593" />
+  <rect x="340" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-alignment_center-595" title="Alignment_Center pattern module" />
+  <rect x="380" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-597" />
+  <rect x="400" y="340" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-598" />
+  <rect x="140" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-602" />
+  <rect x="160" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-603" />
+  <rect x="170" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-604" />
+  <rect x="190" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-605" />
+  <rect x="200" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-606" />
+  <rect x="210" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-607" />
+  <rect x="220" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-608" />
+  <rect x="230" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-609" />
+  <rect x="240" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-610" />
+  <rect x="250" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-611" />
+  <rect x="260" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-612" />
+  <rect x="280" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-613" />
+  <rect x="300" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-614" />
+  <rect x="370" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-617" />
+  <rect x="390" y="350" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-618" />
+  <rect x="160" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-625" />
+  <rect x="180" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-626" />
+  <rect x="190" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-627" />
+  <rect x="200" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-628" />
+  <rect x="230" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-629" />
+  <rect x="240" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-630" />
+  <rect x="260" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-631" />
+  <rect x="270" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-632" />
+  <rect x="290" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-633" />
+  <rect x="300" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-634" />
+  <rect x="310" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-635" />
+  <rect x="380" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-641" />
+  <rect x="390" y="360" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-642" />
+  <rect x="130" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-649" />
+  <rect x="140" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-650" />
+  <rect x="160" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-651" />
+  <rect x="170" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-652" />
+  <rect x="190" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-653" />
+  <rect x="220" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-654" />
+  <rect x="230" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-655" />
+  <rect x="240" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-656" />
+  <rect x="250" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-657" />
+  <rect x="270" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-658" />
+  <rect x="280" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-659" />
+  <rect x="300" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-660" />
+  <rect x="310" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-661" />
+  <rect x="330" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-662" />
+  <rect x="340" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-663" />
+  <rect x="360" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-664" />
+  <rect x="400" y="370" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-665" />
+  <rect x="130" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-672" />
+  <rect x="150" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-673" />
+  <rect x="160" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-674" />
+  <rect x="180" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-675" />
+  <rect x="190" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-676" />
+  <rect x="200" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-677" />
+  <rect x="210" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-678" />
+  <rect x="220" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-679" />
+  <rect x="240" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-680" />
+  <rect x="280" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-681" />
+  <rect x="300" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-682" />
+  <rect x="310" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-683" />
+  <rect x="320" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-684" />
+  <rect x="390" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-685" />
+  <rect x="400" y="380" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-686" />
+  <rect x="130" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-689" />
+  <rect x="140" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-690" />
+  <rect x="160" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-691" />
+  <rect x="170" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-692" />
+  <rect x="180" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-693" />
+  <rect x="190" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-694" />
+  <rect x="230" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-695" />
+  <rect x="250" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-696" />
+  <rect x="270" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-697" />
+  <rect x="280" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-698" />
+  <rect x="300" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-699" />
+  <rect x="320" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-700" />
+  <rect x="330" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-701" />
+  <rect x="340" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-702" />
+  <rect x="360" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-703" />
+  <rect x="400" y="390" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-704" />
+  <rect x="130" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-713" />
+  <rect x="140" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-714" />
+  <rect x="170" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-715" />
+  <rect x="190" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-716" />
+  <rect x="200" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-717" />
+  <rect x="210" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-718" />
+  <rect x="260" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-719" />
+  <rect x="290" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-720" />
+  <rect x="300" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-721" />
+  <rect x="330" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-722" />
+  <rect x="340" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-723" />
+  <rect x="360" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-724" />
+  <rect x="370" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-725" />
+  <rect x="380" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-726" />
+  <rect x="390" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-727" />
+  <rect x="400" y="400" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" id="qr-data-728" />
+
+</g>
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>

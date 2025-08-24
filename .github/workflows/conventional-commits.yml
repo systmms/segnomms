@@ -1,0 +1,77 @@
+name: Conventional Commits
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR title follows conventional commits
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Configure allowed types (aligned with release-please config)
+          types: |
+            feat
+            fix
+            perf
+            deps
+            docs
+            test
+            build
+            ci
+            chore
+            style
+            refactor
+            revert
+          # Ensure scope is lowercase
+          requireScope: false
+          # Allow ! for breaking changes
+          allowBreakingChanges: |
+            feat
+            fix
+            perf
+            deps
+          # Custom validation regex
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            doesn't start with an uppercase character.
+
+      - name: Check commit messages
+        if: github.event_name == 'pull_request'
+        run: |
+          # Get commits in this PR
+          COMMITS=$(git log --format="%s" origin/${{ github.base_ref }}..HEAD)
+          
+          # Conventional commit regex pattern
+          PATTERN='^(feat|fix|perf|deps|docs|test|build|ci|chore|style|refactor|revert)(\(.+\))?: .+'
+          
+          # Check each commit
+          INVALID_COMMITS=""
+          while IFS= read -r commit; do
+            if ! echo "$commit" | grep -qE "$PATTERN"; then
+              INVALID_COMMITS="${INVALID_COMMITS}\n  - ${commit}"
+            fi
+          done <<< "$COMMITS"
+          
+          if [ -n "$INVALID_COMMITS" ]; then
+            echo "❌ The following commits don't follow conventional commit format:"
+            echo -e "$INVALID_COMMITS"
+            echo ""
+            echo "📝 Expected format: <type>(<scope>): <description>"
+            echo "   Example: feat(shapes): add hexagon shape renderer"
+            echo ""
+            echo "📚 Valid types: feat, fix, perf, deps, docs, test, build, ci, chore, style, refactor, revert"
+            exit 1
+          fi
+          
+          echo "✅ All commits follow conventional commit format!"

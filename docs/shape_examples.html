@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Shape Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background: #f3f4f6;
+        }
+        h1, h2 {
+            color: #1f2937;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .shape-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .shape-card h3 {
+            margin: 0 0 8px 0;
+            color: #374151;
+            font-size: 18px;
+        }
+        .shape-card .description {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .shape-card .examples {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .shape-card .example {
+            text-align: center;
+        }
+        .shape-card .example img {
+            width: 140px;
+            height: 140px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+        }
+        .shape-card .example .label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+        .section-title {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #111827;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Shape Examples</h1>
+    <p>Visual reference for all available QR code shapes in segno-plugin</p>
+    
+    <h2 class="section-title">Basic Shapes</h2>
+    <div class="grid">
+
+        <div class="shape-card">
+            <h3>square</h3>
+            <div class="description">Standard square modules for maximum compatibility</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/square_safe.svg" alt="square with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/square_unsafe.svg" alt="square without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>circle</h3>
+            <div class="description">Circular modules for a softer appearance</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/circle_safe.svg" alt="circle with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/circle_unsafe.svg" alt="circle without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>dot</h3>
+            <div class="description">Small dots for minimalist designs</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/dot_safe.svg" alt="dot with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/dot_unsafe.svg" alt="dot without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>diamond</h3>
+            <div class="description">Diamond-shaped modules for geometric patterns</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/diamond_safe.svg" alt="diamond with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/diamond_unsafe.svg" alt="diamond without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>star</h3>
+            <div class="description">Star-shaped modules for decorative designs</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/star_safe.svg" alt="star with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/star_unsafe.svg" alt="star without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>triangle</h3>
+            <div class="description">Triangular modules for dynamic patterns</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/triangle_safe.svg" alt="triangle with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/triangle_unsafe.svg" alt="triangle without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>hexagon</h3>
+            <div class="description">Hexagonal modules for honeycomb effects</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/hexagon_safe.svg" alt="hexagon with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/hexagon_unsafe.svg" alt="hexagon without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>cross</h3>
+            <div class="description">Cross-shaped modules for technical designs</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/cross_safe.svg" alt="cross with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/cross_unsafe.svg" alt="cross without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <h2 class="section-title">Connected Shapes</h2>
+    <div class="grid">
+
+        <div class="shape-card">
+            <h3>connected</h3>
+            <div class="description">Basic connected style with smooth corners</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/connected_safe.svg" alt="connected with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/connected_unsafe.svg" alt="connected without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>connected-extra-rounded</h3>
+            <div class="description">Extra smooth connected curves</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/connected-extra-rounded_safe.svg" alt="connected-extra-rounded with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/connected-extra-rounded_unsafe.svg" alt="connected-extra-rounded without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>connected-classy</h3>
+            <div class="description">Sophisticated boundary styling</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/connected-classy_safe.svg" alt="connected-classy with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/connected-classy_unsafe.svg" alt="connected-classy without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shape-card">
+            <h3>connected-classy-rounded</h3>
+            <div class="description">Elegant rounded boundary styling</div>
+            <div class="examples">
+                <div class="example">
+                    <img src="shape_examples/connected-classy-rounded_safe.svg" alt="connected-classy-rounded with safe mode">
+                    <div class="label">Safe Mode On</div>
+                </div>
+                <div class="example">
+                    <img src="shape_examples/connected-classy-rounded_unsafe.svg" alt="connected-classy-rounded without safe mode">
+                    <div class="label">Safe Mode Off</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+include README.md
+include LICENSE
+include CHANGELOG.md
+include pyproject.toml
+include pytest.ini
+
+# Include package data
+recursive-include segnomms *.py
+
+# Include tests but not test outputs
+recursive-include tests *.py
+recursive-include tests *.md
+recursive-include tests/visual/baseline *.svg
+exclude tests/visual/output/*
+exclude tests/visual/diff/*
+
+# Include documentation source
+recursive-include docs *.rst
+recursive-include docs *.py
+recursive-include docs Makefile
+recursive-exclude docs/build *
+
+# Include example files
+include examples/*.py
+include examples/README.md
+exclude examples/*.svg
+exclude examples-generated/*
+
+# Exclude development files
+exclude .gitignore
+exclude Makefile
+exclude test_*.py
+exclude visual_test_*.svg
+exclude update_imports.py
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
