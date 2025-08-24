@@ -1,0 +1,196 @@
+<svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4442648592">
+<title id="title-4442648592">Interactive QR Code</title><desc>QR Code with 17x17 modules</desc>  <rect x="0" y="0" width="210" height="210" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" />
+  <g class="qr-pattern-timing" data-pattern-type="timing" />
+  <g class="qr-pattern-alignment" data-pattern-type="alignment" />
+  <g class="qr-pattern-format" data-pattern-type="format" />
+  <g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" />
+    <path d="M 24.0 20 L 26.0 20 L 26.0 24.0 L 30 24.0 L 30 26.0 L 26.0 26.0 L 26.0 30 L 24.0 30 L 24.0 26.0 L 20 26.0 L 20 24.0 L 24.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 34.0 20 L 36.0 20 L 36.0 24.0 L 40 24.0 L 40 26.0 L 36.0 26.0 L 36.0 30 L 34.0 30 L 34.0 26.0 L 30 26.0 L 30 24.0 L 34.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 20 L 46.0 20 L 46.0 24.0 L 50 24.0 L 50 26.0 L 46.0 26.0 L 46.0 30 L 44.0 30 L 44.0 26.0 L 40 26.0 L 40 24.0 L 44.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 20 L 56.0 20 L 56.0 24.0 L 60 24.0 L 60 26.0 L 56.0 26.0 L 56.0 30 L 54.0 30 L 54.0 26.0 L 50 26.0 L 50 24.0 L 54.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 20 L 66.0 20 L 66.0 24.0 L 70 24.0 L 70 26.0 L 66.0 26.0 L 66.0 30 L 64.0 30 L 64.0 26.0 L 60 26.0 L 60 24.0 L 64.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 74.0 20 L 76.0 20 L 76.0 24.0 L 80 24.0 L 80 26.0 L 76.0 26.0 L 76.0 30 L 74.0 30 L 74.0 26.0 L 70 26.0 L 70 24.0 L 74.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 20 L 86.0 20 L 86.0 24.0 L 90 24.0 L 90 26.0 L 86.0 26.0 L 86.0 30 L 84.0 30 L 84.0 26.0 L 80 26.0 L 80 24.0 L 84.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 104.0 20 L 106.0 20 L 106.0 24.0 L 110 24.0 L 110 26.0 L 106.0 26.0 L 106.0 30 L 104.0 30 L 104.0 26.0 L 100 26.0 L 100 24.0 L 104.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 20 L 126.0 20 L 126.0 24.0 L 130 24.0 L 130 26.0 L 126.0 26.0 L 126.0 30 L 124.0 30 L 124.0 26.0 L 120 26.0 L 120 24.0 L 124.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 20 L 146.0 20 L 146.0 24.0 L 150 24.0 L 150 26.0 L 146.0 26.0 L 146.0 30 L 144.0 30 L 144.0 26.0 L 140 26.0 L 140 24.0 L 144.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 164.0 20 L 166.0 20 L 166.0 24.0 L 170 24.0 L 170 26.0 L 166.0 26.0 L 166.0 30 L 164.0 30 L 164.0 26.0 L 160 26.0 L 160 24.0 L 164.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 20 L 186.0 20 L 186.0 24.0 L 190 24.0 L 190 26.0 L 186.0 26.0 L 186.0 30 L 184.0 30 L 184.0 26.0 L 180 26.0 L 180 24.0 L 184.0 24.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 30 L 26.0 30 L 26.0 34.0 L 30 34.0 L 30 36.0 L 26.0 36.0 L 26.0 40 L 24.0 40 L 24.0 36.0 L 20 36.0 L 20 34.0 L 24.0 34.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 30 L 86.0 30 L 86.0 34.0 L 90 34.0 L 90 36.0 L 86.0 36.0 L 86.0 40 L 84.0 40 L 84.0 36.0 L 80 36.0 L 80 34.0 L 84.0 34.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 30 L 156.0 30 L 156.0 34.0 L 160 34.0 L 160 36.0 L 156.0 36.0 L 156.0 40 L 154.0 40 L 154.0 36.0 L 150 36.0 L 150 34.0 L 154.0 34.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 40 L 26.0 40 L 26.0 44.0 L 30 44.0 L 30 46.0 L 26.0 46.0 L 26.0 50 L 24.0 50 L 24.0 46.0 L 20 46.0 L 20 44.0 L 24.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 40 L 46.0 40 L 46.0 44.0 L 50 44.0 L 50 46.0 L 46.0 46.0 L 46.0 50 L 44.0 50 L 44.0 46.0 L 40 46.0 L 40 44.0 L 44.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 40 L 56.0 40 L 56.0 44.0 L 60 44.0 L 60 46.0 L 56.0 46.0 L 56.0 50 L 54.0 50 L 54.0 46.0 L 50 46.0 L 50 44.0 L 54.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 40 L 66.0 40 L 66.0 44.0 L 70 44.0 L 70 46.0 L 66.0 46.0 L 66.0 50 L 64.0 50 L 64.0 46.0 L 60 46.0 L 60 44.0 L 64.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 40 L 86.0 40 L 86.0 44.0 L 90 44.0 L 90 46.0 L 86.0 46.0 L 86.0 50 L 84.0 50 L 84.0 46.0 L 80 46.0 L 80 44.0 L 84.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 40 L 116.0 40 L 116.0 44.0 L 120 44.0 L 120 46.0 L 116.0 46.0 L 116.0 50 L 114.0 50 L 114.0 46.0 L 110 46.0 L 110 44.0 L 114.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 40 L 126.0 40 L 126.0 44.0 L 130 44.0 L 130 46.0 L 126.0 46.0 L 126.0 50 L 124.0 50 L 124.0 46.0 L 120 46.0 L 120 44.0 L 124.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 40 L 146.0 40 L 146.0 44.0 L 150 44.0 L 150 46.0 L 146.0 46.0 L 146.0 50 L 144.0 50 L 144.0 46.0 L 140 46.0 L 140 44.0 L 144.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 40 L 156.0 40 L 156.0 44.0 L 160 44.0 L 160 46.0 L 156.0 46.0 L 156.0 50 L 154.0 50 L 154.0 46.0 L 150 46.0 L 150 44.0 L 154.0 44.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 50 L 26.0 50 L 26.0 54.0 L 30 54.0 L 30 56.0 L 26.0 56.0 L 26.0 60 L 24.0 60 L 24.0 56.0 L 20 56.0 L 20 54.0 L 24.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 50 L 46.0 50 L 46.0 54.0 L 50 54.0 L 50 56.0 L 46.0 56.0 L 46.0 60 L 44.0 60 L 44.0 56.0 L 40 56.0 L 40 54.0 L 44.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 50 L 56.0 50 L 56.0 54.0 L 60 54.0 L 60 56.0 L 56.0 56.0 L 56.0 60 L 54.0 60 L 54.0 56.0 L 50 56.0 L 50 54.0 L 54.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 50 L 66.0 50 L 66.0 54.0 L 70 54.0 L 70 56.0 L 66.0 56.0 L 66.0 60 L 64.0 60 L 64.0 56.0 L 60 56.0 L 60 54.0 L 64.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 50 L 86.0 50 L 86.0 54.0 L 90 54.0 L 90 56.0 L 86.0 56.0 L 86.0 60 L 84.0 60 L 84.0 56.0 L 80 56.0 L 80 54.0 L 84.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 50 L 146.0 50 L 146.0 54.0 L 150 54.0 L 150 56.0 L 146.0 56.0 L 146.0 60 L 144.0 60 L 144.0 56.0 L 140 56.0 L 140 54.0 L 144.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 50 L 156.0 50 L 156.0 54.0 L 160 54.0 L 160 56.0 L 156.0 56.0 L 156.0 60 L 154.0 60 L 154.0 56.0 L 150 56.0 L 150 54.0 L 154.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 164.0 50 L 166.0 50 L 166.0 54.0 L 170 54.0 L 170 56.0 L 166.0 56.0 L 166.0 60 L 164.0 60 L 164.0 56.0 L 160 56.0 L 160 54.0 L 164.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 50 L 186.0 50 L 186.0 54.0 L 190 54.0 L 190 56.0 L 186.0 56.0 L 186.0 60 L 184.0 60 L 184.0 56.0 L 180 56.0 L 180 54.0 L 184.0 54.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 60 L 26.0 60 L 26.0 64.0 L 30 64.0 L 30 66.0 L 26.0 66.0 L 26.0 70 L 24.0 70 L 24.0 66.0 L 20 66.0 L 20 64.0 L 24.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 60 L 46.0 60 L 46.0 64.0 L 50 64.0 L 50 66.0 L 46.0 66.0 L 46.0 70 L 44.0 70 L 44.0 66.0 L 40 66.0 L 40 64.0 L 44.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 60 L 56.0 60 L 56.0 64.0 L 60 64.0 L 60 66.0 L 56.0 66.0 L 56.0 70 L 54.0 70 L 54.0 66.0 L 50 66.0 L 50 64.0 L 54.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 60 L 66.0 60 L 66.0 64.0 L 70 64.0 L 70 66.0 L 66.0 66.0 L 66.0 70 L 64.0 70 L 64.0 66.0 L 60 66.0 L 60 64.0 L 64.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 60 L 86.0 60 L 86.0 64.0 L 90 64.0 L 90 66.0 L 86.0 66.0 L 86.0 70 L 84.0 70 L 84.0 66.0 L 80 66.0 L 80 64.0 L 84.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 104.0 60 L 106.0 60 L 106.0 64.0 L 110 64.0 L 110 66.0 L 106.0 66.0 L 106.0 70 L 104.0 70 L 104.0 66.0 L 100 66.0 L 100 64.0 L 104.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 60 L 116.0 60 L 116.0 64.0 L 120 64.0 L 120 66.0 L 116.0 66.0 L 116.0 70 L 114.0 70 L 114.0 66.0 L 110 66.0 L 110 64.0 L 114.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 60 L 126.0 60 L 126.0 64.0 L 130 64.0 L 130 66.0 L 126.0 66.0 L 126.0 70 L 124.0 70 L 124.0 66.0 L 120 66.0 L 120 64.0 L 124.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 60 L 146.0 60 L 146.0 64.0 L 150 64.0 L 150 66.0 L 146.0 66.0 L 146.0 70 L 144.0 70 L 144.0 66.0 L 140 66.0 L 140 64.0 L 144.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 60 L 156.0 60 L 156.0 64.0 L 160 64.0 L 160 66.0 L 156.0 66.0 L 156.0 70 L 154.0 70 L 154.0 66.0 L 150 66.0 L 150 64.0 L 154.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 164.0 60 L 166.0 60 L 166.0 64.0 L 170 64.0 L 170 66.0 L 166.0 66.0 L 166.0 70 L 164.0 70 L 164.0 66.0 L 160 66.0 L 160 64.0 L 164.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 60 L 186.0 60 L 186.0 64.0 L 190 64.0 L 190 66.0 L 186.0 66.0 L 186.0 70 L 184.0 70 L 184.0 66.0 L 180 66.0 L 180 64.0 L 184.0 64.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 70 L 26.0 70 L 26.0 74.0 L 30 74.0 L 30 76.0 L 26.0 76.0 L 26.0 80 L 24.0 80 L 24.0 76.0 L 20 76.0 L 20 74.0 L 24.0 74.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 70 L 86.0 70 L 86.0 74.0 L 90 74.0 L 90 76.0 L 86.0 76.0 L 86.0 80 L 84.0 80 L 84.0 76.0 L 80 76.0 L 80 74.0 L 84.0 74.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 70 L 156.0 70 L 156.0 74.0 L 160 74.0 L 160 76.0 L 156.0 76.0 L 156.0 80 L 154.0 80 L 154.0 76.0 L 150 76.0 L 150 74.0 L 154.0 74.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 174.0 70 L 176.0 70 L 176.0 74.0 L 180 74.0 L 180 76.0 L 176.0 76.0 L 176.0 80 L 174.0 80 L 174.0 76.0 L 170 76.0 L 170 74.0 L 174.0 74.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 80 L 26.0 80 L 26.0 84.0 L 30 84.0 L 30 86.0 L 26.0 86.0 L 26.0 90 L 24.0 90 L 24.0 86.0 L 20 86.0 L 20 84.0 L 24.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 34.0 80 L 36.0 80 L 36.0 84.0 L 40 84.0 L 40 86.0 L 36.0 86.0 L 36.0 90 L 34.0 90 L 34.0 86.0 L 30 86.0 L 30 84.0 L 34.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 80 L 46.0 80 L 46.0 84.0 L 50 84.0 L 50 86.0 L 46.0 86.0 L 46.0 90 L 44.0 90 L 44.0 86.0 L 40 86.0 L 40 84.0 L 44.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 80 L 56.0 80 L 56.0 84.0 L 60 84.0 L 60 86.0 L 56.0 86.0 L 56.0 90 L 54.0 90 L 54.0 86.0 L 50 86.0 L 50 84.0 L 54.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 80 L 66.0 80 L 66.0 84.0 L 70 84.0 L 70 86.0 L 66.0 86.0 L 66.0 90 L 64.0 90 L 64.0 86.0 L 60 86.0 L 60 84.0 L 64.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 74.0 80 L 76.0 80 L 76.0 84.0 L 80 84.0 L 80 86.0 L 76.0 86.0 L 76.0 90 L 74.0 90 L 74.0 86.0 L 70 86.0 L 70 84.0 L 74.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 80 L 86.0 80 L 86.0 84.0 L 90 84.0 L 90 86.0 L 86.0 86.0 L 86.0 90 L 84.0 90 L 84.0 86.0 L 80 86.0 L 80 84.0 L 84.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 80 L 116.0 80 L 116.0 84.0 L 120 84.0 L 120 86.0 L 116.0 86.0 L 116.0 90 L 114.0 90 L 114.0 86.0 L 110 86.0 L 110 84.0 L 114.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 80 L 126.0 80 L 126.0 84.0 L 130 84.0 L 130 86.0 L 126.0 86.0 L 126.0 90 L 124.0 90 L 124.0 86.0 L 120 86.0 L 120 84.0 L 124.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 80 L 156.0 80 L 156.0 84.0 L 160 84.0 L 160 86.0 L 156.0 86.0 L 156.0 90 L 154.0 90 L 154.0 86.0 L 150 86.0 L 150 84.0 L 154.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 80 L 186.0 80 L 186.0 84.0 L 190 84.0 L 190 86.0 L 186.0 86.0 L 186.0 90 L 184.0 90 L 184.0 86.0 L 180 86.0 L 180 84.0 L 184.0 84.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 90 L 146.0 90 L 146.0 94.0 L 150 94.0 L 150 96.0 L 146.0 96.0 L 146.0 100 L 144.0 100 L 144.0 96.0 L 140 96.0 L 140 94.0 L 144.0 94.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 90 L 156.0 90 L 156.0 94.0 L 160 94.0 L 160 96.0 L 156.0 96.0 L 156.0 100 L 154.0 100 L 154.0 96.0 L 150 96.0 L 150 94.0 L 154.0 94.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 164.0 90 L 166.0 90 L 166.0 94.0 L 170 94.0 L 170 96.0 L 166.0 96.0 L 166.0 100 L 164.0 100 L 164.0 96.0 L 160 96.0 L 160 94.0 L 164.0 94.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 90 L 186.0 90 L 186.0 94.0 L 190 94.0 L 190 96.0 L 186.0 96.0 L 186.0 100 L 184.0 100 L 184.0 96.0 L 180 96.0 L 180 94.0 L 184.0 94.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 100 L 26.0 100 L 26.0 104.0 L 30 104.0 L 30 106.0 L 26.0 106.0 L 26.0 110 L 24.0 110 L 24.0 106.0 L 20 106.0 L 20 104.0 L 24.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 100 L 46.0 100 L 46.0 104.0 L 50 104.0 L 50 106.0 L 46.0 106.0 L 46.0 110 L 44.0 110 L 44.0 106.0 L 40 106.0 L 40 104.0 L 44.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 74.0 100 L 76.0 100 L 76.0 104.0 L 80 104.0 L 80 106.0 L 76.0 106.0 L 76.0 110 L 74.0 110 L 74.0 106.0 L 70 106.0 L 70 104.0 L 74.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 100 L 96.0 100 L 96.0 104.0 L 100 104.0 L 100 106.0 L 96.0 106.0 L 96.0 110 L 94.0 110 L 94.0 106.0 L 90 106.0 L 90 104.0 L 94.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 100 L 116.0 100 L 116.0 104.0 L 120 104.0 L 120 106.0 L 116.0 106.0 L 116.0 110 L 114.0 110 L 114.0 106.0 L 110 106.0 L 110 104.0 L 114.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 100 L 126.0 100 L 126.0 104.0 L 130 104.0 L 130 106.0 L 126.0 106.0 L 126.0 110 L 124.0 110 L 124.0 106.0 L 120 106.0 L 120 104.0 L 124.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 100 L 146.0 100 L 146.0 104.0 L 150 104.0 L 150 106.0 L 146.0 106.0 L 146.0 110 L 144.0 110 L 144.0 106.0 L 140 106.0 L 140 104.0 L 144.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 100 L 186.0 100 L 186.0 104.0 L 190 104.0 L 190 106.0 L 186.0 106.0 L 186.0 110 L 184.0 110 L 184.0 106.0 L 180 106.0 L 180 104.0 L 184.0 104.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 110 L 66.0 110 L 66.0 114.0 L 70 114.0 L 70 116.0 L 66.0 116.0 L 66.0 120 L 64.0 120 L 64.0 116.0 L 60 116.0 L 60 114.0 L 64.0 114.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 74.0 110 L 76.0 110 L 76.0 114.0 L 80 114.0 L 80 116.0 L 76.0 116.0 L 76.0 120 L 74.0 120 L 74.0 116.0 L 70 116.0 L 70 114.0 L 74.0 114.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 110 L 86.0 110 L 86.0 114.0 L 90 114.0 L 90 116.0 L 86.0 116.0 L 86.0 120 L 84.0 120 L 84.0 116.0 L 80 116.0 L 80 114.0 L 84.0 114.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 110 L 96.0 110 L 96.0 114.0 L 100 114.0 L 100 116.0 L 96.0 116.0 L 96.0 120 L 94.0 120 L 94.0 116.0 L 90 116.0 L 90 114.0 L 94.0 114.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 110 L 146.0 110 L 146.0 114.0 L 150 114.0 L 150 116.0 L 146.0 116.0 L 146.0 120 L 144.0 120 L 144.0 116.0 L 140 116.0 L 140 114.0 L 144.0 114.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 120 L 26.0 120 L 26.0 124.0 L 30 124.0 L 30 126.0 L 26.0 126.0 L 26.0 130 L 24.0 130 L 24.0 126.0 L 20 126.0 L 20 124.0 L 24.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 34.0 120 L 36.0 120 L 36.0 124.0 L 40 124.0 L 40 126.0 L 36.0 126.0 L 36.0 130 L 34.0 130 L 34.0 126.0 L 30 126.0 L 30 124.0 L 34.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 120 L 46.0 120 L 46.0 124.0 L 50 124.0 L 50 126.0 L 46.0 126.0 L 46.0 130 L 44.0 130 L 44.0 126.0 L 40 126.0 L 40 124.0 L 44.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 120 L 86.0 120 L 86.0 124.0 L 90 124.0 L 90 126.0 L 86.0 126.0 L 86.0 130 L 84.0 130 L 84.0 126.0 L 80 126.0 L 80 124.0 L 84.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 120 L 96.0 120 L 96.0 124.0 L 100 124.0 L 100 126.0 L 96.0 126.0 L 96.0 130 L 94.0 130 L 94.0 126.0 L 90 126.0 L 90 124.0 L 94.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 104.0 120 L 106.0 120 L 106.0 124.0 L 110 124.0 L 110 126.0 L 106.0 126.0 L 106.0 130 L 104.0 130 L 104.0 126.0 L 100 126.0 L 100 124.0 L 104.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 120 L 126.0 120 L 126.0 124.0 L 130 124.0 L 130 126.0 L 126.0 126.0 L 126.0 130 L 124.0 130 L 124.0 126.0 L 120 126.0 L 120 124.0 L 124.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 134.0 120 L 136.0 120 L 136.0 124.0 L 140 124.0 L 140 126.0 L 136.0 126.0 L 136.0 130 L 134.0 130 L 134.0 126.0 L 130 126.0 L 130 124.0 L 134.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 120 L 146.0 120 L 146.0 124.0 L 150 124.0 L 150 126.0 L 146.0 126.0 L 146.0 130 L 144.0 130 L 144.0 126.0 L 140 126.0 L 140 124.0 L 144.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 120 L 156.0 120 L 156.0 124.0 L 160 124.0 L 160 126.0 L 156.0 126.0 L 156.0 130 L 154.0 130 L 154.0 126.0 L 150 126.0 L 150 124.0 L 154.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 174.0 120 L 176.0 120 L 176.0 124.0 L 180 124.0 L 180 126.0 L 176.0 126.0 L 176.0 130 L 174.0 130 L 174.0 126.0 L 170 126.0 L 170 124.0 L 174.0 124.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 34.0 130 L 36.0 130 L 36.0 134.0 L 40 134.0 L 40 136.0 L 36.0 136.0 L 36.0 140 L 34.0 140 L 34.0 136.0 L 30 136.0 L 30 134.0 L 34.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 130 L 56.0 130 L 56.0 134.0 L 60 134.0 L 60 136.0 L 56.0 136.0 L 56.0 140 L 54.0 140 L 54.0 136.0 L 50 136.0 L 50 134.0 L 54.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 74.0 130 L 76.0 130 L 76.0 134.0 L 80 134.0 L 80 136.0 L 76.0 136.0 L 76.0 140 L 74.0 140 L 74.0 136.0 L 70 136.0 L 70 134.0 L 74.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 130 L 86.0 130 L 86.0 134.0 L 90 134.0 L 90 136.0 L 86.0 136.0 L 86.0 140 L 84.0 140 L 84.0 136.0 L 80 136.0 L 80 134.0 L 84.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 130 L 96.0 130 L 96.0 134.0 L 100 134.0 L 100 136.0 L 96.0 136.0 L 96.0 140 L 94.0 140 L 94.0 136.0 L 90 136.0 L 90 134.0 L 94.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 104.0 130 L 106.0 130 L 106.0 134.0 L 110 134.0 L 110 136.0 L 106.0 136.0 L 106.0 140 L 104.0 140 L 104.0 136.0 L 100 136.0 L 100 134.0 L 104.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 134.0 130 L 136.0 130 L 136.0 134.0 L 140 134.0 L 140 136.0 L 136.0 136.0 L 136.0 140 L 134.0 140 L 134.0 136.0 L 130 136.0 L 130 134.0 L 134.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 130 L 146.0 130 L 146.0 134.0 L 150 134.0 L 150 136.0 L 146.0 136.0 L 146.0 140 L 144.0 140 L 144.0 136.0 L 140 136.0 L 140 134.0 L 144.0 134.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 140 L 26.0 140 L 26.0 144.0 L 30 144.0 L 30 146.0 L 26.0 146.0 L 26.0 150 L 24.0 150 L 24.0 146.0 L 20 146.0 L 20 144.0 L 24.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 140 L 96.0 140 L 96.0 144.0 L 100 144.0 L 100 146.0 L 96.0 146.0 L 96.0 150 L 94.0 150 L 94.0 146.0 L 90 146.0 L 90 144.0 L 94.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 140 L 126.0 140 L 126.0 144.0 L 130 144.0 L 130 146.0 L 126.0 146.0 L 126.0 150 L 124.0 150 L 124.0 146.0 L 120 146.0 L 120 144.0 L 124.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 140 L 146.0 140 L 146.0 144.0 L 150 144.0 L 150 146.0 L 146.0 146.0 L 146.0 150 L 144.0 150 L 144.0 146.0 L 140 146.0 L 140 144.0 L 144.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 140 L 156.0 140 L 156.0 144.0 L 160 144.0 L 160 146.0 L 156.0 146.0 L 156.0 150 L 154.0 150 L 154.0 146.0 L 150 146.0 L 150 144.0 L 154.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 164.0 140 L 166.0 140 L 166.0 144.0 L 170 144.0 L 170 146.0 L 166.0 146.0 L 166.0 150 L 164.0 150 L 164.0 146.0 L 160 146.0 L 160 144.0 L 164.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 140 L 186.0 140 L 186.0 144.0 L 190 144.0 L 190 146.0 L 186.0 146.0 L 186.0 150 L 184.0 150 L 184.0 146.0 L 180 146.0 L 180 144.0 L 184.0 144.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 150 L 46.0 150 L 46.0 154.0 L 50 154.0 L 50 156.0 L 46.0 156.0 L 46.0 160 L 44.0 160 L 44.0 156.0 L 40 156.0 L 40 154.0 L 44.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 150 L 56.0 150 L 56.0 154.0 L 60 154.0 L 60 156.0 L 56.0 156.0 L 56.0 160 L 54.0 160 L 54.0 156.0 L 50 156.0 L 50 154.0 L 54.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 150 L 96.0 150 L 96.0 154.0 L 100 154.0 L 100 156.0 L 96.0 156.0 L 96.0 160 L 94.0 160 L 94.0 156.0 L 90 156.0 L 90 154.0 L 94.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 104.0 150 L 106.0 150 L 106.0 154.0 L 110 154.0 L 110 156.0 L 106.0 156.0 L 106.0 160 L 104.0 160 L 104.0 156.0 L 100 156.0 L 100 154.0 L 104.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 150 L 116.0 150 L 116.0 154.0 L 120 154.0 L 120 156.0 L 116.0 156.0 L 116.0 160 L 114.0 160 L 114.0 156.0 L 110 156.0 L 110 154.0 L 114.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 150 L 126.0 150 L 126.0 154.0 L 130 154.0 L 130 156.0 L 126.0 156.0 L 126.0 160 L 124.0 160 L 124.0 156.0 L 120 156.0 L 120 154.0 L 124.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 134.0 150 L 136.0 150 L 136.0 154.0 L 140 154.0 L 140 156.0 L 136.0 156.0 L 136.0 160 L 134.0 160 L 134.0 156.0 L 130 156.0 L 130 154.0 L 134.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 150 L 146.0 150 L 146.0 154.0 L 150 154.0 L 150 156.0 L 146.0 156.0 L 146.0 160 L 144.0 160 L 144.0 156.0 L 140 156.0 L 140 154.0 L 144.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 150 L 156.0 150 L 156.0 154.0 L 160 154.0 L 160 156.0 L 156.0 156.0 L 156.0 160 L 154.0 160 L 154.0 156.0 L 150 156.0 L 150 154.0 L 154.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 174.0 150 L 176.0 150 L 176.0 154.0 L 180 154.0 L 180 156.0 L 176.0 156.0 L 176.0 160 L 174.0 160 L 174.0 156.0 L 170 156.0 L 170 154.0 L 174.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 150 L 186.0 150 L 186.0 154.0 L 190 154.0 L 190 156.0 L 186.0 156.0 L 186.0 160 L 184.0 160 L 184.0 156.0 L 180 156.0 L 180 154.0 L 184.0 154.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 160 L 26.0 160 L 26.0 164.0 L 30 164.0 L 30 166.0 L 26.0 166.0 L 26.0 170 L 24.0 170 L 24.0 166.0 L 20 166.0 L 20 164.0 L 24.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 34.0 160 L 36.0 160 L 36.0 164.0 L 40 164.0 L 40 166.0 L 36.0 166.0 L 36.0 170 L 34.0 170 L 34.0 166.0 L 30 166.0 L 30 164.0 L 34.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 160 L 46.0 160 L 46.0 164.0 L 50 164.0 L 50 166.0 L 46.0 166.0 L 46.0 170 L 44.0 170 L 44.0 166.0 L 40 166.0 L 40 164.0 L 44.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 160 L 56.0 160 L 56.0 164.0 L 60 164.0 L 60 166.0 L 56.0 166.0 L 56.0 170 L 54.0 170 L 54.0 166.0 L 50 166.0 L 50 164.0 L 54.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 160 L 66.0 160 L 66.0 164.0 L 70 164.0 L 70 166.0 L 66.0 166.0 L 66.0 170 L 64.0 170 L 64.0 166.0 L 60 166.0 L 60 164.0 L 64.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 160 L 86.0 160 L 86.0 164.0 L 90 164.0 L 90 166.0 L 86.0 166.0 L 86.0 170 L 84.0 170 L 84.0 166.0 L 80 166.0 L 80 164.0 L 84.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 160 L 96.0 160 L 96.0 164.0 L 100 164.0 L 100 166.0 L 96.0 166.0 L 96.0 170 L 94.0 170 L 94.0 166.0 L 90 166.0 L 90 164.0 L 94.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 104.0 160 L 106.0 160 L 106.0 164.0 L 110 164.0 L 110 166.0 L 106.0 166.0 L 106.0 170 L 104.0 170 L 104.0 166.0 L 100 166.0 L 100 164.0 L 104.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 160 L 116.0 160 L 116.0 164.0 L 120 164.0 L 120 166.0 L 116.0 166.0 L 116.0 170 L 114.0 170 L 114.0 166.0 L 110 166.0 L 110 164.0 L 114.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 164.0 160 L 166.0 160 L 166.0 164.0 L 170 164.0 L 170 166.0 L 166.0 166.0 L 166.0 170 L 164.0 170 L 164.0 166.0 L 160 166.0 L 160 164.0 L 164.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 174.0 160 L 176.0 160 L 176.0 164.0 L 180 164.0 L 180 166.0 L 176.0 166.0 L 176.0 170 L 174.0 170 L 174.0 166.0 L 170 166.0 L 170 164.0 L 174.0 164.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 44.0 170 L 46.0 170 L 46.0 174.0 L 50 174.0 L 50 176.0 L 46.0 176.0 L 46.0 180 L 44.0 180 L 44.0 176.0 L 40 176.0 L 40 174.0 L 44.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 170 L 66.0 170 L 66.0 174.0 L 70 174.0 L 70 176.0 L 66.0 176.0 L 66.0 180 L 64.0 180 L 64.0 176.0 L 60 176.0 L 60 174.0 L 64.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 84.0 170 L 86.0 170 L 86.0 174.0 L 90 174.0 L 90 176.0 L 86.0 176.0 L 86.0 180 L 84.0 180 L 84.0 176.0 L 80 176.0 L 80 174.0 L 84.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 170 L 96.0 170 L 96.0 174.0 L 100 174.0 L 100 176.0 L 96.0 176.0 L 96.0 180 L 94.0 180 L 94.0 176.0 L 90 176.0 L 90 174.0 L 94.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 170 L 116.0 170 L 116.0 174.0 L 120 174.0 L 120 176.0 L 116.0 176.0 L 116.0 180 L 114.0 180 L 114.0 176.0 L 110 176.0 L 110 174.0 L 114.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 124.0 170 L 126.0 170 L 126.0 174.0 L 130 174.0 L 130 176.0 L 126.0 176.0 L 126.0 180 L 124.0 180 L 124.0 176.0 L 120 176.0 L 120 174.0 L 124.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 170 L 146.0 170 L 146.0 174.0 L 150 174.0 L 150 176.0 L 146.0 176.0 L 146.0 180 L 144.0 180 L 144.0 176.0 L 140 176.0 L 140 174.0 L 144.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 154.0 170 L 156.0 170 L 156.0 174.0 L 160 174.0 L 160 176.0 L 156.0 176.0 L 156.0 180 L 154.0 180 L 154.0 176.0 L 150 176.0 L 150 174.0 L 154.0 174.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 24.0 180 L 26.0 180 L 26.0 184.0 L 30 184.0 L 30 186.0 L 26.0 186.0 L 26.0 190 L 24.0 190 L 24.0 186.0 L 20 186.0 L 20 184.0 L 24.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 34.0 180 L 36.0 180 L 36.0 184.0 L 40 184.0 L 40 186.0 L 36.0 186.0 L 36.0 190 L 34.0 190 L 34.0 186.0 L 30 186.0 L 30 184.0 L 34.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 54.0 180 L 56.0 180 L 56.0 184.0 L 60 184.0 L 60 186.0 L 56.0 186.0 L 56.0 190 L 54.0 190 L 54.0 186.0 L 50 186.0 L 50 184.0 L 54.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 64.0 180 L 66.0 180 L 66.0 184.0 L 70 184.0 L 70 186.0 L 66.0 186.0 L 66.0 190 L 64.0 190 L 64.0 186.0 L 60 186.0 L 60 184.0 L 64.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 94.0 180 L 96.0 180 L 96.0 184.0 L 100 184.0 L 100 186.0 L 96.0 186.0 L 96.0 190 L 94.0 190 L 94.0 186.0 L 90 186.0 L 90 184.0 L 94.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 114.0 180 L 116.0 180 L 116.0 184.0 L 120 184.0 L 120 186.0 L 116.0 186.0 L 116.0 190 L 114.0 190 L 114.0 186.0 L 110 186.0 L 110 184.0 L 114.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 144.0 180 L 146.0 180 L 146.0 184.0 L 150 184.0 L 150 186.0 L 146.0 186.0 L 146.0 190 L 144.0 190 L 144.0 186.0 L 140 186.0 L 140 184.0 L 144.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+  <path d="M 184.0 180 L 186.0 180 L 186.0 184.0 L 190 184.0 L 190 186.0 L 186.0 186.0 L 186.0 190 L 184.0 190 L 184.0 186.0 L 180 186.0 L 180 184.0 L 184.0 184.0 Z" class="qr-module" data-thickness="0.2" data-arm-width="2.0" />
+
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>

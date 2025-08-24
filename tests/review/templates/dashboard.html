@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}SegnoMMS Review Dashboard{% endblock %}
+
+{% block content %}
+<!-- Dashboard View -->
+<div id="dashboard-view" class="view-section">
+    <!-- Test Summary Card -->
+    <div class="card">
+        <h2 class="card-title">📊 Test Results Summary</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-number" id="tests-passed">{{ passed | default(0) }}</div>
+                <div class="stat-label">Tests Passed</div>
+            </div>
+            
+            <div class="stat-card {{ 'danger' if failed > 0 else 'success' }}">
+                <div class="stat-number" id="tests-failed">{{ failed | default(0) }}</div>
+                <div class="stat-label">Tests Failed</div>
+            </div>
+            
+            <div class="stat-card info">
+                <div class="stat-number" id="tests-total">{{ total | default(0) }}</div>
+                <div class="stat-label">Total Tests</div>
+            </div>
+            
+            <div class="stat-card info">
+                <div class="stat-number" id="coverage">{{ coverage | default('N/A') }}</div>
+                <div class="stat-label">Code Coverage</div>
+            </div>
+        </div>
+        
+        <div class="progress-bar mt-lg" id="test-progress">
+            <div class="progress-fill" style="width: {{ pass_rate | default(0) }}%">
+                {{ pass_rate | default(0) }}%
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Review Summary -->
+    <div class="card">
+        <h2 class="card-title">🎨 Visual Review Status</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="diffs-pending">{{ visual_pending | default(0) }}</div>
+                <div class="stat-label">Pending Review</div>
+            </div>
+            
+            <div class="stat-card success">
+                <div class="stat-number" id="diffs-approved">{{ visual_approved | default(0) }}</div>
+                <div class="stat-label">Approved</div>
+            </div>
+            
+            <div class="stat-card danger">
+                <div class="stat-number" id="diffs-rejected">{{ visual_rejected | default(0) }}</div>
+                <div class="stat-label">Changes Found</div>
+            </div>
+        </div>
+        
+        {% if visual_pending > 0 %}
+        <div class="warning-box mt-lg">
+            <strong>Action Required:</strong> {{ visual_pending }} visual tests need review.
+            <a href="#" class="nav-item" data-view="visual-diffs">Review Now →</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <h2 class="card-title">⚡ Quick Actions</h2>
+        
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="switchView('visual-diffs')">
+                Review Visual Diffs
+            </button>
+            <button class="btn btn-primary" onclick="switchView('shape-gallery')">
+                Browse Shape Gallery
+            </button>
+            <button class="btn btn-success" onclick="exportReview()">
+                Export Review Report
+            </button>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    {% if recent_activity %}
+    <div class="card">
+        <h2 class="card-title">📝 Recent Activity</h2>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Test</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity in recent_activity %}
+                <tr>
+                    <td>{{ activity.time }}</td>
+                    <td>{{ activity.test }}</td>
+                    <td><span class="status {{ activity.status_class }}">{{ activity.status }}</span></td>
+                    <td>{{ activity.details }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Other View Sections (hidden by default) -->
+<div id="visual-diffs-view" class="view-section" style="display: none;">
+    <!-- Visual diffs content will be loaded here -->
+</div>
+
+<div id="shape-gallery-view" class="view-section" style="display: none;">
+    <!-- Shape gallery content will be loaded here -->
+</div>
+
+<div id="interactive-view" class="view-section" style="display: none;">
+    <!-- Interactive demos content will be loaded here -->
+</div>
+
+<div id="performance-view" class="view-section" style="display: none;">
+    <!-- Performance metrics content will be loaded here -->
+</div>
+{% endblock %}

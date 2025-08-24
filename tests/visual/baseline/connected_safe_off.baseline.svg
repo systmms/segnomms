@@ -1,0 +1,196 @@
+<svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4442718128">
+<title id="title-4442718128">Interactive QR Code</title><desc>QR Code with 17x17 modules</desc>  <rect x="0" y="0" width="210" height="210" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" />
+  <g class="qr-pattern-timing" data-pattern-type="timing" />
+  <g class="qr-pattern-alignment" data-pattern-type="alignment" />
+  <g class="qr-pattern-format" data-pattern-type="format" />
+  <g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" />
+    <path d="M 20 30 V 25.0 A 5.0 5.0 0 0 1 25.0 20 H 30 V 30 Z" class="qr-module" />
+  <rect x="30" y="20" width="10" height="10" class="qr-module" />
+  <rect x="40" y="20" width="10" height="10" class="qr-module" />
+  <rect x="50" y="20" width="10" height="10" class="qr-module" />
+  <rect x="60" y="20" width="10" height="10" class="qr-module" />
+  <rect x="70" y="20" width="10" height="10" class="qr-module" />
+  <path d="M 90 30 H 80 V 20 H 85.0 A 5.0 5.0 0 0 1 90 25.0 Z" class="qr-module" />
+  <circle cx="105.0" cy="25.0" r="5.0" class="qr-module" />
+  <circle cx="125.0" cy="25.0" r="5.0" class="qr-module" />
+  <circle cx="145.0" cy="25.0" r="5.0" class="qr-module" />
+  <circle cx="165.0" cy="25.0" r="5.0" class="qr-module" />
+  <circle cx="185.0" cy="25.0" r="5.0" class="qr-module" />
+  <rect x="20" y="30" width="10" height="10" class="qr-module" />
+  <rect x="80" y="30" width="10" height="10" class="qr-module" />
+  <path d="M 150 40 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <rect x="20" y="40" width="10" height="10" class="qr-module" />
+  <path d="M 40 50 V 45.0 A 5.0 5.0 0 0 1 45.0 40 H 50 V 50 Z" class="qr-module" />
+  <rect x="50" y="40" width="10" height="10" class="qr-module" />
+  <path d="M 70 50 H 60 V 40 H 65.0 A 5.0 5.0 0 0 1 70 45.0 Z" class="qr-module" />
+  <rect x="80" y="40" width="10" height="10" class="qr-module" />
+  <path d="M 120 40 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <path d="M 120 40 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <path d="M 140 50 V 45.0 A 5.0 5.0 0 0 1 145.0 40 H 150 V 50 Z" class="qr-module" />
+  <rect x="150" y="40" width="10" height="10" class="qr-module" />
+  <rect x="20" y="50" width="10" height="10" class="qr-module" />
+  <rect x="40" y="50" width="10" height="10" class="qr-module" />
+  <rect x="50" y="50" width="10" height="10" class="qr-module" />
+  <rect x="60" y="50" width="10" height="10" class="qr-module" />
+  <rect x="80" y="50" width="10" height="10" class="qr-module" />
+  <rect x="140" y="50" width="10" height="10" class="qr-module" />
+  <rect x="150" y="50" width="10" height="10" class="qr-module" />
+  <path d="M 170 60 H 160 V 50 H 165.0 A 5.0 5.0 0 0 1 170 55.0 Z" class="qr-module" />
+  <path d="M 180 60 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <rect x="20" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 40 60 H 50 V 70 H 45.0 A 5.0 5.0 0 0 1 40 65.0 Z" class="qr-module" />
+  <rect x="50" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 70 60 V 65.0 A 5.0 5.0 0 0 1 65.0 70 H 60 V 60 Z" class="qr-module" />
+  <rect x="80" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 110 60 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <rect x="110" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 120 60 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <path d="M 140 60 H 150 V 70 H 145.0 A 5.0 5.0 0 0 1 140 65.0 Z" class="qr-module" />
+  <rect x="150" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 170 60 V 65.0 A 5.0 5.0 0 0 1 165.0 70 H 160 V 60 Z" class="qr-module" />
+  <path d="M 180 60 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <rect x="20" y="70" width="10" height="10" class="qr-module" />
+  <rect x="80" y="70" width="10" height="10" class="qr-module" />
+  <rect x="150" y="70" width="10" height="10" class="qr-module" />
+  <circle cx="175.0" cy="75.0" r="5.0" class="qr-module" />
+  <path d="M 20 80 H 30 V 90 H 25.0 A 5.0 5.0 0 0 1 20 85.0 Z" class="qr-module" />
+  <rect x="30" y="80" width="10" height="10" class="qr-module" />
+  <rect x="40" y="80" width="10" height="10" class="qr-module" />
+  <rect x="50" y="80" width="10" height="10" class="qr-module" />
+  <rect x="60" y="80" width="10" height="10" class="qr-module" />
+  <rect x="70" y="80" width="10" height="10" class="qr-module" />
+  <path d="M 90 80 V 85.0 A 5.0 5.0 0 0 1 85.0 90 H 80 V 80 Z" class="qr-module" />
+  <path d="M 120 80 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <path d="M 120 80 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <rect x="150" y="80" width="10" height="10" class="qr-module" />
+  <path d="M 180 90 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <path d="M 140 100 V 95.0 A 5.0 5.0 0 0 1 145.0 90 H 150 V 100 Z" class="qr-module" />
+  <rect x="150" y="90" width="10" height="10" class="qr-module" />
+  <path d="M 160 90 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <rect x="180" y="90" width="10" height="10" class="qr-module" />
+  <circle cx="25.0" cy="105.0" r="5.0" class="qr-module" />
+  <circle cx="45.0" cy="105.0" r="5.0" class="qr-module" />
+  <path d="M 70 110 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <path d="M 90 110 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <path d="M 120 100 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <path d="M 120 100 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <rect x="140" y="100" width="10" height="10" class="qr-module" />
+  <path d="M 180 100 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <path d="M 70 110 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <rect x="70" y="110" width="10" height="10" class="qr-module" />
+  <rect x="80" y="110" width="10" height="10" class="qr-module" />
+  <rect x="90" y="110" width="10" height="10" class="qr-module" />
+  <rect x="140" y="110" width="10" height="10" class="qr-module" />
+  <path d="M 30 120 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <rect x="30" y="120" width="10" height="10" class="qr-module" />
+  <path d="M 40 120 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <rect x="80" y="120" width="10" height="10" class="qr-module" />
+  <rect x="90" y="120" width="10" height="10" class="qr-module" />
+  <path d="M 110 130 H 100 V 120 H 105.0 A 5.0 5.0 0 0 1 110 125.0 Z" class="qr-module" />
+  <path d="M 130 120 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <rect x="130" y="120" width="10" height="10" class="qr-module" />
+  <rect x="140" y="120" width="10" height="10" class="qr-module" />
+  <path d="M 150 120 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <circle cx="175.0" cy="125.0" r="5.0" class="qr-module" />
+  <path d="M 30 130 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <circle cx="55.0" cy="135.0" r="5.0" class="qr-module" />
+  <path d="M 80 130 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <rect x="80" y="130" width="10" height="10" class="qr-module" />
+  <rect x="90" y="130" width="10" height="10" class="qr-module" />
+  <path d="M 110 130 V 135.0 A 5.0 5.0 0 0 1 105.0 140 H 100 V 130 Z" class="qr-module" />
+  <path d="M 130 130 H 140 V 140 H 135.0 A 5.0 5.0 0 0 1 130 135.0 Z" class="qr-module" />
+  <rect x="140" y="130" width="10" height="10" class="qr-module" />
+  <circle cx="25.0" cy="145.0" r="5.0" class="qr-module" />
+  <rect x="90" y="140" width="10" height="10" class="qr-module" />
+  <path d="M 120 150 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <rect x="140" y="140" width="10" height="10" class="qr-module" />
+  <rect x="150" y="140" width="10" height="10" class="qr-module" />
+  <path d="M 160 140 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <path d="M 180 150 h 10 v -5.0 a 5.0 5.0 0 0 0 -10 0 Z" class="qr-module" />
+  <path d="M 40 160 V 155.0 A 5.0 5.0 0 0 1 45.0 150 H 50 V 160 Z" class="qr-module" />
+  <path d="M 60 160 H 50 V 150 H 55.0 A 5.0 5.0 0 0 1 60 155.0 Z" class="qr-module" />
+  <rect x="90" y="150" width="10" height="10" class="qr-module" />
+  <rect x="100" y="150" width="10" height="10" class="qr-module" />
+  <rect x="110" y="150" width="10" height="10" class="qr-module" />
+  <rect x="120" y="150" width="10" height="10" class="qr-module" />
+  <rect x="130" y="150" width="10" height="10" class="qr-module" />
+  <rect x="140" y="150" width="10" height="10" class="qr-module" />
+  <path d="M 160 150 V 155.0 A 5.0 5.0 0 0 1 155.0 160 H 150 V 150 Z" class="qr-module" />
+  <path d="M 170 160 V 155.0 A 5.0 5.0 0 0 1 175.0 150 H 180 V 160 Z" class="qr-module" />
+  <path d="M 190 150 V 155.0 A 5.0 5.0 0 0 1 185.0 160 H 180 V 150 Z" class="qr-module" />
+  <path d="M 30 160 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <rect x="30" y="160" width="10" height="10" class="qr-module" />
+  <rect x="40" y="160" width="10" height="10" class="qr-module" />
+  <rect x="50" y="160" width="10" height="10" class="qr-module" />
+  <path d="M 70 170 H 60 V 160 H 65.0 A 5.0 5.0 0 0 1 70 165.0 Z" class="qr-module" />
+  <path d="M 80 170 V 165.0 A 5.0 5.0 0 0 1 85.0 160 H 90 V 170 Z" class="qr-module" />
+  <rect x="90" y="160" width="10" height="10" class="qr-module" />
+  <rect x="100" y="160" width="10" height="10" class="qr-module" />
+  <rect x="110" y="160" width="10" height="10" class="qr-module" />
+  <path d="M 170 160 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <path d="M 180 160 V 165.0 A 5.0 5.0 0 0 1 175.0 170 H 170 V 160 Z" class="qr-module" />
+  <path d="M 40 170 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <rect x="60" y="170" width="10" height="10" class="qr-module" />
+  <path d="M 80 170 H 90 V 180 H 85.0 A 5.0 5.0 0 0 1 80 175.0 Z" class="qr-module" />
+  <rect x="90" y="170" width="10" height="10" class="qr-module" />
+  <rect x="110" y="170" width="10" height="10" class="qr-module" />
+  <path d="M 120 170 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <path d="M 140 180 V 175.0 A 5.0 5.0 0 0 1 145.0 170 H 150 V 180 Z" class="qr-module" />
+  <path d="M 150 170 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <path d="M 30 180 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <path d="M 30 180 v 10 h 5.0 a 5.0 5.0 0 0 0 0 -10 Z" class="qr-module" />
+  <path d="M 60 180 v 10 h -5.0 a 5.0 5.0 0 0 1 0 -10 Z" class="qr-module" />
+  <path d="M 70 180 V 185.0 A 5.0 5.0 0 0 1 65.0 190 H 60 V 180 Z" class="qr-module" />
+  <path d="M 90 180 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <path d="M 110 180 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <path d="M 140 180 h 10 v 5.0 a 5.0 5.0 0 0 1 -10 0 Z" class="qr-module" />
+  <circle cx="185.0" cy="185.0" r="5.0" class="qr-module" />
+
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>

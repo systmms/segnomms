@@ -1,0 +1,196 @@
+<svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4442716848">
+<title id="title-4442716848">Interactive QR Code</title><desc>QR Code with 17x17 modules</desc>  <rect x="0" y="0" width="210" height="210" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" />
+  <g class="qr-pattern-timing" data-pattern-type="timing" />
+  <g class="qr-pattern-alignment" data-pattern-type="alignment" />
+  <g class="qr-pattern-format" data-pattern-type="format" />
+  <g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" />
+    <circle cx="25.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="35.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="75.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="25.0" r="4.5" class="qr-module" />
+  <circle cx="105.0" cy="25.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="125.0" cy="25.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="145.0" cy="25.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="165.0" cy="25.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="185.0" cy="25.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="25.0" cy="35.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="35.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="35.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="115.0" cy="45.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="125.0" cy="45.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="145.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="45.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="55.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="55.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="55.0" r="4.95" class="qr-module" />
+  <circle cx="65.0" cy="55.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="55.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="55.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="55.0" r="4.95" class="qr-module" />
+  <circle cx="165.0" cy="55.0" r="4.5" class="qr-module" />
+  <circle cx="185.0" cy="55.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="25.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="105.0" cy="65.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="115.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="125.0" cy="65.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="145.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="165.0" cy="65.0" r="4.5" class="qr-module" />
+  <circle cx="185.0" cy="65.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="25.0" cy="75.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="75.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="75.0" r="4.5" class="qr-module" />
+  <circle cx="175.0" cy="75.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="35.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="75.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="115.0" cy="85.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="125.0" cy="85.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="155.0" cy="85.0" r="4.5" class="qr-module" />
+  <circle cx="185.0" cy="85.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="145.0" cy="95.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="95.0" r="4.5" class="qr-module" />
+  <circle cx="165.0" cy="95.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="185.0" cy="95.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="105.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="45.0" cy="105.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="75.0" cy="105.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="105.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="115.0" cy="105.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="125.0" cy="105.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="145.0" cy="105.0" r="4.5" class="qr-module" />
+  <circle cx="185.0" cy="105.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="65.0" cy="115.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="75.0" cy="115.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="115.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="115.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="115.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="125.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="35.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="125.0" r="4.95" class="qr-module" />
+  <circle cx="105.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="125.0" cy="125.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="135.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="125.0" r="4.5" class="qr-module" />
+  <circle cx="175.0" cy="125.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="35.0" cy="135.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="135.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="75.0" cy="135.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="85.0" cy="135.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="135.0" r="4.5" class="qr-module" />
+  <circle cx="105.0" cy="135.0" r="4.5" class="qr-module" />
+  <circle cx="135.0" cy="135.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="135.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="145.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="95.0" cy="145.0" r="4.5" class="qr-module" />
+  <circle cx="125.0" cy="145.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="145.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="145.0" r="4.5" class="qr-module" />
+  <circle cx="165.0" cy="145.0" r="4.5" class="qr-module" />
+  <circle cx="185.0" cy="145.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="45.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="105.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="115.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="125.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="135.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="175.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="185.0" cy="155.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="165.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="35.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="55.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="105.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="115.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="165.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="175.0" cy="165.0" r="4.5" class="qr-module" />
+  <circle cx="45.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="85.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="115.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="125.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="145.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="155.0" cy="175.0" r="4.5" class="qr-module" />
+  <circle cx="25.0" cy="185.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="35.0" cy="185.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="55.0" cy="185.0" r="4.5" class="qr-module" />
+  <circle cx="65.0" cy="185.0" r="4.5" class="qr-module" />
+  <circle cx="95.0" cy="185.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="115.0" cy="185.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="145.0" cy="185.0" r="4.050000000000001" class="qr-module" />
+  <circle cx="185.0" cy="185.0" r="4.050000000000001" class="qr-module" />
+
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>

@@ -1,0 +1,196 @@
+<svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4442708528">
+<title id="title-4442708528">Interactive QR Code</title><desc>QR Code with 17x17 modules</desc>  <rect x="0" y="0" width="210" height="210" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" />
+  <g class="qr-pattern-timing" data-pattern-type="timing" />
+  <g class="qr-pattern-alignment" data-pattern-type="alignment" />
+  <g class="qr-pattern-format" data-pattern-type="format" />
+  <g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" />
+    <path d="M 20 30 V 25.0 A 5.0 5.0 0 0 1 25.0 20 H 30 V 30 Z" class="qr-module" />
+  <rect x="30" y="20" width="10" height="10" class="qr-module" />
+  <rect x="40" y="20" width="10" height="10" class="qr-module" />
+  <rect x="50" y="20" width="10" height="10" class="qr-module" />
+  <rect x="60" y="20" width="10" height="10" class="qr-module" />
+  <rect x="70" y="20" width="10" height="10" class="qr-module" />
+  <rect x="80" y="20" width="10" height="10" class="qr-module" />
+  <path d="M 100 25.0 A 5.0 5.0 0 0 1 105.0 20 H 110 V 25.0 A 5.0 5.0 0 0 1 105.0 30 H 100 Z" class="qr-module" />
+  <path d="M 120 25.0 A 5.0 5.0 0 0 1 125.0 20 H 130 V 25.0 A 5.0 5.0 0 0 1 125.0 30 H 120 Z" class="qr-module" />
+  <path d="M 140 25.0 A 5.0 5.0 0 0 1 145.0 20 H 150 V 25.0 A 5.0 5.0 0 0 1 145.0 30 H 140 Z" class="qr-module" />
+  <path d="M 160 25.0 A 5.0 5.0 0 0 1 165.0 20 H 170 V 25.0 A 5.0 5.0 0 0 1 165.0 30 H 160 Z" class="qr-module" />
+  <path d="M 180 25.0 A 5.0 5.0 0 0 1 185.0 20 H 190 V 25.0 A 5.0 5.0 0 0 1 185.0 30 H 180 Z" class="qr-module" />
+  <rect x="20" y="30" width="10" height="10" class="qr-module" />
+  <rect x="80" y="30" width="10" height="10" class="qr-module" />
+  <path d="M 150 40 V 35.0 A 5.0 5.0 0 0 1 155.0 30 H 160 V 40 Z" class="qr-module" />
+  <rect x="20" y="40" width="10" height="10" class="qr-module" />
+  <path d="M 40 50 V 45.0 A 5.0 5.0 0 0 1 45.0 40 H 50 V 50 Z" class="qr-module" />
+  <rect x="50" y="40" width="10" height="10" class="qr-module" />
+  <rect x="60" y="40" width="10" height="10" class="qr-module" />
+  <rect x="80" y="40" width="10" height="10" class="qr-module" />
+  <path d="M 110 50 V 45.0 A 5.0 5.0 0 0 1 115.0 40 H 120 V 50 Z" class="qr-module" />
+  <path d="M 130 40 V 45.0 A 5.0 5.0 0 0 1 125.0 50 H 120 V 40 Z" class="qr-module" />
+  <path d="M 140 50 V 45.0 A 5.0 5.0 0 0 1 145.0 40 H 150 V 50 Z" class="qr-module" />
+  <rect x="150" y="40" width="10" height="10" class="qr-module" />
+  <rect x="20" y="50" width="10" height="10" class="qr-module" />
+  <rect x="40" y="50" width="10" height="10" class="qr-module" />
+  <rect x="50" y="50" width="10" height="10" class="qr-module" />
+  <rect x="60" y="50" width="10" height="10" class="qr-module" />
+  <rect x="80" y="50" width="10" height="10" class="qr-module" />
+  <rect x="140" y="50" width="10" height="10" class="qr-module" />
+  <rect x="150" y="50" width="10" height="10" class="qr-module" />
+  <rect x="160" y="50" width="10" height="10" class="qr-module" />
+  <path d="M 180 60 V 55.0 A 5.0 5.0 0 0 1 185.0 50 H 190 V 60 Z" class="qr-module" />
+  <rect x="20" y="60" width="10" height="10" class="qr-module" />
+  <rect x="40" y="60" width="10" height="10" class="qr-module" />
+  <rect x="50" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 70 60 V 65.0 A 5.0 5.0 0 0 1 65.0 70 H 60 V 60 Z" class="qr-module" />
+  <rect x="80" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 100 70 V 65.0 A 5.0 5.0 0 0 1 105.0 60 H 110 V 70 Z" class="qr-module" />
+  <rect x="110" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 130 60 V 65.0 A 5.0 5.0 0 0 1 125.0 70 H 120 V 60 Z" class="qr-module" />
+  <rect x="140" y="60" width="10" height="10" class="qr-module" />
+  <rect x="150" y="60" width="10" height="10" class="qr-module" />
+  <path d="M 170 60 V 65.0 A 5.0 5.0 0 0 1 165.0 70 H 160 V 60 Z" class="qr-module" />
+  <path d="M 190 60 V 65.0 A 5.0 5.0 0 0 1 185.0 70 H 180 V 60 Z" class="qr-module" />
+  <rect x="20" y="70" width="10" height="10" class="qr-module" />
+  <rect x="80" y="70" width="10" height="10" class="qr-module" />
+  <rect x="150" y="70" width="10" height="10" class="qr-module" />
+  <path d="M 170 75.0 A 5.0 5.0 0 0 1 175.0 70 H 180 V 75.0 A 5.0 5.0 0 0 1 175.0 80 H 170 Z" class="qr-module" />
+  <rect x="20" y="80" width="10" height="10" class="qr-module" />
+  <rect x="30" y="80" width="10" height="10" class="qr-module" />
+  <rect x="40" y="80" width="10" height="10" class="qr-module" />
+  <rect x="50" y="80" width="10" height="10" class="qr-module" />
+  <rect x="60" y="80" width="10" height="10" class="qr-module" />
+  <rect x="70" y="80" width="10" height="10" class="qr-module" />
+  <path d="M 90 80 V 85.0 A 5.0 5.0 0 0 1 85.0 90 H 80 V 80 Z" class="qr-module" />
+  <path d="M 110 90 V 85.0 A 5.0 5.0 0 0 1 115.0 80 H 120 V 90 Z" class="qr-module" />
+  <path d="M 130 80 V 85.0 A 5.0 5.0 0 0 1 125.0 90 H 120 V 80 Z" class="qr-module" />
+  <rect x="150" y="80" width="10" height="10" class="qr-module" />
+  <path d="M 180 90 V 85.0 A 5.0 5.0 0 0 1 185.0 80 H 190 V 90 Z" class="qr-module" />
+  <path d="M 140 100 V 95.0 A 5.0 5.0 0 0 1 145.0 90 H 150 V 100 Z" class="qr-module" />
+  <rect x="150" y="90" width="10" height="10" class="qr-module" />
+  <path d="M 170 90 V 95.0 A 5.0 5.0 0 0 1 165.0 100 H 160 V 90 Z" class="qr-module" />
+  <rect x="180" y="90" width="10" height="10" class="qr-module" />
+  <path d="M 20 105.0 A 5.0 5.0 0 0 1 25.0 100 H 30 V 105.0 A 5.0 5.0 0 0 1 25.0 110 H 20 Z" class="qr-module" />
+  <path d="M 40 105.0 A 5.0 5.0 0 0 1 45.0 100 H 50 V 105.0 A 5.0 5.0 0 0 1 45.0 110 H 40 Z" class="qr-module" />
+  <path d="M 70 110 V 105.0 A 5.0 5.0 0 0 1 75.0 100 H 80 V 110 Z" class="qr-module" />
+  <path d="M 90 110 V 105.0 A 5.0 5.0 0 0 1 95.0 100 H 100 V 110 Z" class="qr-module" />
+  <path d="M 110 110 V 105.0 A 5.0 5.0 0 0 1 115.0 100 H 120 V 110 Z" class="qr-module" />
+  <path d="M 130 100 V 105.0 A 5.0 5.0 0 0 1 125.0 110 H 120 V 100 Z" class="qr-module" />
+  <rect x="140" y="100" width="10" height="10" class="qr-module" />
+  <path d="M 190 100 V 105.0 A 5.0 5.0 0 0 1 185.0 110 H 180 V 100 Z" class="qr-module" />
+  <path d="M 60 120 V 115.0 A 5.0 5.0 0 0 1 65.0 110 H 70 V 120 Z" class="qr-module" />
+  <rect x="70" y="110" width="10" height="10" class="qr-module" />
+  <rect x="80" y="110" width="10" height="10" class="qr-module" />
+  <rect x="90" y="110" width="10" height="10" class="qr-module" />
+  <rect x="140" y="110" width="10" height="10" class="qr-module" />
+  <path d="M 20 130 V 125.0 A 5.0 5.0 0 0 1 25.0 120 H 30 V 130 Z" class="qr-module" />
+  <rect x="30" y="120" width="10" height="10" class="qr-module" />
+  <path d="M 50 120 V 125.0 A 5.0 5.0 0 0 1 45.0 130 H 40 V 120 Z" class="qr-module" />
+  <rect x="80" y="120" width="10" height="10" class="qr-module" />
+  <rect x="90" y="120" width="10" height="10" class="qr-module" />
+  <rect x="100" y="120" width="10" height="10" class="qr-module" />
+  <path d="M 120 130 V 125.0 A 5.0 5.0 0 0 1 125.0 120 H 130 V 130 Z" class="qr-module" />
+  <rect x="130" y="120" width="10" height="10" class="qr-module" />
+  <rect x="140" y="120" width="10" height="10" class="qr-module" />
+  <path d="M 160 120 V 125.0 A 5.0 5.0 0 0 1 155.0 130 H 150 V 120 Z" class="qr-module" />
+  <path d="M 170 125.0 A 5.0 5.0 0 0 1 175.0 120 H 180 V 125.0 A 5.0 5.0 0 0 1 175.0 130 H 170 Z" class="qr-module" />
+  <path d="M 40 130 V 135.0 A 5.0 5.0 0 0 1 35.0 140 H 30 V 130 Z" class="qr-module" />
+  <path d="M 50 135.0 A 5.0 5.0 0 0 1 55.0 130 H 60 V 135.0 A 5.0 5.0 0 0 1 55.0 140 H 50 Z" class="qr-module" />
+  <path d="M 70 140 V 135.0 A 5.0 5.0 0 0 1 75.0 130 H 80 V 140 Z" class="qr-module" />
+  <rect x="80" y="130" width="10" height="10" class="qr-module" />
+  <rect x="90" y="130" width="10" height="10" class="qr-module" />
+  <path d="M 110 130 V 135.0 A 5.0 5.0 0 0 1 105.0 140 H 100 V 130 Z" class="qr-module" />
+  <rect x="130" y="130" width="10" height="10" class="qr-module" />
+  <rect x="140" y="130" width="10" height="10" class="qr-module" />
+  <path d="M 20 145.0 A 5.0 5.0 0 0 1 25.0 140 H 30 V 145.0 A 5.0 5.0 0 0 1 25.0 150 H 20 Z" class="qr-module" />
+  <rect x="90" y="140" width="10" height="10" class="qr-module" />
+  <path d="M 120 150 V 145.0 A 5.0 5.0 0 0 1 125.0 140 H 130 V 150 Z" class="qr-module" />
+  <rect x="140" y="140" width="10" height="10" class="qr-module" />
+  <rect x="150" y="140" width="10" height="10" class="qr-module" />
+  <path d="M 170 140 V 145.0 A 5.0 5.0 0 0 1 165.0 150 H 160 V 140 Z" class="qr-module" />
+  <path d="M 180 150 V 145.0 A 5.0 5.0 0 0 1 185.0 140 H 190 V 150 Z" class="qr-module" />
+  <path d="M 40 160 V 155.0 A 5.0 5.0 0 0 1 45.0 150 H 50 V 160 Z" class="qr-module" />
+  <rect x="50" y="150" width="10" height="10" class="qr-module" />
+  <rect x="90" y="150" width="10" height="10" class="qr-module" />
+  <rect x="100" y="150" width="10" height="10" class="qr-module" />
+  <rect x="110" y="150" width="10" height="10" class="qr-module" />
+  <rect x="120" y="150" width="10" height="10" class="qr-module" />
+  <rect x="130" y="150" width="10" height="10" class="qr-module" />
+  <rect x="140" y="150" width="10" height="10" class="qr-module" />
+  <path d="M 160 150 V 155.0 A 5.0 5.0 0 0 1 155.0 160 H 150 V 150 Z" class="qr-module" />
+  <path d="M 170 160 V 155.0 A 5.0 5.0 0 0 1 175.0 150 H 180 V 160 Z" class="qr-module" />
+  <path d="M 190 150 V 155.0 A 5.0 5.0 0 0 1 185.0 160 H 180 V 150 Z" class="qr-module" />
+  <path d="M 20 170 V 165.0 A 5.0 5.0 0 0 1 25.0 160 H 30 V 170 Z" class="qr-module" />
+  <rect x="30" y="160" width="10" height="10" class="qr-module" />
+  <rect x="40" y="160" width="10" height="10" class="qr-module" />
+  <rect x="50" y="160" width="10" height="10" class="qr-module" />
+  <rect x="60" y="160" width="10" height="10" class="qr-module" />
+  <path d="M 80 170 V 165.0 A 5.0 5.0 0 0 1 85.0 160 H 90 V 170 Z" class="qr-module" />
+  <rect x="90" y="160" width="10" height="10" class="qr-module" />
+  <rect x="100" y="160" width="10" height="10" class="qr-module" />
+  <rect x="110" y="160" width="10" height="10" class="qr-module" />
+  <path d="M 160 170 V 165.0 A 5.0 5.0 0 0 1 165.0 160 H 170 V 170 Z" class="qr-module" />
+  <path d="M 180 160 V 165.0 A 5.0 5.0 0 0 1 175.0 170 H 170 V 160 Z" class="qr-module" />
+  <path d="M 50 170 V 175.0 A 5.0 5.0 0 0 1 45.0 180 H 40 V 170 Z" class="qr-module" />
+  <rect x="60" y="170" width="10" height="10" class="qr-module" />
+  <rect x="80" y="170" width="10" height="10" class="qr-module" />
+  <rect x="90" y="170" width="10" height="10" class="qr-module" />
+  <rect x="110" y="170" width="10" height="10" class="qr-module" />
+  <path d="M 130 170 V 175.0 A 5.0 5.0 0 0 1 125.0 180 H 120 V 170 Z" class="qr-module" />
+  <path d="M 140 180 V 175.0 A 5.0 5.0 0 0 1 145.0 170 H 150 V 180 Z" class="qr-module" />
+  <path d="M 160 170 V 175.0 A 5.0 5.0 0 0 1 155.0 180 H 150 V 170 Z" class="qr-module" />
+  <path d="M 20 190 V 185.0 A 5.0 5.0 0 0 1 25.0 180 H 30 V 190 Z" class="qr-module" />
+  <path d="M 40 180 V 185.0 A 5.0 5.0 0 0 1 35.0 190 H 30 V 180 Z" class="qr-module" />
+  <path d="M 50 190 V 185.0 A 5.0 5.0 0 0 1 55.0 180 H 60 V 190 Z" class="qr-module" />
+  <path d="M 70 180 V 185.0 A 5.0 5.0 0 0 1 65.0 190 H 60 V 180 Z" class="qr-module" />
+  <path d="M 100 180 V 185.0 A 5.0 5.0 0 0 1 95.0 190 H 90 V 180 Z" class="qr-module" />
+  <path d="M 120 180 V 185.0 A 5.0 5.0 0 0 1 115.0 190 H 110 V 180 Z" class="qr-module" />
+  <path d="M 150 180 V 185.0 A 5.0 5.0 0 0 1 145.0 190 H 140 V 180 Z" class="qr-module" />
+  <path d="M 180 185.0 A 5.0 5.0 0 0 1 185.0 180 H 190 V 185.0 A 5.0 5.0 0 0 1 185.0 190 H 180 Z" class="qr-module" />
+
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>

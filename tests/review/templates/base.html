@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SegnoMMS Visual Review Suite{% endblock %}</title>
+    <link rel="stylesheet" href="{{ css_path | default('../assets/review.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>🎨 SegnoMMS Visual Review Suite</h1>
+        <div class="subtitle">{{ subtitle | default('Comprehensive Testing & Quality Assurance') }}</div>
+    </header>
+
+    <!-- Navigation -->
+    {% if show_nav | default(true) %}
+    <nav class="nav">
+        <div class="nav-items">
+            <a href="#" class="nav-item active" data-view="dashboard">Dashboard</a>
+            <a href="#" class="nav-item" data-view="visual-diffs">Visual Diffs</a>
+            <a href="#" class="nav-item" data-view="shape-gallery">Shape Gallery</a>
+            <a href="#" class="nav-item" data-view="interactive">Interactive</a>
+            <a href="#" class="nav-item" data-view="performance">Performance</a>
+        </div>
+    </nav>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Scripts -->
+    <script src="{{ js_path | default('../assets/review.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

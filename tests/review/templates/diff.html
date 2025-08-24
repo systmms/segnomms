@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Visual Diff - {{ test_name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="card-title" id="diff-title">{{ test_name }}</h2>
+    
+    <!-- Navigation controls -->
+    <div class="text-center mb-lg">
+        <span class="text-muted">
+            Test <span id="diff-current">{{ current_index }}</span> of <span id="diff-total">{{ total_tests }}</span>
+        </span>
+    </div>
+    
+    <!-- Diff comparison -->
+    <div class="comparison">
+        <div class="comparison-panel">
+            <h3>Baseline (Expected)</h3>
+            {% if baseline_svg %}
+                <div class="svg-container">{{ baseline_svg | safe }}</div>
+            {% else %}
+                <img id="diff-baseline" src="{{ baseline_path }}" alt="Baseline">
+            {% endif %}
+            
+            {% if baseline_config %}
+            <details class="mt-md">
+                <summary>Configuration</summary>
+                <pre class="config-display">{{ baseline_config | tojson(indent=2) }}</pre>
+            </details>
+            {% endif %}
+        </div>
+        
+        <div class="comparison-panel">
+            <h3>Actual (Generated)</h3>
+            {% if actual_svg %}
+                <div class="svg-container">{{ actual_svg | safe }}</div>
+            {% else %}
+                <img id="diff-actual" src="{{ actual_path }}" alt="Actual">
+            {% endif %}
+            
+            {% if test_info %}
+            <div class="info-box mt-md">
+                <strong>Test Info:</strong><br>
+                {{ test_info }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Action buttons -->
+    <div class="btn-group">
+        <button id="diff-prev" class="btn btn-secondary" onclick="prevDiff()" {{ 'disabled' if current_index == 1 }}>
+            ← Previous
+        </button>
+        
+        {% if baseline_svg_path and actual_svg_path %}
+        <button class="btn btn-info" onclick="SVGDiff.showDiff('{{ test_name }}', '{{ baseline_svg_path }}', '{{ actual_svg_path }}')" title="View SVG structure differences">
+            📄 SVG Diff
+        </button>
+        {% endif %}
+        
+        <button class="btn btn-success" onclick="approveDiff()">
+            ✓ Matches Baseline
+        </button>
+        
+        <button class="btn btn-danger" onclick="rejectDiff()">
+            ✗ Has Changes
+        </button>
+        
+        <button id="diff-next" class="btn btn-secondary" onclick="nextDiff()" {{ 'disabled' if current_index == total_tests }}>
+            Next →
+        </button>
+    </div>
+</div>
+
+<style>
+.svg-container {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: auto;
+    max-height: 500px;
+}
+
+.svg-container svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.config-display {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    overflow-x: auto;
+}
+
+details summary {
+    cursor: pointer;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+</style>
+{% endblock %}

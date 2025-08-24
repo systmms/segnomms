@@ -1,0 +1,157 @@
+<svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-root" class="interactive-qr" role="img" aria-label="Interactive QR Code" aria-describedby="qr-root-desc" title="Interactive QR Code" aria-labelledby="title-4442646112">
+<title id="title-4442646112">Interactive QR Code</title><desc>QR Code with 17x17 modules</desc>  <rect x="0" y="0" width="210" height="210" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+        
+]]&gt;
+</style>
+<g role="img" aria-label="QR Code Content">
+  <g class="qr-layer-background" aria-hidden="true" />
+  <g class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g class="qr-layer-modules" role="presentation" fill="#000000">
+  <g class="qr-pattern-finder" data-pattern-type="finder" />
+  <g class="qr-pattern-timing" data-pattern-type="timing" />
+  <g class="qr-pattern-alignment" data-pattern-type="alignment" />
+  <g class="qr-pattern-format" data-pattern-type="format" />
+  <g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" />
+    <rect x="20" y="20" width="10" height="10" class="qr-module" />
+  <rect x="30" y="20" width="10" height="10" class="qr-module" />
+  <rect x="40" y="20" width="10" height="10" class="qr-module" />
+  <rect x="50" y="20" width="10" height="10" class="qr-module" />
+  <rect x="60" y="20" width="10" height="10" class="qr-module" />
+  <rect x="70" y="20" width="10" height="10" class="qr-module" />
+  <rect x="80" y="20" width="10" height="10" class="qr-module" />
+  <rect x="100" y="20" width="10" height="10" class="qr-module" />
+  <rect x="120" y="20" width="10" height="10" class="qr-module" />
+  <rect x="140" y="20" width="10" height="10" class="qr-module" />
+  <rect x="160" y="20" width="10" height="10" class="qr-module" />
+  <rect x="180" y="20" width="10" height="10" class="qr-module" />
+  <rect x="20" y="30" width="10" height="10" class="qr-module" />
+  <rect x="80" y="30" width="10" height="10" class="qr-module" />
+  <rect x="150" y="30" width="10" height="10" class="qr-module" />
+  <rect x="20" y="40" width="10" height="10" class="qr-module" />
+  <rect x="40" y="40" width="10" height="10" class="qr-module" />
+  <rect x="50" y="40" width="10" height="10" class="qr-module" />
+  <rect x="60" y="40" width="10" height="10" class="qr-module" />
+  <rect x="80" y="40" width="10" height="10" class="qr-module" />
+<polygon points="119.05,45.00 117.03,48.51 112.97,48.51 110.95,45.00 112.97,41.49 117.03,41.49" class="qr-module" />  <rect x="120" y="40" width="10" height="10" class="qr-module" />
+  <rect x="140" y="40" width="10" height="10" class="qr-module" />
+  <rect x="150" y="40" width="10" height="10" class="qr-module" />
+  <rect x="20" y="50" width="10" height="10" class="qr-module" />
+  <rect x="40" y="50" width="10" height="10" class="qr-module" />
+  <rect x="50" y="50" width="10" height="10" class="qr-module" />
+  <rect x="60" y="50" width="10" height="10" class="qr-module" />
+  <rect x="80" y="50" width="10" height="10" class="qr-module" />
+  <rect x="140" y="50" width="10" height="10" class="qr-module" />
+  <rect x="150" y="50" width="10" height="10" class="qr-module" />
+  <rect x="160" y="50" width="10" height="10" class="qr-module" />
+  <rect x="180" y="50" width="10" height="10" class="qr-module" />
+  <rect x="20" y="60" width="10" height="10" class="qr-module" />
+  <rect x="40" y="60" width="10" height="10" class="qr-module" />
+  <rect x="50" y="60" width="10" height="10" class="qr-module" />
+  <rect x="60" y="60" width="10" height="10" class="qr-module" />
+  <rect x="80" y="60" width="10" height="10" class="qr-module" />
+  <rect x="100" y="60" width="10" height="10" class="qr-module" />
+<polygon points="119.50,65.00 117.25,68.90 112.75,68.90 110.50,65.00 112.75,61.10 117.25,61.10" class="qr-module" />  <rect x="120" y="60" width="10" height="10" class="qr-module" />
+  <rect x="140" y="60" width="10" height="10" class="qr-module" />
+  <rect x="150" y="60" width="10" height="10" class="qr-module" />
+  <rect x="160" y="60" width="10" height="10" class="qr-module" />
+  <rect x="180" y="60" width="10" height="10" class="qr-module" />
+  <rect x="20" y="70" width="10" height="10" class="qr-module" />
+  <rect x="80" y="70" width="10" height="10" class="qr-module" />
+  <rect x="150" y="70" width="10" height="10" class="qr-module" />
+  <rect x="170" y="70" width="10" height="10" class="qr-module" />
+  <rect x="20" y="80" width="10" height="10" class="qr-module" />
+  <rect x="30" y="80" width="10" height="10" class="qr-module" />
+  <rect x="40" y="80" width="10" height="10" class="qr-module" />
+  <rect x="50" y="80" width="10" height="10" class="qr-module" />
+  <rect x="60" y="80" width="10" height="10" class="qr-module" />
+  <rect x="70" y="80" width="10" height="10" class="qr-module" />
+  <rect x="80" y="80" width="10" height="10" class="qr-module" />
+  <rect x="110" y="80" width="10" height="10" class="qr-module" />
+  <rect x="120" y="80" width="10" height="10" class="qr-module" />
+  <rect x="150" y="80" width="10" height="10" class="qr-module" />
+  <rect x="180" y="80" width="10" height="10" class="qr-module" />
+<polygon points="149.50,95.00 147.25,98.90 142.75,98.90 140.50,95.00 142.75,91.10 147.25,91.10" class="qr-module" /><polygon points="159.50,95.00 157.25,98.90 152.75,98.90 150.50,95.00 152.75,91.10 157.25,91.10" class="qr-module" /><polygon points="169.05,95.00 167.03,98.51 162.97,98.51 160.95,95.00 162.97,91.49 167.03,91.49" class="qr-module" /><polygon points="189.50,95.00 187.25,98.90 182.75,98.90 180.50,95.00 182.75,91.10 187.25,91.10" class="qr-module" />  <rect x="20" y="100" width="10" height="10" class="qr-module" />
+  <rect x="40" y="100" width="10" height="10" class="qr-module" />
+  <rect x="70" y="100" width="10" height="10" class="qr-module" />
+  <rect x="90" y="100" width="10" height="10" class="qr-module" />
+  <rect x="110" y="100" width="10" height="10" class="qr-module" />
+  <rect x="120" y="100" width="10" height="10" class="qr-module" />
+  <rect x="140" y="100" width="10" height="10" class="qr-module" />
+  <rect x="180" y="100" width="10" height="10" class="qr-module" />
+<polygon points="69.05,115.00 67.03,118.51 62.98,118.51 60.95,115.00 62.97,111.49 67.03,111.49" class="qr-module" /><polygon points="79.50,115.00 77.25,118.90 72.75,118.90 70.50,115.00 72.75,111.10 77.25,111.10" class="qr-module" />  <rect x="80" y="110" width="10" height="10" class="qr-module" />
+<polygon points="99.50,115.00 97.25,118.90 92.75,118.90 90.50,115.00 92.75,111.10 97.25,111.10" class="qr-module" />  <rect x="140" y="110" width="10" height="10" class="qr-module" />
+  <rect x="20" y="120" width="10" height="10" class="qr-module" />
+  <rect x="30" y="120" width="10" height="10" class="qr-module" />
+  <rect x="40" y="120" width="10" height="10" class="qr-module" />
+  <rect x="80" y="120" width="10" height="10" class="qr-module" />
+<polygon points="99.95,125.00 97.47,129.29 92.53,129.29 90.05,125.00 92.52,120.71 97.47,120.71" class="qr-module" />  <rect x="100" y="120" width="10" height="10" class="qr-module" />
+<polygon points="129.05,125.00 127.03,128.51 122.97,128.51 120.95,125.00 122.97,121.49 127.03,121.49" class="qr-module" />  <rect x="130" y="120" width="10" height="10" class="qr-module" />
+  <rect x="140" y="120" width="10" height="10" class="qr-module" />
+<polygon points="159.50,125.00 157.25,128.90 152.75,128.90 150.50,125.00 152.75,121.10 157.25,121.10" class="qr-module" /><polygon points="179.05,125.00 177.03,128.51 172.97,128.51 170.95,125.00 172.97,121.49 177.03,121.49" class="qr-module" />  <rect x="30" y="130" width="10" height="10" class="qr-module" />
+  <rect x="50" y="130" width="10" height="10" class="qr-module" />
+  <rect x="70" y="130" width="10" height="10" class="qr-module" />
+  <rect x="80" y="130" width="10" height="10" class="qr-module" />
+<polygon points="99.50,135.00 97.25,138.90 92.75,138.90 90.50,135.00 92.75,131.10 97.25,131.10" class="qr-module" />  <rect x="100" y="130" width="10" height="10" class="qr-module" />
+  <rect x="130" y="130" width="10" height="10" class="qr-module" />
+  <rect x="140" y="130" width="10" height="10" class="qr-module" />
+  <rect x="20" y="140" width="10" height="10" class="qr-module" />
+<polygon points="99.50,145.00 97.25,148.90 92.75,148.90 90.50,145.00 92.75,141.10 97.25,141.10" class="qr-module" />  <rect x="120" y="140" width="10" height="10" class="qr-module" />
+  <rect x="140" y="140" width="10" height="10" class="qr-module" />
+<polygon points="159.50,145.00 157.25,148.90 152.75,148.90 150.50,145.00 152.75,141.10 157.25,141.10" class="qr-module" /><polygon points="169.50,145.00 167.25,148.90 162.75,148.90 160.50,145.00 162.75,141.10 167.25,141.10" class="qr-module" /><polygon points="189.05,145.00 187.03,148.51 182.97,148.51 180.95,145.00 182.97,141.49 187.03,141.49" class="qr-module" />  <rect x="40" y="150" width="10" height="10" class="qr-module" />
+  <rect x="50" y="150" width="10" height="10" class="qr-module" />
+<polygon points="99.50,155.00 97.25,158.90 92.75,158.90 90.50,155.00 92.75,151.10 97.25,151.10" class="qr-module" />  <rect x="100" y="150" width="10" height="10" class="qr-module" />
+<polygon points="119.50,155.00 117.25,158.90 112.75,158.90 110.50,155.00 112.75,151.10 117.25,151.10" class="qr-module" /><polygon points="129.50,155.00 127.25,158.90 122.75,158.90 120.50,155.00 122.75,151.10 127.25,151.10" class="qr-module" /><polygon points="139.50,155.00 137.25,158.90 132.75,158.90 130.50,155.00 132.75,151.10 137.25,151.10" class="qr-module" /><polygon points="149.50,155.00 147.25,158.90 142.75,158.90 140.50,155.00 142.75,151.10 147.25,151.10" class="qr-module" /><polygon points="159.50,155.00 157.25,158.90 152.75,158.90 150.50,155.00 152.75,151.10 157.25,151.10" class="qr-module" /><polygon points="179.50,155.00 177.25,158.90 172.75,158.90 170.50,155.00 172.75,151.10 177.25,151.10" class="qr-module" /><polygon points="189.50,155.00 187.25,158.90 182.75,158.90 180.50,155.00 182.75,151.10 187.25,151.10" class="qr-module" />  <rect x="20" y="160" width="10" height="10" class="qr-module" />
+  <rect x="30" y="160" width="10" height="10" class="qr-module" />
+  <rect x="40" y="160" width="10" height="10" class="qr-module" />
+  <rect x="50" y="160" width="10" height="10" class="qr-module" />
+  <rect x="60" y="160" width="10" height="10" class="qr-module" />
+  <rect x="80" y="160" width="10" height="10" class="qr-module" />
+<polygon points="99.50,165.00 97.25,168.90 92.75,168.90 90.50,165.00 92.75,161.10 97.25,161.10" class="qr-module" />  <rect x="100" y="160" width="10" height="10" class="qr-module" />
+<polygon points="119.50,165.00 117.25,168.90 112.75,168.90 110.50,165.00 112.75,161.10 117.25,161.10" class="qr-module" /><polygon points="169.50,165.00 167.25,168.90 162.75,168.90 160.50,165.00 162.75,161.10 167.25,161.10" class="qr-module" /><polygon points="179.50,165.00 177.25,168.90 172.75,168.90 170.50,165.00 172.75,161.10 177.25,161.10" class="qr-module" />  <rect x="40" y="170" width="10" height="10" class="qr-module" />
+  <rect x="60" y="170" width="10" height="10" class="qr-module" />
+  <rect x="80" y="170" width="10" height="10" class="qr-module" />
+<polygon points="99.50,175.00 97.25,178.90 92.75,178.90 90.50,175.00 92.75,171.10 97.25,171.10" class="qr-module" /><polygon points="119.50,175.00 117.25,178.90 112.75,178.90 110.50,175.00 112.75,171.10 117.25,171.10" class="qr-module" /><polygon points="129.50,175.00 127.25,178.90 122.75,178.90 120.50,175.00 122.75,171.10 127.25,171.10" class="qr-module" /><polygon points="149.50,175.00 147.25,178.90 142.75,178.90 140.50,175.00 142.75,171.10 147.25,171.10" class="qr-module" /><polygon points="159.50,175.00 157.25,178.90 152.75,178.90 150.50,175.00 152.75,171.10 157.25,171.10" class="qr-module" />  <rect x="20" y="180" width="10" height="10" class="qr-module" />
+  <rect x="30" y="180" width="10" height="10" class="qr-module" />
+  <rect x="50" y="180" width="10" height="10" class="qr-module" />
+  <rect x="60" y="180" width="10" height="10" class="qr-module" />
+<polygon points="99.05,185.00 97.03,188.51 92.97,188.51 90.95,185.00 92.97,181.49 97.03,181.49" class="qr-module" /><polygon points="119.05,185.00 117.03,188.51 112.97,188.51 110.95,185.00 112.97,181.49 117.03,181.49" class="qr-module" /><polygon points="149.05,185.00 147.03,188.51 142.97,188.51 140.95,185.00 142.97,181.49 147.03,181.49" class="qr-module" /><polygon points="189.05,185.00 187.03,188.51 182.97,188.51 180.95,185.00 182.97,181.49 187.03,181.49" class="qr-module" />
+</g><g class="qr-layer-frame" aria-hidden="true" />
+  <g class="qr-layer-overlay" style="pointer-events: none;" />
+  
+</g></svg>
