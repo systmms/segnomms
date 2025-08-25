@@ -328,7 +328,7 @@ class AccessibilityEnhancer:
         return accessibility
 
     def enhance_module_element(
-        self, element, row: int, col: int, module_type: str = "data"
+        self, element: Any, row: int, col: int, module_type: str = "data"
     ) -> ElementAccessibility:
         """Enhance a QR module element with accessibility features."""
         if not self.config.enabled:
@@ -369,7 +369,7 @@ class AccessibilityEnhancer:
         return accessibility
 
     def enhance_pattern_group(
-        self, group_element, pattern_type: str, index: int = 0
+        self, group_element: Any, pattern_type: str, index: int = 0
     ) -> ElementAccessibility:
         """Enhance a pattern group (finder, timing, etc.) with accessibility."""
         if not self.config.enabled:
@@ -416,7 +416,7 @@ class AccessibilityEnhancer:
         return accessibility
 
     def create_description_element(
-        self, parent_element, description: str, ref_id: str
+        self, parent_element: Any, description: str, ref_id: str
     ) -> str:
         """Create a description element and return its ID."""
         import xml.etree.ElementTree as ET
@@ -461,7 +461,7 @@ class AccessibilityEnhancer:
 
         return report
 
-    def validate_accessibility(self, svg_root=None) -> List[str]:
+    def validate_accessibility(self, svg_root: Optional[Any] = None) -> List[str]:
         """Validate accessibility implementation and return issues."""
         issues = []
 
@@ -516,7 +516,7 @@ class AccessibilityEnhancer:
 
         return issues
 
-    def _validate_svg_element(self, svg_root) -> List[str]:
+    def _validate_svg_element(self, svg_root: Any) -> List[str]:
         """Validate accessibility of an SVG element directly."""
         issues = []
 
@@ -543,8 +543,8 @@ class AccessibilityEnhancer:
         return issues
 
     def _apply_accessibility_attributes(
-        self, element, accessibility: ElementAccessibility
-    ):
+        self, element: Any, accessibility: ElementAccessibility
+    ) -> None:
         """Apply accessibility attributes to an SVG element."""
         attributes = accessibility.to_attributes()
 
@@ -557,7 +557,7 @@ class AccessibilityEnhancer:
                 element.set(key, str(value))
 
 
-def create_accessibility_config(**kwargs) -> AccessibilityConfig:
+def create_accessibility_config(**kwargs: Any) -> AccessibilityConfig:
     """Factory function to create accessibility configuration with common presets."""
     return AccessibilityConfig(**kwargs)
 

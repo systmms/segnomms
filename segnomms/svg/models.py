@@ -4,7 +4,7 @@ This module provides data models for utility classes using Pydantic
 for automatic validation and type safety.
 """
 
-from typing import Dict, List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator, ValidationInfo
 
@@ -45,7 +45,7 @@ class SVGElementConfig(BaseModel):
 
     @model_validator(mode="before")
     @classmethod  
-    def handle_css_class_aliases(cls, values):
+    def handle_css_class_aliases(cls, values: Any) -> Any:
         """Handle both 'css_class' and 'class' parameter names."""
         if isinstance(values, dict):
             # If both css_class and class are provided, class takes precedence
