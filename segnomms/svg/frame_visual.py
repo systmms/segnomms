@@ -6,10 +6,11 @@ and other visual effects for QR codes.
 
 import logging
 import xml.etree.ElementTree as ET
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, Union
 
+from ..config import RenderingConfig
+from ..config.models.visual import CenterpieceConfig, FrameConfig, QuietZoneConfig
 from ..shapes.frames import FrameShapeGenerator
-from .models import FrameDefinitionConfig
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,11 @@ class FrameVisualBuilder:
     """
 
     def add_frame_definitions(
-        self, svg: ET.Element, frame_config, qr_size: int, module_count: int
+        self,
+        svg: ET.Element,
+        frame_config: FrameConfig,
+        qr_size: int,
+        module_count: int,
     ) -> Optional[str]:
         """Add frame shape definitions to the SVG.
 
@@ -46,20 +51,15 @@ class FrameVisualBuilder:
         try:
             # Generate frame shape
             generator = FrameShapeGenerator()
-            frame_def_config = FrameDefinitionConfig(
-                frame_shape=frame_config.shape,
-                width=qr_size,
-                height=qr_size,
-                border_pixels=0,
-                corner_radius=getattr(frame_config, "corner_radius", 0.0),
-            )
 
             # Generate appropriate frame shape based on configuration
             if frame_config.shape == "circle":
                 frame_element = generator.generate_circle_clip(qr_size, qr_size)
             elif frame_config.shape == "rounded-rect":
                 corner_radius = getattr(frame_config, "corner_radius", 0.0)
-                frame_element = generator.generate_rounded_rect_clip(qr_size, qr_size, 0, corner_radius)
+                frame_element = generator.generate_rounded_rect_clip(
+                    qr_size, qr_size, 0, corner_radius
+                )
             elif frame_config.shape == "squircle":
                 frame_element = generator.generate_squircle_clip(qr_size, qr_size)
             elif frame_config.shape == "custom":
@@ -68,14 +68,16 @@ class FrameVisualBuilder:
                     frame_element = f'<path d="{custom_path}"/>'
                 else:
                     # Fallback to square if no custom path provided
-                    frame_element = f'<rect x="0" y="0" width="{qr_size}" height="{qr_size}"/>'
+                    frame_element = (
+                        f'<rect x="0" y="0" width="{qr_size}" height="{qr_size}"/>'
+                    )
             else:
                 frame_element = None
 
             if frame_element is not None:
                 # Create clip path
                 # Generate consistent clip ID based on frame shape
-                shape_name = getattr(frame_config, 'shape', 'unknown')
+                shape_name = getattr(frame_config, "shape", "unknown")
                 clip_id = f"frame-clip-{shape_name}-clip"
                 clipPath = ET.SubElement(defs, "clipPath", attrib={"id": clip_id})
                 # Parse the string into an Element and append
@@ -98,7 +100,10 @@ class FrameVisualBuilder:
         return None
 
     def add_quiet_zone_with_style(
-        self, svg: ET.Element, config, qr_bounds: Tuple[int, int, int, int]
+        self,
+        svg: ET.Element,
+        config: QuietZoneConfig,
+        qr_bounds: Tuple[int, int, int, int],
     ) -> None:
         """Add styled quiet zone to the SVG.
 
@@ -147,7 +152,11 @@ class FrameVisualBuilder:
             qz_rect.set("fill", f"url(#{grad_id})")
 
     def add_centerpiece_metadata(
-        self, svg: ET.Element, config, qr_bounds: Tuple[int, int, int, int], scale: int
+        self,
+        svg: ET.Element,
+        config: Union[RenderingConfig, CenterpieceConfig],
+        qr_bounds: Tuple[int, int, int, int],
+        scale: int,
     ) -> None:
         """Add metadata for centerpiece/reserve area.
 
@@ -157,13 +166,13 @@ class FrameVisualBuilder:
             qr_bounds: Tuple of (x, y, width, height) for QR code bounds
             scale: Scale factor for module size calculations
         """
-        # Handle both full config with centerpiece attribute and direct centerpiece config
+        # Handle both full config with centerpiece attribute and direct config
         if hasattr(config, "centerpiece"):
             cp = config.centerpiece
         else:
             # config is the centerpiece config itself
             cp = config
-            
+
         if not cp.enabled:
             return
 
@@ -221,23 +230,21 @@ class FrameVisualBuilder:
             centerpiece_metadata,
             "{https://segnomms.io/ns/qr}config",
         )
-        
+
         # Add offset information if available
-        if hasattr(cp, 'offset_x') and hasattr(cp, 'offset_y'):
+        if hasattr(cp, "offset_x") and hasattr(cp, "offset_y"):
             offset_x_element = ET.SubElement(
-                config_element,
-                "{https://segnomms.io/ns/qr}offset-x"
+                config_element, "{https://segnomms.io/ns/qr}offset-x"
             )
             offset_x_element.text = str(cp.offset_x)
-            
+
             offset_y_element = ET.SubElement(
-                config_element,
-                "{https://segnomms.io/ns/qr}offset-y"
+                config_element, "{https://segnomms.io/ns/qr}offset-y"
             )
             offset_y_element.text = str(cp.offset_y)
 
     def _add_fade_mask(
-        self, defs: ET.Element, clip_id: str, frame_config, qr_size: int
+        self, defs: ET.Element, clip_id: str, frame_config: FrameConfig, qr_size: int
     ) -> str:
         """Add fade mask for frame clipping.
 
@@ -246,12 +253,12 @@ class FrameVisualBuilder:
             clip_id: ID of the clip path
             frame_config: Frame configuration
             qr_size: Size of the QR code
-            
+
         Returns:
             The mask ID that was created
         """
         # Use consistent mask ID pattern matching shapes/frames.py
-        shape_name = getattr(frame_config, 'shape', 'unknown')
+        shape_name = getattr(frame_config, "shape", "unknown")
         mask_id = f"fade-mask-{shape_name}"
         mask = ET.SubElement(defs, "mask", attrib={"id": mask_id})
 
@@ -293,12 +300,12 @@ class FrameVisualBuilder:
                 attrib={
                     "id": grad_id,
                     "x1": "0%",
-                    "y1": "0%", 
+                    "y1": "0%",
                     "x2": "100%",
-                    "y2": "100%"
+                    "y2": "100%",
                 },
             )
-            
+
             # Create fade from edges to center
             fade_pct = (fade_distance / (qr_size / 2)) * 100
             ET.SubElement(
@@ -308,18 +315,16 @@ class FrameVisualBuilder:
             )
             ET.SubElement(
                 gradient,
-                "stop", 
-                attrib={"offset": f"{fade_pct}%", "stop-color": "white"}
+                "stop",
+                attrib={"offset": f"{fade_pct}%", "stop-color": "white"},
             )
             ET.SubElement(
                 gradient,
                 "stop",
-                attrib={"offset": f"{100-fade_pct}%", "stop-color": "white"}
+                attrib={"offset": f"{100 - fade_pct}%", "stop-color": "white"},
             )
             ET.SubElement(
-                gradient,
-                "stop",
-                attrib={"offset": "100%", "stop-color": "black"}
+                gradient, "stop", attrib={"offset": "100%", "stop-color": "black"}
             )
 
         # Apply gradient to mask
@@ -332,11 +337,11 @@ class FrameVisualBuilder:
                 "fill": f"url(#{grad_id})",
             },
         )
-        
+
         return mask_id
 
     def _create_quiet_zone_gradient(
-        self, defs: ET.Element, grad_id: str, gradient_config: Dict
+        self, defs: ET.Element, grad_id: str, gradient_config: Optional[Dict[str, Any]]
     ) -> None:
         """Create gradient definition for quiet zone.
 
@@ -345,6 +350,9 @@ class FrameVisualBuilder:
             grad_id: ID for the gradient
             gradient_config: Gradient configuration
         """
+        if gradient_config is None:
+            return
+
         grad_type = gradient_config.get("type", "linear")
 
         if grad_type == "linear":
@@ -379,21 +387,23 @@ class FrameVisualBuilder:
             colors = gradient_config["colors"]
             stops = []
             for i, color in enumerate(colors):
-                offset = f"{int(i * 100 / max(1, len(colors) - 1))}%" if len(colors) > 1 else "0%"
+                offset = (
+                    f"{int(i * 100 / max(1, len(colors) - 1))}%"
+                    if len(colors) > 1
+                    else "0%"
+                )
                 if isinstance(color, dict):
                     # Color with opacity: {"color": "#ffffff", "opacity": 1.0}
-                    stops.append({
-                        "offset": offset,
-                        "color": color["color"],
-                        "opacity": color.get("opacity", 1)
-                    })
+                    stops.append(
+                        {
+                            "offset": offset,
+                            "color": color["color"],
+                            "opacity": color.get("opacity", 1),
+                        }
+                    )
                 else:
                     # Simple color string
-                    stops.append({
-                        "offset": offset,
-                        "color": color,
-                        "opacity": 1
-                    })
+                    stops.append({"offset": offset, "color": color, "opacity": 1})
         else:
             # Default stops
             stops = [
