@@ -4,7 +4,9 @@ This module provides pure mathematical functions for calculating centerpiece
 bounds, placement offsets, containment checks, and safe reserve sizes.
 """
 
-from typing import Tuple
+from typing import List, Tuple
+
+from ...config import CenterpieceConfig
 
 
 class CenterpieceGeometry:
@@ -48,7 +50,9 @@ class CenterpieceGeometry:
         # Use 80% of capacity for safety margin
         return capacity * 0.8
 
-    def calculate_placement_offsets(self, config) -> Tuple[float, float]:
+    def calculate_placement_offsets(
+        self, config: CenterpieceConfig
+    ) -> Tuple[float, float]:
         """Calculate offset_x and offset_y based on placement mode.
 
         Args:
@@ -79,7 +83,9 @@ class CenterpieceGeometry:
 
         return placement_offsets.get(config.placement, (0.0, 0.0))
 
-    def get_centerpiece_bounds(self, config) -> Tuple[int, int, int, int]:
+    def get_centerpiece_bounds(
+        self, config: CenterpieceConfig
+    ) -> Tuple[int, int, int, int]:
         """Calculate centerpiece bounds in module coordinates.
 
         Args:
@@ -103,7 +109,7 @@ class CenterpieceGeometry:
         # Clamp to matrix bounds
         return max(0, x1), max(0, y1), min(self.size, x2), min(self.size, y2)
 
-    def is_in_centerpiece(self, row: int, col: int, config) -> bool:
+    def is_in_centerpiece(self, row: int, col: int, config: CenterpieceConfig) -> bool:
         """Check if a module is within the centerpiece area.
 
         Args:
@@ -126,7 +132,7 @@ class CenterpieceGeometry:
             center_y = self.size / 2 + (offset_y * self.size)
             radius = config.size * self.size / 2 + config.margin
             dist = ((col - center_x) ** 2 + (row - center_y) ** 2) ** 0.5
-            return dist <= radius
+            return float(dist) <= radius
 
         elif config.shape == "squircle":
             # Superellipse formula for squircle
@@ -143,9 +149,10 @@ class CenterpieceGeometry:
                 abs(row - center_y) / radius
             ) ** n <= 1
 
-        return False
+        # Safety fallback for unknown shapes
+        return False  # type: ignore[unreachable]
 
-    def is_edge_module(self, row: int, col: int, config) -> bool:
+    def is_edge_module(self, row: int, col: int, config: CenterpieceConfig) -> bool:
         """Check if a module is on the edge of the centerpiece area.
 
         Args:
@@ -176,7 +183,9 @@ class CenterpieceGeometry:
 
         return False
 
-    def should_clear_edge_module(self, row: int, col: int, config, matrix) -> bool:
+    def should_clear_edge_module(
+        self, row: int, col: int, config: CenterpieceConfig, matrix: List[List[bool]]
+    ) -> bool:
         """Determine if an edge module should be cleared based on refinement settings.
 
         Args:
@@ -207,7 +216,9 @@ class CenterpieceGeometry:
             # Clear all edge modules for clean appearance
             return True
 
-    def _is_critical_pattern_module(self, row: int, col: int, matrix) -> bool:
+    def _is_critical_pattern_module(
+        self, row: int, col: int, matrix: List[List[bool]]
+    ) -> bool:
         """Check if a module is part of a critical QR pattern.
 
         This is a simplified check - in practice, this would use
@@ -233,7 +244,9 @@ class CenterpieceGeometry:
 
         return False
 
-    def _should_clear_for_smooth_edge(self, row: int, col: int, config, matrix) -> bool:
+    def _should_clear_for_smooth_edge(
+        self, row: int, col: int, config: CenterpieceConfig, matrix: List[List[bool]]
+    ) -> bool:
         """Determine if a module should be cleared for smooth edge refinement.
 
         This analyzes neighboring modules to create visually pleasing edges.

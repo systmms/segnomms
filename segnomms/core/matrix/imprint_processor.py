@@ -8,6 +8,7 @@ centerpiece overlays.
 import logging
 from typing import Any, Dict, List
 
+from ...config import CenterpieceConfig
 from ..detector import ModuleDetector
 from ..geometry import CenterpieceGeometry
 from ..performance import measure_imprint_rendering
@@ -56,7 +57,7 @@ class ImprintProcessor:
         }
 
     @measure_imprint_rendering
-    def apply_imprint_mode(self, config) -> List[List[bool]]:
+    def apply_imprint_mode(self, config: CenterpieceConfig) -> List[List[bool]]:
         """Apply imprint mode - preserve modules underneath centerpiece for scanability.
 
         In imprint mode, the QR modules remain scannable but are visually modified
@@ -94,7 +95,9 @@ class ImprintProcessor:
         # Return original matrix unchanged for full scanability
         return preserved_matrix
 
-    def _collect_imprinted_modules(self, config, stats: Dict[str, Any]) -> List[Dict]:
+    def _collect_imprinted_modules(
+        self, config: CenterpieceConfig, stats: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
         """Collect modules that need visual imprinting treatment.
 
         Args:
@@ -120,7 +123,8 @@ class ImprintProcessor:
                         stats["protected_modules"] += 1
                         continue
 
-                    # Only track dark modules for imprinting (preserve light modules as-is)
+                    # Only track dark modules for imprinting
+                    # (preserve light modules as-is)
                     if self.matrix[row][col]:  # Dark module
                         stats["data_modules_imprinted"] += 1
 
@@ -140,7 +144,10 @@ class ImprintProcessor:
         return imprinted_modules
 
     def _store_imprint_metadata(
-        self, imprinted_modules: List[Dict], stats: Dict[str, Any], config
+        self,
+        imprinted_modules: List[Dict[str, Any]],
+        stats: Dict[str, Any],
+        config: CenterpieceConfig,
     ) -> None:
         """Store imprint metadata for later use by rendering system.
 
@@ -177,7 +184,7 @@ class ImprintProcessor:
             )
 
     def _get_imprint_visual_treatment(
-        self, row: int, col: int, config, module_type: str
+        self, row: int, col: int, config: CenterpieceConfig, module_type: str
     ) -> Dict[str, Any]:
         """Calculate visual treatment parameters for an imprinted module.
 
@@ -239,7 +246,7 @@ class ImprintProcessor:
             "distance_from_center": normalized_distance,
         }
 
-    def _calculate_imprint_opacity(self, config) -> float:
+    def _calculate_imprint_opacity(self, config: CenterpieceConfig) -> float:
         """Calculate base opacity for imprinted modules.
 
         Args:
@@ -261,7 +268,9 @@ class ImprintProcessor:
         else:
             return 0.2  # Very large centerpiece, very subtle modules
 
-    def _calculate_imprint_color_shift(self, config) -> Dict[str, float]:
+    def _calculate_imprint_color_shift(
+        self, config: CenterpieceConfig
+    ) -> Dict[str, float]:
         """Calculate color shift parameters for imprinted modules.
 
         Args:
@@ -278,7 +287,7 @@ class ImprintProcessor:
             "contrast_reduction": 0.4,  # Reduce contrast with background
         }
 
-    def _calculate_imprint_size_ratio(self, config) -> float:
+    def _calculate_imprint_size_ratio(self, config: CenterpieceConfig) -> float:
         """Calculate size adjustment ratio for imprinted modules.
 
         Args:
