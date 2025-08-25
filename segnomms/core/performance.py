@@ -232,7 +232,7 @@ class PerformanceMonitor:
             complexity = None
             if complexity_func:
                 try:
-                    complexity = complexity_func(result, *args, **kwargs)
+                    complexity = complexity_func()
                 except Exception as e:
                     logger.debug(f"Failed to calculate complexity for {operation}: {e}")
 
@@ -523,7 +523,7 @@ def measure_imprint_rendering(func: Callable[..., Any]) -> Callable[..., Any]:
 
         # Simplified complexity calculation
         def complexity_calc() -> int:
-            return 50  # Fixed complexity for imprint rendering
+            return 100  # Fixed complexity for imprint rendering
 
         return monitor.measure_operation(
             "imprint_rendering", func, *args, complexity_func=complexity_calc, **kwargs
