@@ -4,9 +4,9 @@ This module provides data models for validation classes using Pydantic
 for automatic validation and type safety.
 """
 
-from typing import Literal
+from typing import Any, Dict, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, ValidationInfo
+from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, field_validator
 
 
 class Phase4ValidatorConfig(BaseModel):
@@ -68,7 +68,7 @@ class Phase4ValidatorConfig(BaseModel):
 
         raise ValueError(
             f"Invalid QR matrix size {v}. Must be 11, 13, 15, 17 (Micro QR) "
-            f"or 21+4*n (Regular QR)"
+            "or 21+4*n (Regular QR)"
         )
 
 
@@ -113,6 +113,6 @@ class ValidationResult(BaseModel):
         """Get total count of errors and warnings."""
         return len(self.errors) + len(self.warnings)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format."""
         return self.model_dump()

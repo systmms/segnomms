@@ -10,6 +10,7 @@ This module provides comprehensive accessibility features including:
 """
 
 import re
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set
@@ -144,7 +145,8 @@ class AccessibilityConfig(BaseModel):
         """Validate ID prefix follows HTML standards."""
         if not re.match(r"^[a-zA-Z][a-zA-Z0-9_-]*$", v):
             raise ValueError(
-                "ID prefix must start with a letter and contain only letters, numbers, underscores, and hyphens"
+                "ID prefix must start with a letter and contain only "
+                "letters, numbers, underscores, and hyphens"
             )
         return v
 
@@ -195,7 +197,9 @@ class IDGenerator:
 
         return self._ensure_unique(base_id)
 
-    def generate_pattern_id(self, pattern_type: str, index: Optional[int] = None) -> str:
+    def generate_pattern_id(
+        self, pattern_type: str, index: Optional[int] = None
+    ) -> str:
         """Generate ID for a QR pattern (finder, timing, etc.)."""
         if index is not None:
             base_id = f"{self.config.id_prefix}-{pattern_type}-{index}"
@@ -259,7 +263,7 @@ class AccessibilityEnhancer:
 
     def enhance_root_element(
         self,
-        svg_element,
+        svg_element: ET.Element,
         title: Optional[str] = None,
         description: Optional[str] = None,
     ) -> ElementAccessibility:
@@ -268,6 +272,7 @@ class AccessibilityEnhancer:
             # Even when disabled, add basic title for minimal accessibility
             if title:
                 import xml.etree.ElementTree as ET
+
                 title_element = ET.SubElement(svg_element, "title")
                 title_element.text = title
             # Use proper ID generation even when disabled
@@ -302,7 +307,7 @@ class AccessibilityEnhancer:
 
         # Create child elements for title and description (SVG best practice)
         import xml.etree.ElementTree as ET
-        
+
         if title or self.config.root_label:
             title_text = title or self.config.root_label
             title_id = f"{self.config.id_prefix}-title"
@@ -382,9 +387,17 @@ class AccessibilityEnhancer:
         # Add pattern-specific labels
         if self.config.include_pattern_labels:
             labels = {
-                "finder": f"Finder pattern {index + 1}" if index is not None else "Finder pattern",
+                "finder": (
+                    f"Finder pattern {index + 1}"
+                    if index is not None
+                    else "Finder pattern"
+                ),
                 "timing": "Timing pattern",
-                "alignment": f"Alignment pattern {index + 1}" if index is not None else "Alignment pattern",
+                "alignment": (
+                    f"Alignment pattern {index + 1}"
+                    if index is not None
+                    else "Alignment pattern"
+                ),
                 "format": "Format information",
                 "version": "Version information",
                 "data": "Data modules",
@@ -506,26 +519,26 @@ class AccessibilityEnhancer:
     def _validate_svg_element(self, svg_root) -> List[str]:
         """Validate accessibility of an SVG element directly."""
         issues = []
-        
+
         # Check for title element
         title_elem = svg_root.find("title")
         if title_elem is None:
             issues.append("Missing title element for accessibility")
-        
+
         # Check for description element (optional but good for comprehensive accessibility)
-        desc_elem = svg_root.find("desc")
-        
+        # desc_elem = svg_root.find("desc")  # Not currently used
+
         # Check for ARIA attributes if enabled
         if self.config.enable_aria:
             if not svg_root.get("role"):
                 issues.append("Missing ARIA role attribute")
             if not svg_root.get("aria-label") and title_elem is None:
                 issues.append("Missing ARIA label or title element")
-        
+
         # Check for proper ID structure
         if self.config.use_stable_ids and not svg_root.get("id"):
             issues.append("Missing ID attribute for stable identification")
-        
+
         return issues
 
     def _apply_accessibility_attributes(

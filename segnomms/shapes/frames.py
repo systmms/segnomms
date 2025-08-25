@@ -5,7 +5,7 @@ for various frame shapes including circles, rounded rectangles, and squircles.
 """
 
 import xml.etree.ElementTree as ET
-from typing import Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 
 class FrameShapeGenerator:
@@ -141,7 +141,8 @@ class FrameShapeGenerator:
             return f"""
                 <defs>
                     <radialGradient id="{grad_id}" cx="50%" cy="50%" r="50%">
-                        <stop offset="{fade_start * 100:.1f}%" stop-color="white" stop-opacity="1"/>
+                        <stop offset="{fade_start * 100:.1f}%" 
+                              stop-color="white" stop-opacity="1"/>
                         <stop offset="100%" stop-color="white" stop-opacity="0"/>
                     </radialGradient>
                     <mask id="{mask_id}">
@@ -162,7 +163,8 @@ class FrameShapeGenerator:
                     </radialGradient>
                     <mask id="{mask_id}">
                         <rect x="{actual_fade}" y="{actual_fade}"
-                              width="{width - 2*actual_fade}" height="{height - 2*actual_fade}"
+                              width="{width - 2 * actual_fade}" 
+                              height="{height - 2 * actual_fade}"
                               rx="{radius}" ry="{radius}" fill="white"/>
                         <rect x="0" y="0" width="{width}" height="{height}"
                               rx="{radius}" ry="{radius}" fill="url(#{grad_id})"/>
@@ -179,8 +181,12 @@ class FrameShapeGenerator:
                         <stop offset="100%" stop-color="white" stop-opacity="0"/>
                     </radialGradient>
                     <mask id="{mask_id}">
-                        {FrameShapeGenerator.generate_squircle_clip(int(width - 2*actual_fade), int(height - 2*actual_fade))}
-                        <rect x="0" y="0" width="{width}" height="{height}" fill="url(#{grad_id})"/>
+                        {FrameShapeGenerator.generate_squircle_clip(
+                            int(width - 2 * actual_fade), 
+                            int(height - 2 * actual_fade)
+                        )}
+                        <rect x="0" y="0" width="{width}" height="{height}" 
+                              fill="url(#{grad_id})"/>
                     </mask>
                 </defs>
             """
@@ -243,7 +249,8 @@ class FrameShapeGenerator:
         else:
             clip_path = f'<rect x="0" y="0" width="{width}" height="{height}"/>'
 
-        # For scale mode, we'll apply scaling via CSS transforms based on distance from edge
+        # For scale mode, we'll apply scaling via CSS transforms based on
+        # distance from edge
         # This is a placeholder - the actual scaling logic will be applied per-module
         # in the rendering code
         clip_def = f"""
@@ -316,37 +323,42 @@ class FrameShapeGenerator:
         # Basic path scaling implementation
         # NOTE: This is a simplified implementation that only handles transform attribute
         # For complex path coordinate transformation, would need SVG path parser
-        
+
         if not path or not current_box:
             return path
-            
+
         current_width, current_height = current_box[2], current_box[3]
-        
+
         # Avoid division by zero
         if current_width == 0 or current_height == 0:
             return path
-            
+
         # Calculate scaling factors
         scale_x = target_width / current_width
         scale_y = target_height / current_height
-        
+
         # If no scaling needed, return original
         if abs(scale_x - 1.0) < 0.001 and abs(scale_y - 1.0) < 0.001:
             return path
-            
-        # For complex paths, recommend using transform attribute at element level
+
+        # For complex paths, recommend using transform attribute at element
+        # level
         # rather than modifying path coordinates directly
         import logging
+
         logging.getLogger(__name__).info(
             f"Path scaling requested (scale: {scale_x:.3f}, {scale_y:.3f}). "
             "Consider using SVG transform attribute for better precision."
         )
-        
+
         return path
 
     @staticmethod
     def create_frame_group(
-        shape_type: str, width: int, height: int, config: Optional[dict] = None
+        shape_type: str,
+        width: int,
+        height: int,
+        config: Optional[Dict[str, Any]] = None,
     ) -> ET.Element:
         """Create a complete frame shape group.
 

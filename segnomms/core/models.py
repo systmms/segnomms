@@ -4,7 +4,7 @@ This module provides data models for core classes using Pydantic
 for automatic validation and type safety.
 """
 
-from typing import List, Optional, Union
+from typing import List, Optional, Tuple, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -43,7 +43,8 @@ class ModuleDetectorConfig(BaseModel):
         size = len(v)
         if not all(len(row) == size for row in v):
             raise ValueError(
-                "Matrix must be square (all rows must have the same length as the number of rows)"
+                "Matrix must be square (all rows must have the same "
+                "length as the number of rows)"
             )
 
         # Check if size follows QR code specification
@@ -168,6 +169,6 @@ class NeighborAnalysis(BaseModel):
         ..., ge=0, le=4, description="Number of diagonal connections"
     )
 
-    active_neighbors: List[tuple] = Field(
+    active_neighbors: List[Tuple[int, int]] = Field(
         ..., description="List of active neighbor positions"
     )

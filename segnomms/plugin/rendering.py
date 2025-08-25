@@ -34,7 +34,7 @@ NON_STYLED_MODULES = [
 class QRCodeRenderer:
     """Encapsulates the QR code rendering logic with better organization."""
 
-    def __init__(self, qr_code, config: RenderingConfig):
+    def __init__(self, qr_code: Any, config: RenderingConfig) -> None:
         """Initialize the renderer with QR code and configuration.
 
         Args:
@@ -85,14 +85,15 @@ class QRCodeRenderer:
             matrix.append([bool(module) for module in row])
         return matrix
 
-    def _validate_size(self):
+    def _validate_size(self) -> None:
         """Check size limits to prevent DoS attacks."""
         size = len(self.matrix)
         if size > MAX_QR_SIZE:
             raise ValueError(
-                f"QR code size {size}x{size} exceeds maximum allowed size of {MAX_QR_SIZE}x{MAX_QR_SIZE}. "
-                f"This limit exists to prevent denial-of-service attacks. "
-                f"If you need to generate larger QR codes, please contact support."
+                f"QR code size {size}x{size} exceeds maximum allowed size of "
+                f"{MAX_QR_SIZE}x{MAX_QR_SIZE}. This limit exists to prevent "
+                f"denial-of-service attacks. If you need to generate larger "
+                f"QR codes, please contact support."
             )
 
     def _init_phase4_validator(self) -> Optional[Phase4Validator]:
@@ -297,7 +298,7 @@ class QRCodeRenderer:
             self.matrix,
             self.detector,
             self.config.geometry.min_island_modules,
-            self.config.geometry.connectivity,
+            self.config.geometry.connectivity.value,
         )
 
     def _should_use_clustering(self) -> bool:
@@ -322,7 +323,7 @@ class QRCodeRenderer:
         cluster_analyzer = ConnectedComponentAnalyzer(
             min_cluster_size,
             self.config.phase2.density_threshold,
-            self.config.geometry.connectivity,
+            self.config.geometry.connectivity.value,
         )
 
         clusters = cluster_analyzer.process(
@@ -574,7 +575,7 @@ class ModuleRenderer:
 
         # Determine current shape with pattern-specific styling support
         current_shape, current_color = _get_pattern_specific_style(
-            self.config, module_type, self.config.geometry.shape, self.config.dark
+            self.config, module_type, self.config.geometry.shape.value, self.config.dark
         )
 
         # Legacy finder shape override (for backward compatibility)

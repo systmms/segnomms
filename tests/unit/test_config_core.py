@@ -6,39 +6,35 @@ and integration with other configuration components.
 """
 
 import json
-import pytest
-from typing import Any, Dict
-from unittest.mock import patch
 
+import pytest
 from pydantic import ValidationError
 
 from segnomms.config import (
-    RenderingConfig,
-    PerformanceConfig,
-    DebugConfig,
-    GeometryConfig,
-    FinderConfig,
-    PatternStyleConfig,
-    FrameConfig,
+    AdvancedQRConfig,
     CenterpieceConfig,
-    QuietZoneConfig,
-    StyleConfig,
+    DebugConfig,
+    FinderConfig,
+    FrameConfig,
+    GeometryConfig,
+    PatternStyleConfig,
+    PerformanceConfig,
     Phase1Config,
     Phase2Config,
     Phase3Config,
-    AdvancedQRConfig,
+    QuietZoneConfig,
+    RenderingConfig,
+    StyleConfig,
 )
 from segnomms.config.enums import (
+    ContourMode,
+    FinderShape,
     ModuleShape,
-    MergeStrategy,
-    ConnectivityMode,
+    OptimizationLevel,
     PlacementMode,
     ReserveMode,
-    ContourMode,
-    OptimizationLevel,
 )
 from segnomms.exceptions import InvalidColorFormatError
-from tests.constants import DEFAULT_SCALE
 
 
 class TestRenderingConfigBasics:
@@ -47,14 +43,14 @@ class TestRenderingConfigBasics:
     def test_default_config_creation(self):
         """Test creating config with all default values."""
         config = RenderingConfig()
-        
+
         # Basic parameters
         assert config.scale == 1
         assert config.border == 4
         assert config.dark == "#000000"
         assert config.light == "#ffffff"
         assert config.safe_mode is False
-        
+
         # Component configs should be initialized
         assert isinstance(config.geometry, GeometryConfig)
         assert isinstance(config.finder, FinderConfig)
@@ -67,13 +63,13 @@ class TestRenderingConfigBasics:
         assert isinstance(config.phase2, Phase2Config)
         assert isinstance(config.phase3, Phase3Config)
         assert isinstance(config.advanced_qr, AdvancedQRConfig)
-        
+
         # Optional fields
         assert config.accessibility is not None
         assert config.accessibility.enabled is False
         assert config.shape_options is None
         assert config.metadata is None
-        
+
         # Accessibility settings
         assert config.min_contrast_ratio == 4.5
         assert config.enable_palette_validation is False
@@ -83,11 +79,7 @@ class TestRenderingConfigBasics:
         """Test validation of basic parameters."""
         # Valid parameters
         config = RenderingConfig(
-            scale=10,
-            border=2,
-            dark="#1a1a2e",
-            light="#ffffff",
-            safe_mode=True
+            scale=10, border=2, dark="#1a1a2e", light="#ffffff", safe_mode=True
         )
         assert config.scale == 10
         assert config.border == 2
@@ -101,16 +93,16 @@ class TestRenderingConfigBasics:
         for scale in [1, 10, 50, 100]:
             config = RenderingConfig(scale=scale)
             assert config.scale == scale
-        
+
         # Invalid scale values
         with pytest.raises(ValidationError) as exc_info:
             RenderingConfig(scale=0)
         assert "greater than or equal to 1" in str(exc_info.value)
-        
+
         with pytest.raises(ValidationError) as exc_info:
             RenderingConfig(scale=101)
         assert "less than or equal to 100" in str(exc_info.value)
-        
+
         with pytest.raises(ValidationError):
             RenderingConfig(scale=-1)
 
@@ -120,12 +112,12 @@ class TestRenderingConfigBasics:
         for border in [0, 4, 10, 20]:
             config = RenderingConfig(border=border)
             assert config.border == border
-        
+
         # Invalid border values
         with pytest.raises(ValidationError) as exc_info:
             RenderingConfig(border=-1)
         assert "greater than or equal to 0" in str(exc_info.value)
-        
+
         with pytest.raises(ValidationError) as exc_info:
             RenderingConfig(border=21)
         assert "less than or equal to 20" in str(exc_info.value)
@@ -142,17 +134,17 @@ class TestRenderingConfigBasics:
             "rgba(255, 0, 0, 0.5)",
             "red",
             "blue",
-            "transparent"
+            "transparent",
         ]
-        
+
         for color in valid_colors:
             config = RenderingConfig(dark=color, light=color)
             assert config.dark == color
             assert config.light == color
-        
+
         # Invalid color formats
         invalid_colors = ["", "   ", None]
-        
+
         for color in invalid_colors:
             with pytest.raises((ValidationError, InvalidColorFormatError)):
                 RenderingConfig(dark=color)
@@ -165,11 +157,11 @@ class TestRenderingConfigBasics:
         for ratio in [1.0, 4.5, 7.0, 21.0]:
             config = RenderingConfig(min_contrast_ratio=ratio)
             assert config.min_contrast_ratio == ratio
-        
+
         # Invalid contrast ratios
         with pytest.raises(ValidationError):
             RenderingConfig(min_contrast_ratio=0.5)
-        
+
         with pytest.raises(ValidationError):
             RenderingConfig(min_contrast_ratio=22.0)
 
@@ -184,9 +176,9 @@ class TestRenderingConfigBasics:
         shape_options = {
             "star_points": 5,
             "hexagon_rotation": 30,
-            "custom_parameter": "value"
+            "custom_parameter": "value",
         }
-        
+
         config = RenderingConfig(shape_options=shape_options)
         assert config.shape_options == shape_options
 
@@ -195,9 +187,9 @@ class TestRenderingConfigBasics:
         metadata = {
             "created_by": "test_suite",
             "version": "1.0",
-            "custom_field": "custom_value"
+            "custom_field": "custom_value",
         }
-        
+
         config = RenderingConfig(metadata=metadata)
         assert config.metadata == metadata
 
@@ -208,13 +200,9 @@ class TestRenderingConfigFactoryMethod:
     def test_basic_kwargs_conversion(self):
         """Test basic parameter conversion from kwargs."""
         config = RenderingConfig.from_kwargs(
-            scale=15,
-            border=6,
-            dark="#e74c3c",
-            light="#ecf0f1",
-            safe_mode=True
+            scale=15, border=6, dark="#e74c3c", light="#ecf0f1", safe_mode=True
         )
-        
+
         assert config.scale == 15
         assert config.border == 6
         assert config.dark == "#e74c3c"
@@ -228,9 +216,9 @@ class TestRenderingConfigFactoryMethod:
             corner_radius=0.3,
             connectivity="8-way",
             merge="soft",
-            min_island_modules=3
+            min_island_modules=3,
         )
-        
+
         assert config.geometry.shape == "rounded"  # use_enum_values=True
         assert config.geometry.corner_radius == 0.3
         assert config.geometry.connectivity == "8-way"  # use_enum_values=True
@@ -240,12 +228,10 @@ class TestRenderingConfigFactoryMethod:
     def test_finder_kwargs_conversion(self):
         """Test finder parameter conversion."""
         config = RenderingConfig.from_kwargs(
-            finder_shape="circle",
-            finder_inner_scale=0.7,
-            finder_stroke=True
+            finder_shape="circle", finder_inner_scale=0.7, finder_stroke=True
         )
-        
-        assert config.finder.shape == "circle"
+
+        assert config.finder.shape == FinderShape.CIRCLE
         assert config.finder.inner_scale == 0.7
         assert config.finder.stroke == 1.0  # True gets converted to 1.0
 
@@ -257,10 +243,10 @@ class TestRenderingConfigFactoryMethod:
             frame_clip_mode="fade",
             frame_fade_distance=10,
             frame_scale_distance=5,
-            frame_custom_path="M0,0 L100,100"
+            frame_custom_path="M0,0 L100,100",
         )
-        
-        assert config.frame.shape == "circle"
+
+        assert config.frame.shape == ModuleShape.CIRCLE
         assert config.frame.corner_radius == 0.2
         assert config.frame.clip_mode == "fade"
         assert config.frame.fade_distance == 10
@@ -277,11 +263,11 @@ class TestRenderingConfigFactoryMethod:
             centerpiece_offset_y=-0.05,
             centerpiece_margin=3,
             centerpiece_mode="imprint",
-            centerpiece_placement="top-left"
+            centerpiece_placement="top-left",
         )
-        
+
         assert config.centerpiece.enabled is True
-        assert config.centerpiece.shape == "squircle"
+        assert config.centerpiece.shape == ModuleShape.SQUIRCLE
         assert config.centerpiece.size == 0.2
         assert config.centerpiece.offset_x == 0.1
         assert config.centerpiece.offset_y == -0.05
@@ -298,11 +284,11 @@ class TestRenderingConfigFactoryMethod:
             reserve_size=0.15,
             reserve_offset_x=0.2,
             reserve_offset_y=0.1,
-            reserve_margin=2
+            reserve_margin=2,
         )
-        
+
         assert config.centerpiece.enabled is True
-        assert config.centerpiece.shape == "circle"
+        assert config.centerpiece.shape == ModuleShape.CIRCLE
         assert config.centerpiece.size == 0.15
         assert config.centerpiece.offset_x == 0.2
         assert config.centerpiece.offset_y == 0.1
@@ -310,11 +296,8 @@ class TestRenderingConfigFactoryMethod:
 
     def test_style_kwargs_conversion(self):
         """Test style parameter conversion."""
-        config = RenderingConfig.from_kwargs(
-            interactive=True,
-            tooltips=True
-        )
-        
+        config = RenderingConfig.from_kwargs(interactive=True, tooltips=True)
+
         assert config.style.interactive is True
         assert config.style.tooltips is True
 
@@ -327,12 +310,12 @@ class TestRenderingConfigFactoryMethod:
             pattern_finder_color="#e74c3c",
             pattern_timing_color="#3498db",
             pattern_finder_scale=1.2,
-            pattern_timing_scale=0.8
+            pattern_timing_scale=0.8,
         )
-        
+
         assert config.patterns.enabled is True
-        assert config.patterns.finder == "rounded"
-        assert config.patterns.timing == "circle"
+        assert config.patterns.finder == ModuleShape.ROUNDED
+        assert config.patterns.timing == ModuleShape.CIRCLE
         assert config.patterns.finder_color == "#e74c3c"
         assert config.patterns.timing_color == "#3498db"
         assert config.patterns.finder_scale == 1.2
@@ -347,9 +330,9 @@ class TestRenderingConfigFactoryMethod:
             auto_mask=False,
             structured_append=True,
             symbol_count=4,
-            boost_error=False
+            boost_error=False,
         )
-        
+
         assert config.advanced_qr.eci_enabled is True
         assert config.advanced_qr.encoding == "UTF-8"
         assert config.advanced_qr.mask_pattern == 3
@@ -366,13 +349,13 @@ class TestRenderingConfigFactoryMethod:
             enable_phase3=True,
             phase1_roundness=0.4,
             phase2_min_cluster_size=5,
-            phase3_contour_smoothing=0.6
+            phase3_contour_smoothing=0.6,
         )
-        
+
         assert config.phase1.enabled is True
         assert config.phase2.enabled is False
         assert config.phase3.enabled is True
-        assert hasattr(config.phase1, 'roundness')  # May not be directly set
+        assert hasattr(config.phase1, "roundness")  # May not be directly set
         # Note: Phase-specific parameters may be handled differently
 
     def test_quiet_zone_kwargs_conversion(self):
@@ -384,11 +367,11 @@ class TestRenderingConfigFactoryMethod:
                 "type": "linear",
                 "stops": [
                     {"offset": "0%", "color": "#ffffff"},
-                    {"offset": "100%", "color": "#eeeeee"}
-                ]
-            }
+                    {"offset": "100%", "color": "#eeeeee"},
+                ],
+            },
         )
-        
+
         assert config.quiet_zone.style == "solid"
         assert config.quiet_zone.color == "#f8f9fa"
         assert config.quiet_zone.gradient["type"] == "linear"
@@ -403,9 +386,9 @@ class TestRenderingConfigFactoryMethod:
             accessibility_enable_aria=True,
             accessibility_root_role="img",
             accessibility_root_label="QR Code",
-            accessibility_root_description="QR code for accessibility testing"
+            accessibility_root_description="QR code for accessibility testing",
         )
-        
+
         # Accessibility config may be optional/conditional
         if config.accessibility:
             assert config.accessibility.enabled is True
@@ -415,7 +398,10 @@ class TestRenderingConfigFactoryMethod:
             assert config.accessibility.enable_aria is True
             assert config.accessibility.root_role == "img"
             assert config.accessibility.root_label == "QR Code"
-            assert config.accessibility.root_description == "QR code for accessibility testing"
+            assert (
+                config.accessibility.root_description
+                == "QR code for accessibility testing"
+            )
 
     def test_complex_kwargs_combination(self):
         """Test complex combination of multiple parameter types."""
@@ -439,17 +425,21 @@ class TestRenderingConfigFactoryMethod:
             interactive=True,
             # Advanced parameters
             eci_enabled=True,
-            encoding="UTF-8"
+            encoding="UTF-8",
         )
-        
+
         # Verify all parameters were set correctly
         assert config.scale == 20
         assert config.dark == "#2c3e50"
         assert config.light == "#ecf0f1"
-        assert config.geometry.shape == "squircle"  # use_enum_values=True converts to string
+        assert (
+            config.geometry.shape == "squircle"
+        )  # use_enum_values=True converts to string
         assert config.geometry.corner_radius == 0.25
-        assert config.geometry.merge == "aggressive"  # use_enum_values=True converts to string
-        assert config.frame.shape == "circle"
+        assert (
+            config.geometry.merge == "aggressive"
+        )  # use_enum_values=True converts to string
+        assert config.frame.shape == ModuleShape.CIRCLE
         assert config.frame.clip_mode == "fade"
         assert config.centerpiece.enabled is True
         assert config.centerpiece.size == 0.18
@@ -465,18 +455,15 @@ class TestAutoPhaseEnabling:
     def test_phase1_auto_enable_for_non_square_shapes(self):
         """Test Phase 1 auto-enabling for non-square shapes."""
         config = RenderingConfig.from_kwargs(shape="circle")
-        
+
         # Phase 1 should be auto-enabled for non-square shapes
         assert config.phase1.enabled is True
         assert config.phase1.use_enhanced_shapes is True
 
     def test_phase1_auto_enable_for_corner_radius(self):
         """Test Phase 1 auto-enabling for corner radius > 0."""
-        config = RenderingConfig.from_kwargs(
-            shape="square",
-            corner_radius=0.3
-        )
-        
+        config = RenderingConfig.from_kwargs(shape="square", corner_radius=0.3)
+
         # Phase 1 should be auto-enabled for corner radius > 0
         assert config.phase1.enabled is True
         assert config.phase1.use_enhanced_shapes is True
@@ -485,7 +472,7 @@ class TestAutoPhaseEnabling:
     def test_phase2_auto_enable_for_merge_soft(self):
         """Test Phase 2 auto-enabling for soft merge."""
         config = RenderingConfig.from_kwargs(merge="soft")
-        
+
         # Phase 2 should be auto-enabled for merge != "none"
         assert config.phase2.enabled is True
         assert config.phase2.use_cluster_rendering is True
@@ -494,7 +481,7 @@ class TestAutoPhaseEnabling:
     def test_phase3_auto_enable_for_aggressive_merge(self):
         """Test Phase 3 auto-enabling for aggressive merge."""
         config = RenderingConfig.from_kwargs(merge="aggressive")
-        
+
         # Phase 3 should be auto-enabled for aggressive merge
         assert config.phase3.enabled is True
         assert config.phase3.use_marching_squares is True
@@ -505,9 +492,9 @@ class TestAutoPhaseEnabling:
         """Test that explicit phase settings override auto-enabling."""
         config = RenderingConfig.from_kwargs(
             shape="circle",  # Would normally auto-enable Phase 1
-            enable_phase1=False  # But explicitly disabled
+            enable_phase1=False,  # But explicitly disabled
         )
-        
+
         # Explicit setting should override auto-enabling
         assert config.phase1.enabled is False
 
@@ -516,9 +503,9 @@ class TestAutoPhaseEnabling:
         config = RenderingConfig.from_kwargs(
             shape="rounded",  # Should enable Phase 1
             corner_radius=0.4,  # Should enable Phase 1
-            merge="aggressive"  # Should enable Phase 2 and 3
+            merge="aggressive",  # Should enable Phase 2 and 3
         )
-        
+
         # Multiple phases should be enabled
         assert config.phase1.enabled is True
         assert config.phase2.enabled is True
@@ -535,11 +522,11 @@ class TestConfigSerialization:
             dark="#e74c3c",
             light="#ffffff",
             geometry=GeometryConfig(shape="circle", corner_radius=0.2),
-            style=StyleConfig(interactive=True)
+            style=StyleConfig(interactive=True),
         )
-        
+
         json_str = config.to_json()
-        
+
         # Should be valid JSON
         json_data = json.loads(json_str)
         assert isinstance(json_data, dict)
@@ -550,7 +537,7 @@ class TestConfigSerialization:
 
     def test_from_json_deserialization(self):
         """Test JSON deserialization."""
-        json_str = '''
+        json_str = """
         {
             "scale": 20,
             "dark": "#2c3e50",
@@ -564,10 +551,10 @@ class TestConfigSerialization:
                 "tooltips": false
             }
         }
-        '''
-        
+        """
+
         config = RenderingConfig.from_json(json_str)
-        
+
         assert config.scale == 20
         assert config.dark == "#2c3e50"
         assert config.light == "#ecf0f1"
@@ -586,34 +573,39 @@ class TestConfigSerialization:
             merge="soft",
             interactive=True,
             centerpiece_enabled=True,
-            centerpiece_size=0.15
+            centerpiece_size=0.15,
         )
-        
+
         # Serialize to JSON and back
         json_str = original_config.to_json()
         restored_config = RenderingConfig.from_json(json_str)
-        
+
         # Should be equivalent
         assert restored_config.scale == original_config.scale
         assert restored_config.geometry.shape == original_config.geometry.shape
-        assert restored_config.geometry.corner_radius == original_config.geometry.corner_radius
+        assert (
+            restored_config.geometry.corner_radius
+            == original_config.geometry.corner_radius
+        )
         assert restored_config.dark == original_config.dark
         assert restored_config.geometry.merge == original_config.geometry.merge
         assert restored_config.style.interactive == original_config.style.interactive
-        assert restored_config.centerpiece.enabled == original_config.centerpiece.enabled
+        assert (
+            restored_config.centerpiece.enabled == original_config.centerpiece.enabled
+        )
         assert restored_config.centerpiece.size == original_config.centerpiece.size
 
     def test_json_schema_generation(self):
         """Test JSON schema generation."""
         schema = RenderingConfig.json_schema()
-        
+
         assert isinstance(schema, dict)
         assert "type" in schema
         assert "properties" in schema
         assert "scale" in schema["properties"]
         assert "dark" in schema["properties"]
         assert "geometry" in schema["properties"]
-        
+
         # Check that required fields are marked
         assert schema["properties"]["scale"]["minimum"] == 1
         assert schema["properties"]["scale"]["maximum"] == 100
@@ -625,11 +617,11 @@ class TestConfigSerialization:
             dark="#34495e",
             geometry=GeometryConfig(shape="rounded", corner_radius=0.25),
             style=StyleConfig(interactive=True),
-            centerpiece=CenterpieceConfig(enabled=True, size=0.18)
+            centerpiece=CenterpieceConfig(enabled=True, size=0.18),
         )
-        
+
         kwargs = config.to_kwargs()
-        
+
         # Should contain flattened parameters
         assert kwargs["scale"] == 12
         assert kwargs["dark"] == "#34495e"
@@ -650,13 +642,13 @@ class TestConfigSerialization:
             "interactive": True,
             "centerpiece_enabled": True,
             "centerpiece_size": 0.2,
-            "frame_shape": "circle"
+            "frame_shape": "circle",
         }
-        
+
         # Convert to config and back to kwargs
         config = RenderingConfig.from_kwargs(**original_kwargs)
         restored_kwargs = config.to_kwargs()
-        
+
         # Key parameters should be preserved
         for key in ["scale", "dark", "shape", "corner_radius", "interactive"]:
             assert restored_kwargs[key] == original_kwargs[key]
@@ -671,27 +663,24 @@ class TestConfigIntegrations:
             dark="#000000",
             light="#ffffff",
             enable_palette_validation=True,
-            min_contrast_ratio=7.0
+            min_contrast_ratio=7.0,
         )
-        
+
         # Should be able to call palette validation
         # Note: This tests the interface, actual validation may depend on implementation
-        assert hasattr(config, 'validate_palette')
+        assert hasattr(config, "validate_palette")
         assert callable(config.validate_palette)
 
     def test_contrast_ratio_calculation(self):
         """Test contrast ratio calculation."""
-        config = RenderingConfig(
-            dark="#000000",
-            light="#ffffff"
-        )
-        
+        config = RenderingConfig(dark="#000000", light="#ffffff")
+
         # Should be able to calculate contrast ratio
-        assert hasattr(config, 'get_contrast_ratio')
+        assert hasattr(config, "get_contrast_ratio")
         assert callable(config.get_contrast_ratio)
-        
+
         # Should be able to check if meets requirements
-        assert hasattr(config, 'meets_contrast_requirements')
+        assert hasattr(config, "meets_contrast_requirements")
         assert callable(config.meets_contrast_requirements)
 
     def test_accent_color_extraction(self):
@@ -703,13 +692,13 @@ class TestConfigIntegrations:
                 enabled=True,
                 finder_color="#e74c3c",
                 timing_color="#3498db",
-                data_color="#2ecc71"
-            )
+                data_color="#2ecc71",
+            ),
         )
-        
+
         # Should extract accent colors for palette validation
         accent_colors = config._get_accent_colors()
-        
+
         assert "#e74c3c" in accent_colors
         assert "#3498db" in accent_colors
         assert "#2ecc71" in accent_colors
@@ -724,7 +713,7 @@ class TestPerformanceConfig:
     def test_default_performance_config(self):
         """Test default performance configuration."""
         config = PerformanceConfig()
-        
+
         assert config.enable_caching is True
         assert config.max_cache_size == 100
         assert config.enable_parallel_processing is False
@@ -738,9 +727,9 @@ class TestPerformanceConfig:
             max_cache_size=500,
             enable_parallel_processing=True,
             memory_limit_mb=2048,
-            debug_timing=True
+            debug_timing=True,
         )
-        
+
         assert config.enable_caching is False
         assert config.max_cache_size == 500
         assert config.enable_parallel_processing is True
@@ -752,7 +741,7 @@ class TestPerformanceConfig:
         # max_cache_size must be >= 1
         with pytest.raises(ValidationError):
             PerformanceConfig(max_cache_size=0)
-        
+
         # memory_limit_mb must be >= 1 if specified
         with pytest.raises(ValidationError):
             PerformanceConfig(memory_limit_mb=0)
@@ -764,12 +753,12 @@ class TestDebugConfig:
     def test_default_debug_config(self):
         """Test default debug configuration."""
         config = DebugConfig()
-        
+
         assert config.debug_mode is False
         assert config.debug_stroke is False
         assert config.save_intermediate_results is False
         assert config.verbose_logging is False
-        
+
         # Check default debug colors
         assert "contour" in config.debug_colors
         assert "cluster" in config.debug_colors
@@ -782,17 +771,17 @@ class TestDebugConfig:
             "contour": "#e74c3c",
             "cluster": "#3498db",
             "enhanced": "#2ecc71",
-            "custom": "#9b59b6"
+            "custom": "#9b59b6",
         }
-        
+
         config = DebugConfig(
             debug_mode=True,
             debug_stroke=True,
             debug_colors=custom_colors,
             save_intermediate_results=True,
-            verbose_logging=True
+            verbose_logging=True,
         )
-        
+
         assert config.debug_mode is True
         assert config.debug_stroke is True
         assert config.debug_colors == custom_colors
@@ -808,15 +797,15 @@ class TestConfigErrorHandling:
         # Test scale validation error
         with pytest.raises(ValidationError) as exc_info:
             RenderingConfig(scale=150)
-        
+
         error_message = str(exc_info.value)
         assert "scale" in error_message.lower()
         assert "100" in error_message  # Maximum value mentioned
-        
+
         # Test color validation error
         with pytest.raises((ValidationError, InvalidColorFormatError)) as exc_info:
             RenderingConfig(dark="")
-        
+
         error_message = str(exc_info.value)
         assert "dark" in error_message.lower() or "color" in error_message.lower()
 
@@ -826,7 +815,7 @@ class TestConfigErrorHandling:
             RenderingConfig(
                 geometry=GeometryConfig(corner_radius=2.0)  # Invalid: > 1.0
             )
-        
+
         error_message = str(exc_info.value)
         assert "geometry" in error_message.lower()
         assert "corner_radius" in error_message.lower()
@@ -835,6 +824,6 @@ class TestConfigErrorHandling:
         """Test enum validation graceful fallback."""
         # from_kwargs should handle invalid enum values gracefully
         config = RenderingConfig.from_kwargs(shape="invalid_shape")
-        
+
         # Should fall back to default shape
-        assert config.geometry.shape == "square"
+        assert config.geometry.shape == ModuleShape.SQUARE

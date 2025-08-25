@@ -56,7 +56,7 @@ class ShapeRenderer(ABC):
     """
 
     @abstractmethod
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """
         Render a shape at the specified position.
 
@@ -92,7 +92,7 @@ class AlgorithmProcessor(ABC):
 
     @abstractmethod
     def process(
-        self, matrix: List[List[bool]], detector: Any, **kwargs
+        self, matrix: List[List[bool]], detector: Any, **kwargs: Any
     ) -> List[Dict[str, Any]]:
         """
         Process the QR matrix using the specific algorithm.
@@ -173,7 +173,7 @@ class SVGBuilder(ABC):
     """
 
     @abstractmethod
-    def create_svg_root(self, width: int, height: int, **kwargs) -> ET.Element:
+    def create_svg_root(self, width: int, height: int, **kwargs: Any) -> ET.Element:
         """Create the root SVG element.
 
         Args:
