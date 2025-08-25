@@ -1873,6 +1873,7 @@ source = { editable = "." }
 dependencies = [
     { name = "pydantic" },
     { name = "segno" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 
 [package.dev-dependencies]
@@ -1914,8 +1915,9 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pydantic", specifier = ">=2.0.0" },
+    { name = "pydantic", specifier = ">=2.7,<3" },
     { name = "segno", specifier = ">=1.5.2" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.8" },
 ]
 provides-extras = ["dev", "docs", "test"]
 
