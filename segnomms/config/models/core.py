@@ -4,12 +4,15 @@ This module contains the main RenderingConfig class that combines all
 other configuration models into a comprehensive configuration system.
 """
 
-# mypy: disable-error-code=unreachable
+from __future__ import annotations
 
 import logging
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+# mypy: disable-error-code=unreachable
+
 
 if TYPE_CHECKING:
     from ...color.palette import PaletteValidationResult
@@ -39,7 +42,8 @@ class RenderingConfig(BaseModel):
     """Main QR code rendering configuration.
 
     This is the central configuration class that combines all aspects of QR code
-    generation including geometry, visual styling, advanced features, and processing phases.
+    generation including geometry, visual styling, advanced features, and processing
+    phases.
 
     The configuration supports both Pydantic model initialization and a convenient
     kwargs-based factory method for backward compatibility.
@@ -93,9 +97,7 @@ class RenderingConfig(BaseModel):
             )
     """
 
-    model_config = ConfigDict(
-        validate_default=True, extra="forbid", use_enum_values=True
-    )
+    model_config = ConfigDict(validate_default=True, extra="forbid")
 
     # Basic QR code parameters
     scale: int = Field(
@@ -112,7 +114,8 @@ class RenderingConfig(BaseModel):
     )
     safe_mode: bool = Field(
         default=False,
-        description="Force square shapes for critical QR patterns (finder, timing) to ensure scannability",
+        description="Force square shapes for critical QR patterns (finder, timing) "
+        "to ensure scannability",
     )
 
     # Configuration subsections
@@ -464,7 +467,8 @@ class RenderingConfig(BaseModel):
             if kwarg_key in kwargs:
                 accessibility_data[config_key] = kwargs[kwarg_key]
 
-        # Auto-enable accessibility for basic features if any accessibility params are provided
+        # Auto-enable accessibility for basic features if any accessibility
+        # params are provided
         if accessibility_data and "enabled" not in accessibility_data:
             accessibility_data["enabled"] = True
 
@@ -490,7 +494,8 @@ class RenderingConfig(BaseModel):
 
             if "frame.shape" in str(e) and "frame_shape" in kwargs:
                 logger.warning(
-                    f"Invalid frame shape '{kwargs['frame_shape']}', falling back to 'square'"
+                    f"Invalid frame shape '{kwargs['frame_shape']}', "
+                    f"falling back to 'square'"
                 )
                 config_data["frame"]["shape"] = "square"
 
@@ -520,7 +525,7 @@ class RenderingConfig(BaseModel):
         # Phase 1: Auto-enable when shape != "square" or corner_radius > 0
         if enable_phase1 is None and not config.phase1.enabled:
             needs_phase1 = (
-                str(config.geometry.shape) != "square"
+                config.geometry.shape.value != "square"
                 or config.geometry.corner_radius > 0
             )
             if needs_phase1:
@@ -531,7 +536,7 @@ class RenderingConfig(BaseModel):
 
         # Phase 2: Auto-enable when merge != "none"
         if enable_phase2 is None and not config.phase2.enabled:
-            if str(config.geometry.merge) != "none":
+            if config.geometry.merge.value != "none":
                 config.phase2.enabled = True
                 config.phase2.use_cluster_rendering = True
                 config.phase2.cluster_module_types = ["data"]
@@ -539,7 +544,7 @@ class RenderingConfig(BaseModel):
 
         # Phase 3: Auto-enable when merge == "aggressive"
         if enable_phase3 is None and not config.phase3.enabled:
-            if str(config.geometry.merge) == "aggressive":
+            if config.geometry.merge.value == "aggressive":
                 config.phase3.enabled = True
                 config.phase3.use_marching_squares = True
                 config.phase3.contour_module_types = ["data"]
@@ -696,21 +701,21 @@ class RenderingConfig(BaseModel):
                     "accessibility_enabled": self.accessibility.enabled,
                     "accessibility_id_prefix": self.accessibility.id_prefix,
                     "accessibility_use_stable_ids": self.accessibility.use_stable_ids,
-                    "accessibility_include_coordinates": self.accessibility.include_coordinates,
+                    "accessibility_include_coordinates": self.accessibility.include_coordinates,  # noqa: E501
                     "accessibility_enable_aria": self.accessibility.enable_aria,
                     "accessibility_root_role": self.accessibility.root_role,
                     "accessibility_module_role": self.accessibility.module_role,
-                    "accessibility_root_label": self.accessibility.root_label,
-                    "accessibility_root_description": self.accessibility.root_description,
-                    "accessibility_include_module_labels": self.accessibility.include_module_labels,
-                    "accessibility_include_pattern_labels": self.accessibility.include_pattern_labels,
-                    "accessibility_optimize_for_screen_readers": self.accessibility.optimize_for_screen_readers,
-                    "accessibility_group_similar_elements": self.accessibility.group_similar_elements,
-                    "accessibility_add_structural_markup": self.accessibility.add_structural_markup,
-                    "accessibility_enable_keyboard_navigation": self.accessibility.enable_keyboard_navigation,
-                    "accessibility_focus_visible_elements": self.accessibility.focus_visible_elements,
-                    "accessibility_target_compliance": self.accessibility.target_compliance,
-                    "accessibility_custom_attributes": self.accessibility.custom_attributes,
+                    "accessibility_root_label": self.accessibility.root_label,  # noqa: E501
+                    "accessibility_root_description": self.accessibility.root_description,  # noqa: E501
+                    "accessibility_include_module_labels": self.accessibility.include_module_labels,  # noqa: E501
+                    "accessibility_include_pattern_labels": self.accessibility.include_pattern_labels,  # noqa: E501
+                    "accessibility_optimize_for_screen_readers": self.accessibility.optimize_for_screen_readers,  # noqa: E501
+                    "accessibility_group_similar_elements": self.accessibility.group_similar_elements,  # noqa: E501
+                    "accessibility_add_structural_markup": self.accessibility.add_structural_markup,  # noqa: E501
+                    "accessibility_enable_keyboard_navigation": self.accessibility.enable_keyboard_navigation,  # noqa: E501
+                    "accessibility_focus_visible_elements": self.accessibility.focus_visible_elements,  # noqa: E501
+                    "accessibility_target_compliance": self.accessibility.target_compliance,  # noqa: E501
+                    "accessibility_custom_attributes": self.accessibility.custom_attributes,  # noqa: E501
                 }
             )
 

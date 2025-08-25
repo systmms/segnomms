@@ -4,6 +4,8 @@ This module contains configuration classes for the multi-phase rendering
 pipeline (Phase 1, 2, and 3).
 """
 
+from __future__ import annotations
+
 from typing import Dict, List
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -99,9 +101,7 @@ class Phase3Config(BaseModel):
         point_reduction: Factor for reducing control points (0.0-1.0)
     """
 
-    model_config = ConfigDict(
-        use_enum_values=True, validate_default=True, extra="forbid"
-    )
+    model_config = ConfigDict(validate_default=True, extra="forbid")
 
     enabled: bool = False
     use_marching_squares: bool = False

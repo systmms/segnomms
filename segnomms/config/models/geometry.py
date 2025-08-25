@@ -4,6 +4,8 @@ This module contains configuration classes related to module geometry,
 shapes, and finder pattern styling.
 """
 
+from __future__ import annotations
+
 from pydantic import BaseModel, ConfigDict, Field
 
 from ..enums import ConnectivityMode, FinderShape, MergeStrategy, ModuleShape
@@ -44,9 +46,7 @@ class GeometryConfig(BaseModel):
             )
     """
 
-    model_config = ConfigDict(
-        use_enum_values=True, validate_default=True, extra="forbid"
-    )
+    model_config = ConfigDict(validate_default=True, extra="forbid")
 
     connectivity: ConnectivityMode = ConnectivityMode.FOUR_WAY
     merge: MergeStrategy = MergeStrategy.NONE
@@ -73,9 +73,7 @@ class FinderConfig(BaseModel):
         stroke: Stroke width in module units (0-5)
     """
 
-    model_config = ConfigDict(
-        use_enum_values=True, validate_default=True, extra="forbid"
-    )
+    model_config = ConfigDict(validate_default=True, extra="forbid")
 
     shape: FinderShape = FinderShape.SQUARE
     inner_scale: float = Field(

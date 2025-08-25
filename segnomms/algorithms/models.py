@@ -4,6 +4,8 @@ This module provides data models for algorithm classes using Pydantic
 for automatic validation and type safety.
 """
 
+from __future__ import annotations
+
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -24,7 +26,7 @@ class ClusteringConfig(BaseModel):
         >>> analyzer = ConnectedComponentAnalyzer(**config.model_dump())
     """
 
-    model_config = ConfigDict(use_enum_values=True)
+    model_config = ConfigDict()
 
     min_cluster_size: int = Field(
         default=3, ge=1, description="Minimum number of modules to form a cluster"
