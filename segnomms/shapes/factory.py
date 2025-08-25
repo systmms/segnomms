@@ -57,11 +57,11 @@ class ShapeRendererFactory(RendererFactory):
         _renderers: Internal registry mapping shape names to renderer classes
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._renderers: Dict[str, Type[ShapeRenderer]] = {}
         self._register_default_renderers()
 
-    def _normalize_shape_type(self, shape_type) -> str:
+    def _normalize_shape_type(self, shape_type: Any) -> str:
         """Normalize shape type to lowercase string, handling both enums and strings.
 
         Args:
@@ -72,12 +72,12 @@ class ShapeRendererFactory(RendererFactory):
         """
         if hasattr(shape_type, "value"):
             # It's an enum, get the string value
-            return shape_type.value.lower()
+            return str(shape_type.value).lower()
         else:
             # It's already a string
-            return shape_type.lower()
+            return str(shape_type).lower()
 
-    def _register_default_renderers(self):
+    def _register_default_renderers(self) -> None:
         """Register all default shape renderers.
 
         This method is called during initialization to register
@@ -149,7 +149,9 @@ class ShapeRendererFactory(RendererFactory):
 
         return supported
 
-    def register_renderer(self, shape_type: str, renderer_class: Type[ShapeRenderer]):
+    def register_renderer(
+        self, shape_type: str, renderer_class: Type[ShapeRenderer]
+    ) -> None:
         """Register a custom shape renderer.
 
         Args:
@@ -270,7 +272,9 @@ def get_shape_factory() -> ShapeRendererFactory:
     return _shape_factory
 
 
-def register_custom_renderer(shape_type: str, renderer_class: Type[ShapeRenderer]):
+def register_custom_renderer(
+    shape_type: str, renderer_class: Type[ShapeRenderer]
+) -> None:
     """Register a custom shape renderer with the global factory.
 
     Args:

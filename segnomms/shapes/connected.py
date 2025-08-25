@@ -19,12 +19,9 @@ from __future__ import annotations
 
 import xml.etree.ElementTree as ET
 from enum import Enum, auto
-from typing import Callable, Optional
-
-from typing_extensions import Unpack
+from typing import Any, Callable, Optional
 
 from ..core.interfaces import ShapeRenderer
-from ..types import ConnectedRenderKwargs
 from .basic import apply_element_attributes
 
 
@@ -69,9 +66,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
 
     """
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[ConnectedRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a connected module based on its neighbors.
 
         Args:
@@ -124,7 +119,9 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         else:  # > 2 neighbors
             return self._draw_straight(x, y, size, **kwargs)
 
-    def _draw_isolated(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _draw_isolated(
+        self, x: float, y: float, size: float, **kwargs: Any
+    ) -> ET.Element:
         """Draw an isolated module with no neighbors.
 
         Args:
@@ -138,11 +135,15 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         """
         return self._basic_dot(x, y, size, **kwargs)
 
-    def _draw_straight(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _draw_straight(
+        self, x: float, y: float, size: float, **kwargs: Any
+    ) -> ET.Element:
         """Draw a module that's part of a straight line or has many neighbors."""
         return self._basic_square(x, y, size, **kwargs)
 
-    def _draw_terminal(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _draw_terminal(
+        self, x: float, y: float, size: float, **kwargs: Any
+    ) -> ET.Element:
         """Draw a terminal module with exactly one neighbor."""
         if self._top_neighbor:
             return self._side_rounded(x, y, size, Side.BOTTOM, **kwargs)
@@ -156,7 +157,9 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         # Fallback (shouldn't happen)
         return self._basic_square(x, y, size, **kwargs)
 
-    def _draw_corner(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _draw_corner(
+        self, x: float, y: float, size: float, **kwargs: Any
+    ) -> ET.Element:
         """Draw a corner module with exactly two perpendicular neighbors."""
         if self._left_neighbor and self._top_neighbor:
             return self._corner_rounded(x, y, size, Corner.BOTTOM_RIGHT, **kwargs)
@@ -170,7 +173,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         # Fallback (shouldn't happen)
         return self._basic_square(x, y, size, **kwargs)
 
-    def _basic_dot(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _basic_dot(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Create a circular dot for isolated modules."""
         circle = ET.Element(
             "circle",
@@ -184,7 +187,9 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         apply_element_attributes(circle, kwargs)
         return circle
 
-    def _basic_square(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _basic_square(
+        self, x: float, y: float, size: float, **kwargs: Any
+    ) -> ET.Element:
         """Create a square for highly connected modules."""
         rect = ET.Element(
             "rect",
@@ -200,7 +205,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         return rect
 
     def _side_rounded(
-        self, x: float, y: float, size: float, side: Side, **kwargs
+        self, x: float, y: float, size: float, side: Side, **kwargs: Any
     ) -> ET.Element:
         """Create a module with one rounded side."""
         half_size = size / 2
@@ -241,7 +246,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
         return self._create_path(path_data, **kwargs)
 
     def _corner_rounded(
-        self, x: float, y: float, size: float, corner: Corner, **kwargs
+        self, x: float, y: float, size: float, corner: Corner, **kwargs: Any
     ) -> ET.Element:
         """Create a module with one rounded corner.
 
@@ -293,7 +298,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
 
         return self._create_path(path_data, **kwargs)
 
-    def _create_path(self, path_data: str, **kwargs) -> ET.Element:
+    def _create_path(self, path_data: str, **kwargs: Any) -> ET.Element:
         """Create a path element with the given data."""
         path = ET.Element(
             "path",
@@ -326,7 +331,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
         >>> element = renderer.render(0, 0, 10, get_neighbor=neighbor_func)
     """
 
-    def _basic_dot(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _basic_dot(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Create a smaller circular dot for isolated modules."""
         circle = ET.Element(
             "circle",
@@ -340,7 +345,9 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
         apply_element_attributes(circle, kwargs)
         return circle
 
-    def _basic_square(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def _basic_square(
+        self, x: float, y: float, size: float, **kwargs: Any
+    ) -> ET.Element:
         """Create a square for highly connected modules.
 
         Note: This uses sharp corners (no rounding) because these modules
@@ -361,7 +368,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
         return rect
 
     def _side_rounded(
-        self, x: float, y: float, size: float, side: Side, **kwargs
+        self, x: float, y: float, size: float, side: Side, **kwargs: Any
     ) -> ET.Element:
         """Creates a module with one pill-shaped, extra-rounded side."""
         half = size / 2
@@ -381,7 +388,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
         return self._create_path(path_data, **kwargs)
 
     def _corner_rounded(
-        self, x: float, y: float, size: float, corner: Corner, **kwargs
+        self, x: float, y: float, size: float, corner: Corner, **kwargs: Any
     ) -> ET.Element:
         """
         Creates a module with one extra-rounded, convex corner using a Quadratic Bezier curve.  # noqa: E501
@@ -458,7 +465,7 @@ class AdvancedClassyRenderer(ConnectedRoundedRenderer):
         Based on the TypeScript QRDot.ts _drawClassy logic from qr-code-styling.
     """
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         get_neighbor: Optional[Callable[[int, int], bool]] = kwargs.get("get_neighbor")
         if not get_neighbor:
             return self._basic_square(x, y, size, **kwargs)
@@ -487,7 +494,7 @@ class AdvancedClassyRenderer(ConnectedRoundedRenderer):
         return self._basic_square(x, y, size, **kwargs)
 
     def _basic_corners_rounded(
-        self, x: float, y: float, size: float, **kwargs
+        self, x: float, y: float, size: float, **kwargs: Any
     ) -> ET.Element:
         """Create a jewel-like shape with opposite corners rounded.
 
@@ -542,7 +549,7 @@ class AdvancedClassyRoundedRenderer(ConnectedExtraRoundedRenderer):
         >>> element = renderer.render(0, 0, 10, get_neighbor=neighbor_func)
     """
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         get_neighbor: Optional[Callable[[int, int], bool]] = kwargs.get("get_neighbor")
         if not get_neighbor:
             return self._basic_square(x, y, size, **kwargs)
@@ -571,7 +578,7 @@ class AdvancedClassyRoundedRenderer(ConnectedExtraRoundedRenderer):
         return self._basic_square(x, y, size, **kwargs)
 
     def _basic_corners_rounded(
-        self, x: float, y: float, size: float, **kwargs
+        self, x: float, y: float, size: float, **kwargs: Any
     ) -> ET.Element:
         """Create a jewel-like shape with ultra-smooth opposite corners.
 

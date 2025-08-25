@@ -178,7 +178,7 @@ class QRCodeRenderer:
         rough_string = ET.tostring(svg, encoding="unicode")
         return _format_svg_string(rough_string)
 
-    def _apply_centerpiece(self):
+    def _apply_centerpiece(self) -> None:
         """Apply centerpiece clearing if enabled."""
         if not self.config.centerpiece.enabled:
             return
@@ -357,7 +357,7 @@ class QRCodeRenderer:
 
     def _render_individual_modules(
         self, layers: Dict[str, ET.Element], processed_positions: Set[Tuple[int, int]]
-    ):
+    ) -> None:
         """Render individual modules that aren't part of clusters."""
         module_count = len(self.matrix)
         module_index = 0
@@ -401,7 +401,7 @@ class QRCodeRenderer:
                     target_group.append(element)
                     module_index += 1
 
-    def _add_finder_halos(self, svg: ET.Element, layers: Dict[str, ET.Element]):
+    def _add_finder_halos(self, svg: ET.Element, layers: Dict[str, ET.Element]) -> None:
         """Add decorative halo elements behind finder patterns for pulse animation."""
         # Find finder pattern positions
         finder_positions = []
@@ -448,7 +448,7 @@ class QRCodeRenderer:
                 },
             )
 
-    def _enhance_pattern_groups(self, layers: Dict[str, ET.Element]):
+    def _enhance_pattern_groups(self, layers: Dict[str, ET.Element]) -> None:
         """Apply accessibility enhancements to pattern groups."""
         pattern_types = [
             ("pattern_finder", "finder"),
@@ -478,10 +478,10 @@ class ModuleRenderer:
         self,
         config: RenderingConfig,
         detector: ModuleDetector,
-        shape_factory,
+        shape_factory: Any,
         path_clipper: Optional[PathClipper] = None,
-        svg_builder=None,
-    ):
+        svg_builder: Any = None,
+    ) -> None:
         """Initialize the module renderer.
 
         Args:
@@ -731,7 +731,7 @@ class ModuleRenderer:
         title.text = f"{module_type} module at ({row}, {col})"
 
 
-def generate_interactive_svg(qr_code, config: RenderingConfig) -> str:
+def generate_interactive_svg(qr_code: Any, config: RenderingConfig) -> str:
     """
     Generate interactive SVG content for a QR code.
 
@@ -759,8 +759,8 @@ def _render_cluster(
     cluster: Dict[str, Any],
     config: RenderingConfig,
     detector: ModuleDetector,
-    path_clipper=None,
-    svg_builder=None,
+    path_clipper: Any = None,
+    svg_builder: Any = None,
 ) -> None:
     """Render a cluster as a single shape"""
     cluster_analyzer = ConnectedComponentAnalyzer()

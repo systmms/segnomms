@@ -47,7 +47,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         self.accessibility_enhancer = self.accessibility_builder.enhancer
 
     # Delegate core SVG methods
-    def create_svg_root(self, width: int, height: int, **kwargs) -> ET.Element:
+    def create_svg_root(self, width: int, height: int, **kwargs: Any) -> ET.Element:
         """Create the root SVG element with accessibility features.
 
         Handles both web accessibility (ARIA attributes) and SVG accessibility
@@ -79,12 +79,17 @@ class InteractiveSVGBuilder(SVGBuilder):
 
         return svg
 
-    def add_styles(self, svg: ET.Element, interactive: bool = False, animation_config: Optional[dict] = None) -> None:
+    def add_styles(
+        self,
+        svg: ET.Element,
+        interactive: bool = False,
+        animation_config: Optional[Dict[str, Any]] = None,
+    ) -> None:
         """Add CSS styles to the SVG."""
         self.core_builder.add_styles(svg, interactive, animation_config)
 
     def add_background(
-        self, svg: ET.Element, width: int, height: int, color: str, **kwargs
+        self, svg: ET.Element, width: int, height: int, color: str, **kwargs: Any
     ) -> None:
         """Add a background rectangle to the SVG."""
         self.core_builder.add_background(svg, width, height, color, **kwargs)
@@ -93,12 +98,14 @@ class InteractiveSVGBuilder(SVGBuilder):
     def add_definitions(
         self,
         svg: ET.Element,
-        definitions_or_gradients: Optional[Union[Dict, List[GradientConfig]]] = None,
-        patterns: Optional[List[Dict]] = None,
-        filters: Optional[List[Dict]] = None,
+        definitions_or_gradients: Optional[
+            Union[Dict[str, Any], List[GradientConfig]]
+        ] = None,
+        patterns: Optional[List[Dict[str, Any]]] = None,
+        filters: Optional[List[Dict[str, Any]]] = None,
     ) -> ET.Element:
         """Add definitions section to SVG.
-        
+
         Args:
             svg: SVG element to add definitions to
             definitions_or_gradients: Either a dictionary containing definitions structure
@@ -112,17 +119,19 @@ class InteractiveSVGBuilder(SVGBuilder):
             gradients_data = definitions.get("gradients", {})
             patterns_data = definitions.get("patterns", {})
             filters_data = definitions.get("filters", {})
-            
+
             # Convert gradients dictionary to list of GradientConfig objects
             gradients_list = []
             if gradients_data:
                 for grad_id, grad_config in gradients_data.items():
                     if isinstance(grad_config, dict):
                         # Transform test format to GradientConfig format
-                        transformed_config = self._transform_gradient_config(grad_id, grad_config)
+                        transformed_config = self._transform_gradient_config(
+                            grad_id, grad_config
+                        )
                         gradients_list.append(transformed_config)
-            
-            # Convert patterns dictionary to list  
+
+            # Convert patterns dictionary to list
             patterns_list = []
             if patterns_data:
                 for pattern_id, pattern_config in patterns_data.items():
@@ -130,7 +139,7 @@ class InteractiveSVGBuilder(SVGBuilder):
                         pattern_config_copy = pattern_config.copy()
                         pattern_config_copy["id"] = pattern_id  # Add missing id field
                         patterns_list.append(pattern_config_copy)
-            
+
             # Convert filters dictionary to list
             filters_list = []
             if filters_data:
@@ -139,7 +148,7 @@ class InteractiveSVGBuilder(SVGBuilder):
                         filter_config_copy = filter_config.copy()
                         filter_config_copy["id"] = filter_id  # Add missing id field
                         filters_list.append(filter_config_copy)
-            
+
             return self.definitions_builder.add_definitions(
                 svg, gradients_list, patterns_list, filters_list
             )
@@ -191,15 +200,15 @@ class InteractiveSVGBuilder(SVGBuilder):
         return self.core_builder._generate_css_styles(interactive)
 
     # Private methods for definitions (maintain interface)
-    def _add_gradient(self, defs: ET.Element, gradient) -> None:
+    def _add_gradient(self, defs: ET.Element, gradient: GradientConfig) -> None:
         """Add a gradient definition."""
         self.definitions_builder._add_gradient(defs, gradient)
 
-    def _add_pattern(self, defs: ET.Element, pattern: Dict) -> None:
+    def _add_pattern(self, defs: ET.Element, pattern: Dict[str, Any]) -> None:
         """Add a pattern definition."""
         self.definitions_builder._add_pattern(defs, pattern)
 
-    def _add_filter(self, defs: ET.Element, filter_config: Dict) -> None:
+    def _add_filter(self, defs: ET.Element, filter_config: Dict[str, Any]) -> None:
         """Add a filter definition."""
         self.definitions_builder._add_filter(defs, filter_config)
 
@@ -214,7 +223,12 @@ class InteractiveSVGBuilder(SVGBuilder):
 
     # Delegate frame and visual methods
     def add_frame_definitions(
-        self, svg: ET.Element, frame_config, width: int, height: int, border_pixels: int
+        self,
+        svg: ET.Element,
+        frame_config: Any,
+        width: int,
+        height: int,
+        border_pixels: int,
     ) -> Optional[str]:
         """Add frame shape definitions to SVG defs section."""
         # Convert original parameters to modular format
@@ -226,7 +240,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         )
 
     def add_quiet_zone_with_style(
-        self, svg: ET.Element, config, width: int, height: int
+        self, svg: ET.Element, config: Any, width: int, height: int
     ) -> None:
         """Add styled quiet zone to the SVG."""
         # Convert width/height to qr_bounds format for the frame_visual builder
@@ -234,7 +248,12 @@ class InteractiveSVGBuilder(SVGBuilder):
         self.frame_visual_builder.add_quiet_zone_with_style(svg, config, qr_bounds)
 
     def add_centerpiece_metadata(
-        self, svg: ET.Element, config, bounds: dict, scale: int, border: int
+        self,
+        svg: ET.Element,
+        config: Any,
+        bounds: Dict[str, Any],
+        scale: int,
+        border: int,
     ) -> None:
         """Add metadata about centerpiece location for overlay applications."""
         # Convert original bounds dict to qr_bounds tuple format
@@ -244,7 +263,9 @@ class InteractiveSVGBuilder(SVGBuilder):
         width = bounds.get("width", 0) * scale
         height = bounds.get("height", 0) * scale
         qr_bounds = (x, y, width, height)
-        self.frame_visual_builder.add_centerpiece_metadata(svg, config, qr_bounds, scale)
+        self.frame_visual_builder.add_centerpiece_metadata(
+            svg, config, qr_bounds, scale
+        )
 
     # Delegate accessibility structure methods
     def create_layered_structure(self, svg: ET.Element) -> Dict[str, ET.Element]:
@@ -275,16 +296,18 @@ class InteractiveSVGBuilder(SVGBuilder):
         """Validate accessibility compliance."""
         return self.accessibility_builder.validate_accessibility()
 
-    def _transform_gradient_config(self, grad_id: str, grad_config: Dict) -> Dict:
+    def _transform_gradient_config(
+        self, grad_id: str, grad_config: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Transform test format gradient config to GradientConfig format.
-        
+
         This method doesn't create a GradientConfig object but returns a dictionary
         that bypasses the strict model validation and preserves original format.
-        
+
         Args:
             grad_id: Gradient ID
             grad_config: Dictionary containing gradient configuration in test format
-            
+
         Returns:
             Dictionary that will be passed directly to _add_gradient
         """
@@ -293,5 +316,5 @@ class InteractiveSVGBuilder(SVGBuilder):
         result = grad_config.copy()
         result["gradient_id"] = grad_id
         result["gradient_type"] = grad_config.get("type", "linear")
-        
+
         return result
