@@ -8,22 +8,18 @@ pre-commit:
     actionlint:
       glob: ".github/workflows/*.{yml,yaml}"
       run: actionlint {staged_files}
-      
     # Python code formatting - Black
     black:
       glob: "*.py"
       run: black --check {staged_files}
-      
     # Python import sorting - isort
     isort:
       glob: "*.py"
       run: isort --check-only --profile black {staged_files}
-      
     # Python linting - Flake8
     flake8:
       glob: "*.py"
       run: flake8 --max-line-length=88 --extend-ignore=E203,W503 {staged_files}
-      
     # General file checks
     trailing-whitespace:
       run: |
@@ -33,7 +29,7 @@ pre-commit:
             exit 1
           fi
         done
-        
+
     end-of-file:
       run: |
         for file in {staged_files}; do
@@ -42,7 +38,7 @@ pre-commit:
             exit 1
           fi
         done
-        
+
     check-yaml:
       glob: "*.{yml,yaml}"
       exclude: ".github/workflows/*.{yml,yaml}"
@@ -50,14 +46,14 @@ pre-commit:
         for file in {staged_files}; do
           python -c "import yaml; yaml.safe_load(open('$file'))" || exit 1
         done
-        
+
     check-json:
       glob: "*.json"
       run: |
         for file in {staged_files}; do
           python -m json.tool "$file" > /dev/null || exit 1
         done
-        
+
     check-merge-conflict:
       run: |
         for file in {staged_files}; do
@@ -66,7 +62,7 @@ pre-commit:
             exit 1
           fi
         done
-        
+
     debug-statements:
       glob: "*.py"
       run: |
@@ -77,9 +73,7 @@ pre-commit:
           fi
         done
 
-# Optional: Type checking (uncomment to enable)
-# pre-commit:
-#   commands:
-#     mypy:
-#       glob: "*.py"
-#       run: mypy --ignore-missing-imports {staged_files}
+    # Type checking - MyPy with comprehensive configuration from pyproject.toml
+    mypy:
+      glob: "*.py"
+      run: mypy {staged_files}
