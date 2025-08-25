@@ -16,28 +16,44 @@ Available shapes:
 
 """
 
+from __future__ import annotations
+
 import xml.etree.ElementTree as ET
 
+from typing_extensions import Unpack
+
 from ..core.interfaces import ShapeRenderer
+from ..types import (
+    CircleRenderKwargs,
+    CrossRenderKwargs,
+    DiamondRenderKwargs,
+    DotRenderKwargs,
+    HexagonRenderKwargs,
+    RoundedRenderKwargs,
+    SquareRenderKwargs,
+    SquircleRenderKwargs,
+    StarRenderKwargs,
+    TriangleRenderKwargs,
+)
 
 
 class BaseShapeRenderer(ShapeRenderer):
     """Abstract base class for basic shape renderers with common functionality.
-    
+
     Provides standardized implementations of common methods like supports_type()
     and shared constants. Subclasses should define shape_names to specify
     which shape types they support.
     """
-    
+
     # Subclasses should override this with their supported shape names
     shape_names: list[str] = []
-    
+
     def supports_type(self, shape_type: str) -> bool:
         """Check if this renderer supports the given shape type.
-        
+
         Args:
             shape_type: Name of the shape type to check
-            
+
         Returns:
             bool: True if shape_type is in the renderer's shape_names list
         """
@@ -71,40 +87,40 @@ def apply_element_attributes(element: ET.Element, kwargs: dict) -> None:
 
 def create_svg_element(tag: str, attributes: dict, kwargs: dict) -> ET.Element:
     """Create an SVG element with common attributes applied.
-    
+
     This helper function combines element creation with common attribute
     application, reducing boilerplate code across all renderers.
-    
+
     Args:
         tag: SVG element tag name (e.g., 'rect', 'circle', 'polygon')
         attributes: Dictionary of SVG-specific attributes
         kwargs: Additional parameters including css_class, id, data-* attributes
-        
+
     Returns:
         ET.Element: SVG element with all attributes applied
     """
     # Ensure css_class is always set to default if not provided
     attributes.setdefault("class", kwargs.get("css_class", "qr-module"))
-    
+
     # Convert all attribute values to strings for XML
     str_attributes = {k: str(v) for k, v in attributes.items()}
-    
+
     # Create element and apply additional attributes
     element = ET.Element(tag, str_attributes)
     apply_element_attributes(element, kwargs)
-    
+
     return element
 
 
 # Geometry utility functions
 def get_module_center(x: float, y: float, size: float) -> tuple[float, float]:
     """Calculate the center point of a module.
-    
+
     Args:
         x: Module's top-left x coordinate
-        y: Module's top-left y coordinate  
+        y: Module's top-left y coordinate
         size: Module size
-        
+
     Returns:
         tuple[float, float]: Center coordinates (cx, cy)
     """
@@ -113,27 +129,29 @@ def get_module_center(x: float, y: float, size: float) -> tuple[float, float]:
 
 def apply_size_ratio(size: float, kwargs: dict, default: float = 1.0) -> float:
     """Apply size ratio from kwargs to a base size.
-    
+
     Args:
         size: Base size value
         kwargs: Parameters dictionary that may contain 'size_ratio'
         default: Default ratio if not specified in kwargs
-        
+
     Returns:
         float: Size multiplied by the ratio
     """
     return size * kwargs.get("size_ratio", default)
 
 
-def get_corner_radius(size: float, kwargs: dict, param_name: str = "roundness", default: float = 0.3) -> float:
+def get_corner_radius(
+    size: float, kwargs: dict, param_name: str = "roundness", default: float = 0.3
+) -> float:
     """Calculate corner radius from size and roundness parameter.
-    
+
     Args:
         size: Base size value
-        kwargs: Parameters dictionary 
+        kwargs: Parameters dictionary
         param_name: Name of the parameter to look for (default: 'roundness')
         default: Default roundness ratio if not specified
-        
+
     Returns:
         float: Corner radius value
     """
@@ -142,64 +160,77 @@ def get_corner_radius(size: float, kwargs: dict, param_name: str = "roundness", 
 
 
 # Polygon generation utilities
-def generate_regular_polygon(center_x: float, center_y: float, radius: float, 
-                           sides: int, start_angle: float = 0.0) -> list[str]:
+def generate_regular_polygon(
+    center_x: float,
+    center_y: float,
+    radius: float,
+    sides: int,
+    start_angle: float = 0.0,
+) -> list[str]:
     """Generate points for a regular polygon.
-    
+
     Args:
         center_x: X coordinate of polygon center
-        center_y: Y coordinate of polygon center  
+        center_y: Y coordinate of polygon center
         radius: Distance from center to vertices
         sides: Number of polygon sides (must be >= 3)
         start_angle: Starting angle in radians (default: 0.0)
-        
+
     Returns:
         list[str]: List of point strings in "x,y" format for SVG polygon
-        
+
     Raises:
         ValueError: If sides < 3
     """
     if sides < 3:
         raise ValueError("Polygon must have at least 3 sides")
-        
+
     import math
+
     points = []
     angle_step = 2 * math.pi / sides
-    
+
     for i in range(sides):
         angle = start_angle + i * angle_step
         px = center_x + radius * math.cos(angle)
         py = center_y + radius * math.sin(angle)
         points.append(f"{px:.2f},{py:.2f}")
-    
+
     return points
 
 
-def generate_star_polygon(center_x: float, center_y: float, outer_radius: float,
-                         inner_radius: float, points: int, start_angle: float = -3.141592653589793/2) -> list[str]:
+def generate_star_polygon(
+    center_x: float,
+    center_y: float,
+    outer_radius: float,
+    inner_radius: float,
+    points: int,
+    start_angle: float = -3.141592653589793 / 2,
+) -> list[str]:
     """Generate points for a star polygon.
-    
+
     Args:
         center_x: X coordinate of star center
         center_y: Y coordinate of star center
         outer_radius: Distance from center to outer points
-        inner_radius: Distance from center to inner points  
+        inner_radius: Distance from center to inner points
         points: Number of star points (must be >= 3)
         start_angle: Starting angle in radians (default: -π/2 for upward point)
-        
+
     Returns:
         list[str]: List of point strings in "x,y" format for SVG polygon
-        
+
     Raises:
         ValueError: If points < 3
     """
     if points < 3:
         raise ValueError("Star must have at least 3 points")
-        
+
     import math
+
     star_points = []
     angle_step = math.pi / points  # Half the angle between outer points
-    
+
     for i in range(points * 2):
         angle = start_angle + i * angle_step
         if i % 2 == 0:
@@ -211,47 +242,49 @@ def generate_star_polygon(center_x: float, center_y: float, outer_radius: float,
             px = center_x + inner_radius * math.cos(angle)
             py = center_y + inner_radius * math.sin(angle)
         star_points.append(f"{px:.2f},{py:.2f}")
-    
+
     return star_points
 
 
 def generate_diamond_points(x: float, y: float, size: float) -> list[str]:
     """Generate points for a diamond (rotated square) shape.
-    
+
     Args:
         x: Top-left x coordinate of bounding box
         y: Top-left y coordinate of bounding box
         size: Size of the bounding box
-        
+
     Returns:
         list[str]: List of point strings for diamond polygon
     """
     half = size / 2
     return [
-        f"{x + half},{y}",          # Top
-        f"{x + size},{y + half}",   # Right  
-        f"{x + half},{y + size}",   # Bottom
-        f"{x},{y + half}",          # Left
+        f"{x + half},{y}",  # Top
+        f"{x + size},{y + half}",  # Right
+        f"{x + half},{y + size}",  # Bottom
+        f"{x},{y + half}",  # Left
     ]
 
 
-def generate_triangle_points(x: float, y: float, size: float, direction: str = "up") -> list[str]:
+def generate_triangle_points(
+    x: float, y: float, size: float, direction: str = "up"
+) -> list[str]:
     """Generate points for a triangle in the specified direction.
-    
+
     Args:
         x: Top-left x coordinate of bounding box
         y: Top-left y coordinate of bounding box
         size: Size of the bounding box
         direction: Triangle direction ('up', 'down', 'left', 'right')
-        
+
     Returns:
         list[str]: List of point strings for triangle polygon
-        
+
     Raises:
         ValueError: If direction is not valid
     """
     direction = direction.lower()
-    
+
     if direction == "up":
         return [
             f"{x + size / 2},{y}",
@@ -277,7 +310,9 @@ def generate_triangle_points(x: float, y: float, size: float, direction: str = "
             f"{x + size},{y + size / 2}",
         ]
     else:
-        raise ValueError(f"Invalid direction '{direction}'. Must be 'up', 'down', 'left', or 'right'")
+        raise ValueError(
+            f"Invalid direction '{direction}'. Must be 'up', 'down', 'left', or 'right'"
+        )
 
 
 class SquareRenderer(BaseShapeRenderer):
@@ -292,10 +327,12 @@ class SquareRenderer(BaseShapeRenderer):
         >>> square = renderer.render(0, 0, 10)
         >>> # Creates a 10x10 square at position (0,0)
     """
-    
+
     shape_names = ["square"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[SquareRenderKwargs]
+    ) -> ET.Element:
         """Render a square module.
 
         Args:
@@ -317,7 +354,7 @@ class SquareRenderer(BaseShapeRenderer):
                 "width": size,
                 "height": size,
             },
-            kwargs
+            kwargs,
         )
 
 
@@ -333,10 +370,12 @@ class CircleRenderer(BaseShapeRenderer):
         >>> circle = renderer.render(5, 5, 10)
         >>> # Creates a circle with radius 5 centered at (10,10)
     """
-    
+
     shape_names = ["circle"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[CircleRenderKwargs]
+    ) -> ET.Element:
         """Render a circular module.
 
         Args:
@@ -352,12 +391,8 @@ class CircleRenderer(BaseShapeRenderer):
         """
         cx, cy = get_module_center(x, y, size)
         radius = apply_size_ratio(size / 2, kwargs, 0.9)
-        
-        return create_svg_element(
-            "circle",
-            {"cx": cx, "cy": cy, "r": radius},
-            kwargs
-        )
+
+        return create_svg_element("circle", {"cx": cx, "cy": cy, "r": radius}, kwargs)
 
 
 class RoundedRenderer(BaseShapeRenderer):
@@ -372,10 +407,12 @@ class RoundedRenderer(BaseShapeRenderer):
         >>> rounded_rect = renderer.render(0, 0, 10, roundness=0.3)
         >>> # Creates a square with 30% corner radius
     """
-    
+
     shape_names = ["rounded"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[RoundedRenderKwargs]
+    ) -> ET.Element:
         """Render a rounded square module.
 
         Args:
@@ -402,7 +439,7 @@ class RoundedRenderer(BaseShapeRenderer):
                 "rx": radius,
                 "ry": radius,
             },
-            kwargs
+            kwargs,
         )
 
 
@@ -418,10 +455,12 @@ class DotRenderer(BaseShapeRenderer):
         >>> dot = renderer.render(0, 0, 10, size_ratio=0.5)
         >>> # Creates a 5-pixel diameter dot in a 10x10 module
     """
-    
+
     shape_names = ["dot"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[DotRenderKwargs]
+    ) -> ET.Element:
         """Render a small dot module.
 
         Args:
@@ -438,11 +477,9 @@ class DotRenderer(BaseShapeRenderer):
         """
         cx, cy = get_module_center(x, y, size)
         dot_size = apply_size_ratio(size, kwargs, 0.6)
-        
+
         return create_svg_element(
-            "circle",
-            {"cx": cx, "cy": cy, "r": dot_size / 2},
-            kwargs
+            "circle", {"cx": cx, "cy": cy, "r": dot_size / 2}, kwargs
         )
 
 
@@ -458,10 +495,12 @@ class DiamondRenderer(BaseShapeRenderer):
         >>> diamond = renderer.render(0, 0, 10)
         >>> # Creates a diamond touching all edges of the 10x10 module
     """
-    
+
     shape_names = ["diamond"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[DiamondRenderKwargs]
+    ) -> ET.Element:
         """Render a diamond shape module.
 
         Args:
@@ -476,11 +515,7 @@ class DiamondRenderer(BaseShapeRenderer):
             ET.Element: SVG polygon element forming a diamond
         """
         points = generate_diamond_points(x, y, size)
-        return create_svg_element(
-            "polygon",
-            {"points": " ".join(points)},
-            kwargs
-        )
+        return create_svg_element("polygon", {"points": " ".join(points)}, kwargs)
 
 
 class StarRenderer(BaseShapeRenderer):
@@ -495,10 +530,12 @@ class StarRenderer(BaseShapeRenderer):
         >>> star = renderer.render(0, 0, 10, star_points=6, inner_ratio=0.4)
         >>> # Creates a 6-pointed star with sharp points
     """
-    
+
     shape_names = ["star"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[StarRenderKwargs]
+    ) -> ET.Element:
         """Render a star shape module.
 
         Args:
@@ -520,13 +557,11 @@ class StarRenderer(BaseShapeRenderer):
         outer_radius = size / 2
         inner_radius = outer_radius * inner_ratio
 
-        star_points = generate_star_polygon(center_x, center_y, outer_radius, inner_radius, points)
-
-        return create_svg_element(
-            "polygon",
-            {"points": " ".join(star_points)},
-            kwargs
+        star_points = generate_star_polygon(
+            center_x, center_y, outer_radius, inner_radius, points
         )
+
+        return create_svg_element("polygon", {"points": " ".join(star_points)}, kwargs)
 
 
 class TriangleRenderer(BaseShapeRenderer):
@@ -541,10 +576,12 @@ class TriangleRenderer(BaseShapeRenderer):
         >>> triangle = renderer.render(0, 0, 10, direction='up')
         >>> # Creates an upward-pointing triangle
     """
-    
+
     shape_names = ["triangle"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[TriangleRenderKwargs]
+    ) -> ET.Element:
         """Render a triangle shape module.
 
         Args:
@@ -562,11 +599,7 @@ class TriangleRenderer(BaseShapeRenderer):
         direction = kwargs.get("direction", "up")
         points = generate_triangle_points(x, y, size, direction)
 
-        return create_svg_element(
-            "polygon",
-            {"points": " ".join(points)},
-            kwargs
-        )
+        return create_svg_element("polygon", {"points": " ".join(points)}, kwargs)
 
 
 class HexagonRenderer(BaseShapeRenderer):
@@ -581,10 +614,12 @@ class HexagonRenderer(BaseShapeRenderer):
         >>> hexagon = renderer.render(0, 0, 10, size_ratio=0.95)
         >>> # Creates a hexagon slightly smaller than the module
     """
-    
+
     shape_names = ["hexagon"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[HexagonRenderKwargs]
+    ) -> ET.Element:
         """Render a hexagon shape module.
 
         Args:
@@ -604,11 +639,7 @@ class HexagonRenderer(BaseShapeRenderer):
 
         hex_points = generate_regular_polygon(center_x, center_y, radius, 6)
 
-        return create_svg_element(
-            "polygon",
-            {"points": " ".join(hex_points)},
-            kwargs
-        )
+        return create_svg_element("polygon", {"points": " ".join(hex_points)}, kwargs)
 
 
 class CrossRenderer(BaseShapeRenderer):
@@ -624,10 +655,12 @@ class CrossRenderer(BaseShapeRenderer):
         >>> cross = renderer.render(0, 0, 10, thickness=0.25, sharp=True)
         >>> # Creates a sharp cross with tapered arms
     """
-    
+
     shape_names = ["cross"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[CrossRenderKwargs]
+    ) -> ET.Element:
         """Render a cross shape module.
 
         Args:
@@ -706,7 +739,7 @@ class CrossRenderer(BaseShapeRenderer):
                 "data-thickness": debug_thickness,
                 "data-arm-width": arm_width,
             },
-            kwargs
+            kwargs,
         )
 
 
@@ -722,10 +755,12 @@ class SquircleRenderer(BaseShapeRenderer):
         >>> squircle = renderer.render(0, 0, 10)
         >>> # Creates a 10x10 squircle at position (0,0)
     """
-    
+
     shape_names = ["squircle"]
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[SquircleRenderKwargs]
+    ) -> ET.Element:
         """Render a squircle module.
 
         Args:
@@ -769,8 +804,4 @@ class SquircleRenderer(BaseShapeRenderer):
             f"Z"
         )
 
-        return create_svg_element(
-            "path",
-            {"d": path_data},
-            kwargs
-        )
+        return create_svg_element("path", {"d": path_data}, kwargs)

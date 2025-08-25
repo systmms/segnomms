@@ -15,11 +15,16 @@ Available connected renderers:
 
 """
 
+from __future__ import annotations
+
 import xml.etree.ElementTree as ET
 from enum import Enum, auto
 from typing import Callable, Optional
 
+from typing_extensions import Unpack
+
 from ..core.interfaces import ShapeRenderer
+from ..types import ConnectedRenderKwargs
 from .basic import apply_element_attributes
 
 
@@ -64,7 +69,9 @@ class ConnectedRoundedRenderer(ShapeRenderer):
 
     """
 
-    def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
+    def render(
+        self, x: float, y: float, size: float, **kwargs: Unpack[ConnectedRenderKwargs]
+    ) -> ET.Element:
         """Render a connected module based on its neighbors.
 
         Args:
@@ -248,7 +255,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
             path_data = (
                 f"M {x} {y + size} "  # Start at bottom-left
                 f"V {y + half_size} "  # Move up to middle-left
-                f"A {half_size} {half_size} 0 0 1 {x + half_size} {y} "  # Arc to top-middle
+                f"A {half_size} {half_size} 0 0 1 {x + half_size} {y} "  # Arc to top-middle  # noqa: E501
                 f"H {x + size} "  # Line to top-right
                 f"V {y + size} "  # Line to bottom-right
                 f"Z"  # Close path back to bottom-left
@@ -260,7 +267,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
                 f"H {x} "  # Line to bottom-left
                 f"V {y} "  # Line to top-left
                 f"H {x + half_size} "  # Line to top-middle
-                f"A {half_size} {half_size} 0 0 1 {x + size} {y + half_size} "  # Arc to right-middle
+                f"A {half_size} {half_size} 0 0 1 {x + size} {y + half_size} "  # Arc to right-middle  # noqa: E501
                 f"Z"  # Close path back to bottom-right
             )
         elif corner == Corner.BOTTOM_RIGHT:
@@ -268,7 +275,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
             path_data = (
                 f"M {x + size} {y} "  # Start at top-right
                 f"V {y + half_size} "  # Line to right-middle
-                f"A {half_size} {half_size} 0 0 1 {x + half_size} {y + size} "  # Arc to bottom-middle
+                f"A {half_size} {half_size} 0 0 1 {x + half_size} {y + size} "  # Arc to bottom-middle  # noqa: E501
                 f"H {x} "  # Line to bottom-left
                 f"V {y} "  # Line to top-left
                 f"Z"  # Close path back to top-right
@@ -280,7 +287,7 @@ class ConnectedRoundedRenderer(ShapeRenderer):
                 f"H {x + size} "  # Line to top-right
                 f"V {y + size} "  # Line to bottom-right
                 f"H {x + half_size} "  # Line to bottom-middle
-                f"A {half_size} {half_size} 0 0 1 {x} {y + half_size} "  # Arc to left-middle
+                f"A {half_size} {half_size} 0 0 1 {x} {y + half_size} "  # Arc to left-middle  # noqa: E501
                 f"Z"  # Close path back to top-left
             )
 
@@ -377,24 +384,24 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
         self, x: float, y: float, size: float, corner: Corner, **kwargs
     ) -> ET.Element:
         """
-        Creates a module with one extra-rounded, convex corner using a Quadratic Bezier curve.
+        Creates a module with one extra-rounded, convex corner using a Quadratic Bezier curve.  # noqa: E501
         """
         if corner == Corner.TOP_LEFT:
             # Neighbors are RIGHT and BOTTOM. Soft corner is TOP-LEFT.
             path_data = (
                 f"M {x + size} {y} "  # Start at top-right
-                f"L {x + size} {y + size} "  # Line to bottom-right (connects to bottom neighbor)
+                f"L {x + size} {y + size} "  # Line to bottom-right (connects to bottom neighbor)  # noqa: E501
                 f"L {x} {y + size} "  # Line to bottom-left
-                f"Q {x} {y} {x + size} {y} "  # Curve to top-right with top-left as control point
+                f"Q {x} {y} {x + size} {y} "  # Curve to top-right with top-left as control point  # noqa: E501
                 f"Z"
             )
         elif corner == Corner.TOP_RIGHT:
             # Neighbors are LEFT and BOTTOM. Soft corner is TOP-RIGHT.
             path_data = (
                 f"M {x + size} {y + size} "  # Start at bottom-right
-                f"L {x} {y + size} "  # Line to bottom-left (connects to bottom neighbor)
+                f"L {x} {y + size} "  # Line to bottom-left (connects to bottom neighbor)  # noqa: E501
                 f"L {x} {y} "  # Line to top-left (connects to left neighbor)
-                f"Q {x + size} {y} {x + size} {y + size} "  # Curve to bottom-right with top-right as control
+                f"Q {x + size} {y} {x + size} {y + size} "  # Curve to bottom-right with top-right as control  # noqa: E501
                 f"Z"
             )
         elif corner == Corner.BOTTOM_RIGHT:
@@ -403,7 +410,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
                 f"M {x} {y + size} "  # Start at bottom-left
                 f"L {x} {y} "  # Line to top-left (connects to top neighbor)
                 f"L {x + size} {y} "  # Line to top-right
-                f"Q {x + size} {y + size} {x} {y + size} "  # Curve to bottom-left with bottom-right as control
+                f"Q {x + size} {y + size} {x} {y + size} "  # Curve to bottom-left with bottom-right as control  # noqa: E501
                 f"Z"
             )
         else:  # corner == Corner.BOTTOM_LEFT
@@ -411,8 +418,8 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
             path_data = (
                 f"M {x} {y} "  # Start at top-left
                 f"L {x + size} {y} "  # Line to top-right (connects to top neighbor)
-                f"L {x + size} {y + size} "  # Line to bottom-right (connects to right neighbor)
-                f"Q {x} {y + size} {x} {y} "  # Curve to top-left with bottom-left as control
+                f"L {x + size} {y + size} "  # Line to bottom-right (connects to right neighbor)  # noqa: E501
+                f"Q {x} {y + size} {x} {y} "  # Curve to top-left with bottom-left as control  # noqa: E501
                 f"Z"
             )
         return self._create_path(path_data, **kwargs)
@@ -422,7 +429,7 @@ class ConnectedExtraRoundedRenderer(ConnectedRoundedRenderer):
         return shape_type.lower() in ["connected-extra-rounded"]
 
 
-# ConnectedClassyRenderer removed - shapes 'classy', 'connected_classy', 'elegant' no longer supported
+# ConnectedClassyRenderer removed - shapes 'classy', 'connected_classy', 'elegant' no longer supported  # noqa: E501
 
 
 class AdvancedClassyRenderer(ConnectedRoundedRenderer):
@@ -476,7 +483,7 @@ class AdvancedClassyRenderer(ConnectedRoundedRenderer):
         if not bottom and not right:
             return self._corner_rounded(x, y, size, Corner.BOTTOM_RIGHT, **kwargs)
 
-        # Rule 4: Everything else is a solid square (middle of lines, T-junctions, crosses)
+        # Rule 4: Everything else is a solid square (middle of lines, T-junctions, crosses)  # noqa: E501
         return self._basic_square(x, y, size, **kwargs)
 
     def _basic_corners_rounded(
@@ -499,10 +506,10 @@ class AdvancedClassyRenderer(ConnectedRoundedRenderer):
         half_size = size / 2
         path_data = (
             f"M {x} {y + half_size} "  # Start at middle-left
-            f"A {half_size} {half_size} 0 0 1 {x + half_size} {y} "  # Arc for top-left corner
+            f"A {half_size} {half_size} 0 0 1 {x + half_size} {y} "  # Arc for top-left corner  # noqa: E501
             f"H {x + size} "  # Line to top-right
             f"V {y + half_size} "  # Line to middle-right
-            f"A {half_size} {half_size} 0 0 1 {x + half_size} {y + size} "  # Arc for bottom-right
+            f"A {half_size} {half_size} 0 0 1 {x + half_size} {y + size} "  # Arc for bottom-right  # noqa: E501
             f"H {x} "  # Line to bottom-left
             f"Z"
         )
@@ -560,7 +567,7 @@ class AdvancedClassyRoundedRenderer(ConnectedExtraRoundedRenderer):
         if not bottom and not right:
             return self._corner_rounded(x, y, size, Corner.BOTTOM_RIGHT, **kwargs)
 
-        # Rule 4: Everything else is a solid square (middle of lines, T-junctions, crosses)
+        # Rule 4: Everything else is a solid square (middle of lines, T-junctions, crosses)  # noqa: E501
         return self._basic_square(x, y, size, **kwargs)
 
     def _basic_corners_rounded(
@@ -587,7 +594,7 @@ class AdvancedClassyRoundedRenderer(ConnectedExtraRoundedRenderer):
             f"Q {x} {y} {x + radius} {y} "  # Quadratic curve for top-left corner
             f"H {x + size} "  # Line to top-right
             f"V {y + radius} "  # Line to middle-right
-            f"Q {x + size} {y + size} {x + radius} {y + size} "  # Quadratic curve for bottom-right
+            f"Q {x + size} {y + size} {x + radius} {y + size} "  # Quadratic curve for bottom-right  # noqa: E501
             f"H {x} "  # Line to bottom-left
             f"Z"
         )
