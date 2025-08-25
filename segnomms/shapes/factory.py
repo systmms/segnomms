@@ -23,7 +23,7 @@ Example:
 
 """
 
-from typing import Any, Dict, List, Type, cast, Optional
+from typing import Any, Dict, List, Optional, Type
 
 from ..core.interfaces import RendererFactory, ShapeRenderer
 from .basic import (
@@ -60,6 +60,22 @@ class ShapeRendererFactory(RendererFactory):
     def __init__(self):
         self._renderers: Dict[str, Type[ShapeRenderer]] = {}
         self._register_default_renderers()
+
+    def _normalize_shape_type(self, shape_type) -> str:
+        """Normalize shape type to lowercase string, handling both enums and strings.
+
+        Args:
+            shape_type: Shape type as string or enum
+
+        Returns:
+            str: Normalized lowercase shape type string
+        """
+        if hasattr(shape_type, "value"):
+            # It's an enum, get the string value
+            return shape_type.value.lower()
+        else:
+            # It's already a string
+            return shape_type.lower()
 
     def _register_default_renderers(self):
         """Register all default shape renderers.
@@ -143,7 +159,7 @@ class ShapeRendererFactory(RendererFactory):
         Example:
             >>> factory.register_renderer('my-shape', MyShapeRenderer)
         """
-        self._renderers[shape_type.lower()] = renderer_class
+        self._renderers[self._normalize_shape_type(shape_type)] = renderer_class
 
     def create_renderer(self, shape_type: str, config: Dict[str, Any]) -> ShapeRenderer:
         """Create a renderer for the specified shape type.
@@ -163,7 +179,7 @@ class ShapeRendererFactory(RendererFactory):
 
         logger = logging.getLogger(__name__)
 
-        shape_type_lower = shape_type.lower()
+        shape_type_lower = self._normalize_shape_type(shape_type)
 
         if shape_type_lower not in self._renderers:
             available_shapes = sorted(self._renderers.keys())
@@ -194,7 +210,7 @@ class ShapeRendererFactory(RendererFactory):
         Returns:
             bool: True if shape type is registered
         """
-        return shape_type.lower() in self._renderers
+        return self._normalize_shape_type(shape_type) in self._renderers
 
     def get_renderer_info(self, shape_type: str) -> Dict[str, Any]:
         """Get information about a specific renderer.
@@ -203,9 +219,9 @@ class ShapeRendererFactory(RendererFactory):
             shape_type: Shape type to query
 
         Returns:
-            Dict[str, Any]: Information including class name, supported types, and module
+            Dict[str, Any]: Information including class name, supported types, and module  # noqa: E501
         """
-        shape_type_lower = shape_type.lower()
+        shape_type_lower = self._normalize_shape_type(shape_type)
         if shape_type_lower not in self._renderers:
             return {}
 
@@ -215,7 +231,7 @@ class ShapeRendererFactory(RendererFactory):
         return {
             "class_name": renderer_class.__name__,
             "supported_types": self._get_supported_types(renderer_instance),
-            "module": renderer_class.__module__,
+            "module": renderer_class.__module__,  # noqa: E501
         }
 
     def get_all_renderer_info(self) -> Dict[str, Dict[str, Any]]:
