@@ -302,4 +302,5 @@ dev-dependencies = [
     "lefthook>=1.0.0",
     "beautifulsoup4>=4.0.0",
     "lxml>=4.0.0",  # For XML/SVG parsing in tests
+    "psutil>=5.0.0",  # For performance benchmarking
 ]

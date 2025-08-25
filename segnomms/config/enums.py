@@ -5,9 +5,10 @@ system to ensure type safety and provide clear, validated options.
 """
 
 from enum import Enum
+from typing import Any
 
 
-class ConnectivityMode(Enum):
+class ConnectivityMode(str, Enum):
     """Module connectivity detection modes.
 
     Attributes:
@@ -18,8 +19,32 @@ class ConnectivityMode(Enum):
     FOUR_WAY = "4-way"
     EIGHT_WAY = "8-way"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "ConnectivityMode":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip()
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "4way": cls.FOUR_WAY,
+                "4-way": cls.FOUR_WAY,
+                "four": cls.FOUR_WAY,
+                "orthogonal": cls.FOUR_WAY,
+                "8way": cls.EIGHT_WAY,
+                "8-way": cls.EIGHT_WAY,
+                "eight": cls.EIGHT_WAY,
+                "diagonal": cls.EIGHT_WAY,
+                "all": cls.EIGHT_WAY,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class MergeStrategy(Enum):
+
+class MergeStrategy(str, Enum):
     """Module merging strategies.
 
     Attributes:
@@ -32,8 +57,35 @@ class MergeStrategy(Enum):
     SOFT = "soft"
     AGGRESSIVE = "aggressive"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "MergeStrategy":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip()
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "no": cls.NONE,
+                "off": cls.NONE,
+                "false": cls.NONE,
+                "disabled": cls.NONE,
+                "smooth": cls.SOFT,
+                "medium": cls.SOFT,
+                "moderate": cls.SOFT,
+                "hard": cls.AGGRESSIVE,
+                "strong": cls.AGGRESSIVE,
+                "max": cls.AGGRESSIVE,
+                "maximum": cls.AGGRESSIVE,
+                "full": cls.AGGRESSIVE,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class ReserveMode(Enum):
+
+class ReserveMode(str, Enum):
     """Reserve area interaction mode enumeration.
 
     Attributes:
@@ -44,8 +96,29 @@ class ReserveMode(Enum):
     KNOCKOUT = "knockout"
     IMPRINT = "imprint"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "ReserveMode":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip()
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "clear": cls.KNOCKOUT,
+                "remove": cls.KNOCKOUT,
+                "cut": cls.KNOCKOUT,
+                "overlay": cls.IMPRINT,
+                "preserve": cls.IMPRINT,
+                "keep": cls.IMPRINT,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class PlacementMode(Enum):
+
+class PlacementMode(str, Enum):
     """Reserve area placement mode enumeration.
 
     Attributes:
@@ -72,8 +145,40 @@ class PlacementMode(Enum):
     LEFT_CENTER = "left-center"
     RIGHT_CENTER = "right-center"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "PlacementMode":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip().replace("_", "-")
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases with underscores/spaces
+            aliases = {
+                "topleft": cls.TOP_LEFT,
+                "top_left": cls.TOP_LEFT,
+                "topright": cls.TOP_RIGHT,
+                "top_right": cls.TOP_RIGHT,
+                "bottomleft": cls.BOTTOM_LEFT,
+                "bottom_left": cls.BOTTOM_LEFT,
+                "bottomright": cls.BOTTOM_RIGHT,
+                "bottom_right": cls.BOTTOM_RIGHT,
+                "topcenter": cls.TOP_CENTER,
+                "top_center": cls.TOP_CENTER,
+                "bottomcenter": cls.BOTTOM_CENTER,
+                "bottom_center": cls.BOTTOM_CENTER,
+                "leftcenter": cls.LEFT_CENTER,
+                "left_center": cls.LEFT_CENTER,
+                "rightcenter": cls.RIGHT_CENTER,
+                "right_center": cls.RIGHT_CENTER,
+                "middle": cls.CENTER,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class ModuleShape(Enum):
+
+class ModuleShape(str, Enum):
     """Base module shape types.
 
     Attributes:
@@ -108,8 +213,45 @@ class ModuleShape(Enum):
     CONNECTED_CLASSY = "connected-classy"
     CONNECTED_CLASSY_ROUNDED = "connected-classy-rounded"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "ModuleShape":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip().replace("_", "-")
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "rect": cls.SQUARE,
+                "rectangle": cls.SQUARE,
+                "round": cls.CIRCLE,
+                "circular": cls.CIRCLE,
+                "smooth": cls.ROUNDED,
+                "round-corner": cls.ROUNDED,
+                "round_corner": cls.ROUNDED,
+                "point": cls.DOT,
+                "pixel": cls.DOT,
+                "rhombus": cls.DIAMOND,
+                "hex": cls.HEXAGON,
+                "tri": cls.TRIANGLE,
+                "plus": cls.CROSS,
+                "flow": cls.CONNECTED,
+                "smooth-connected": cls.CONNECTED_EXTRA_ROUNDED,
+                "smooth_connected": cls.CONNECTED_EXTRA_ROUNDED,
+                "extra-rounded": cls.CONNECTED_EXTRA_ROUNDED,
+                "extra_rounded": cls.CONNECTED_EXTRA_ROUNDED,
+                "classy": cls.CONNECTED_CLASSY,
+                "elegant": cls.CONNECTED_CLASSY,
+                "classy-rounded": cls.CONNECTED_CLASSY_ROUNDED,
+                "classy_rounded": cls.CONNECTED_CLASSY_ROUNDED,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class FinderShape(Enum):
+
+class FinderShape(str, Enum):
     """Finder pattern shape types.
 
     Attributes:
@@ -122,8 +264,30 @@ class FinderShape(Enum):
     ROUNDED = "rounded"
     CIRCLE = "circle"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "FinderShape":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip()
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "rect": cls.SQUARE,
+                "rectangle": cls.SQUARE,
+                "smooth": cls.ROUNDED,
+                "round-corner": cls.ROUNDED,
+                "round_corner": cls.ROUNDED,
+                "round": cls.CIRCLE,
+                "circular": cls.CIRCLE,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class ContourMode(Enum):
+
+class ContourMode(str, Enum):
     """Contour rendering modes for Phase 3.
 
     Attributes:
@@ -136,8 +300,33 @@ class ContourMode(Enum):
     COMBINED = "combined"
     OVERLAY = "overlay"
 
+    @classmethod
+    def _missing_(cls, value: Any) -> "ContourMode":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip()
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "curve": cls.BEZIER,
+                "curves": cls.BEZIER,
+                "smooth": cls.BEZIER,
+                "multi": cls.COMBINED,
+                "multiple": cls.COMBINED,
+                "mixed": cls.COMBINED,
+                "hybrid": cls.COMBINED,
+                "layer": cls.OVERLAY,
+                "layered": cls.OVERLAY,
+                "over": cls.OVERLAY,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
 
-class OptimizationLevel(Enum):
+
+class OptimizationLevel(str, Enum):
     """Optimization levels for Bezier curve generation.
 
     Attributes:
@@ -149,3 +338,31 @@ class OptimizationLevel(Enum):
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
+
+    @classmethod
+    def _missing_(cls, value: Any) -> "OptimizationLevel":
+        """Handle case-insensitive lookup and common aliases."""
+        if isinstance(value, str):
+            value_lower = value.lower().strip()
+            for member in cls:
+                if member.value.lower() == value_lower:
+                    return member
+            # Handle aliases
+            aliases = {
+                "min": cls.LOW,
+                "minimal": cls.LOW,
+                "fast": cls.LOW,
+                "fastest": cls.LOW,
+                "none": cls.LOW,
+                "med": cls.MEDIUM,
+                "balanced": cls.MEDIUM,
+                "normal": cls.MEDIUM,
+                "default": cls.MEDIUM,
+                "max": cls.HIGH,
+                "maximum": cls.HIGH,
+                "best": cls.HIGH,
+                "full": cls.HIGH,
+            }
+            if value_lower in aliases:
+                return aliases[value_lower]
+        raise ValueError(f"'{value}' is not a valid {cls.__name__}")
