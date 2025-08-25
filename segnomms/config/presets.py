@@ -21,7 +21,7 @@ Example:
             print(f"{name}: {description}")
 """
 
-from typing import Dict
+from typing import Any, Dict
 
 from .models import RenderingConfig
 
@@ -299,7 +299,7 @@ class ConfigPresets:
         )
 
     @staticmethod
-    def custom(base_preset: str = "minimal", **overrides) -> RenderingConfig:
+    def custom(base_preset: str = "minimal", **overrides: Any) -> RenderingConfig:
         """Create a custom configuration based on a preset.
 
         Args:
