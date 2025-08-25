@@ -100,8 +100,9 @@ class TestStyleIntentErrorHandling:
         assert warning.code == "UNSUPPORTED_INTENT"
         assert "Merge strategy 'ultra-aggressive'" in warning.detail
         
-        # Should use default
-        assert result.used_options["merge"] == "none"
+        # Should use default (now returns enum object)
+        from segnomms.config.enums import MergeStrategy
+        assert result.used_options["merge"] == MergeStrategy.NONE
 
 
 class TestIntentTransformationTracking:

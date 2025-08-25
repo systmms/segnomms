@@ -70,7 +70,8 @@ class QRCodeRenderer:
         if degradation_result.warning_count > 0:
             logger = logging.getLogger(__name__)
             logger.info(
-                f"Graceful degradation applied {degradation_result.warning_count} warnings"
+                f"Graceful degradation applied "
+                f"{degradation_result.warning_count} warnings"
             )
 
             for warning in degradation_result.warnings:

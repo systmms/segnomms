@@ -141,7 +141,7 @@ class FrameShapeGenerator:
             return f"""
                 <defs>
                     <radialGradient id="{grad_id}" cx="50%" cy="50%" r="50%">
-                        <stop offset="{fade_start * 100:.1f}%" 
+                        <stop offset="{fade_start * 100:.1f}%"
                               stop-color="white" stop-opacity="1"/>
                         <stop offset="100%" stop-color="white" stop-opacity="0"/>
                     </radialGradient>
@@ -163,7 +163,7 @@ class FrameShapeGenerator:
                     </radialGradient>
                     <mask id="{mask_id}">
                         <rect x="{actual_fade}" y="{actual_fade}"
-                              width="{width - 2 * actual_fade}" 
+                              width="{width - 2 * actual_fade}"
                               height="{height - 2 * actual_fade}"
                               rx="{radius}" ry="{radius}" fill="white"/>
                         <rect x="0" y="0" width="{width}" height="{height}"
@@ -182,10 +182,10 @@ class FrameShapeGenerator:
                     </radialGradient>
                     <mask id="{mask_id}">
                         {FrameShapeGenerator.generate_squircle_clip(
-                            int(width - 2 * actual_fade), 
+                            int(width - 2 * actual_fade),
                             int(height - 2 * actual_fade)
                         )}
-                        <rect x="0" y="0" width="{width}" height="{height}" 
+                        <rect x="0" y="0" width="{width}" height="{height}"
                               fill="url(#{grad_id})"/>
                     </mask>
                 </defs>
@@ -321,7 +321,8 @@ class FrameShapeGenerator:
             Scaled SVG path string
         """
         # Basic path scaling implementation
-        # NOTE: This is a simplified implementation that only handles transform attribute
+        # NOTE: This is a simplified implementation that only handles transform
+        # attribute
         # For complex path coordinate transformation, would need SVG path parser
 
         if not path or not current_box:

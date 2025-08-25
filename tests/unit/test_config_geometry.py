@@ -57,7 +57,8 @@ class TestGeometryConfig:
 
     def test_shape_string_conversion(self):
         """Test shape string input conversion to enum objects."""
-        # Test string inputs are converted to enum objects (no more use_enum_values=True)
+        # Test string inputs are converted to enum objects (no more
+        # use_enum_values=True)
         config = GeometryConfig(shape="circle")
         assert config.shape == ModuleShape.CIRCLE
 
@@ -229,13 +230,13 @@ class TestFinderConfig:
     def test_finder_shape_string_conversion(self):
         """Test finder shape string conversion."""
         config = FinderConfig(shape="square")
-        assert config.shape == ModuleShape.SQUARE
+        assert config.shape == FinderShape.SQUARE
 
         config = FinderConfig(shape="rounded")
-        assert config.shape == ModuleShape.ROUNDED
+        assert config.shape == FinderShape.ROUNDED
 
         config = FinderConfig(shape="circle")
-        assert config.shape == ModuleShape.CIRCLE
+        assert config.shape == FinderShape.CIRCLE
 
     def test_invalid_finder_shape(self):
         """Test invalid finder shape rejection."""

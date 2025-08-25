@@ -681,7 +681,7 @@ class TestPhaseConfigIntegration:
         # Verify complex configuration
         assert phase1.flow_weights["data"] == 1.2  # Emphasis on data modules
         assert phase2.min_cluster_size == 5  # Larger clusters
-        assert phase3.bezier_optimization == "high"  # Maximum quality
+        assert phase3.bezier_optimization == OptimizationLevel.HIGH  # Maximum quality
         assert phase3.point_reduction == 0.8  # Aggressive optimization
 
 

@@ -27,8 +27,10 @@ from segnomms.config import (
     StyleConfig,
 )
 from segnomms.config.enums import (
+    ConnectivityMode,
     ContourMode,
     FinderShape,
+    MergeStrategy,
     ModuleShape,
     OptimizationLevel,
     PlacementMode,
@@ -219,10 +221,10 @@ class TestRenderingConfigFactoryMethod:
             min_island_modules=3,
         )
 
-        assert config.geometry.shape == "rounded"  # use_enum_values=True
+        assert config.geometry.shape == ModuleShape.ROUNDED
         assert config.geometry.corner_radius == 0.3
-        assert config.geometry.connectivity == "8-way"  # use_enum_values=True
-        assert config.geometry.merge == "soft"  # use_enum_values=True
+        assert config.geometry.connectivity == ConnectivityMode.EIGHT_WAY
+        assert config.geometry.merge == MergeStrategy.SOFT
         assert config.geometry.min_island_modules == 3
 
     def test_finder_kwargs_conversion(self):
@@ -246,7 +248,7 @@ class TestRenderingConfigFactoryMethod:
             frame_custom_path="M0,0 L100,100",
         )
 
-        assert config.frame.shape == ModuleShape.CIRCLE
+        assert config.frame.shape == "circle"
         assert config.frame.corner_radius == 0.2
         assert config.frame.clip_mode == "fade"
         assert config.frame.fade_distance == 10
@@ -267,7 +269,7 @@ class TestRenderingConfigFactoryMethod:
         )
 
         assert config.centerpiece.enabled is True
-        assert config.centerpiece.shape == ModuleShape.SQUIRCLE
+        assert config.centerpiece.shape == "squircle"
         assert config.centerpiece.size == 0.2
         assert config.centerpiece.offset_x == 0.1
         assert config.centerpiece.offset_y == -0.05
@@ -314,8 +316,8 @@ class TestRenderingConfigFactoryMethod:
         )
 
         assert config.patterns.enabled is True
-        assert config.patterns.finder == ModuleShape.ROUNDED
-        assert config.patterns.timing == ModuleShape.CIRCLE
+        assert config.patterns.finder == "rounded"
+        assert config.patterns.timing == "circle"
         assert config.patterns.finder_color == "#e74c3c"
         assert config.patterns.timing_color == "#3498db"
         assert config.patterns.finder_scale == 1.2
@@ -432,14 +434,10 @@ class TestRenderingConfigFactoryMethod:
         assert config.scale == 20
         assert config.dark == "#2c3e50"
         assert config.light == "#ecf0f1"
-        assert (
-            config.geometry.shape == "squircle"
-        )  # use_enum_values=True converts to string
+        assert config.geometry.shape == ModuleShape.SQUIRCLE
         assert config.geometry.corner_radius == 0.25
-        assert (
-            config.geometry.merge == "aggressive"
-        )  # use_enum_values=True converts to string
-        assert config.frame.shape == ModuleShape.CIRCLE
+        assert config.geometry.merge == MergeStrategy.AGGRESSIVE
+        assert config.frame.shape == "circle"
         assert config.frame.clip_mode == "fade"
         assert config.centerpiece.enabled is True
         assert config.centerpiece.size == 0.18
@@ -558,7 +556,7 @@ class TestConfigSerialization:
         assert config.scale == 20
         assert config.dark == "#2c3e50"
         assert config.light == "#ecf0f1"
-        assert config.geometry.shape == "squircle"  # use_enum_values=True
+        assert config.geometry.shape == ModuleShape.SQUIRCLE
         assert config.geometry.corner_radius == 0.3
         assert config.style.interactive is True
         assert config.style.tooltips is False
@@ -625,7 +623,7 @@ class TestConfigSerialization:
         # Should contain flattened parameters
         assert kwargs["scale"] == 12
         assert kwargs["dark"] == "#34495e"
-        assert kwargs["shape"] == "rounded"
+        assert kwargs["shape"] == ModuleShape.ROUNDED
         assert kwargs["corner_radius"] == 0.25
         assert kwargs["interactive"] is True
         assert kwargs["centerpiece_enabled"] is True
@@ -649,9 +647,12 @@ class TestConfigSerialization:
         config = RenderingConfig.from_kwargs(**original_kwargs)
         restored_kwargs = config.to_kwargs()
 
-        # Key parameters should be preserved
-        for key in ["scale", "dark", "shape", "corner_radius", "interactive"]:
-            assert restored_kwargs[key] == original_kwargs[key]
+        # Key parameters should be preserved (accounting for string->enum conversion)
+        assert restored_kwargs["scale"] == original_kwargs["scale"]
+        assert restored_kwargs["dark"] == original_kwargs["dark"] 
+        assert restored_kwargs["shape"] == ModuleShape.SQUIRCLE  # Converted to enum
+        assert restored_kwargs["corner_radius"] == original_kwargs["corner_radius"]
+        assert restored_kwargs["interactive"] == original_kwargs["interactive"]
 
 
 class TestConfigIntegrations:
