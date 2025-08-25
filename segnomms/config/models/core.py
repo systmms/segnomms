@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 from ...exceptions import (
     InvalidColorFormatError,
 )
-from ..enums import ContourMode, OptimizationLevel
+from ..enums import ContourMode, MergeStrategy, ModuleShape, OptimizationLevel
 from .advanced import AdvancedQRConfig
 
 # Import all component models
@@ -525,7 +525,7 @@ class RenderingConfig(BaseModel):
         # Phase 1: Auto-enable when shape != "square" or corner_radius > 0
         if enable_phase1 is None and not config.phase1.enabled:
             needs_phase1 = (
-                config.geometry.shape.value != "square"
+                config.geometry.shape != ModuleShape.SQUARE
                 or config.geometry.corner_radius > 0
             )
             if needs_phase1:
@@ -536,7 +536,7 @@ class RenderingConfig(BaseModel):
 
         # Phase 2: Auto-enable when merge != "none"
         if enable_phase2 is None and not config.phase2.enabled:
-            if config.geometry.merge.value != "none":
+            if config.geometry.merge != MergeStrategy.NONE:
                 config.phase2.enabled = True
                 config.phase2.use_cluster_rendering = True
                 config.phase2.cluster_module_types = ["data"]
@@ -544,7 +544,7 @@ class RenderingConfig(BaseModel):
 
         # Phase 3: Auto-enable when merge == "aggressive"
         if enable_phase3 is None and not config.phase3.enabled:
-            if config.geometry.merge.value == "aggressive":
+            if config.geometry.merge == MergeStrategy.AGGRESSIVE:
                 config.phase3.enabled = True
                 config.phase3.use_marching_squares = True
                 config.phase3.contour_module_types = ["data"]

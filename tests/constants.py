@@ -6,24 +6,45 @@ in tests and ensure consistency across the test suite.
 """
 
 from segnomms.config.enums import (
-    ModuleShape, FinderShape, ConnectivityMode, MergeStrategy,
-    ReserveMode, PlacementMode, ContourMode, OptimizationLevel
+    ConnectivityMode,
+    ContourMode,
+    FinderShape,
+    MergeStrategy,
+    ModuleShape,
+    OptimizationLevel,
+    PlacementMode,
+    ReserveMode,
 )
 
 # Re-export enums for convenience
 __all__ = [
     # Enums
-    'ModuleShape', 'FinderShape', 'ConnectivityMode', 'MergeStrategy',
-    'ReserveMode', 'PlacementMode', 'ContourMode', 'OptimizationLevel',
-    
+    "ModuleShape",
+    "FinderShape",
+    "ConnectivityMode",
+    "MergeStrategy",
+    "ReserveMode",
+    "PlacementMode",
+    "ContourMode",
+    "OptimizationLevel",
     # Test data
-    'VALID_SHAPES', 'CONNECTED_SHAPES', 'BASIC_SHAPES',
-    'DEFAULT_TEST_CONFIG', 'SHAPE_TEST_CASES', 'COLOR_TEST_CASES',
-    'FRAME_TEST_CASES', 'QR_PAYLOADS', 'ERROR_LEVELS',
-    
+    "VALID_SHAPES",
+    "CONNECTED_SHAPES",
+    "BASIC_SHAPES",
+    "DEFAULT_TEST_CONFIG",
+    "SHAPE_TEST_CASES",
+    "COLOR_TEST_CASES",
+    "FRAME_TEST_CASES",
+    "QR_PAYLOADS",
+    "ERROR_LEVELS",
     # Common values
-    'DEFAULT_SCALE', 'DEFAULT_BORDER', 'DEFAULT_DARK', 'DEFAULT_LIGHT',
-    'TEST_SCALES', 'TEST_BORDERS', 'TEST_COLORS'
+    "DEFAULT_SCALE",
+    "DEFAULT_BORDER",
+    "DEFAULT_DARK",
+    "DEFAULT_LIGHT",
+    "TEST_SCALES",
+    "TEST_BORDERS",
+    "TEST_COLORS",
 ]
 
 
@@ -33,49 +54,49 @@ __all__ = [
 
 # Valid module shapes for testing
 VALID_SHAPES = [
-    ModuleShape.SQUARE.value,
-    ModuleShape.CIRCLE.value,
-    ModuleShape.ROUNDED.value,
-    ModuleShape.DOT.value,
-    ModuleShape.DIAMOND.value,
-    ModuleShape.STAR.value,
-    ModuleShape.HEXAGON.value,
-    ModuleShape.TRIANGLE.value,
-    ModuleShape.SQUIRCLE.value,
-    ModuleShape.CROSS.value,
-    ModuleShape.CONNECTED.value,
-    ModuleShape.CONNECTED_EXTRA_ROUNDED.value,
-    ModuleShape.CONNECTED_CLASSY.value,
-    ModuleShape.CONNECTED_CLASSY_ROUNDED.value,
+    ModuleShape.SQUARE,
+    ModuleShape.CIRCLE,
+    ModuleShape.ROUNDED,
+    ModuleShape.DOT,
+    ModuleShape.DIAMOND,
+    ModuleShape.STAR,
+    ModuleShape.HEXAGON,
+    ModuleShape.TRIANGLE,
+    ModuleShape.SQUIRCLE,
+    ModuleShape.CROSS,
+    ModuleShape.CONNECTED,
+    ModuleShape.CONNECTED_EXTRA_ROUNDED,
+    ModuleShape.CONNECTED_CLASSY,
+    ModuleShape.CONNECTED_CLASSY_ROUNDED,
 ]
 
 # Connected shape variants
 CONNECTED_SHAPES = [
-    ModuleShape.CONNECTED.value,
-    ModuleShape.CONNECTED_EXTRA_ROUNDED.value,
-    ModuleShape.CONNECTED_CLASSY.value,
-    ModuleShape.CONNECTED_CLASSY_ROUNDED.value,
+    ModuleShape.CONNECTED,
+    ModuleShape.CONNECTED_EXTRA_ROUNDED,
+    ModuleShape.CONNECTED_CLASSY,
+    ModuleShape.CONNECTED_CLASSY_ROUNDED,
 ]
 
 # Basic shapes (non-connected)
 BASIC_SHAPES = [
-    ModuleShape.SQUARE.value,
-    ModuleShape.CIRCLE.value,
-    ModuleShape.ROUNDED.value,
-    ModuleShape.DOT.value,
-    ModuleShape.DIAMOND.value,
-    ModuleShape.STAR.value,
-    ModuleShape.HEXAGON.value,
-    ModuleShape.TRIANGLE.value,
-    ModuleShape.SQUIRCLE.value,
-    ModuleShape.CROSS.value,
+    ModuleShape.SQUARE,
+    ModuleShape.CIRCLE,
+    ModuleShape.ROUNDED,
+    ModuleShape.DOT,
+    ModuleShape.DIAMOND,
+    ModuleShape.STAR,
+    ModuleShape.HEXAGON,
+    ModuleShape.TRIANGLE,
+    ModuleShape.SQUIRCLE,
+    ModuleShape.CROSS,
 ]
 
 # Finder shapes
 FINDER_SHAPES = [
-    FinderShape.SQUARE.value,
-    FinderShape.ROUNDED.value,
-    FinderShape.CIRCLE.value,
+    FinderShape.SQUARE,
+    FinderShape.ROUNDED,
+    FinderShape.CIRCLE,
 ]
 
 
@@ -114,32 +135,32 @@ TEST_COLORS = {
 # Shape test cases with expected behaviors
 SHAPE_TEST_CASES = [
     {
-        "shape": ModuleShape.SQUARE.value,
+        "shape": ModuleShape.SQUARE,
         "corner_radius": 0,
         "supports_merging": True,
         "supports_safe_mode": True,
-        "description": "Traditional square modules"
+        "description": "Traditional square modules",
     },
     {
-        "shape": ModuleShape.CIRCLE.value,
+        "shape": ModuleShape.CIRCLE,
         "corner_radius": 0,
         "supports_merging": False,
         "supports_safe_mode": True,
-        "description": "Circular modules with gaps"
+        "description": "Circular modules with gaps",
     },
     {
-        "shape": ModuleShape.SQUIRCLE.value,
+        "shape": ModuleShape.SQUIRCLE,
         "corner_radius": 0.3,
         "supports_merging": True,
         "supports_safe_mode": False,
-        "description": "Superellipse shape"
+        "description": "Superellipse shape",
     },
     {
-        "shape": ModuleShape.CONNECTED.value,
+        "shape": ModuleShape.CONNECTED,
         "corner_radius": 0.2,
         "supports_merging": True,
         "supports_safe_mode": False,
-        "description": "Connected modules with rounded corners"
+        "description": "Connected modules with rounded corners",
     },
 ]
 
@@ -154,24 +175,24 @@ COLOR_TEST_CASES = [
 # Frame configuration test cases
 FRAME_TEST_CASES = [
     {
-        "shape": ModuleShape.SQUARE.value,
+        "shape": ModuleShape.SQUARE,
         "clip_mode": "hard",
         "corner_radius": 0,
-        "description": "Square frame (default)"
+        "description": "Square frame (default)",
     },
     {
-        "shape": ModuleShape.CIRCLE.value,
+        "shape": ModuleShape.CIRCLE,
         "clip_mode": "fade",
         "fade_start": 0.7,
         "fade_end": 0.9,
-        "description": "Circle frame with fade"
+        "description": "Circle frame with fade",
     },
     {
-        "shape": ModuleShape.ROUNDED.value,
+        "shape": ModuleShape.ROUNDED,
         "clip_mode": "scale",
         "corner_radius": 0.2,
         "scale_distance": 0.1,
-        "description": "Rounded frame with scaling"
+        "description": "Rounded frame with scaling",
     },
 ]
 
@@ -203,7 +224,7 @@ DEFAULT_TEST_CONFIG = {
     "border": DEFAULT_BORDER,
     "dark": DEFAULT_DARK,
     "light": DEFAULT_LIGHT,
-    "shape": ModuleShape.SQUARE.value,
+    "shape": ModuleShape.SQUARE,
     "error": "M",
 }
 
@@ -218,15 +239,15 @@ FULL_TEST_CONFIG = {
     "border": 4,
     "dark": "#1a1a2e",
     "light": "#f5f5f5",
-    "shape": ModuleShape.SQUIRCLE.value,
+    "shape": ModuleShape.SQUIRCLE,
     "corner_radius": 0.3,
-    "merge": MergeStrategy.SOFT.value,
-    "connectivity": ConnectivityMode.EIGHT_WAY.value,
+    "merge": MergeStrategy.SOFT,
+    "connectivity": ConnectivityMode.EIGHT_WAY,
     "safe_mode": False,
     "interactive": True,
     "tooltips": True,
     "frame": {
-        "shape": ModuleShape.CIRCLE.value,
+        "shape": ModuleShape.CIRCLE,
         "clip_mode": "fade",
         "fade_start": 0.7,
         "fade_end": 0.9,
@@ -234,17 +255,17 @@ FULL_TEST_CONFIG = {
     "centerpiece": {
         "enabled": True,
         "size": 0.2,
-        "shape": ModuleShape.CIRCLE.value,
-        "mode": ReserveMode.KNOCKOUT.value,
+        "shape": ModuleShape.CIRCLE,
+        "mode": ReserveMode.KNOCKOUT,
     },
     "patterns": {
         "enabled": True,
         "finder": {
-            "shape": FinderShape.ROUNDED.value,
+            "shape": FinderShape.ROUNDED,
             "color": "#FF6B6B",
         },
         "data": {
-            "shape": ModuleShape.DOT.value,
+            "shape": ModuleShape.DOT,
             "size_ratio": 0.8,
         },
     },
@@ -255,15 +276,16 @@ FULL_TEST_CONFIG = {
 # TEST UTILITIES
 # ============================================================================
 
+
 def get_shape_enum(shape_string: str) -> ModuleShape:
     """Convert a shape string to ModuleShape enum.
-    
+
     Args:
         shape_string: Shape name as string
-        
+
     Returns:
         ModuleShape enum value
-        
+
     Raises:
         ValueError: If shape string is not valid
     """
@@ -275,7 +297,7 @@ def get_shape_enum(shape_string: str) -> ModuleShape:
 
 def get_all_shape_combinations():
     """Generate all valid shape combinations for testing.
-    
+
     Returns:
         List of (module_shape, finder_shape) tuples
     """
@@ -288,25 +310,25 @@ def get_all_shape_combinations():
 
 def get_safe_mode_compatible_shapes():
     """Get shapes that are compatible with safe mode.
-    
+
     Returns:
         List of shape strings that work with safe_mode=True
     """
     return [
-        ModuleShape.SQUARE.value,
-        ModuleShape.CIRCLE.value,
-        ModuleShape.ROUNDED.value,
-        ModuleShape.DOT.value,
-        ModuleShape.DIAMOND.value,
+        ModuleShape.SQUARE,
+        ModuleShape.CIRCLE,
+        ModuleShape.ROUNDED,
+        ModuleShape.DOT,
+        ModuleShape.DIAMOND,
     ]
 
 
 def create_test_config(**overrides):
     """Create a test configuration with defaults and overrides.
-    
+
     Args:
         **overrides: Keyword arguments to override defaults
-        
+
     Returns:
         Dictionary configuration for testing
     """
