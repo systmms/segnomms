@@ -19,22 +19,9 @@ Available shapes:
 from __future__ import annotations
 
 import xml.etree.ElementTree as ET
-
-from typing_extensions import Unpack
+from typing import Any, Dict, List, Tuple, Union
 
 from ..core.interfaces import ShapeRenderer
-from ..types import (
-    CircleRenderKwargs,
-    CrossRenderKwargs,
-    DiamondRenderKwargs,
-    DotRenderKwargs,
-    HexagonRenderKwargs,
-    RoundedRenderKwargs,
-    SquareRenderKwargs,
-    SquircleRenderKwargs,
-    StarRenderKwargs,
-    TriangleRenderKwargs,
-)
 
 
 class BaseShapeRenderer(ShapeRenderer):
@@ -46,7 +33,7 @@ class BaseShapeRenderer(ShapeRenderer):
     """
 
     # Subclasses should override this with their supported shape names
-    shape_names: list[str] = []
+    shape_names: List[str] = []
 
     def supports_type(self, shape_type: str) -> bool:
         """Check if this renderer supports the given shape type.
@@ -60,7 +47,9 @@ class BaseShapeRenderer(ShapeRenderer):
         return shape_type.lower() in self.shape_names
 
 
-def apply_element_attributes(element: ET.Element, kwargs: dict) -> None:
+def apply_element_attributes(
+    element: ET.Element, kwargs: Union[Dict[str, Any], Any]
+) -> None:
     """Apply common attributes to an SVG element.
 
     This helper function applies standard attributes like id, data-* attributes,
@@ -85,7 +74,9 @@ def apply_element_attributes(element: ET.Element, kwargs: dict) -> None:
             element.set(key, str(value))
 
 
-def create_svg_element(tag: str, attributes: dict, kwargs: dict) -> ET.Element:
+def create_svg_element(
+    tag: str, attributes: Dict[str, Any], kwargs: Union[Dict[str, Any], Any]
+) -> ET.Element:
     """Create an SVG element with common attributes applied.
 
     This helper function combines element creation with common attribute
@@ -113,7 +104,7 @@ def create_svg_element(tag: str, attributes: dict, kwargs: dict) -> ET.Element:
 
 
 # Geometry utility functions
-def get_module_center(x: float, y: float, size: float) -> tuple[float, float]:
+def get_module_center(x: float, y: float, size: float) -> Tuple[float, float]:
     """Calculate the center point of a module.
 
     Args:
@@ -127,7 +118,9 @@ def get_module_center(x: float, y: float, size: float) -> tuple[float, float]:
     return x + size / 2, y + size / 2
 
 
-def apply_size_ratio(size: float, kwargs: dict, default: float = 1.0) -> float:
+def apply_size_ratio(
+    size: float, kwargs: Union[Dict[str, Any], Any], default: float = 1.0
+) -> float:
     """Apply size ratio from kwargs to a base size.
 
     Args:
@@ -138,11 +131,15 @@ def apply_size_ratio(size: float, kwargs: dict, default: float = 1.0) -> float:
     Returns:
         float: Size multiplied by the ratio
     """
-    return size * kwargs.get("size_ratio", default)
+    ratio = kwargs.get("size_ratio", default)
+    return size * float(ratio)
 
 
 def get_corner_radius(
-    size: float, kwargs: dict, param_name: str = "roundness", default: float = 0.3
+    size: float,
+    kwargs: Union[Dict[str, Any], Any],
+    param_name: str = "roundness",
+    default: float = 0.3,
 ) -> float:
     """Calculate corner radius from size and roundness parameter.
 
@@ -156,7 +153,7 @@ def get_corner_radius(
         float: Corner radius value
     """
     ratio = kwargs.get(param_name, default)
-    return size * ratio
+    return size * float(ratio)
 
 
 # Polygon generation utilities
@@ -330,9 +327,7 @@ class SquareRenderer(BaseShapeRenderer):
 
     shape_names = ["square"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[SquareRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a square module.
 
         Args:
@@ -373,9 +368,7 @@ class CircleRenderer(BaseShapeRenderer):
 
     shape_names = ["circle"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[CircleRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a circular module.
 
         Args:
@@ -410,9 +403,7 @@ class RoundedRenderer(BaseShapeRenderer):
 
     shape_names = ["rounded"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[RoundedRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a rounded square module.
 
         Args:
@@ -458,9 +449,7 @@ class DotRenderer(BaseShapeRenderer):
 
     shape_names = ["dot"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[DotRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a small dot module.
 
         Args:
@@ -498,9 +487,7 @@ class DiamondRenderer(BaseShapeRenderer):
 
     shape_names = ["diamond"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[DiamondRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a diamond shape module.
 
         Args:
@@ -533,9 +520,7 @@ class StarRenderer(BaseShapeRenderer):
 
     shape_names = ["star"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[StarRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a star shape module.
 
         Args:
@@ -579,9 +564,7 @@ class TriangleRenderer(BaseShapeRenderer):
 
     shape_names = ["triangle"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[TriangleRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a triangle shape module.
 
         Args:
@@ -617,9 +600,7 @@ class HexagonRenderer(BaseShapeRenderer):
 
     shape_names = ["hexagon"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[HexagonRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a hexagon shape module.
 
         Args:
@@ -658,9 +639,7 @@ class CrossRenderer(BaseShapeRenderer):
 
     shape_names = ["cross"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[CrossRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a cross shape module.
 
         Args:
@@ -758,9 +737,7 @@ class SquircleRenderer(BaseShapeRenderer):
 
     shape_names = ["squircle"]
 
-    def render(
-        self, x: float, y: float, size: float, **kwargs: Unpack[SquircleRenderKwargs]
-    ) -> ET.Element:
+    def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
         """Render a squircle module.
 
         Args:
