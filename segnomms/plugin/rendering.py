@@ -556,7 +556,7 @@ class ModuleRenderer:
                 element, row, col, module_type
             )
 
-        return element
+        return element  # type: ignore[no-any-return]
 
     def _is_module_in_frame(self, x: float, y: float) -> bool:
         """Check if module is within the frame boundaries."""
@@ -647,16 +647,20 @@ class ModuleRenderer:
 
         return render_kwargs
 
-    def _create_neighbor_function(self, row: int, col: int):
+    def _create_neighbor_function(self, row: int, col: int) -> Any:
         """Create get_neighbor function based on connectivity mode."""
         if self.config.geometry.connectivity == ConnectivityMode.EIGHT_WAY:
             # 8-way connectivity includes diagonals
-            def get_neighbor(x_offset, y_offset, r=row, c=col):
+            def get_neighbor(
+                x_offset: int, y_offset: int, r: int = row, c: int = col
+            ) -> bool:
                 return self.detector.is_module_active(r + y_offset, c + x_offset)
 
         else:
             # 4-way connectivity only includes orthogonal neighbors
-            def get_neighbor(x_offset, y_offset, r=row, c=col):
+            def get_neighbor(
+                x_offset: int, y_offset: int, r: int = row, c: int = col
+            ) -> bool:
                 # Only allow orthogonal neighbors
                 if abs(x_offset) + abs(y_offset) == 1:
                     return self.detector.is_module_active(r + y_offset, c + x_offset)
@@ -666,7 +670,7 @@ class ModuleRenderer:
 
     def _add_shape_specific_params(
         self, render_kwargs: Dict[str, Any], shape: str, module_type: str
-    ):
+    ) -> None:
         """Add shape-specific parameters to render kwargs."""
         # Add roundness for RoundedRenderer
         if shape == "rounded":
@@ -716,7 +720,7 @@ class ModuleRenderer:
 
         return True
 
-    def _apply_module_color(self, element: ET.Element, color: str):
+    def _apply_module_color(self, element: ET.Element, color: str) -> None:
         """Apply color to the module element."""
         if self.config.patterns.enabled:
             # When pattern styling is enabled, always set individual element colors
@@ -725,7 +729,9 @@ class ModuleRenderer:
             # Legacy: only set if different from default
             element.set("fill", color)
 
-    def _add_tooltip(self, element: ET.Element, module_type: str, row: int, col: int):
+    def _add_tooltip(
+        self, element: ET.Element, module_type: str, row: int, col: int
+    ) -> None:
         """Add tooltip to the module element."""
         title = ET.SubElement(element, "title")
         title.text = f"{module_type} module at ({row}, {col})"
@@ -820,11 +826,11 @@ def _get_enhanced_render_kwargs(
         connectivity_strength = analysis.get("connectivity_strength", 0)
 
     if connectivity_strength > 6:
-        kwargs["size_ratio"] = config.phase1.size_ratio * 1.1
+        kwargs["size_ratio"] = str(config.phase1.size_ratio * 1.1)
     elif connectivity_strength < 2:
-        kwargs["size_ratio"] = config.phase1.size_ratio * 0.9
+        kwargs["size_ratio"] = str(config.phase1.size_ratio * 0.9)
     else:
-        kwargs["size_ratio"] = config.phase1.size_ratio
+        kwargs["size_ratio"] = str(config.phase1.size_ratio)
 
     # Adjust roundness based on flow (handle both dict and Pydantic model)
     if hasattr(analysis, "flow_direction"):
@@ -832,11 +838,11 @@ def _get_enhanced_render_kwargs(
     else:
         flow_direction = analysis.get("flow_direction", "none")
     if flow_direction == "horizontal":
-        kwargs["roundness"] = config.phase1.roundness * 0.7
+        kwargs["roundness"] = str(config.phase1.roundness * 0.7)
     elif flow_direction == "vertical":
-        kwargs["roundness"] = config.phase1.roundness * 0.7
+        kwargs["roundness"] = str(config.phase1.roundness * 0.7)
     else:
-        kwargs["roundness"] = config.phase1.roundness
+        kwargs["roundness"] = str(config.phase1.roundness)
 
     return kwargs
 
