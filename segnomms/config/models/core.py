@@ -515,7 +515,9 @@ class RenderingConfig(BaseModel):
         return config
 
     @classmethod
-    def _auto_enable_phases(cls, config: "RenderingConfig", kwargs: dict) -> None:
+    def _auto_enable_phases(
+        cls, config: "RenderingConfig", kwargs: Dict[str, Any]
+    ) -> None:
         """Auto-enable phases based on configuration settings."""
         # Only auto-enable if not explicitly set in kwargs
         enable_phase1 = kwargs.get("enable_phase1")
