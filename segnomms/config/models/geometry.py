@@ -6,7 +6,10 @@ shapes, and finder pattern styling.
 
 from __future__ import annotations
 
+from typing import Literal, Union
+
 from pydantic import BaseModel, ConfigDict, Field
+from typing_extensions import Annotated
 
 from ..enums import ConnectivityMode, FinderShape, MergeStrategy, ModuleShape
 
@@ -82,3 +85,125 @@ class FinderConfig(BaseModel):
     stroke: float = Field(
         default=0.0, ge=0.0, le=5.0, description="Stroke width in module units"
     )
+
+
+# Discriminated Union Patterns for Shape-Specific Configurations
+
+
+class BasicShapeConfig(BaseModel):
+    """Configuration for basic shapes (square, circle, diamond, dot)."""
+
+    model_config = ConfigDict(validate_default=True, extra="forbid")
+
+    shape: Literal[
+        "square", "circle", "diamond", "dot", "star", "hexagon", "triangle", "cross"
+    ]
+    connectivity: ConnectivityMode = ConnectivityMode.FOUR_WAY
+    merge: MergeStrategy = MergeStrategy.NONE
+    min_island_modules: int = Field(
+        default=1, ge=1, le=10, description="Minimum size for isolated module groups"
+    )
+
+
+class RoundedShapeConfig(BaseModel):
+    """Configuration for shapes with corner radius (rounded, squircle)."""
+
+    model_config = ConfigDict(validate_default=True, extra="forbid")
+
+    shape: Literal["rounded", "squircle"]
+    corner_radius: float = Field(
+        default=0.3,
+        ge=0.0,
+        le=1.0,
+        description="Relative corner radius (0=square, 1=circle)",
+    )
+    connectivity: ConnectivityMode = ConnectivityMode.FOUR_WAY
+    merge: MergeStrategy = MergeStrategy.NONE
+    min_island_modules: int = Field(
+        default=1, ge=1, le=10, description="Minimum size for isolated module groups"
+    )
+
+
+class ConnectedShapeConfig(BaseModel):
+    """Configuration for connected shapes with merging capabilities."""
+
+    model_config = ConfigDict(validate_default=True, extra="forbid")
+
+    shape: Literal[
+        "connected",
+        "connected-extra-rounded",
+        "connected-classy",
+        "connected-classy-rounded",
+    ]
+    corner_radius: float = Field(
+        default=0.2,
+        ge=0.0,
+        le=1.0,
+        description="Relative corner radius for connected elements",
+    )
+    connectivity: ConnectivityMode = ConnectivityMode.EIGHT_WAY
+    merge: MergeStrategy = MergeStrategy.SOFT
+    min_island_modules: int = Field(
+        default=2, ge=1, le=10, description="Minimum size for isolated module groups"
+    )
+
+
+# Discriminated union type
+ShapeSpecificConfig = Annotated[
+    Union[BasicShapeConfig, RoundedShapeConfig, ConnectedShapeConfig],
+    Field(discriminator="shape"),
+]
+
+
+class ModernGeometryConfig(BaseModel):
+    """Modern geometry configuration using discriminated unions.
+
+    This provides type-safe shape-specific configuration while maintaining
+    backward compatibility through factory methods.
+    """
+
+    model_config = ConfigDict(validate_default=True, extra="forbid")
+
+    config: ShapeSpecificConfig
+
+    @classmethod
+    def from_legacy(cls, legacy_config: GeometryConfig) -> "ModernGeometryConfig":
+        """Convert legacy GeometryConfig to discriminated union format."""
+        shape_value = legacy_config.shape.value
+
+        # Determine which union type to use based on shape
+        if shape_value in ["rounded", "squircle"]:
+            config = RoundedShapeConfig(
+                shape=shape_value,  # type: ignore
+                corner_radius=legacy_config.corner_radius,
+                connectivity=legacy_config.connectivity,
+                merge=legacy_config.merge,
+                min_island_modules=legacy_config.min_island_modules,
+            )
+        elif shape_value.startswith("connected"):
+            config = ConnectedShapeConfig(
+                shape=shape_value,  # type: ignore
+                corner_radius=legacy_config.corner_radius,
+                connectivity=legacy_config.connectivity,
+                merge=legacy_config.merge,
+                min_island_modules=legacy_config.min_island_modules,
+            )
+        else:
+            config = BasicShapeConfig(
+                shape=shape_value,  # type: ignore
+                connectivity=legacy_config.connectivity,
+                merge=legacy_config.merge,
+                min_island_modules=legacy_config.min_island_modules,
+            )
+
+        return cls(config=config)
+
+    def to_legacy(self) -> GeometryConfig:
+        """Convert back to legacy GeometryConfig format."""
+        return GeometryConfig(
+            connectivity=self.config.connectivity,
+            merge=self.config.merge,
+            corner_radius=getattr(self.config, "corner_radius", 0.0),
+            shape=ModuleShape(self.config.shape),
+            min_island_modules=self.config.min_island_modules,
+        )
