@@ -442,18 +442,22 @@ class TestGeometryConfigEdgeCases:
         with pytest.raises(ValidationError):
             GeometryConfig(min_island_modules=11)
 
-    def test_shape_enum_case_sensitivity(self):
-        """Test shape enum case sensitivity and variations."""
+    def test_shape_enum_case_insensitivity(self):
+        """Test shape enum case insensitivity and variations."""
         # Test exact case
         config = GeometryConfig(shape="square")
-        assert config.shape == ModuleShape.SQUARE  # use_enum_values=True
+        assert config.shape == ModuleShape.SQUARE
 
-        # Test that invalid cases fail
-        with pytest.raises(ValidationError):
-            GeometryConfig(shape="SQUARE")
+        # Test that case variations work correctly (case insensitive)
+        config_upper = GeometryConfig(shape="SQUARE")
+        assert config_upper.shape == ModuleShape.SQUARE
 
-        with pytest.raises(ValidationError):
-            GeometryConfig(shape="Square")
+        config_title = GeometryConfig(shape="Square")
+        assert config_title.shape == ModuleShape.SQUARE
+
+        # Test that aliases work correctly
+        config_alias = GeometryConfig(shape="rect")
+        assert config_alias.shape == ModuleShape.SQUARE
 
     def test_hyphenated_shape_names(self):
         """Test hyphenated shape names."""

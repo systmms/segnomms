@@ -19,6 +19,10 @@ class ConnectivityMode(str, Enum):
     FOUR_WAY = "4-way"
     EIGHT_WAY = "8-way"
 
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
+
     @classmethod
     def _missing_(cls, value: Any) -> "ConnectivityMode":
         """Handle case-insensitive lookup and common aliases."""
@@ -56,6 +60,10 @@ class MergeStrategy(str, Enum):
     NONE = "none"
     SOFT = "soft"
     AGGRESSIVE = "aggressive"
+
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
 
     @classmethod
     def _missing_(cls, value: Any) -> "MergeStrategy":
@@ -95,6 +103,10 @@ class ReserveMode(str, Enum):
 
     KNOCKOUT = "knockout"
     IMPRINT = "imprint"
+
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
 
     @classmethod
     def _missing_(cls, value: Any) -> "ReserveMode":
@@ -144,6 +156,10 @@ class PlacementMode(str, Enum):
     BOTTOM_CENTER = "bottom-center"
     LEFT_CENTER = "left-center"
     RIGHT_CENTER = "right-center"
+
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
 
     @classmethod
     def _missing_(cls, value: Any) -> "PlacementMode":
@@ -213,6 +229,10 @@ class ModuleShape(str, Enum):
     CONNECTED_CLASSY = "connected-classy"
     CONNECTED_CLASSY_ROUNDED = "connected-classy-rounded"
 
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
+
     @classmethod
     def _missing_(cls, value: Any) -> "ModuleShape":
         """Handle case-insensitive lookup and common aliases."""
@@ -264,6 +284,10 @@ class FinderShape(str, Enum):
     ROUNDED = "rounded"
     CIRCLE = "circle"
 
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
+
     @classmethod
     def _missing_(cls, value: Any) -> "FinderShape":
         """Handle case-insensitive lookup and common aliases."""
@@ -299,6 +323,10 @@ class ContourMode(str, Enum):
     BEZIER = "bezier"
     COMBINED = "combined"
     OVERLAY = "overlay"
+
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
 
     @classmethod
     def _missing_(cls, value: Any) -> "ContourMode":
@@ -338,6 +366,10 @@ class OptimizationLevel(str, Enum):
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
+
+    def __str__(self) -> str:
+        """Return the enum value for string representation."""
+        return self.value
 
     @classmethod
     def _missing_(cls, value: Any) -> "OptimizationLevel":
