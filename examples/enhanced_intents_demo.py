@@ -210,6 +210,7 @@ def main():
 
     # Comparison demo
     comparison_result = demo_comparison()
+    assert comparison_result is not None  # Validate comparison demo completed successfully
 
     # Save example outputs to proper directory
     output_dir = Path(__file__).parent / "output" / "demos"
