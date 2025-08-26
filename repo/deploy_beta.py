@@ -19,11 +19,11 @@ from pathlib import Path
 
 
 def get_current_version():
-    """Read current version from pyproject.toml."""
-    pyproject = Path("pyproject.toml").read_text()
-    match = re.search(r'version = "([^"]+)"', pyproject)
+    """Read current version from segnomms/__init__.py (dynamic versioning)."""
+    init_py = Path("segnomms/__init__.py").read_text()
+    match = re.search(r'__version__ = "([^"]+)"', init_py)
     if not match:
-        raise ValueError("Could not find version in pyproject.toml")
+        raise ValueError("Could not find __version__ in segnomms/__init__.py")
     return match.group(1)
 
 
@@ -71,11 +71,8 @@ def update_version_in_file(filepath, old_version, new_version):
 def update_all_versions(old_version, new_version):
     """Update version in all project files."""
     files_to_update = [
-        "pyproject.toml",
-        "segnomms/__init__.py",
-        "package.json",
-        ".github/.release-please-manifest.json",
-        "scripts/build_wheel.py",
+        "segnomms/__init__.py",  # Primary version source for dynamic versioning
+        # Note: pyproject.toml uses dynamic versioning, no version field to update
     ]
 
     print(f"Updating version from {old_version} to {new_version}")
@@ -89,42 +86,44 @@ def update_all_versions(old_version, new_version):
 
 
 def build_package(version):
-    """Build the Python package with a specific version."""
+    """Build the Python package with a specific version using Hatchling dynamic versioning."""
     print("\nBuilding package...")
 
     # Clean previous builds
     subprocess.run("rm -rf dist/ build/ *.egg-info", shell=True)
 
-    # Create a temporary pyproject.toml with the new version
-    pyproject_path = Path("pyproject.toml")
-    pyproject_backup = Path("pyproject.toml.backup")
+    # For Hatchling dynamic versioning, update the version in the source file
+    init_py_path = Path("segnomms/__init__.py")
+    init_py_backup = Path("segnomms/__init__.py.backup")
 
-    # Backup current pyproject.toml
-    shutil.copy2(pyproject_path, pyproject_backup)
+    # Backup current __init__.py
+    shutil.copy2(init_py_path, init_py_backup)
 
     try:
-        # Update version in pyproject.toml temporarily
-        content = pyproject_path.read_text()
-        current_version_match = re.search(r'version = "([^"]+)"', content)
+        # Update version in __init__.py temporarily
+        content = init_py_path.read_text()
+        current_version_match = re.search(r'__version__ = "([^"]+)"', content)
         if current_version_match:
             current_version_str = current_version_match.group(0)
-            new_version_str = f'version = "{version}"'
+            new_version_str = f'__version__ = "{version}"'
             content = content.replace(current_version_str, new_version_str)
-            pyproject_path.write_text(content)
+            init_py_path.write_text(content)
+        else:
+            print("Warning: Could not find __version__ in segnomms/__init__.py")
 
-        # Build wheel and source distribution
+        # Build wheel and source distribution with Hatchling
         result = subprocess.run([sys.executable, "-m", "build"], capture_output=True, text=True)
 
         if result.returncode != 0:
             print(f"Build failed: {result.stderr}")
             return False
 
-        print("  ✓ Package built successfully")
+        print("  ✓ Package built successfully with Hatchling dynamic versioning")
         return True
 
     finally:
-        # Always restore the original pyproject.toml
-        shutil.move(pyproject_backup, pyproject_path)
+        # Always restore the original __init__.py
+        shutil.move(init_py_backup, init_py_path)
 
 
 def deploy_to_gcloud_registry(version):
@@ -167,7 +166,7 @@ def deploy_to_gcloud_registry(version):
         return False
 
     print(f"  ✓ Successfully deployed version {version} to Google Cloud Artifact Registry")
-    print(f"\nInstall with:")
+    print("\nInstall with:")
     print(f"  pip install --index-url {repository_url}simple segnomms=={version}")
     return True
 
@@ -184,7 +183,7 @@ def main():
 
     # Check if build tool is installed
     try:
-        import build
+        import build  # noqa: F401
     except ImportError:
         print("Installing build tool...")
         subprocess.run([sys.executable, "-m", "pip", "install", "build", "twine"])
@@ -220,13 +219,13 @@ def main():
     repository_url = f"https://{location}-python.pkg.dev/{project_id}/{repository}/"
 
     print("\n✅ Deployment complete!")
-    print(f"\nNext steps:")
-    print(f"1. Test the package:")
+    print("\nNext steps:")
+    print("1. Test the package:")
     print(f"   pip install --index-url {repository_url}simple segnomms=={next_version}")
-    print(f"2. Commit the version changes:")
+    print("2. Commit the version changes:")
     print(f"   git add -A && git commit -m 'chore: release {next_version}'")
-    print(f"3. Push the changes:")
-    print(f"   git push")
+    print("3. Push the changes:")
+    print("   git push")
 
 
 if __name__ == "__main__":
