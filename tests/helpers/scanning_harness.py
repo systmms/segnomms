@@ -293,6 +293,8 @@ class QRScanabilityHarness:
             barcodes = pyzbar.decode(image)
             scan_time = (time.time() - start_time) * 1000
 
+            logger.debug(f"pyzbar scan completed in {scan_time:.2f}ms")
+
             if barcodes:
                 # Get first QR code found
                 barcode = barcodes[0]
@@ -331,6 +333,8 @@ class QRScanabilityHarness:
             start_time = time.time()
             data, vertices, _ = detector.detectAndDecode(img_array)
             scan_time = (time.time() - start_time) * 1000
+
+            logger.debug(f"OpenCV scan completed in {scan_time:.2f}ms")
 
             if data:
                 # Estimate confidence from detection quality

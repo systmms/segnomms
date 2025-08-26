@@ -400,11 +400,11 @@ class TestAlgorithmBenchmarks:
 
             # Performance warnings
             if result.mean_time > 1.0:  # > 1 second
-                print(f"  ⚠️  WARNING: High execution time")
+                print("  ⚠️  WARNING: High execution time")
             if result.memory_usage_mb > 50:  # > 50 MB
-                print(f"  ⚠️  WARNING: High memory usage")
+                print("  ⚠️  WARNING: High memory usage")
             if result.success_rate < 1.0:
-                print(f"  ❌ WARNING: Failures detected")
+                print("  ❌ WARNING: Failures detected")
 
     def _assert_performance_thresholds(self, results: List[BenchmarkResult]):
         """Assert that performance meets minimum thresholds."""
@@ -520,6 +520,6 @@ class TestScalabilityBenchmarks:
 
             # Alert if scaling is worse than O(n²)
             if time_ratio > size_ratio * 2:
-                print(f"⚠️  WARNING: Potentially poor scaling behavior")
+                print("⚠️  WARNING: Potentially poor scaling behavior")
             else:
-                print(f"✅ Scaling behavior appears reasonable")
+                print("✅ Scaling behavior appears reasonable")

@@ -329,13 +329,13 @@ def generate_review_with_svg_diffs(output_dir: Path) -> None:
     # Create summary report
     summary = integration.create_diff_summary()
 
-    print(f"SVG Diff Summary:")
+    print("SVG Diff Summary:")
     print(f"  Total tests: {summary['total_tests']}")
     print(f"  SVG changes: {summary['svg_changes']} ({summary['change_rate']['svg']:.1f}%)")
     print(f"  PNG changes: {summary['png_changes']} ({summary['change_rate']['png']:.1f}%)")
 
     breakdown = summary["change_breakdown"]
-    print(f"  Change breakdown:")
+    print("  Change breakdown:")
     print(f"    Both changed: {breakdown['both_changed']}")
     print(f"    SVG only: {breakdown['svg_only']}")
     print(f"    PNG only: {breakdown['png_only']}")

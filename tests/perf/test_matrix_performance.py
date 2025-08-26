@@ -75,6 +75,9 @@ class TestMatrixPerformanceWarnings:
 
         elapsed = time.time() - start_time
 
+        # Assert reasonable performance for large matrix operations
+        assert elapsed < 10.0, f"Large matrix operations took too long: {elapsed:.2f}s"
+
         # Should warn about complex shape calculations
         metadata = large_manipulator.get_centerpiece_metadata(config)
         if "performance_warnings" in metadata:
