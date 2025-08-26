@@ -47,9 +47,7 @@ class BaseShapeRenderer(ShapeRenderer):
         return shape_type.lower() in self.shape_names
 
 
-def apply_element_attributes(
-    element: ET.Element, kwargs: Union[Dict[str, Any], Any]
-) -> None:
+def apply_element_attributes(element: ET.Element, kwargs: Union[Dict[str, Any], Any]) -> None:
     """Apply common attributes to an SVG element.
 
     This helper function applies standard attributes like id, data-* attributes,
@@ -118,9 +116,7 @@ def get_module_center(x: float, y: float, size: float) -> Tuple[float, float]:
     return x + size / 2, y + size / 2
 
 
-def apply_size_ratio(
-    size: float, kwargs: Union[Dict[str, Any], Any], default: float = 1.0
-) -> float:
+def apply_size_ratio(size: float, kwargs: Union[Dict[str, Any], Any], default: float = 1.0) -> float:
     """Apply size ratio from kwargs to a base size.
 
     Args:
@@ -263,9 +259,7 @@ def generate_diamond_points(x: float, y: float, size: float) -> list[str]:
     ]
 
 
-def generate_triangle_points(
-    x: float, y: float, size: float, direction: str = "up"
-) -> list[str]:
+def generate_triangle_points(x: float, y: float, size: float, direction: str = "up") -> list[str]:
     """Generate points for a triangle in the specified direction.
 
     Args:
@@ -307,9 +301,7 @@ def generate_triangle_points(
             f"{x + size},{y + size / 2}",
         ]
     else:
-        raise ValueError(
-            f"Invalid direction '{direction}'. Must be 'up', 'down', 'left', or 'right'"
-        )
+        raise ValueError(f"Invalid direction '{direction}'. Must be 'up', 'down', 'left', or 'right'")
 
 
 class SquareRenderer(BaseShapeRenderer):
@@ -467,9 +459,7 @@ class DotRenderer(BaseShapeRenderer):
         cx, cy = get_module_center(x, y, size)
         dot_size = apply_size_ratio(size, kwargs, 0.6)
 
-        return create_svg_element(
-            "circle", {"cx": cx, "cy": cy, "r": dot_size / 2}, kwargs
-        )
+        return create_svg_element("circle", {"cx": cx, "cy": cy, "r": dot_size / 2}, kwargs)
 
 
 class DiamondRenderer(BaseShapeRenderer):
@@ -542,9 +532,7 @@ class StarRenderer(BaseShapeRenderer):
         outer_radius = size / 2
         inner_radius = outer_radius * inner_ratio
 
-        star_points = generate_star_polygon(
-            center_x, center_y, outer_radius, inner_radius, points
-        )
+        star_points = generate_star_polygon(center_x, center_y, outer_radius, inner_radius, points)
 
         return create_svg_element("polygon", {"points": " ".join(star_points)}, kwargs)
 

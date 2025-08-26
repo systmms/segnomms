@@ -193,7 +193,7 @@ def validate_qr_contrast(
             level = "adequate"
         message = f"Contrast ratio {ratio:.1f}:1 is {level} for QR scanning"
     else:
-        message = f"Contrast ratio {ratio:.1f}:1 is below minimum {min_ratio:.1f}:1 for reliable scanning"
+        message = f"Contrast ratio {ratio:.1f}:1 is below minimum " f"{min_ratio:.1f}:1 for reliable scanning"
 
     return is_valid, ratio, message
 
@@ -239,15 +239,11 @@ def suggest_color_improvements(dark_color: str, light_color: str) -> list[str]:
 
     ratio = calculate_contrast_ratio(dark_color, light_color)
     if ratio is None:
-        suggestions.append(
-            "Use standard color formats like #000000, rgb(0,0,0), or 'black'"
-        )
+        suggestions.append("Use standard color formats like #000000, rgb(0,0,0), or 'black'")
         return suggestions
 
     if ratio < 3.0:
-        suggestions.append(
-            "Increase contrast - use darker dark color or lighter light color"
-        )
+        suggestions.append("Increase contrast - use darker dark color or lighter light color")
 
         # Parse colors for specific suggestions
         dark_rgb = parse_color(dark_color)
@@ -258,25 +254,17 @@ def suggest_color_improvements(dark_color: str, light_color: str) -> list[str]:
             light_avg = sum(light_rgb) // 3
 
             if dark_avg > 100:
-                suggestions.append(
-                    "Consider using a darker color like #000000 (black) for dark modules"
-                )
+                suggestions.append("Consider using a darker color like #000000 (black) for dark modules")
 
             if light_avg < 200:
-                suggestions.append(
-                    "Consider using a lighter color like #FFFFFF (white) for light modules"
-                )
+                suggestions.append("Consider using a lighter color like #FFFFFF (white) for light modules")
 
     elif ratio < 4.5:
-        suggestions.append(
-            "Good contrast, but consider increasing for better reliability in poor lighting"
-        )
+        suggestions.append("Good contrast, but consider increasing for better reliability in poor lighting")
 
     # Check color distance
     distance = get_color_distance(dark_color, light_color)
     if distance and distance < 100:
-        suggestions.append(
-            "Colors are very similar - increase difference for better scanner detection"
-        )
+        suggestions.append("Colors are very similar - increase difference for better scanner detection")
 
     return suggestions

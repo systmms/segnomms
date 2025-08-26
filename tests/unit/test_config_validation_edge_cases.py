@@ -199,9 +199,7 @@ class TestConfigurationIntegrationConstraints:
         performance_config = PerformanceConfig(
             enable_caching=False, debug_timing=True  # Disable for consistent debugging
         )
-        debug_config = DebugConfig(
-            debug_mode=True, verbose_logging=True, save_intermediate_results=True
-        )
+        debug_config = DebugConfig(debug_mode=True, verbose_logging=True, save_intermediate_results=True)
 
         assert performance_config.enable_caching is False
         assert performance_config.debug_timing is True
@@ -215,9 +213,7 @@ class TestConfigurationIntegrationConstraints:
             enable_parallel_processing=True,
             debug_timing=False,
         )
-        debug_config = DebugConfig(
-            debug_mode=False, verbose_logging=False, save_intermediate_results=False
-        )
+        debug_config = DebugConfig(debug_mode=False, verbose_logging=False, save_intermediate_results=False)
 
         assert performance_config.enable_caching is True
         assert performance_config.enable_parallel_processing is True
@@ -257,9 +253,7 @@ class TestConfigurationIntegrationConstraints:
         # Coordinated circular frame and centerpiece
         config = RenderingConfig(
             frame=FrameConfig(shape="circle", clip_mode="fade", fade_distance=15.0),
-            centerpiece=CenterpieceConfig(
-                enabled=True, shape="circle", size=0.25, mode="imprint"
-            ),
+            centerpiece=CenterpieceConfig(enabled=True, shape="circle", size=0.25, mode="imprint"),
         )
 
         assert config.frame.shape == "circle"
@@ -443,9 +437,7 @@ class TestComplexValidationScenarios:
                     "qr_data": "qr-data accent",
                 },
             ),
-            phase1=Phase1Config(
-                enabled=True, use_enhanced_shapes=True, roundness=0.5, size_ratio=0.9
-            ),
+            phase1=Phase1Config(enabled=True, use_enhanced_shapes=True, roundness=0.5, size_ratio=0.9),
             phase2=Phase2Config(
                 enabled=True,
                 use_cluster_rendering=True,
@@ -534,9 +526,7 @@ class TestComplexValidationScenarios:
 
         # Invalid quiet zone gradient style without gradient
         with pytest.raises(ValidationError):
-            RenderingConfig(
-                quiet_zone=QuietZoneConfig(style="gradient")  # Missing gradient
-            )
+            RenderingConfig(quiet_zone=QuietZoneConfig(style="gradient"))  # Missing gradient
 
         # Invalid patterns enabled without overrides
         with pytest.raises(ValidationError):
@@ -674,9 +664,7 @@ class TestConfigurationStateConsistency:
 
     def test_configuration_immutability_after_creation(self):
         """Test that configurations maintain consistent state after creation."""
-        config = RenderingConfig(
-            scale=20, geometry=GeometryConfig(shape="circle", corner_radius=0.3)
-        )
+        config = RenderingConfig(scale=20, geometry=GeometryConfig(shape="circle", corner_radius=0.3))
 
         # Configuration should maintain its state
         assert config.scale == 20
@@ -718,10 +706,7 @@ class TestConfigurationStateConsistency:
         assert restored_config.scale == original_config.scale
         assert restored_config.dark == original_config.dark
         assert restored_config.geometry.shape == original_config.geometry.shape
-        assert (
-            restored_config.geometry.corner_radius
-            == original_config.geometry.corner_radius
-        )
+        assert restored_config.geometry.corner_radius == original_config.geometry.corner_radius
         assert restored_config.style.interactive == original_config.style.interactive
 
     def test_factory_method_consistency(self):
@@ -741,8 +726,5 @@ class TestConfigurationStateConsistency:
         # Should have equivalent key properties
         assert factory_config.scale == direct_config.scale
         assert factory_config.geometry.shape == direct_config.geometry.shape
-        assert (
-            factory_config.geometry.corner_radius
-            == direct_config.geometry.corner_radius
-        )
+        assert factory_config.geometry.corner_radius == direct_config.geometry.corner_radius
         assert factory_config.style.interactive == direct_config.style.interactive

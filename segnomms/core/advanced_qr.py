@@ -11,7 +11,7 @@ proper error handling, validation, and fallback mechanisms.
 
 import logging
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, TypedDict, Union
+from typing import Any, Dict, List, Optional, TypedDict
 
 import segno
 from segno import QRCode
@@ -147,13 +147,9 @@ class AdvancedQRGenerator:
 
         try:
             if config.structured_append:
-                return self._generate_structured_append(
-                    content, config, error, version, warnings, metadata
-                )
+                return self._generate_structured_append(content, config, error, version, warnings, metadata)
             else:
-                return self._generate_single_qr(
-                    content, config, error, version, warnings, metadata
-                )
+                return self._generate_single_qr(content, config, error, version, warnings, metadata)
 
         except Exception as e:
             logger.warning(f"Advanced QR generation failed: {e}")
@@ -198,9 +194,7 @@ class AdvancedQRGenerator:
 
             # Validate encoding
             if config.encoding not in self.supported_encodings:
-                warnings.append(
-                    f"Encoding '{config.encoding}' may not be widely supported"
-                )
+                warnings.append(f"Encoding '{config.encoding}' may not be widely supported")
 
         # Add ECI mode if enabled
         if config.eci_enabled:
@@ -211,9 +205,7 @@ class AdvancedQRGenerator:
             if not config.encoding:
                 segno_params["encoding"] = "UTF-8"
                 metadata["encoding"] = "UTF-8"
-                warnings.append(
-                    "ECI enabled without encoding specified, defaulting to UTF-8"
-                )
+                warnings.append("ECI enabled without encoding specified, defaulting to UTF-8")
 
             # Warn about ECI compatibility
             warnings.append("ECI mode enabled - ensure target scanners support ECI")
@@ -245,8 +237,7 @@ class AdvancedQRGenerator:
             if config.mask_pattern is not None and hasattr(qr, "mask"):
                 if qr.mask != config.mask_pattern:
                     warnings.append(
-                        f"Requested mask pattern {config.mask_pattern} "
-                        f"but QR uses mask {qr.mask}"
+                        f"Requested mask pattern {config.mask_pattern} " f"but QR uses mask {qr.mask}"
                     )
 
             return QRGenerationResult(
@@ -261,9 +252,7 @@ class AdvancedQRGenerator:
             # Try without ECI if ECI fails
             if config.eci_enabled and "eci" in segno_params:
                 logger.info(f"ECI mode failed ({e}), retrying without ECI")
-                warnings.append(
-                    f"ECI mode failed, using encoding without ECI: {str(e)}"
-                )
+                warnings.append(f"ECI mode failed, using encoding without ECI: {str(e)}")
 
                 # Remove ECI and retry
                 segno_params_fallback: SegnoMakeParams = segno_params.copy()
@@ -322,9 +311,7 @@ class AdvancedQRGenerator:
             if not config.encoding:
                 sequence_params["encoding"] = "UTF-8"
                 metadata["encoding"] = "UTF-8"
-                warnings.append(
-                    "ECI requested for sequence but not supported, using UTF-8 encoding"
-                )
+                warnings.append("ECI requested for sequence but not supported, using UTF-8 encoding")
 
         # Add mask pattern if specified
         if config.mask_pattern is not None:
@@ -342,9 +329,7 @@ class AdvancedQRGenerator:
             # Default to 2 symbols if neither specified
             sequence_params["symbol_count"] = 2
             metadata["requested_symbol_count"] = 2
-            warnings.append(
-                "No symbol count or version specified for sequence, defaulting to 2 symbols"
-            )
+            warnings.append("No symbol count or version specified for sequence, defaulting to 2 symbols")
 
         try:
             # Generate structured append sequence
@@ -356,9 +341,7 @@ class AdvancedQRGenerator:
             else:
                 # Single QR returned - structured append not needed
                 qr_codes = [sequence]
-                warnings.append(
-                    "Content fits in single QR code, structured append not used"
-                )
+                warnings.append("Content fits in single QR code, structured append not used")
 
             # Collect metadata from all QR codes in sequence
             metadata.update(
@@ -381,9 +364,7 @@ class AdvancedQRGenerator:
 
             # Check if sequence was split as expected
             if config.symbol_count and len(qr_codes) != config.symbol_count:
-                warnings.append(
-                    f"Requested {config.symbol_count} symbols but generated {len(qr_codes)}"
-                )
+                warnings.append(f"Requested {config.symbol_count} symbols but generated {len(qr_codes)}")
 
             return QRGenerationResult(
                 qr_codes=qr_codes,
@@ -397,21 +378,15 @@ class AdvancedQRGenerator:
             # Try fallback - since ECI is already not in sequence_params,
             # try without encoding if encoding was the issue
             if config.encoding and "encoding" in sequence_params:
-                logger.info(
-                    f"Structured append with encoding failed ({e}), retrying with default encoding"
-                )
-                warnings.append(
-                    f"Structured append encoding failed, using fallback: {str(e)}"
-                )
+                logger.info(f"Structured append with encoding failed ({e}), retrying with default encoding")
+                warnings.append(f"Structured append encoding failed, using fallback: {str(e)}")
 
                 sequence_params_fallback: SegnoSequenceParams = sequence_params.copy()
                 del sequence_params_fallback["encoding"]
                 metadata["encoding_fallback"] = True
 
                 sequence = segno.make_sequence(content, **sequence_params_fallback)
-                qr_codes = (
-                    list(sequence) if hasattr(sequence, "__iter__") else [sequence]
-                )
+                qr_codes = list(sequence) if hasattr(sequence, "__iter__") else [sequence]
 
                 metadata.update(
                     {
@@ -457,27 +432,21 @@ class AdvancedQRGenerator:
                 warnings.append("ECI enabled without encoding specification")
             else:
                 if config.encoding not in self.supported_encodings:
-                    warnings.append(
-                        f"Encoding '{config.encoding}' may not be supported"
-                    )
+                    warnings.append(f"Encoding '{config.encoding}' may not be supported")
 
             warnings.append("ECI mode may not be supported by all QR code scanners")
 
         # Mask pattern validation
         if config.mask_pattern is not None:
             if not 0 <= config.mask_pattern <= 7:
-                warnings.append(
-                    f"Mask pattern {config.mask_pattern} is outside valid range 0-7"
-                )
+                warnings.append(f"Mask pattern {config.mask_pattern} is outside valid range 0-7")
 
         # Structured append validation
         if config.structured_append:
             if config.symbol_count and config.symbol_count > 16:
                 warnings.append("Structured append supports maximum 16 symbols")
 
-            warnings.append(
-                "Structured append requires scanners that support multi-symbol sequences"
-            )
+            warnings.append("Structured append requires scanners that support multi-symbol sequences")
 
         return warnings
 

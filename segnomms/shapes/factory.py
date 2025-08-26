@@ -149,9 +149,7 @@ class ShapeRendererFactory(RendererFactory):
 
         return supported
 
-    def register_renderer(
-        self, shape_type: str, renderer_class: Type[ShapeRenderer]
-    ) -> None:
+    def register_renderer(self, shape_type: str, renderer_class: Type[ShapeRenderer]) -> None:
         """Register a custom shape renderer.
 
         Args:
@@ -272,9 +270,7 @@ def get_shape_factory() -> ShapeRendererFactory:
     return _shape_factory
 
 
-def register_custom_renderer(
-    shape_type: str, renderer_class: Type[ShapeRenderer]
-) -> None:
+def register_custom_renderer(shape_type: str, renderer_class: Type[ShapeRenderer]) -> None:
     """Register a custom shape renderer with the global factory.
 
     Args:
@@ -289,9 +285,7 @@ def register_custom_renderer(
     factory.register_renderer(shape_type, renderer_class)
 
 
-def create_shape_renderer(
-    shape_type: str, config: Optional[Dict[str, Any]] = None
-) -> ShapeRenderer:
+def create_shape_renderer(shape_type: str, config: Optional[Dict[str, Any]] = None) -> ShapeRenderer:
     """Create a shape renderer using the global factory.
 
     Args:

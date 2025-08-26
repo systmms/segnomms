@@ -7,7 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2024-01-17
+## [0.1.0] - 2025-01-26
+
+### Added
+- Complete Pydantic v2 integration with strict MyPy compliance across 67 modules
+- Modern enum object handling with discriminated unions for shape configurations
+- TypedDict patterns for type-safe **kwargs usage in shape renderers
+- Comprehensive error handling with structured exceptions
+- Intent-based API with graceful degradation
+- Capability discovery system
+- Performance monitoring and memory leak detection
+- Visual regression testing framework
+
+### Changed
+- Modernized configuration system from Pydantic v1 to v2
+- Removed `use_enum_values=True` - enums now return objects at runtime
+- Updated build system to use `uv` and `Hatchling`
+- Enhanced type safety throughout codebase
+- Improved development workflow with strict pre-commit hooks
+
+### Fixed
+- Memory leak detection test matrix dimension issue
+- Unused import cleanup across modules
+- Line length violations in docstrings and comments
+- MyPy compliance issues in core modules
+
+### Technical Improvements
+- 1,079 comprehensive tests with excellent coverage
+- Zero MyPy errors across all core modules
+- Modern Python packaging with PEP 517/518 compliance
+- Automated visual regression testing
+- Cross-platform compatibility testing
+
+## [0.1.0-beta] - 2024-01-17
 
 ### Added
 - Initial release of SegnoMMS
@@ -25,3 +57,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated author information to SYSTMMS
 
 [0.1.0]: https://github.com/systmms/segnomms/releases/tag/v0.1.0
+[0.1.0-beta]: https://github.com/systmms/segnomms/releases/tag/v0.1.0-beta

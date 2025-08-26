@@ -50,9 +50,7 @@ class ModuleDetector(QRCodeAnalyzer):
         >>> print(module_type)  # 'data'
     """
 
-    def __init__(
-        self, matrix: List[List[bool]], version: Optional[Union[int, str]] = None
-    ):
+    def __init__(self, matrix: List[List[bool]], version: Optional[Union[int, str]] = None):
         """Initialize the detector with QR code matrix and optional version.
 
         Args:
@@ -162,9 +160,7 @@ class ModuleDetector(QRCodeAnalyzer):
         """
         # Validate bounds
         if not (0 <= row < self.size and 0 <= col < self.size):
-            raise IndexError(
-                f"Position ({row}, {col}) out of bounds for {self.size}x{self.size} matrix"
-            )
+            raise IndexError(f"Position ({row}, {col}) out of bounds for {self.size}x{self.size} matrix")
 
         size = self.size
 
@@ -173,15 +169,9 @@ class ModuleDetector(QRCodeAnalyzer):
             abs_row = base_row if base_row >= 0 else size + base_row
             abs_col = base_col if base_col >= 0 else size + base_col
 
-            if (
-                abs_row <= row < abs_row + FINDER_SIZE
-                and abs_col <= col < abs_col + FINDER_SIZE
-            ):
+            if abs_row <= row < abs_row + FINDER_SIZE and abs_col <= col < abs_col + FINDER_SIZE:
                 # Check if it's the inner part
-                if (
-                    abs_row + 2 <= row < abs_row + 5
-                    and abs_col + 2 <= col < abs_col + 5
-                ):
+                if abs_row + 2 <= row < abs_row + 5 and abs_col + 2 <= col < abs_col + 5:
                     return "finder_inner"
                 return "finder"
 
@@ -191,16 +181,10 @@ class ModuleDetector(QRCodeAnalyzer):
             abs_col = base_col if base_col >= 0 else size + base_col
 
             # Horizontal separator
-            if (
-                row == abs_row + FINDER_SIZE
-                and abs_col <= col < abs_col + FINDER_SIZE + 1
-            ):
+            if row == abs_row + FINDER_SIZE and abs_col <= col < abs_col + FINDER_SIZE + 1:
                 return "separator"
             # Vertical separator
-            if (
-                col == abs_col + FINDER_SIZE
-                and abs_row <= row < abs_row + FINDER_SIZE + 1
-            ):
+            if col == abs_col + FINDER_SIZE and abs_row <= row < abs_row + FINDER_SIZE + 1:
                 return "separator"
 
         # Timing patterns
@@ -219,9 +203,7 @@ class ModuleDetector(QRCodeAnalyzer):
             return "dark"
 
         # Format information
-        if (row == 8 and (col < 9 or col >= size - 8)) or (
-            col == 8 and (row < 9 or row >= size - 7)
-        ):
+        if (row == 8 and (col < 9 or col >= size - 8)) or (col == 8 and (row < 9 or row >= size - 7)):
             return "format"
 
         # Version information (for version 7+)
@@ -261,9 +243,7 @@ class ModuleDetector(QRCodeAnalyzer):
             return self.matrix[row][col]
         return False
 
-    def get_neighbors(
-        self, row: int, col: int, neighborhood: str = "von_neumann"
-    ) -> List[Tuple[int, int]]:
+    def get_neighbors(self, row: int, col: int, neighborhood: str = "von_neumann") -> List[Tuple[int, int]]:
         """
         Get neighboring positions for a module.
 
@@ -322,9 +302,7 @@ class ModuleDetector(QRCodeAnalyzer):
         """
         # Validate bounds
         if not (0 <= row < self.size and 0 <= col < self.size):
-            raise IndexError(
-                f"Position ({row}, {col}) out of bounds for {self.size}x{self.size} matrix"
-            )
+            raise IndexError(f"Position ({row}, {col}) out of bounds for {self.size}x{self.size} matrix")
 
         neighbors = self.get_neighbors(row, col, "moore")
 
@@ -366,17 +344,11 @@ class ModuleDetector(QRCodeAnalyzer):
         vertical_flow = 0.0
 
         if len(cardinal_neighbors) >= 4:
-            horizontal_flow = (
-                cardinal_neighbors[2] + cardinal_neighbors[3]
-            ) / 2  # left + right
-            vertical_flow = (
-                cardinal_neighbors[0] + cardinal_neighbors[1]
-            ) / 2  # up + down
+            horizontal_flow = (cardinal_neighbors[2] + cardinal_neighbors[3]) / 2  # left + right
+            vertical_flow = (cardinal_neighbors[0] + cardinal_neighbors[1]) / 2  # up + down
 
         # Get active neighbor positions
-        active_neighbors = [
-            (nr, nc) for nr, nc in neighbors if self.is_module_active(nr, nc)
-        ]
+        active_neighbors = [(nr, nc) for nr, nc in neighbors if self.is_module_active(nr, nc)]
 
         return NeighborAnalysis(
             cardinal_count=cardinal_count,
@@ -385,9 +357,7 @@ class ModuleDetector(QRCodeAnalyzer):
             weighted_strength=weighted_strength,
             horizontal_flow=horizontal_flow,
             vertical_flow=vertical_flow,
-            flow_direction=(
-                "horizontal" if horizontal_flow > vertical_flow else "vertical"
-            ),
+            flow_direction=("horizontal" if horizontal_flow > vertical_flow else "vertical"),
             isolation_level=4 - cardinal_count,
             corner_connections=diagonal_count,
             active_neighbors=active_neighbors,

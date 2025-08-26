@@ -57,9 +57,7 @@ class DefinitionsBuilder:
 
         return defs
 
-    def _add_gradient(
-        self, defs: ET.Element, gradient: Union[GradientConfig, Dict[str, Any]]
-    ) -> None:
+    def _add_gradient(self, defs: ET.Element, gradient: Union[GradientConfig, Dict[str, Any]]) -> None:
         """Add a gradient definition to the defs element.
 
         Args:
@@ -102,11 +100,7 @@ class DefinitionsBuilder:
         if gradient.stops is not None:
             for i, stop_position in enumerate(gradient.stops):
                 # Use color from colors list
-                color = (
-                    gradient.colors[i]
-                    if i < len(gradient.colors)
-                    else gradient.colors[-1]
-                )
+                color = gradient.colors[i] if i < len(gradient.colors) else gradient.colors[-1]
                 ET.SubElement(
                     grad_elem,
                     "stop",
@@ -119,9 +113,7 @@ class DefinitionsBuilder:
         else:
             # Auto-generate stops based on colors
             for i, color in enumerate(gradient.colors):
-                offset = (
-                    i / (len(gradient.colors) - 1) if len(gradient.colors) > 1 else 0
-                )
+                offset = i / (len(gradient.colors) - 1) if len(gradient.colors) > 1 else 0
                 ET.SubElement(
                     grad_elem,
                     "stop",
@@ -132,9 +124,7 @@ class DefinitionsBuilder:
                     },
                 )
 
-    def _add_gradient_from_dict(
-        self, defs: ET.Element, gradient: Dict[str, Any]
-    ) -> None:
+    def _add_gradient_from_dict(self, defs: ET.Element, gradient: Dict[str, Any]) -> None:
         """Add a gradient definition from dictionary format.
 
         This method handles the test format which may not match GradientConfig model.
@@ -268,9 +258,7 @@ class DefinitionsBuilder:
             for primitive in filter_config["primitives"]:
                 self._create_filter_primitive(filter_elem, primitive)
 
-    def _create_pattern_element(
-        self, pattern_elem: ET.Element, element_config: Dict[str, Any]
-    ) -> None:
+    def _create_pattern_element(self, pattern_elem: ET.Element, element_config: Dict[str, Any]) -> None:
         """Create an element within a pattern.
 
         Args:
@@ -281,9 +269,7 @@ class DefinitionsBuilder:
         attribs = {k: str(v) for k, v in element_config.items() if k != "type"}
         ET.SubElement(pattern_elem, elem_type, attrib=attribs)
 
-    def _create_filter_primitive(
-        self, filter_elem: ET.Element, primitive_config: Dict[str, Any]
-    ) -> None:
+    def _create_filter_primitive(self, filter_elem: ET.Element, primitive_config: Dict[str, Any]) -> None:
         """Create a filter primitive element.
 
         Args:

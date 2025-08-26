@@ -8,14 +8,14 @@ and StyleConfig validation, interactions, and complex scenarios.
 import pytest
 from pydantic import ValidationError
 
+from segnomms.config.enums import PlacementMode, ReserveMode
 from segnomms.config.models.visual import (
-    PatternStyleConfig,
-    FrameConfig,
     CenterpieceConfig,
+    FrameConfig,
+    PatternStyleConfig,
     QuietZoneConfig,
     StyleConfig,
 )
-from segnomms.config.enums import PlacementMode, ReserveMode
 
 
 class TestPatternStyleConfig:
@@ -24,7 +24,7 @@ class TestPatternStyleConfig:
     def test_default_pattern_style_config(self):
         """Test default pattern style configuration."""
         config = PatternStyleConfig()
-        
+
         assert config.enabled is False
         assert config.finder is None
         assert config.finder_inner is None
@@ -33,7 +33,7 @@ class TestPatternStyleConfig:
         assert config.format is None
         assert config.version is None
         assert config.data is None
-        
+
         # Color fields
         assert config.finder_color is None
         assert config.finder_inner_color is None
@@ -42,12 +42,12 @@ class TestPatternStyleConfig:
         assert config.format_color is None
         assert config.version_color is None
         assert config.data_color is None
-        
+
         # Scale fields
         assert config.finder_scale is None
         assert config.timing_scale is None
         assert config.alignment_scale is None
-        
+
         # Effects fields
         assert config.finder_effects is None
         assert config.timing_effects is None
@@ -63,9 +63,9 @@ class TestPatternStyleConfig:
             alignment="rounded",
             format="diamond",
             version="star",
-            data="squircle"
+            data="squircle",
         )
-        
+
         assert config.enabled is True
         assert config.finder == "circle"
         assert config.finder_inner == "square"
@@ -85,9 +85,9 @@ class TestPatternStyleConfig:
             alignment_color="#f39c12",
             format_color="#9b59b6",
             version_color="#e67e22",
-            data_color="#1abc9c"
+            data_color="#1abc9c",
         )
-        
+
         assert config.enabled is True
         assert config.finder_color == "#e74c3c"
         assert config.finder_inner_color == "#3498db"
@@ -99,13 +99,8 @@ class TestPatternStyleConfig:
 
     def test_pattern_scale_overrides(self):
         """Test pattern-specific scale overrides."""
-        config = PatternStyleConfig(
-            enabled=True,
-            finder_scale=1.2,
-            timing_scale=0.8,
-            alignment_scale=1.5
-        )
-        
+        config = PatternStyleConfig(enabled=True, finder_scale=1.2, timing_scale=0.8, alignment_scale=1.5)
+
         assert config.enabled is True
         assert config.finder_scale == 1.2
         assert config.timing_scale == 0.8
@@ -115,14 +110,14 @@ class TestPatternStyleConfig:
         """Test pattern scale validation constraints."""
         # Valid scale values
         valid_scales = [0.1, 0.5, 1.0, 1.5, 2.0]
-        
+
         for scale in valid_scales:
             config = PatternStyleConfig(enabled=True, finder_scale=scale)
             assert config.finder_scale == scale
-        
+
         # Invalid scale values
         invalid_scales = [0.05, 2.1, -0.1, 3.0]
-        
+
         for scale in invalid_scales:
             with pytest.raises(ValidationError) as exc_info:
                 PatternStyleConfig(enabled=True, finder_scale=scale)
@@ -133,14 +128,14 @@ class TestPatternStyleConfig:
         finder_effects = {"glow": True, "shadow": "2px 2px 4px rgba(0,0,0,0.3)"}
         timing_effects = {"animation": "pulse", "duration": "1s"}
         alignment_effects = {"border": "2px solid #000", "background": "gradient"}
-        
+
         config = PatternStyleConfig(
             enabled=True,
             finder_effects=finder_effects,
             timing_effects=timing_effects,
-            alignment_effects=alignment_effects
+            alignment_effects=alignment_effects,
         )
-        
+
         assert config.enabled is True
         assert config.finder_effects == finder_effects
         assert config.timing_effects == timing_effects
@@ -151,10 +146,10 @@ class TestPatternStyleConfig:
         # Should fail when enabled but no overrides specified
         with pytest.raises(ValidationError) as exc_info:
             PatternStyleConfig(enabled=True)
-        
+
         error_message = str(exc_info.value)
         assert "at least one pattern override" in error_message.lower()
-        
+
         # Should pass when enabled with at least one override
         config = PatternStyleConfig(enabled=True, finder="circle")
         assert config.enabled is True
@@ -164,19 +159,29 @@ class TestPatternStyleConfig:
         """Test validation of pattern shape values."""
         # Valid shapes
         valid_shapes = [
-            "square", "circle", "rounded", "dot", "diamond",
-            "star", "hexagon", "triangle", "squircle", "cross",
-            "connected", "connected-extra-rounded",
-            "connected-classy", "connected-classy-rounded"
+            "square",
+            "circle",
+            "rounded",
+            "dot",
+            "diamond",
+            "star",
+            "hexagon",
+            "triangle",
+            "squircle",
+            "cross",
+            "connected",
+            "connected-extra-rounded",
+            "connected-classy",
+            "connected-classy-rounded",
         ]
-        
+
         for shape in valid_shapes:
             config = PatternStyleConfig(enabled=True, finder=shape)
             assert config.finder == shape
-        
+
         # Invalid shapes
         invalid_shapes = ["invalid", "pentagon", "octagon", ""]
-        
+
         for shape in invalid_shapes:
             with pytest.raises(ValidationError) as exc_info:
                 PatternStyleConfig(enabled=True, finder=shape)
@@ -196,9 +201,9 @@ class TestPatternStyleConfig:
             alignment="rounded",
             alignment_color="#2ecc71",
             data="connected-classy-rounded",
-            data_color="#f39c12"
+            data_color="#f39c12",
         )
-        
+
         assert config.enabled is True
         assert config.finder == "circle"
         assert config.finder_color == "#e74c3c"
@@ -215,12 +220,8 @@ class TestPatternStyleConfig:
     def test_disabled_patterns_with_overrides(self):
         """Test that overrides are allowed even when patterns are disabled."""
         # Should allow overrides even when disabled
-        config = PatternStyleConfig(
-            enabled=False,
-            finder="circle",
-            finder_color="#e74c3c"
-        )
-        
+        config = PatternStyleConfig(enabled=False, finder="circle", finder_color="#e74c3c")
+
         assert config.enabled is False
         assert config.finder == "circle"
         assert config.finder_color == "#e74c3c"
@@ -232,7 +233,7 @@ class TestFrameConfig:
     def test_default_frame_config(self):
         """Test default frame configuration."""
         config = FrameConfig()
-        
+
         assert config.shape == "square"
         assert config.corner_radius == 0.0
         assert config.clip_mode == "clip"
@@ -243,11 +244,11 @@ class TestFrameConfig:
     def test_frame_shape_validation(self):
         """Test frame shape validation."""
         valid_shapes = ["square", "circle", "rounded-rect", "squircle"]
-        
+
         for shape in valid_shapes:
             config = FrameConfig(shape=shape)
             assert config.shape == shape
-        
+
         # Test custom shape separately (requires custom_path)
         config = FrameConfig(shape="custom", custom_path="M0,0 L100,100")
         assert config.shape == "custom"
@@ -255,7 +256,7 @@ class TestFrameConfig:
     def test_frame_clip_mode_validation(self):
         """Test frame clip mode validation."""
         valid_modes = ["clip", "fade", "scale"]
-        
+
         for mode in valid_modes:
             config = FrameConfig(clip_mode=mode)
             assert config.clip_mode == mode
@@ -264,14 +265,14 @@ class TestFrameConfig:
         """Test corner radius validation."""
         # Valid corner radius values
         valid_radii = [0.0, 0.3, 0.5, 1.0]
-        
+
         for radius in valid_radii:
             config = FrameConfig(corner_radius=radius)
             assert config.corner_radius == radius
-        
+
         # Invalid corner radius values
         invalid_radii = [-0.1, 1.1, 2.0]
-        
+
         for radius in invalid_radii:
             with pytest.raises(ValidationError):
                 FrameConfig(corner_radius=radius)
@@ -280,14 +281,14 @@ class TestFrameConfig:
         """Test fade distance validation."""
         # Valid fade distance values
         valid_distances = [0.0, 10.0, 25.0, 50.0]
-        
+
         for distance in valid_distances:
             config = FrameConfig(fade_distance=distance)
             assert config.fade_distance == distance
-        
+
         # Invalid fade distance values
         invalid_distances = [-1.0, 51.0, 100.0]
-        
+
         for distance in invalid_distances:
             with pytest.raises(ValidationError):
                 FrameConfig(fade_distance=distance)
@@ -296,14 +297,14 @@ class TestFrameConfig:
         """Test scale distance validation."""
         # Valid scale distance values
         valid_distances = [0.0, 5.0, 12.5, 25.0]
-        
+
         for distance in valid_distances:
             config = FrameConfig(scale_distance=distance)
             assert config.scale_distance == distance
-        
+
         # Invalid scale distance values
         invalid_distances = [-1.0, 26.0, 50.0]
-        
+
         for distance in invalid_distances:
             with pytest.raises(ValidationError):
                 FrameConfig(scale_distance=distance)
@@ -313,27 +314,20 @@ class TestFrameConfig:
         # Custom shape requires custom_path
         with pytest.raises(ValidationError) as exc_info:
             FrameConfig(shape="custom")
-        
+
         assert "custom_path required" in str(exc_info.value).lower()
-        
+
         # Custom shape with path should work
-        config = FrameConfig(
-            shape="custom",
-            custom_path="M0,0 L100,0 L100,100 L0,100 Z"
-        )
+        config = FrameConfig(shape="custom", custom_path="M0,0 L100,0 L100,100 L0,100 Z")
         assert config.shape == "custom"
         assert config.custom_path == "M0,0 L100,0 L100,100 L0,100 Z"
 
     def test_complex_frame_configuration(self):
         """Test complex frame configuration."""
         config = FrameConfig(
-            shape="rounded-rect",
-            corner_radius=0.3,
-            clip_mode="fade",
-            fade_distance=15.0,
-            scale_distance=8.0
+            shape="rounded-rect", corner_radius=0.3, clip_mode="fade", fade_distance=15.0, scale_distance=8.0
         )
-        
+
         assert config.shape == "rounded-rect"
         assert config.corner_radius == 0.3
         assert config.clip_mode == "fade"
@@ -342,14 +336,13 @@ class TestFrameConfig:
 
     def test_custom_svg_path_frame(self):
         """Test custom SVG path frame configuration."""
-        svg_path = "M50,0 C22.4,0 0,22.4 0,50 C0,77.6 22.4,100 50,100 C77.6,100 100,77.6 100,50 C100,22.4 77.6,0 50,0 Z"
-        
-        config = FrameConfig(
-            shape="custom",
-            custom_path=svg_path,
-            clip_mode="clip"
+        svg_path = (
+            "M50,0 C22.4,0 0,22.4 0,50 C0,77.6 22.4,100 50,100 "
+            "C77.6,100 100,77.6 100,50 C100,22.4 77.6,0 50,0 Z"
         )
-        
+
+        config = FrameConfig(shape="custom", custom_path=svg_path, clip_mode="clip")
+
         assert config.shape == "custom"
         assert config.custom_path == svg_path
         assert config.clip_mode == "clip"
@@ -361,7 +354,7 @@ class TestCenterpieceConfig:
     def test_default_centerpiece_config(self):
         """Test default centerpiece configuration."""
         config = CenterpieceConfig()
-        
+
         assert config.enabled is False
         assert config.shape == "rect"
         assert config.size == 0.0
@@ -374,7 +367,7 @@ class TestCenterpieceConfig:
     def test_centerpiece_shape_validation(self):
         """Test centerpiece shape validation."""
         valid_shapes = ["rect", "circle", "squircle"]
-        
+
         for shape in valid_shapes:
             config = CenterpieceConfig(shape=shape)
             assert config.shape == shape
@@ -383,14 +376,14 @@ class TestCenterpieceConfig:
         """Test centerpiece size validation."""
         # Valid size values
         valid_sizes = [0.0, 0.1, 0.25, 0.5]
-        
+
         for size in valid_sizes:
             config = CenterpieceConfig(size=size)
             assert config.size == size
-        
+
         # Invalid size values
         invalid_sizes = [-0.1, 0.6, 1.0, 2.0]
-        
+
         for size in invalid_sizes:
             with pytest.raises(ValidationError):
                 CenterpieceConfig(size=size)
@@ -399,15 +392,15 @@ class TestCenterpieceConfig:
         """Test centerpiece offset validation."""
         # Valid offset values
         valid_offsets = [-0.5, -0.2, 0.0, 0.3, 0.5]
-        
+
         for offset in valid_offsets:
             config = CenterpieceConfig(offset_x=offset, offset_y=offset)
             assert config.offset_x == offset
             assert config.offset_y == offset
-        
+
         # Invalid offset values
         invalid_offsets = [-0.6, 0.6, 1.0, -1.0]
-        
+
         for offset in invalid_offsets:
             with pytest.raises(ValidationError):
                 CenterpieceConfig(offset_x=offset)
@@ -418,14 +411,14 @@ class TestCenterpieceConfig:
         """Test centerpiece margin validation."""
         # Valid margin values
         valid_margins = [0, 1, 2, 5, 10]
-        
+
         for margin in valid_margins:
             config = CenterpieceConfig(margin=margin)
             assert config.margin == margin
-        
+
         # Invalid margin values
         invalid_margins = [-1, -5]
-        
+
         for margin in invalid_margins:
             with pytest.raises(ValidationError):
                 CenterpieceConfig(margin=margin)
@@ -434,7 +427,7 @@ class TestCenterpieceConfig:
         """Test centerpiece mode validation."""
         config = CenterpieceConfig(mode="knockout")
         assert config.mode == ReserveMode.KNOCKOUT
-        
+
         config = CenterpieceConfig(mode="imprint")
         assert config.mode == ReserveMode.IMPRINT
 
@@ -450,9 +443,9 @@ class TestCenterpieceConfig:
             ("top-center", PlacementMode.TOP_CENTER),
             ("bottom-center", PlacementMode.BOTTOM_CENTER),
             ("left-center", PlacementMode.LEFT_CENTER),
-            ("right-center", PlacementMode.RIGHT_CENTER)
+            ("right-center", PlacementMode.RIGHT_CENTER),
         ]
-        
+
         for placement_str, placement_enum in valid_placements:
             config = CenterpieceConfig(placement=placement_str)
             assert config.placement == placement_enum
@@ -462,9 +455,9 @@ class TestCenterpieceConfig:
         # Enabled centerpiece with size 0 should fail
         with pytest.raises(ValidationError) as exc_info:
             CenterpieceConfig(enabled=True, size=0.0)
-        
+
         assert "centerpiece size must be > 0" in str(exc_info.value).lower()
-        
+
         # Enabled centerpiece with positive size should work
         config = CenterpieceConfig(enabled=True, size=0.2)
         assert config.enabled is True
@@ -480,9 +473,9 @@ class TestCenterpieceConfig:
             offset_y=-0.05,
             margin=3,
             mode="imprint",
-            placement="custom"
+            placement="custom",
         )
-        
+
         assert config.enabled is True
         assert config.shape == "circle"
         assert config.size == 0.25
@@ -495,10 +488,17 @@ class TestCenterpieceConfig:
     def test_centerpiece_placement_modes(self):
         """Test different centerpiece placement modes."""
         placements = [
-            "center", "top-left", "top-right", "bottom-left", "bottom-right",
-            "top-center", "bottom-center", "left-center", "right-center"
+            "center",
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right",
+            "top-center",
+            "bottom-center",
+            "left-center",
+            "right-center",
         ]
-        
+
         placement_mappings = {
             "center": PlacementMode.CENTER,
             "top-left": PlacementMode.TOP_LEFT,
@@ -508,33 +508,21 @@ class TestCenterpieceConfig:
             "top-center": PlacementMode.TOP_CENTER,
             "bottom-center": PlacementMode.BOTTOM_CENTER,
             "left-center": PlacementMode.LEFT_CENTER,
-            "right-center": PlacementMode.RIGHT_CENTER
+            "right-center": PlacementMode.RIGHT_CENTER,
         }
-        
+
         for placement_str, placement_enum in placement_mappings.items():
-            config = CenterpieceConfig(
-                enabled=True,
-                size=0.15,
-                placement=placement_str
-            )
+            config = CenterpieceConfig(enabled=True, size=0.15, placement=placement_str)
             assert config.placement == placement_enum
 
     def test_knockout_vs_imprint_modes(self):
         """Test knockout vs imprint reserve modes."""
         # Knockout mode
-        knockout_config = CenterpieceConfig(
-            enabled=True,
-            size=0.2,
-            mode="knockout"
-        )
+        knockout_config = CenterpieceConfig(enabled=True, size=0.2, mode="knockout")
         assert knockout_config.mode == ReserveMode.KNOCKOUT
-        
+
         # Imprint mode
-        imprint_config = CenterpieceConfig(
-            enabled=True,
-            size=0.2,
-            mode="imprint"
-        )
+        imprint_config = CenterpieceConfig(enabled=True, size=0.2, mode="imprint")
         assert imprint_config.mode == ReserveMode.IMPRINT
 
 
@@ -544,7 +532,7 @@ class TestQuietZoneConfig:
     def test_default_quiet_zone_config(self):
         """Test default quiet zone configuration."""
         config = QuietZoneConfig()
-        
+
         assert config.color == "#ffffff"
         assert config.style == "solid"
         assert config.gradient is None
@@ -552,7 +540,7 @@ class TestQuietZoneConfig:
     def test_quiet_zone_color_validation(self):
         """Test quiet zone color validation."""
         valid_colors = ["#ffffff", "#000000", "#e74c3c", "rgb(255,0,0)", "red", "transparent"]
-        
+
         for color in valid_colors:
             config = QuietZoneConfig(color=color)
             assert config.color == color
@@ -561,11 +549,11 @@ class TestQuietZoneConfig:
         """Test quiet zone style validation."""
         # Test solid and none styles (don't require gradient)
         valid_styles = ["solid", "none"]
-        
+
         for style in valid_styles:
             config = QuietZoneConfig(style=style)
             assert config.style == style
-        
+
         # Test gradient style separately (requires gradient definition)
         gradient_def = {"type": "linear", "stops": []}
         config = QuietZoneConfig(style="gradient", gradient=gradient_def)
@@ -576,15 +564,15 @@ class TestQuietZoneConfig:
         # Gradient style requires gradient definition
         with pytest.raises(ValidationError) as exc_info:
             QuietZoneConfig(style="gradient")
-        
+
         assert "gradient definition required" in str(exc_info.value).lower()
-        
+
         # Gradient style with definition should work
         gradient_def = {
             "type": "linear",
-            "stops": [{"offset": "0%", "color": "#fff"}, {"offset": "100%", "color": "#eee"}]
+            "stops": [{"offset": "0%", "color": "#fff"}, {"offset": "100%", "color": "#eee"}],
         }
-        
+
         config = QuietZoneConfig(style="gradient", gradient=gradient_def)
         assert config.style == "gradient"
         assert config.gradient == gradient_def
@@ -597,27 +585,20 @@ class TestQuietZoneConfig:
             "stops": [
                 {"offset": "0%", "color": "#ffffff"},
                 {"offset": "50%", "color": "#f8f9fa"},
-                {"offset": "100%", "color": "#e9ecef"}
-            ]
+                {"offset": "100%", "color": "#e9ecef"},
+            ],
         }
-        
-        config = QuietZoneConfig(
-            color="#f8f9fa",
-            style="gradient",
-            gradient=gradient_def
-        )
-        
+
+        config = QuietZoneConfig(color="#f8f9fa", style="gradient", gradient=gradient_def)
+
         assert config.color == "#f8f9fa"
         assert config.style == "gradient"
         assert config.gradient == gradient_def
 
     def test_solid_style_without_gradient(self):
         """Test solid style doesn't require gradient."""
-        config = QuietZoneConfig(
-            color="#e74c3c",
-            style="solid"
-        )
-        
+        config = QuietZoneConfig(color="#e74c3c", style="solid")
+
         assert config.color == "#e74c3c"
         assert config.style == "solid"
         assert config.gradient is None
@@ -629,7 +610,7 @@ class TestStyleConfig:
     def test_default_style_config(self):
         """Test default style configuration."""
         config = StyleConfig()
-        
+
         assert config.interactive is False
         assert config.tooltips is False
         assert config.css_classes is None
@@ -637,7 +618,7 @@ class TestStyleConfig:
     def test_interactive_features(self):
         """Test interactive features configuration."""
         config = StyleConfig(interactive=True, tooltips=True)
-        
+
         assert config.interactive is True
         assert config.tooltips is True
 
@@ -651,33 +632,27 @@ class TestStyleConfig:
             "qr_format": "custom-format",
             "qr_version": "custom-version",
             "qr_data": "custom-data",
-            "qr_cluster": "custom-cluster"
+            "qr_cluster": "custom-cluster",
         }
-        
+
         config = StyleConfig(css_classes=valid_css_classes)
         assert config.css_classes == valid_css_classes
 
     def test_css_classes_validation_invalid_keys(self):
         """Test CSS classes validation with invalid keys."""
-        invalid_css_classes = {
-            "invalid_key": "custom-class",
-            "qr_module": "valid-class"
-        }
-        
+        invalid_css_classes = {"invalid_key": "custom-class", "qr_module": "valid-class"}
+
         with pytest.raises(ValidationError) as exc_info:
             StyleConfig(css_classes=invalid_css_classes)
-        
+
         error_message = str(exc_info.value)
         assert "invalid css class key" in error_message.lower()
         assert "invalid_key" in error_message
 
     def test_partial_css_classes(self):
         """Test partial CSS classes configuration."""
-        partial_css_classes = {
-            "qr_module": "module-class",
-            "qr_finder": "finder-class"
-        }
-        
+        partial_css_classes = {"qr_module": "module-class", "qr_finder": "finder-class"}
+
         config = StyleConfig(css_classes=partial_css_classes)
         assert config.css_classes == partial_css_classes
 
@@ -686,15 +661,11 @@ class TestStyleConfig:
         css_classes = {
             "qr_module": "qr-mod animated",
             "qr_finder": "qr-find highlighted",
-            "qr_data": "qr-data interactive"
+            "qr_data": "qr-data interactive",
         }
-        
-        config = StyleConfig(
-            interactive=True,
-            tooltips=True,
-            css_classes=css_classes
-        )
-        
+
+        config = StyleConfig(interactive=True, tooltips=True, css_classes=css_classes)
+
         assert config.interactive is True
         assert config.tooltips is True
         assert config.css_classes == css_classes
@@ -714,28 +685,22 @@ class TestVisualConfigIntegration:
         primary_color = "#e74c3c"
         secondary_color = "#3498db"
         accent_color = "#2ecc71"
-        
+
         pattern_config = PatternStyleConfig(
-            enabled=True,
-            finder_color=primary_color,
-            timing_color=secondary_color,
-            data_color=accent_color
+            enabled=True, finder_color=primary_color, timing_color=secondary_color, data_color=accent_color
         )
-        
-        quiet_zone_config = QuietZoneConfig(
-            color="#ffffff",
-            style="solid"
-        )
-        
+
+        quiet_zone_config = QuietZoneConfig(color="#ffffff", style="solid")
+
         style_config = StyleConfig(
             interactive=True,
             css_classes={
                 "qr_finder": "primary-element",
                 "qr_timing": "secondary-element",
-                "qr_data": "accent-element"
-            }
+                "qr_data": "accent-element",
+            },
         )
-        
+
         assert pattern_config.finder_color == primary_color
         assert pattern_config.timing_color == secondary_color
         assert pattern_config.data_color == accent_color
@@ -744,19 +709,10 @@ class TestVisualConfigIntegration:
 
     def test_frame_centerpiece_interaction(self):
         """Test frame and centerpiece configuration interaction."""
-        frame_config = FrameConfig(
-            shape="circle",
-            clip_mode="fade",
-            fade_distance=20.0
-        )
-        
-        centerpiece_config = CenterpieceConfig(
-            enabled=True,
-            shape="circle",
-            size=0.3,
-            mode="imprint"
-        )
-        
+        frame_config = FrameConfig(shape="circle", clip_mode="fade", fade_distance=20.0)
+
+        centerpiece_config = CenterpieceConfig(enabled=True, shape="circle", size=0.3, mode="imprint")
+
         # Both use circular shapes for consistency
         assert frame_config.shape == "circle"
         assert centerpiece_config.shape == "circle"
@@ -768,18 +724,15 @@ class TestVisualConfigIntegration:
         style_config = StyleConfig(
             interactive=True,
             tooltips=True,
-            css_classes={
-                "qr_module": "interactive-module",
-                "qr_cluster": "hover-cluster"
-            }
+            css_classes={"qr_module": "interactive-module", "qr_cluster": "hover-cluster"},
         )
-        
+
         pattern_config = PatternStyleConfig(
             enabled=True,
             finder_effects={"hover": "scale(1.1)", "transition": "0.3s"},
-            timing_effects={"animation": "pulse 2s infinite"}
+            timing_effects={"animation": "pulse 2s infinite"},
         )
-        
+
         assert style_config.interactive is True
         assert style_config.tooltips is True
         assert pattern_config.finder_effects["hover"] == "scale(1.1)"
@@ -796,38 +749,25 @@ class TestVisualConfigIntegration:
             timing="dot",
             timing_color="#3498db",
             data="connected-classy-rounded",
-            data_color="#2ecc71"
+            data_color="#2ecc71",
         )
-        
-        frame_config = FrameConfig(
-            shape="squircle",
-            corner_radius=0.3,
-            clip_mode="fade",
-            fade_distance=15.0
-        )
-        
+
+        frame_config = FrameConfig(shape="squircle", corner_radius=0.3, clip_mode="fade", fade_distance=15.0)
+
         centerpiece_config = CenterpieceConfig(
-            enabled=True,
-            shape="squircle",
-            size=0.25,
-            mode="imprint",
-            placement="center",
-            margin=3
+            enabled=True, shape="squircle", size=0.25, mode="imprint", placement="center", margin=3
         )
-        
+
         quiet_zone_config = QuietZoneConfig(
             color="#f8f9fa",
             style="gradient",
             gradient={
                 "type": "linear",
                 "direction": "to bottom",
-                "stops": [
-                    {"offset": "0%", "color": "#ffffff"},
-                    {"offset": "100%", "color": "#f8f9fa"}
-                ]
-            }
+                "stops": [{"offset": "0%", "color": "#ffffff"}, {"offset": "100%", "color": "#f8f9fa"}],
+            },
         )
-        
+
         style_config = StyleConfig(
             interactive=True,
             tooltips=True,
@@ -835,17 +775,17 @@ class TestVisualConfigIntegration:
                 "qr_module": "qr-module animated",
                 "qr_finder": "qr-finder primary",
                 "qr_timing": "qr-timing secondary",
-                "qr_data": "qr-data accent"
-            }
+                "qr_data": "qr-data accent",
+            },
         )
-        
+
         # Verify all configurations are valid
         assert pattern_config.enabled is True
         assert frame_config.shape == "squircle"
         assert centerpiece_config.enabled is True
         assert quiet_zone_config.style == "gradient"
         assert style_config.interactive is True
-        
+
         # Verify coordinated elements
         assert frame_config.shape == centerpiece_config.shape  # Both squircle
         assert frame_config.corner_radius == 0.3
@@ -858,23 +798,13 @@ class TestVisualConfigEdgeCases:
     def test_pattern_config_boundary_values(self):
         """Test pattern config boundary values."""
         # Minimum scale values
-        config = PatternStyleConfig(
-            enabled=True,
-            finder_scale=0.1,
-            timing_scale=0.1,
-            alignment_scale=0.1
-        )
+        config = PatternStyleConfig(enabled=True, finder_scale=0.1, timing_scale=0.1, alignment_scale=0.1)
         assert config.finder_scale == 0.1
         assert config.timing_scale == 0.1
         assert config.alignment_scale == 0.1
-        
+
         # Maximum scale values
-        config = PatternStyleConfig(
-            enabled=True,
-            finder_scale=2.0,
-            timing_scale=2.0,
-            alignment_scale=2.0
-        )
+        config = PatternStyleConfig(enabled=True, finder_scale=2.0, timing_scale=2.0, alignment_scale=2.0)
         assert config.finder_scale == 2.0
         assert config.timing_scale == 2.0
         assert config.alignment_scale == 2.0
@@ -882,21 +812,13 @@ class TestVisualConfigEdgeCases:
     def test_frame_config_boundary_values(self):
         """Test frame config boundary values."""
         # Minimum values
-        config = FrameConfig(
-            corner_radius=0.0,
-            fade_distance=0.0,
-            scale_distance=0.0
-        )
+        config = FrameConfig(corner_radius=0.0, fade_distance=0.0, scale_distance=0.0)
         assert config.corner_radius == 0.0
         assert config.fade_distance == 0.0
         assert config.scale_distance == 0.0
-        
+
         # Maximum values
-        config = FrameConfig(
-            corner_radius=1.0,
-            fade_distance=50.0,
-            scale_distance=25.0
-        )
+        config = FrameConfig(corner_radius=1.0, fade_distance=50.0, scale_distance=25.0)
         assert config.corner_radius == 1.0
         assert config.fade_distance == 50.0
         assert config.scale_distance == 25.0
@@ -904,23 +826,14 @@ class TestVisualConfigEdgeCases:
     def test_centerpiece_config_boundary_values(self):
         """Test centerpiece config boundary values."""
         # Minimum values
-        config = CenterpieceConfig(
-            size=0.0,
-            offset_x=-0.5,
-            offset_y=-0.5,
-            margin=0
-        )
+        config = CenterpieceConfig(size=0.0, offset_x=-0.5, offset_y=-0.5, margin=0)
         assert config.size == 0.0
         assert config.offset_x == -0.5
         assert config.offset_y == -0.5
         assert config.margin == 0
-        
+
         # Maximum values
-        config = CenterpieceConfig(
-            size=0.5,
-            offset_x=0.5,
-            offset_y=0.5
-        )
+        config = CenterpieceConfig(size=0.5, offset_x=0.5, offset_y=0.5)
         assert config.size == 0.5
         assert config.offset_x == 0.5
         assert config.offset_y == 0.5
@@ -929,24 +842,20 @@ class TestVisualConfigEdgeCases:
         """Test handling of None values in optional fields."""
         # All None values should be allowed for optional fields
         pattern_config = PatternStyleConfig(
-            enabled=False,
-            finder=None,
-            finder_color=None,
-            finder_scale=None,
-            finder_effects=None
+            enabled=False, finder=None, finder_color=None, finder_scale=None, finder_effects=None
         )
-        
+
         assert pattern_config.finder is None
         assert pattern_config.finder_color is None
         assert pattern_config.finder_scale is None
         assert pattern_config.finder_effects is None
-        
+
         frame_config = FrameConfig(custom_path=None)
         assert frame_config.custom_path is None
-        
+
         quiet_zone_config = QuietZoneConfig(gradient=None)
         assert quiet_zone_config.gradient is None
-        
+
         style_config = StyleConfig(css_classes=None)
         assert style_config.css_classes is None
 
@@ -956,12 +865,12 @@ class TestVisualConfigEdgeCases:
         pattern_config = PatternStyleConfig(enabled=True, finder_scale=1)
         assert pattern_config.finder_scale == 1.0
         assert isinstance(pattern_config.finder_scale, float)
-        
+
         # String to float coercion
         frame_config = FrameConfig(corner_radius="0.5")
         assert frame_config.corner_radius == 0.5
         assert isinstance(frame_config.corner_radius, float)
-        
+
         # Float to int coercion for margin
         centerpiece_config = CenterpieceConfig(margin=3.0)
         assert centerpiece_config.margin == 3

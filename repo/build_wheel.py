@@ -107,9 +107,7 @@ requires-python = ">=3.7"
         )
 
     print("Wheel built successfully!")
-    print(
-        "You can now use: await micropip.install('./dist/segnomms-0.1.0-py3-none-any.whl')"
-    )
+    print("You can now use: await micropip.install('./dist/segnomms-0.1.0-py3-none-any.whl')")
 
 
 if __name__ == "__main__":

@@ -93,11 +93,9 @@ class IntentProcessor:
 
         # Step 3: Create QR code(s) based on requirements
         if needs_advanced:
-            qr_codes, generation_metadata = self._create_advanced_qr(
-                payload, config_kwargs
-            )
+            qr_codes, generation_metadata = self._create_advanced_qr(payload, config_kwargs)
             # For now, use the first QR code for rendering
-            # TODO: Handle multiple QR codes for structured append
+            # NOTE: Future feature - structured append for multiple QR codes
             qr_code = qr_codes[0] if qr_codes else self._create_qr_code(payload)
         else:
             qr_code = self._create_qr_code(payload)
@@ -175,8 +173,7 @@ class IntentProcessor:
             warnings=self.get_warnings(),
             metrics=metrics,
             used_options=config.to_kwargs(),
-            degradation_applied=len(unsupported_intents) > 0
-            or degradation_result.warning_count > 0,
+            degradation_applied=len(unsupported_intents) > 0 or degradation_result.warning_count > 0,
             unsupported_intents=unsupported_intents,
             translation_report=translation_report,
             requested_options=self.original_intents,
@@ -186,9 +183,7 @@ class IntentProcessor:
 
         return result
 
-    def _process_all_intents(
-        self, intents: IntentsConfig
-    ) -> tuple[Dict[str, Any], list[str]]:
+    def _process_all_intents(self, intents: IntentsConfig) -> tuple[Dict[str, Any], list[str]]:
         """Process all intent categories."""
         config_kwargs = {}
         all_unsupported = []
@@ -216,9 +211,7 @@ class IntentProcessor:
 
         # Process reserve intents
         if intents.reserve:
-            reserve_config, reserve_unsupported = self.process_reserve_intents(
-                intents.reserve
-            )
+            reserve_config, reserve_unsupported = self.process_reserve_intents(intents.reserve)
             # Map reserve config to nested structure
             if reserve_config:
                 centerpiece_dict = {}
@@ -233,9 +226,7 @@ class IntentProcessor:
 
         # Process accessibility intents
         if intents.accessibility:
-            accessibility_config = self._process_accessibility_intents(
-                intents.accessibility
-            )
+            accessibility_config = self._process_accessibility_intents(intents.accessibility)
             config_kwargs.update(accessibility_config)
 
         # Process validation intents
@@ -245,49 +236,41 @@ class IntentProcessor:
 
         # Process interactivity intents
         if intents.interactivity:
-            interactivity_config, interactivity_unsupported = (
-                self._process_interactivity_intents(intents.interactivity)
+            interactivity_config, interactivity_unsupported = self._process_interactivity_intents(
+                intents.interactivity
             )
             config_kwargs.update(interactivity_config)
             all_unsupported.extend(interactivity_unsupported)
 
         # Process animation intents
         if intents.animation:
-            animation_config, animation_unsupported = self._process_animation_intents(
-                intents.animation
-            )
+            animation_config, animation_unsupported = self._process_animation_intents(intents.animation)
             config_kwargs.update(animation_config)
             all_unsupported.extend(animation_unsupported)
 
         # Process performance intents
         if intents.performance:
-            performance_config, performance_unsupported = (
-                self._process_performance_intents(intents.performance)
+            performance_config, performance_unsupported = self._process_performance_intents(
+                intents.performance
             )
             config_kwargs.update(performance_config)
             all_unsupported.extend(performance_unsupported)
 
         # Process branding intents
         if intents.branding:
-            branding_config, branding_unsupported = self._process_branding_intents(
-                intents.branding
-            )
+            branding_config, branding_unsupported = self._process_branding_intents(intents.branding)
             config_kwargs.update(branding_config)
             all_unsupported.extend(branding_unsupported)
 
         # Process advanced intents (mostly unsupported for now)
         if intents.advanced:
-            advanced_config, advanced_unsupported = self._process_advanced_intents(
-                intents.advanced
-            )
+            advanced_config, advanced_unsupported = self._process_advanced_intents(intents.advanced)
             config_kwargs.update(advanced_config)
             all_unsupported.extend(advanced_unsupported)
 
         return config_kwargs, all_unsupported
 
-    def _process_accessibility_intents(
-        self, accessibility: Optional[AccessibilityIntents]
-    ) -> Dict[str, Any]:
+    def _process_accessibility_intents(self, accessibility: Optional[AccessibilityIntents]) -> Dict[str, Any]:
         """Process accessibility intents."""
         config: Dict[str, Any] = {}
 
@@ -360,9 +343,7 @@ class IntentProcessor:
 
         return config
 
-    def _process_validation_intents(
-        self, validation: Optional[ValidationIntents]
-    ) -> Dict[str, Any]:
+    def _process_validation_intents(self, validation: Optional[ValidationIntents]) -> Dict[str, Any]:
         """Process validation intents."""
         config: Dict[str, Any] = {}
 
@@ -460,8 +441,7 @@ class IntentProcessor:
                             self._add_warning(
                                 "INTENT_OUT_OF_RANGE",
                                 "advanced.structured_append.symbol_count",
-                                f"Symbol count {symbol_count} out of valid range "
-                                "(2-16)",
+                                f"Symbol count {symbol_count} out of valid range " "(2-16)",
                                 "Using automatic symbol count",
                             )
 
@@ -509,16 +489,9 @@ class IntentProcessor:
         # Apply path simplification suggestions
         if simplify_paths and "_suggested_corner_radius" in config_kwargs:
             if "corner_radius" not in config_kwargs:
-                config_kwargs["corner_radius"] = config_kwargs.pop(
-                    "_suggested_corner_radius"
-                )
-            if (
-                "connectivity" not in config_kwargs
-                and "_suggested_connectivity" in config_kwargs
-            ):
-                config_kwargs["connectivity"] = config_kwargs.pop(
-                    "_suggested_connectivity"
-                )
+                config_kwargs["corner_radius"] = config_kwargs.pop("_suggested_corner_radius")
+            if "connectivity" not in config_kwargs and "_suggested_connectivity" in config_kwargs:
+                config_kwargs["connectivity"] = config_kwargs.pop("_suggested_connectivity")
 
         # Clean up any remaining suggestion keys
         keys_to_remove = [k for k in config_kwargs if k.startswith("_suggested_")]
@@ -534,9 +507,7 @@ class IntentProcessor:
                 "lazy_rendering": lazy_rendering,
             }
 
-    def _needs_advanced_features(
-        self, config_kwargs: Dict[str, Any], payload: PayloadConfig
-    ) -> bool:
+    def _needs_advanced_features(self, config_kwargs: Dict[str, Any], payload: PayloadConfig) -> bool:
         """Check if advanced QR generation is needed."""
         # Check for advanced features in config
         if config_kwargs.get("structured_append", False):
@@ -571,16 +542,12 @@ class IntentProcessor:
 
         # Create generator and generate QR codes
         generator = AdvancedQRGenerator()
-        result = generator.generate_qr(
-            content, advanced_config, error=payload.error_correction or "M"
-        )
+        result = generator.generate_qr(content, advanced_config, error=payload.error_correction or "M")
 
         # Track metadata
         if result.warnings:
             for warning in result.warnings:
-                self._add_warning(
-                    "ADVANCED_QR_WARNING", "advanced", warning, None, "info"
-                )
+                self._add_warning("ADVANCED_QR_WARNING", "advanced", warning, None, "info")
 
         return result.qr_codes, result.metadata
 
@@ -621,9 +588,7 @@ class IntentProcessor:
         light_color = config.light
 
         # Validate contrast
-        is_valid, actual_ratio, message = validate_qr_contrast(
-            dark_color, light_color, min_ratio
-        )
+        is_valid, actual_ratio, message = validate_qr_contrast(dark_color, light_color, min_ratio)
 
         if not is_valid:
             # Add warning about poor contrast
@@ -680,9 +645,7 @@ class IntentProcessor:
 
         # Add actual contrast ratio if calculated
         if hasattr(self, "_actual_contrast_ratio"):
-            metrics = metrics.model_copy(
-                update={"contrast_ratio": self._actual_contrast_ratio}
-            )
+            metrics = metrics.model_copy(update={"contrast_ratio": self._actual_contrast_ratio})
         elif hasattr(config, "dark") and hasattr(config, "light"):
             # Calculate contrast ratio if not already done
             _, ratio, _ = validate_qr_contrast(config.dark, config.light)
@@ -691,9 +654,7 @@ class IntentProcessor:
 
         return metrics
 
-    def process_style_intents(
-        self, style: Optional[StyleIntents]
-    ) -> tuple[Dict[str, Any], list[str]]:
+    def process_style_intents(self, style: Optional[StyleIntents]) -> tuple[Dict[str, Any], list[str]]:
         """Process style intents with degradation.
 
         Returns:
@@ -779,10 +740,7 @@ class IntentProcessor:
                     style.merge,
                     "none",
                     "rejected",
-                    reason=(
-                        f"Merge strategy '{style.merge}' not supported, "
-                        "using default"
-                    ),
+                    reason=(f"Merge strategy '{style.merge}' not supported, " "using default"),
                     confidence=0.0,
                 )
                 unsupported.append("style.merge")
@@ -812,10 +770,7 @@ class IntentProcessor:
                     style.connectivity,
                     "4-way",
                     "rejected",
-                    reason=(
-                        f"Connectivity mode '{style.connectivity}' not "
-                        "supported, using default"
-                    ),
+                    reason=(f"Connectivity mode '{style.connectivity}' not " "supported, using default"),
                     confidence=0.0,
                 )
                 unsupported.append("style.connectivity")
@@ -830,8 +785,7 @@ class IntentProcessor:
                 validation_error = IntentValidationError(
                     intent_path="style.corner_radius",
                     message=(
-                        f"Corner radius {style.corner_radius} outside valid range "
-                        f"[{min_val}, {max_val}]"
+                        f"Corner radius {style.corner_radius} outside valid range " f"[{min_val}, {max_val}]"
                     ),
                     original_value=style.corner_radius,
                     suggestion=f"Use a value between {min_val} and {max_val}",
@@ -842,9 +796,7 @@ class IntentProcessor:
                     validation_error.message,
                     validation_error.suggestion,
                 )
-                processed["corner_radius"] = max(
-                    min_val, min(max_val, style.corner_radius)
-                )
+                processed["corner_radius"] = max(min_val, min(max_val, style.corner_radius))
 
         # Pattern-specific styling
         if style.patterns:
@@ -869,9 +821,7 @@ class IntentProcessor:
 
         return processed, unsupported
 
-    def process_frame_intents(
-        self, frame: Optional[FrameIntents]
-    ) -> tuple[Dict[str, Any], list[str]]:
+    def process_frame_intents(self, frame: Optional[FrameIntents]) -> tuple[Dict[str, Any], list[str]]:
         """Process frame intents with degradation."""
         if not frame:
             return {}, []
@@ -924,9 +874,7 @@ class IntentProcessor:
                     ),
                     "Clamping to valid range",
                 )
-                processed["frame_corner_radius"] = max(
-                    min_val, min(max_val, frame.corner_radius)
-                )
+                processed["frame_corner_radius"] = max(min_val, min(max_val, frame.corner_radius))
 
         # Fade distance for fade mode
         if frame.fade_distance is not None:
@@ -948,9 +896,7 @@ class IntentProcessor:
                     f"Fade distance {frame.fade_distance} outside valid range [0, 50]",
                     "Clamping to valid range",
                 )
-                processed["frame_fade_distance"] = max(
-                    0.0, min(50.0, float(frame.fade_distance))
-                )
+                processed["frame_fade_distance"] = max(0.0, min(50.0, float(frame.fade_distance)))
                 self._track_transformation(
                     "frame.fade_distance",
                     frame.fade_distance,
@@ -977,15 +923,10 @@ class IntentProcessor:
                 self._add_warning(
                     "INTENT_OUT_OF_RANGE",
                     "frame.scale_distance",
-                    (
-                        f"Scale distance {frame.scale_distance} outside valid range "
-                        "[0, 25]"
-                    ),
+                    (f"Scale distance {frame.scale_distance} outside valid range " "[0, 25]"),
                     "Clamping to valid range",
                 )
-                processed["frame_scale_distance"] = max(
-                    0.0, min(25.0, float(frame.scale_distance))
-                )
+                processed["frame_scale_distance"] = max(0.0, min(25.0, float(frame.scale_distance)))
                 self._track_transformation(
                     "frame.scale_distance",
                     frame.scale_distance,
@@ -997,9 +938,7 @@ class IntentProcessor:
 
         return processed, unsupported
 
-    def process_reserve_intents(
-        self, reserve: Optional[ReserveIntents]
-    ) -> tuple[Dict[str, Any], list[str]]:
+    def process_reserve_intents(self, reserve: Optional[ReserveIntents]) -> tuple[Dict[str, Any], list[str]]:
         """Process reserve area intents with degradation."""
         if not reserve:
             return {}, []
@@ -1017,10 +956,7 @@ class IntentProcessor:
                 self._add_warning(
                     "SCANABILITY_AT_RISK",
                     "reserve.area_pct",
-                    (
-                        f"Reserve area {reserve.area_pct}% exceeds safe limit of "
-                        f"{max_safe}%"
-                    ),
+                    (f"Reserve area {reserve.area_pct}% exceeds safe limit of " f"{max_safe}%"),
                     f"Reducing to {max_safe}% for scanability",
                 )
                 processed["centerpiece_size"] = max_safe / 100.0
@@ -1227,10 +1163,7 @@ class IntentProcessor:
                 self._add_warning(
                     "INTENT_OUT_OF_RANGE",
                     "interactivity.hover_scale",
-                    (
-                        f"Hover scale {interactivity.hover_scale} outside valid range "
-                        "[1.0, 2.0]"
-                    ),
+                    (f"Hover scale {interactivity.hover_scale} outside valid range " "[1.0, 2.0]"),
                     "Clamping to valid range",
                 )
                 processed["hover_scale"] = max(1.0, min(2.0, interactivity.hover_scale))
@@ -1259,15 +1192,10 @@ class IntentProcessor:
                 self._add_warning(
                     "INTENT_OUT_OF_RANGE",
                     "interactivity.hover_brightness",
-                    (
-                        f"Hover brightness {interactivity.hover_brightness} outside "
-                        "valid range [0.5, 2.0]"
-                    ),
+                    (f"Hover brightness {interactivity.hover_brightness} outside " "valid range [0.5, 2.0]"),
                     "Clamping to valid range",
                 )
-                processed["hover_brightness"] = max(
-                    0.5, min(2.0, interactivity.hover_brightness)
-                )
+                processed["hover_brightness"] = max(0.5, min(2.0, interactivity.hover_brightness))
                 self._track_transformation(
                     "interactivity.hover_brightness",
                     interactivity.hover_brightness,
@@ -1342,10 +1270,7 @@ class IntentProcessor:
                 "zoom-out",
             ]
 
-            if (
-                interactivity.cursor_style in valid_cursors
-                or interactivity.cursor_style.startswith("url(")
-            ):
+            if interactivity.cursor_style in valid_cursors or interactivity.cursor_style.startswith("url("):
                 processed["cursor_style"] = interactivity.cursor_style
                 self._track_transformation(
                     "interactivity.cursor_style",
@@ -1423,15 +1348,10 @@ class IntentProcessor:
                 self._add_warning(
                     "INTENT_OUT_OF_RANGE",
                     "animation.fade_duration",
-                    (
-                        f"Fade duration {animation.fade_duration} outside valid range "
-                        "[0.1, 5.0]"
-                    ),
+                    (f"Fade duration {animation.fade_duration} outside valid range " "[0.1, 5.0]"),
                     "Clamping to valid range",
                 )
-                processed["animation_fade_duration"] = max(
-                    0.1, min(5.0, animation.fade_duration)
-                )
+                processed["animation_fade_duration"] = max(0.1, min(5.0, animation.fade_duration))
                 self._track_transformation(
                     "animation.fade_duration",
                     animation.fade_duration,
@@ -1455,9 +1375,7 @@ class IntentProcessor:
                 # We'll use a conservative estimate
                 max_total_reveal_ms = 800
                 estimated_modules = 400  # Reasonable estimate for typical QR codes
-                max_stagger_delay = (
-                    max_total_reveal_ms / estimated_modules / 1000
-                )  # Convert to seconds
+                max_stagger_delay = max_total_reveal_ms / estimated_modules / 1000  # Convert to seconds
 
                 if stagger_delay > max_stagger_delay:
                     self._add_warning(
@@ -1496,15 +1414,10 @@ class IntentProcessor:
                 self._add_warning(
                     "INTENT_OUT_OF_RANGE",
                     "animation.stagger_delay",
-                    (
-                        f"Stagger delay {animation.stagger_delay} outside valid range "
-                        "[0.01, 0.5]"
-                    ),
+                    (f"Stagger delay {animation.stagger_delay} outside valid range " "[0.01, 0.5]"),
                     "Clamping to valid range",
                 )
-                processed["animation_stagger_delay"] = max(
-                    0.01, min(0.5, animation.stagger_delay)
-                )
+                processed["animation_stagger_delay"] = max(0.01, min(0.5, animation.stagger_delay))
                 self._track_transformation(
                     "animation.stagger_delay",
                     animation.stagger_delay,
@@ -1693,10 +1606,7 @@ class IntentProcessor:
                 performance.precision,
                 performance.precision,
                 "accepted",
-                reason=(
-                    f"Coordinate precision set to {performance.precision} "
-                    "decimal places"
-                ),
+                reason=(f"Coordinate precision set to {performance.precision} " "decimal places"),
                 confidence=1.0,
             )
 
@@ -1934,9 +1844,7 @@ class IntentProcessor:
         # Count transformations by type
         transform_counts: Dict[str, int] = {}
         for step in self.transformation_steps:
-            transform_counts[step.transformation_type] = (
-                transform_counts.get(step.transformation_type, 0) + 1
-            )
+            transform_counts[step.transformation_type] = transform_counts.get(step.transformation_type, 0) + 1
 
         summary["total_intents_processed"] = str(len(self.transformation_steps))
         summary["transformations"] = str(transform_counts)
@@ -2043,9 +1951,7 @@ class IntentProcessor:
         return self.warnings.copy()
 
 
-def render_with_intents(
-    payload: PayloadConfig, intents: Optional[IntentsConfig] = None
-) -> RenderingResult:
+def render_with_intents(payload: PayloadConfig, intents: Optional[IntentsConfig] = None) -> RenderingResult:
     """Main function for intent-based rendering.
 
     This is the primary entry point for the client's intent-based API.

@@ -71,9 +71,7 @@ class CenterpieceConfigProtocol(Protocol):
 
 # Union types for common parameter patterns
 OptionalConfigType = Optional[Union[ConfigProtocol, Dict[str, Any]]]
-OptionalCenterpieceConfigType = Optional[
-    Union[CenterpieceConfigProtocol, Dict[str, Any]]
-]
+OptionalCenterpieceConfigType = Optional[Union[CenterpieceConfigProtocol, Dict[str, Any]]]
 
 
 # ============================================================================

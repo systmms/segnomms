@@ -74,9 +74,7 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         self.visited: Set[Tuple[int, int]] = set()
         self.config = config
 
-    def process(
-        self, matrix: Matrix, detector: ModuleDetector, **kwargs: Any
-    ) -> List[Dict[str, Any]]:
+    def process(self, matrix: Matrix, detector: ModuleDetector, **kwargs: Any) -> List[Dict[str, Any]]:
         """Process the QR matrix to find connected components.
 
         Traverses the matrix to identify groups of connected modules,
@@ -114,9 +112,7 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
                         )
 
                         if len(cluster["positions"]) >= self.min_cluster_size:
-                            cluster_info = self._analyze_cluster(
-                                cluster, matrix, detector
-                            )
+                            cluster_info = self._analyze_cluster(cluster, matrix, detector)
                             if cluster_info["density"] >= self.density_threshold:
                                 clusters.append(cluster_info)
 
@@ -265,9 +261,7 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         aspect_ratio = width / height if height > 0 else 1.0
 
         # Determine cluster shape type
-        shape_type = self._determine_cluster_shape(
-            positions, width, height, aspect_ratio
-        )
+        shape_type = self._determine_cluster_shape(positions, width, height, aspect_ratio)
 
         # Calculate center of mass
         center_row = sum(rows) / len(rows)
@@ -383,18 +377,14 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         # Calculate connectivity metrics
         total_possible_connections = len(positions) * 4  # Max cardinal connections
         connectivity_ratio = (
-            internal_connections / total_possible_connections
-            if total_possible_connections > 0
-            else 0
+            internal_connections / total_possible_connections if total_possible_connections > 0 else 0
         )
 
         return {
             "internal_connections": internal_connections // 2,  # Avoid double counting
             "corner_connections": corner_connections // 2,
             "connectivity_ratio": connectivity_ratio,
-            "avg_connections_per_module": (
-                internal_connections / len(positions) if positions else 0
-            ),
+            "avg_connections_per_module": (internal_connections / len(positions) if positions else 0),
         }
 
     def _generate_rendering_hints(
@@ -521,10 +511,7 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
             )
         else:
             # Simple rectangle
-            path = (
-                f"M {x} {y} L {x + width} {y} "
-                f"L {x + width} {y + height} L {x} {y + height} Z"
-            )
+            path = f"M {x} {y} L {x + width} {y} " f"L {x + width} {y + height} L {x} {y + height} Z"
 
         # Apply frame clipping if needed
         if path_clipper and path_clipper.frame_shape != "square":

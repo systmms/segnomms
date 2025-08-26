@@ -79,12 +79,8 @@ class FinderConfig(BaseModel):
     model_config = ConfigDict(validate_default=True, extra="forbid")
 
     shape: FinderShape = FinderShape.SQUARE
-    inner_scale: float = Field(
-        default=0.6, ge=0.1, le=1.0, description="Scale of inner filled square"
-    )
-    stroke: float = Field(
-        default=0.0, ge=0.0, le=5.0, description="Stroke width in module units"
-    )
+    inner_scale: float = Field(default=0.6, ge=0.1, le=1.0, description="Scale of inner filled square")
+    stroke: float = Field(default=0.0, ge=0.0, le=5.0, description="Stroke width in module units")
 
 
 # Discriminated Union Patterns for Shape-Specific Configurations
@@ -95,9 +91,7 @@ class BasicShapeConfig(BaseModel):
 
     model_config = ConfigDict(validate_default=True, extra="forbid")
 
-    shape: Literal[
-        "square", "circle", "diamond", "dot", "star", "hexagon", "triangle", "cross"
-    ]
+    shape: Literal["square", "circle", "diamond", "dot", "star", "hexagon", "triangle", "cross"]
     connectivity: ConnectivityMode = ConnectivityMode.FOUR_WAY
     merge: MergeStrategy = MergeStrategy.NONE
     min_island_modules: int = Field(

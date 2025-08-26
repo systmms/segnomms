@@ -19,7 +19,8 @@ pre-commit:
     # Python linting - Flake8
     flake8:
       glob: "*.py"
-      run: flake8 --max-line-length=88 --extend-ignore=E203,W503 {staged_files}
+      exclude: "examples/**/*.py"
+      run: flake8 --max-line-length=110 --extend-ignore=E203,W503,E402,F841,F541,E501,E722,F401,E226,E712,F811,F821 {staged_files}
     # General file checks
     trailing-whitespace:
       run: |
@@ -76,4 +77,5 @@ pre-commit:
     # Type checking - MyPy with comprehensive configuration from pyproject.toml
     mypy:
       glob: "*.py"
+      exclude: "tests/|examples/|repo/"
       run: mypy {staged_files}

@@ -8,7 +8,7 @@ import logging
 import time
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from typing import Any, DefaultDict, Dict, List, Optional, Tuple, Union
+from typing import Any, DefaultDict, Dict, List, Optional, Tuple
 
 from ..performance import get_performance_monitor
 
@@ -44,12 +44,8 @@ class CenterpiecePerformanceMonitor:
         """
         self.max_history = max_history
         self.matrix_size = matrix_size
-        self.metrics_history: deque[CenterpiecePerformanceMetric] = deque(
-            maxlen=max_history
-        )
-        self.operation_stats: DefaultDict[str, List[CenterpiecePerformanceMetric]] = (
-            defaultdict(list)
-        )
+        self.metrics_history: deque[CenterpiecePerformanceMetric] = deque(maxlen=max_history)
+        self.operation_stats: DefaultDict[str, List[CenterpiecePerformanceMetric]] = defaultdict(list)
 
         # Performance thresholds (in seconds)
         self.performance_thresholds = {
@@ -94,9 +90,7 @@ class CenterpiecePerformanceMonitor:
             "matrix_size": matrix_size,
         }
 
-        logger.debug(
-            f"Started monitoring {operation} (area: {context['centerpiece_area']} modules)"
-        )
+        logger.debug(f"Started monitoring {operation} (area: {context['centerpiece_area']} modules)")
         return context
 
     def end_operation(
@@ -132,9 +126,9 @@ class CenterpiecePerformanceMonitor:
 
         # Trim operation stats to prevent unbounded growth
         if len(self.operation_stats[context["operation"]]) > self.max_history:
-            self.operation_stats[context["operation"]] = self.operation_stats[
-                context["operation"]
-            ][-self.max_history :]
+            self.operation_stats[context["operation"]] = self.operation_stats[context["operation"]][
+                -self.max_history :
+            ]
 
         logger.debug(f"Completed {context['operation']} in {execution_time:.4f}s")
 
@@ -197,10 +191,7 @@ class CenterpiecePerformanceMonitor:
             )
 
         if (
-            config
-            and hasattr(config, "shape")
-            and config.shape == "squircle"
-            and area > 15
+            config and hasattr(config, "shape") and config.shape == "squircle" and area > 15
         ):  # Lower threshold for squircles
             warnings.append(
                 "Squircle shapes with large areas require complex calculations. "
@@ -270,9 +261,7 @@ class CenterpiecePerformanceMonitor:
         for operation in centerpiece_operations:
             operation_warnings = global_monitor.get_operation_warnings(operation)
             for metric in operation_warnings[-3:]:  # Last 3 warnings per operation
-                warnings.append(
-                    f"Performance warning in {operation}: {metric.warning_message}"
-                )
+                warnings.append(f"Performance warning in {operation}: {metric.warning_message}")
 
         # Get performance recommendations from global monitor
         recommendations = global_monitor.generate_performance_recommendations()
@@ -309,9 +298,7 @@ class CenterpiecePerformanceMonitor:
                 recommendations.append(
                     "Consider using knockout mode instead of imprint for large centerpieces"
                 )
-                recommendations.append(
-                    "Reduce centerpiece size to improve processing performance"
-                )
+                recommendations.append("Reduce centerpiece size to improve processing performance")
 
             if config.shape == "squircle" and area > 50:
                 recommendations.append(
@@ -319,17 +306,13 @@ class CenterpiecePerformanceMonitor:
                 )
 
             if config.margin > 3:
-                recommendations.append(
-                    "Reduce margin to minimize processing area and improve performance"
-                )
+                recommendations.append("Reduce margin to minimize processing area and improve performance")
 
         # Historical performance recommendations
         if self.metrics_history:
             slow_operations = self._identify_slow_operations()
             for operation, avg_time in slow_operations:
-                recommendations.append(
-                    f"Optimize {operation} operations (average: {avg_time:.3f}s)"
-                )
+                recommendations.append(f"Optimize {operation} operations (average: {avg_time:.3f}s)")
 
         # Memory usage recommendations
         memory_recommendations = self._get_memory_recommendations()
@@ -381,15 +364,11 @@ class CenterpiecePerformanceMonitor:
         estimated_area = int(area_fraction * matrix_size * matrix_size)
 
         # Add margin impact
-        margin_impact = (
-            config.margin * 4 * int(config.size * matrix_size)
-        )  # Perimeter effect
+        margin_impact = config.margin * 4 * int(config.size * matrix_size)  # Perimeter effect
 
         return int(estimated_area + margin_impact)
 
-    def _check_performance_thresholds(
-        self, metric: CenterpiecePerformanceMetric
-    ) -> None:
+    def _check_performance_thresholds(self, metric: CenterpiecePerformanceMetric) -> None:
         """Check metric against performance thresholds and add warnings."""
         threshold = self.performance_thresholds.get(metric.operation)
 
@@ -423,17 +402,13 @@ class CenterpiecePerformanceMonitor:
                 return category
         return "unknown"
 
-    def _calculate_performance_trend(
-        self, metrics: List[CenterpiecePerformanceMetric]
-    ) -> str:
+    def _calculate_performance_trend(self, metrics: List[CenterpiecePerformanceMetric]) -> str:
         """Calculate performance trend for metrics."""
         if len(metrics) < 2:
             return "insufficient_data"
 
         recent_avg = sum(m.execution_time for m in metrics[-5:]) / min(5, len(metrics))
-        older_avg = sum(m.execution_time for m in metrics[:-5]) / max(
-            1, len(metrics) - 5
-        )
+        older_avg = sum(m.execution_time for m in metrics[:-5]) / max(1, len(metrics) - 5)
 
         if recent_avg < older_avg * 0.9:
             return "improving"
@@ -456,9 +431,7 @@ class CenterpiecePerformanceMonitor:
         ]
 
         if similar_metrics:
-            avg_time = sum(m.execution_time for m in similar_metrics) / len(
-                similar_metrics
-            )
+            avg_time = sum(m.execution_time for m in similar_metrics) / len(similar_metrics)
             max_time = max(m.execution_time for m in similar_metrics)
 
             if avg_time > 0.1:  # Average time over 100ms
@@ -494,14 +467,10 @@ class CenterpiecePerformanceMonitor:
         recommendations = []
 
         # Check for metrics with high memory usage (placeholder for now)
-        high_memory_metrics = [
-            m for m in self.metrics_history if m.memory_usage > 50 * 1024 * 1024
-        ]  # 50MB
+        high_memory_metrics = [m for m in self.metrics_history if m.memory_usage > 50 * 1024 * 1024]  # 50MB
 
         if high_memory_metrics:
-            recommendations.append(
-                "Consider processing smaller areas to reduce memory usage"
-            )
+            recommendations.append("Consider processing smaller areas to reduce memory usage")
 
         return recommendations
 
@@ -511,11 +480,7 @@ class CenterpiecePerformanceMonitor:
             return "insufficient_data"
 
         recent_metrics = list(self.metrics_history)[-10:]
-        older_metrics = (
-            list(self.metrics_history)[-20:-10]
-            if len(self.metrics_history) >= 20
-            else []
-        )
+        older_metrics = list(self.metrics_history)[-20:-10] if len(self.metrics_history) >= 20 else []
 
         if not older_metrics:
             return "insufficient_data"
@@ -534,9 +499,7 @@ class CenterpiecePerformanceMonitor:
         else:
             return "stable"
 
-    def _get_slowest_operations(
-        self, metrics: List[CenterpiecePerformanceMetric]
-    ) -> List[Dict[str, Any]]:
+    def _get_slowest_operations(self, metrics: List[CenterpiecePerformanceMetric]) -> List[Dict[str, Any]]:
         """Get the slowest operations from a list of metrics."""
         sorted_metrics = sorted(metrics, key=lambda m: m.execution_time, reverse=True)
 

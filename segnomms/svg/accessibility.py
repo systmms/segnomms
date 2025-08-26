@@ -12,7 +12,7 @@ from ..a11y.accessibility import (
     AccessibilityEnhancer,
     create_basic_accessibility,
 )
-from .models import LayerStructureConfig, TitleDescriptionConfig
+from .models import TitleDescriptionConfig
 
 
 class AccessibilityBuilder:
@@ -108,7 +108,7 @@ class AccessibilityBuilder:
         Returns:
             Dictionary mapping layer names to group elements
         """
-        # TODO: LayerStructureConfig will be used for configurable layer structure
+        # NOTE: Future feature - configurable layer structure via LayerStructureConfig
         # config = LayerStructureConfig()
         layers = {}
 

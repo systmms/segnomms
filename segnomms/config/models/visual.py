@@ -33,50 +33,24 @@ class PatternStyleConfig(BaseModel):
     enabled: bool = Field(default=False, description="Enable pattern-specific styling")
 
     # Pattern-specific shape overrides
-    finder: Optional[str] = Field(
-        default=None, description="Custom shape for finder patterns"
-    )
-    finder_inner: Optional[str] = Field(
-        default=None, description="Custom shape for finder inner regions"
-    )
-    timing: Optional[str] = Field(
-        default=None, description="Custom shape for timing patterns"
-    )
-    alignment: Optional[str] = Field(
-        default=None, description="Custom shape for alignment patterns"
-    )
-    format: Optional[str] = Field(
-        default=None, description="Custom shape for format information"
-    )
-    version: Optional[str] = Field(
-        default=None, description="Custom shape for version information"
-    )
-    data: Optional[str] = Field(
-        default=None, description="Custom shape for data modules"
-    )
+    finder: Optional[str] = Field(default=None, description="Custom shape for finder patterns")
+    finder_inner: Optional[str] = Field(default=None, description="Custom shape for finder inner regions")
+    timing: Optional[str] = Field(default=None, description="Custom shape for timing patterns")
+    alignment: Optional[str] = Field(default=None, description="Custom shape for alignment patterns")
+    format: Optional[str] = Field(default=None, description="Custom shape for format information")
+    version: Optional[str] = Field(default=None, description="Custom shape for version information")
+    data: Optional[str] = Field(default=None, description="Custom shape for data modules")
 
     # Pattern-specific colors
-    finder_color: Optional[str] = Field(
-        default=None, description="Custom color for finder patterns"
-    )
+    finder_color: Optional[str] = Field(default=None, description="Custom color for finder patterns")
     finder_inner_color: Optional[str] = Field(
         default=None, description="Custom color for finder inner regions"
     )
-    timing_color: Optional[str] = Field(
-        default=None, description="Custom color for timing patterns"
-    )
-    alignment_color: Optional[str] = Field(
-        default=None, description="Custom color for alignment patterns"
-    )
-    format_color: Optional[str] = Field(
-        default=None, description="Custom color for format information"
-    )
-    version_color: Optional[str] = Field(
-        default=None, description="Custom color for version information"
-    )
-    data_color: Optional[str] = Field(
-        default=None, description="Custom color for data modules"
-    )
+    timing_color: Optional[str] = Field(default=None, description="Custom color for timing patterns")
+    alignment_color: Optional[str] = Field(default=None, description="Custom color for alignment patterns")
+    format_color: Optional[str] = Field(default=None, description="Custom color for format information")
+    version_color: Optional[str] = Field(default=None, description="Custom color for version information")
+    data_color: Optional[str] = Field(default=None, description="Custom color for data modules")
 
     # Pattern-specific sizing/effects
     finder_scale: Optional[float] = Field(
@@ -171,7 +145,8 @@ class PatternStyleConfig(BaseModel):
         for field_name, shape_value in shape_fields:
             if shape_value is not None and shape_value not in valid_shapes:
                 raise ValueError(
-                    f"Invalid shape '{shape_value}' for {field_name}. Valid shapes are: {', '.join(valid_shapes)}"
+                    f"Invalid shape '{shape_value}' for {field_name}. "
+                    f"Valid shapes are: {', '.join(valid_shapes)}"
                 )
 
         return self
@@ -190,13 +165,9 @@ class FrameConfig(BaseModel):
     model_config = ConfigDict(validate_default=True, extra="forbid")
 
     shape: Literal["square", "circle", "rounded-rect", "squircle", "custom"] = "square"
-    corner_radius: float = Field(
-        default=0.0, ge=0.0, le=1.0, description="Corner radius for rounded-rect"
-    )
+    corner_radius: float = Field(default=0.0, ge=0.0, le=1.0, description="Corner radius for rounded-rect")
     clip_mode: Literal["clip", "fade", "scale"] = "clip"
-    custom_path: Optional[str] = Field(
-        default=None, description="SVG path string for custom frame shapes"
-    )
+    custom_path: Optional[str] = Field(default=None, description="SVG path string for custom frame shapes")
 
     # Clip mode parameters
     fade_distance: float = Field(
@@ -238,9 +209,7 @@ class CenterpieceConfig(BaseModel):
 
     enabled: bool = False
     shape: Literal["rect", "circle", "squircle"] = "rect"
-    size: float = Field(
-        default=0.0, ge=0.0, le=0.5, description="Size relative to QR code"
-    )
+    size: float = Field(default=0.0, ge=0.0, le=0.5, description="Size relative to QR code")
     offset_x: float = Field(
         default=0.0,
         ge=-0.5,
@@ -253,12 +222,8 @@ class CenterpieceConfig(BaseModel):
         le=0.5,
         description="Vertical offset (custom placement only)",
     )
-    margin: int = Field(
-        default=2, ge=0, description="Module margin around reserved area"
-    )
-    mode: ReserveMode = Field(
-        default=ReserveMode.KNOCKOUT, description="Reserve area interaction mode"
-    )
+    margin: int = Field(default=2, ge=0, description="Module margin around reserved area")
+    mode: ReserveMode = Field(default=ReserveMode.KNOCKOUT, description="Reserve area interaction mode")
     placement: PlacementMode = Field(
         default=PlacementMode.CENTER, description="Placement mode for positioning"
     )
@@ -309,9 +274,7 @@ class StyleConfig(BaseModel):
 
     model_config = ConfigDict(validate_default=True, extra="forbid")
 
-    interactive: bool = Field(
-        default=False, description="Enable interactive hover effects"
-    )
+    interactive: bool = Field(default=False, description="Enable interactive hover effects")
     tooltips: bool = Field(default=False, description="Show tooltips on module hover")
     css_classes: Optional[Dict[str, str]] = Field(
         default=None, description="Custom CSS classes for different QR elements"
@@ -319,9 +282,7 @@ class StyleConfig(BaseModel):
 
     @field_validator("css_classes")
     @classmethod
-    def validate_css_classes(
-        cls, v: Optional[Dict[str, str]]
-    ) -> Optional[Dict[str, str]]:
+    def validate_css_classes(cls, v: Optional[Dict[str, str]]) -> Optional[Dict[str, str]]:
         """Validate CSS class names."""
         if v is not None:
             # Valid keys with qr_ prefix (new format)
@@ -354,7 +315,5 @@ class StyleConfig(BaseModel):
 
             for key in v.keys():
                 if key not in valid_keys:
-                    raise ValueError(
-                        f"Invalid CSS class key '{key}'. Valid keys: {', '.join(valid_keys)}"
-                    )
+                    raise ValueError(f"Invalid CSS class key '{key}'. Valid keys: {', '.join(valid_keys)}")
         return v

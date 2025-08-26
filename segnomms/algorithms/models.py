@@ -28,9 +28,7 @@ class ClusteringConfig(BaseModel):
 
     model_config = ConfigDict()
 
-    min_cluster_size: int = Field(
-        default=3, ge=1, description="Minimum number of modules to form a cluster"
-    )
+    min_cluster_size: int = Field(default=3, ge=1, description="Minimum number of modules to form a cluster")
 
     density_threshold: float = Field(
         default=0.5,
@@ -48,10 +46,7 @@ class ClusteringConfig(BaseModel):
     def validate_cluster_size(cls, v: int) -> int:
         """Validate reasonable cluster size."""
         if v > 1000:
-            raise ValueError(
-                f"min_cluster_size of {v} is unusually large. "
-                f"Consider using a value < 1000"
-            )
+            raise ValueError(f"min_cluster_size of {v} is unusually large. " f"Consider using a value < 1000")
         return v
 
 
@@ -74,21 +69,13 @@ class ClusterInfo(BaseModel):
 
     module_count: int = Field(..., ge=1, description="Number of modules in the cluster")
 
-    density: float = Field(
-        ..., ge=0.0, le=1.0, description="Ratio of filled modules in bounding box"
-    )
+    density: float = Field(..., ge=0.0, le=1.0, description="Ratio of filled modules in bounding box")
 
-    aspect_ratio: float = Field(
-        ..., gt=0.0, description="Width/height ratio of the cluster"
-    )
+    aspect_ratio: float = Field(..., gt=0.0, description="Width/height ratio of the cluster")
 
-    is_rectangular: bool = Field(
-        ..., description="Whether the cluster forms a perfect rectangle"
-    )
+    is_rectangular: bool = Field(..., description="Whether the cluster forms a perfect rectangle")
 
-    module_type: str = Field(
-        default="data", description="Type of modules in this cluster"
-    )
+    module_type: str = Field(default="data", description="Type of modules in this cluster")
 
     @property
     def width(self) -> int:
@@ -136,9 +123,7 @@ class ClusteringResult(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    clusters: List[ClusterInfo] = Field(
-        default_factory=list, description="List of detected clusters"
-    )
+    clusters: List[ClusterInfo] = Field(default_factory=list, description="List of detected clusters")
 
     total_modules_clustered: int = Field(
         default=0, ge=0, description="Total number of modules in all clusters"
@@ -151,9 +136,7 @@ class ClusteringResult(BaseModel):
         description="Ratio of clustered modules to total active modules",
     )
 
-    parameters_used: ClusteringConfig = Field(
-        ..., description="Parameters used for clustering"
-    )
+    parameters_used: ClusteringConfig = Field(..., description="Parameters used for clustering")
 
     @property
     def cluster_count(self) -> int:

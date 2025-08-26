@@ -33,9 +33,7 @@ class FrameShapeGenerator:
         return f'<circle cx="{cx}" cy="{cy}" r="{r}"/>'
 
     @staticmethod
-    def generate_rounded_rect_clip(
-        width: int, height: int, border: int, corner_radius: float
-    ) -> str:
+    def generate_rounded_rect_clip(width: int, height: int, border: int, corner_radius: float) -> str:
         """Generate rounded rectangle clipping path.
 
         Args:
@@ -54,10 +52,7 @@ class FrameShapeGenerator:
         max_radius = min(width, height) / 2
         radius = min(radius, max_radius)
 
-        return (
-            f'<rect x="0" y="0" width="{width}" height="{height}" '
-            f'rx="{radius}" ry="{radius}"/>'
-        )
+        return f'<rect x="0" y="0" width="{width}" height="{height}" ' f'rx="{radius}" ry="{radius}"/>'
 
     @staticmethod
     def generate_squircle_clip(width: int, height: int, border: int = 0) -> str:
@@ -182,9 +177,8 @@ class FrameShapeGenerator:
                     </radialGradient>
                     <mask id="{mask_id}">
                         {FrameShapeGenerator.generate_squircle_clip(
-                            int(width - 2 * actual_fade),
-                            int(height - 2 * actual_fade)
-                        )}
+                         int(width - 2 * actual_fade), int(height - 2 * actual_fade)
+                         )}
                         <rect x="0" y="0" width="{width}" height="{height}"
                               fill="url(#{grad_id})"/>
                     </mask>
@@ -239,9 +233,7 @@ class FrameShapeGenerator:
         if shape == "circle":
             clip_path = FrameShapeGenerator.generate_circle_clip(width, height)
         elif shape == "rounded-rect":
-            clip_path = FrameShapeGenerator.generate_rounded_rect_clip(
-                width, height, 0, corner_radius
-            )
+            clip_path = FrameShapeGenerator.generate_rounded_rect_clip(width, height, 0, corner_radius)
         elif shape == "squircle":
             clip_path = FrameShapeGenerator.generate_squircle_clip(width, height)
         elif shape == "custom" and custom_path:
@@ -381,9 +373,7 @@ class FrameShapeGenerator:
             shape_str = FrameShapeGenerator.generate_circle_clip(width, height)
         elif shape_type == "rounded-rect":
             corner_radius = config.get("corner_radius", 0.1)
-            shape_str = FrameShapeGenerator.generate_rounded_rect_clip(
-                width, height, 0, corner_radius
-            )
+            shape_str = FrameShapeGenerator.generate_rounded_rect_clip(width, height, 0, corner_radius)
         elif shape_type == "squircle":
             shape_str = FrameShapeGenerator.generate_squircle_clip(width, height)
         elif shape_type == "custom":

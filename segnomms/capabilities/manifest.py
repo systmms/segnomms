@@ -21,12 +21,8 @@ class FeatureSupport(BaseModel):
     """Support level for a feature category."""
 
     supported: bool = Field(description="Whether feature category is supported")
-    version_added: Optional[str] = Field(
-        default=None, description="Version when feature was added"
-    )
-    experimental: bool = Field(
-        default=False, description="Whether feature is experimental"
-    )
+    version_added: Optional[str] = Field(default=None, description="Version when feature was added")
+    experimental: bool = Field(default=False, description="Whether feature is experimental")
 
 
 class ShapeCapabilities(BaseModel):
@@ -36,9 +32,7 @@ class ShapeCapabilities(BaseModel):
     connected_shapes: List[str] = Field(description="Advanced connected shape variants")
     merge_strategies: List[str] = Field(description="Module merging strategies")
     connectivity_modes: List[str] = Field(description="Neighbor connectivity modes")
-    custom_shapes: FeatureSupport = Field(
-        description="Custom shape registration support"
-    )
+    custom_shapes: FeatureSupport = Field(description="Custom shape registration support")
 
 
 class FrameCapabilities(BaseModel):
@@ -47,9 +41,7 @@ class FrameCapabilities(BaseModel):
     frame_shapes: List[str] = Field(description="Available frame shape types")
     clip_modes: List[str] = Field(description="Frame clipping modes")
     custom_paths: FeatureSupport = Field(description="Custom SVG path support")
-    corner_radius_range: tuple[float, float] = Field(
-        description="Corner radius min/max values"
-    )
+    corner_radius_range: tuple[float, float] = Field(description="Corner radius min/max values")
 
 
 class ReserveCapabilities(BaseModel):
@@ -59,25 +51,17 @@ class ReserveCapabilities(BaseModel):
     max_area_pct: float = Field(description="Maximum safe reserve area percentage")
     shapes: List[str] = Field(description="Available reserve area shapes")
     placement_modes: List[str] = Field(description="Reserve placement modes")
-    arbitrary_placement: FeatureSupport = Field(
-        description="Arbitrary placement support"
-    )
+    arbitrary_placement: FeatureSupport = Field(description="Arbitrary placement support")
 
 
 class ValidationCapabilities(BaseModel):
     """Capabilities related to validation and safety."""
 
-    scanability_validation: FeatureSupport = Field(
-        description="QR scanability validation"
-    )
+    scanability_validation: FeatureSupport = Field(description="QR scanability validation")
     contrast_validation: FeatureSupport = Field(description="Color contrast validation")
     frame_safety: FeatureSupport = Field(description="Frame safety validation")
-    centerpiece_safety: FeatureSupport = Field(
-        description="Centerpiece safety validation"
-    )
-    performance_warnings: FeatureSupport = Field(
-        description="Performance warning system"
-    )
+    centerpiece_safety: FeatureSupport = Field(description="Centerpiece safety validation")
+    performance_warnings: FeatureSupport = Field(description="Performance warning system")
 
 
 class AccessibilityCapabilities(BaseModel):
@@ -85,13 +69,9 @@ class AccessibilityCapabilities(BaseModel):
 
     css_classes: FeatureSupport = Field(description="CSS class generation")
     stable_ids: FeatureSupport = Field(description="Stable ID generation")
-    title_description: FeatureSupport = Field(
-        description="SVG title/description support"
-    )
+    title_description: FeatureSupport = Field(description="SVG title/description support")
     aria_attributes: FeatureSupport = Field(description="ARIA attribute support")
-    interactive_features: FeatureSupport = Field(
-        description="Interactive hover/click support"
-    )
+    interactive_features: FeatureSupport = Field(description="Interactive hover/click support")
 
 
 class APICapabilities(BaseModel):
@@ -99,33 +79,19 @@ class APICapabilities(BaseModel):
 
     pydantic_validation: FeatureSupport = Field(description="Pydantic-based validation")
     json_schema: FeatureSupport = Field(description="JSON Schema generation")
-    configuration_presets: FeatureSupport = Field(
-        description="Built-in configuration presets"
-    )
-    serialization: FeatureSupport = Field(
-        description="JSON serialization/deserialization"
-    )
-    kwargs_compatibility: FeatureSupport = Field(
-        description="Backward compatible kwargs API"
-    )
+    configuration_presets: FeatureSupport = Field(description="Built-in configuration presets")
+    serialization: FeatureSupport = Field(description="JSON serialization/deserialization")
+    kwargs_compatibility: FeatureSupport = Field(description="Backward compatible kwargs API")
 
 
 class AdvancedFeatures(BaseModel):
     """Advanced and experimental features."""
 
-    multi_phase_pipeline: FeatureSupport = Field(
-        description="Multi-phase processing pipeline"
-    )
+    multi_phase_pipeline: FeatureSupport = Field(description="Multi-phase processing pipeline")
     clustering: FeatureSupport = Field(description="Connected component clustering")
-    neighbor_analysis: FeatureSupport = Field(
-        description="8-connected neighbor analysis"
-    )
-    performance_monitoring: FeatureSupport = Field(
-        description="Performance timing and metrics"
-    )
-    intent_based_api: FeatureSupport = Field(
-        description="Intent-based configuration API"
-    )
+    neighbor_analysis: FeatureSupport = Field(description="8-connected neighbor analysis")
+    performance_monitoring: FeatureSupport = Field(description="Performance timing and metrics")
+    intent_based_api: FeatureSupport = Field(description="Intent-based configuration API")
 
 
 class CapabilityFeatures(BaseModel):
@@ -134,12 +100,8 @@ class CapabilityFeatures(BaseModel):
     shapes: ShapeCapabilities = Field(description="Shape rendering capabilities")
     frames: FrameCapabilities = Field(description="Frame and clipping capabilities")
     reserve: ReserveCapabilities = Field(description="Reserve area capabilities")
-    validation: ValidationCapabilities = Field(
-        description="Validation and safety capabilities"
-    )
-    accessibility: AccessibilityCapabilities = Field(
-        description="Accessibility capabilities"
-    )
+    validation: ValidationCapabilities = Field(description="Validation and safety capabilities")
+    accessibility: AccessibilityCapabilities = Field(description="Accessibility capabilities")
     api: APICapabilities = Field(description="API and configuration capabilities")
     advanced: AdvancedFeatures = Field(description="Advanced and experimental features")
 
@@ -171,9 +133,7 @@ def _get_shape_capabilities() -> ShapeCapabilities:
     module_shapes = [shape.value for shape in ModuleShape]
 
     # Identify connected shapes (those with "connected" in name)
-    connected_shapes = [
-        shape for shape in module_shapes if "connected" in shape.lower()
-    ]
+    connected_shapes = [shape for shape in module_shapes if "connected" in shape.lower()]
 
     # Get merge strategies and connectivity modes
     merge_strategies = [strategy.value for strategy in MergeStrategy]
@@ -184,9 +144,7 @@ def _get_shape_capabilities() -> ShapeCapabilities:
         connected_shapes=connected_shapes,
         merge_strategies=merge_strategies,
         connectivity_modes=connectivity_modes,
-        custom_shapes=FeatureSupport(
-            supported=True, version_added="0.0.0b3", experimental=False
-        ),
+        custom_shapes=FeatureSupport(supported=True, version_added="0.0.0b3", experimental=False),
     )
 
 
@@ -267,9 +225,7 @@ def _get_advanced_features() -> AdvancedFeatures:
         clustering=FeatureSupport(supported=True, experimental=True),
         neighbor_analysis=FeatureSupport(supported=True),
         performance_monitoring=FeatureSupport(supported=False),
-        intent_based_api=FeatureSupport(
-            supported=True, version_added="0.1.0", experimental=False
-        ),
+        intent_based_api=FeatureSupport(supported=True, version_added="0.1.0", experimental=False),
     )
 
 

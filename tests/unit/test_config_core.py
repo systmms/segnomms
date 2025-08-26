@@ -80,9 +80,7 @@ class TestRenderingConfigBasics:
     def test_basic_parameter_validation(self):
         """Test validation of basic parameters."""
         # Valid parameters
-        config = RenderingConfig(
-            scale=10, border=2, dark="#1a1a2e", light="#ffffff", safe_mode=True
-        )
+        config = RenderingConfig(scale=10, border=2, dark="#1a1a2e", light="#ffffff", safe_mode=True)
         assert config.scale == 10
         assert config.border == 2
         assert config.dark == "#1a1a2e"
@@ -400,10 +398,7 @@ class TestRenderingConfigFactoryMethod:
             assert config.accessibility.enable_aria is True
             assert config.accessibility.root_role == "img"
             assert config.accessibility.root_label == "QR Code"
-            assert (
-                config.accessibility.root_description
-                == "QR code for accessibility testing"
-            )
+            assert config.accessibility.root_description == "QR code for accessibility testing"
 
     def test_complex_kwargs_combination(self):
         """Test complex combination of multiple parameter types."""
@@ -581,16 +576,11 @@ class TestConfigSerialization:
         # Should be equivalent
         assert restored_config.scale == original_config.scale
         assert restored_config.geometry.shape == original_config.geometry.shape
-        assert (
-            restored_config.geometry.corner_radius
-            == original_config.geometry.corner_radius
-        )
+        assert restored_config.geometry.corner_radius == original_config.geometry.corner_radius
         assert restored_config.dark == original_config.dark
         assert restored_config.geometry.merge == original_config.geometry.merge
         assert restored_config.style.interactive == original_config.style.interactive
-        assert (
-            restored_config.centerpiece.enabled == original_config.centerpiece.enabled
-        )
+        assert restored_config.centerpiece.enabled == original_config.centerpiece.enabled
         assert restored_config.centerpiece.size == original_config.centerpiece.size
 
     def test_json_schema_generation(self):
@@ -649,7 +639,7 @@ class TestConfigSerialization:
 
         # Key parameters should be preserved (accounting for string->enum conversion)
         assert restored_kwargs["scale"] == original_kwargs["scale"]
-        assert restored_kwargs["dark"] == original_kwargs["dark"] 
+        assert restored_kwargs["dark"] == original_kwargs["dark"]
         assert restored_kwargs["shape"] == ModuleShape.SQUIRCLE  # Converted to enum
         assert restored_kwargs["corner_radius"] == original_kwargs["corner_radius"]
         assert restored_kwargs["interactive"] == original_kwargs["interactive"]
@@ -813,9 +803,7 @@ class TestConfigErrorHandling:
     def test_nested_config_validation_errors(self):
         """Test validation errors in nested configurations."""
         with pytest.raises(ValidationError) as exc_info:
-            RenderingConfig(
-                geometry=GeometryConfig(corner_radius=2.0)  # Invalid: > 1.0
-            )
+            RenderingConfig(geometry=GeometryConfig(corner_radius=2.0))  # Invalid: > 1.0
 
         error_message = str(exc_info.value)
         assert "geometry" in error_message.lower()

@@ -46,9 +46,7 @@ class ConfigPresets:
             >>> config = ConfigPresets.minimal()
             >>> qr.save("output.svg", kind="interactive_svg", **config.to_kwargs())
         """
-        return RenderingConfig.from_kwargs(
-            scale=8, shape="square", safe_mode=True, border=4
-        )
+        return RenderingConfig.from_kwargs(scale=8, shape="square", safe_mode=True, border=4)
 
     @staticmethod
     def artistic() -> RenderingConfig:
@@ -335,8 +333,7 @@ class ConfigPresets:
 
         if base_preset not in preset_map:
             raise ValueError(
-                f"Unknown preset '{base_preset}'. "
-                f"Available presets: {', '.join(preset_map.keys())}"
+                f"Unknown preset '{base_preset}'. " f"Available presets: {', '.join(preset_map.keys())}"
             )
 
         # Get base configuration
@@ -434,8 +431,7 @@ class ConfigPresets:
 
         if use_case not in use_case_map:
             raise ValueError(
-                f"Unknown use case '{use_case}'. "
-                f"Available use cases: {', '.join(use_case_map.keys())}"
+                f"Unknown use case '{use_case}'. " f"Available use cases: {', '.join(use_case_map.keys())}"
             )
 
         return use_case_map[use_case]()

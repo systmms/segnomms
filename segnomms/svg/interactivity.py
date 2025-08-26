@@ -151,9 +151,7 @@ class InteractivityBuilder:
 
         self.add_javascript(svg, custom_handler)
 
-    def add_animation_controls(
-        self, svg: ET.Element, animations: List[Dict[str, str]]
-    ) -> None:
+    def add_animation_controls(self, svg: ET.Element, animations: List[Dict[str, str]]) -> None:
         """Add animation control handlers.
 
         Args:
@@ -199,9 +197,7 @@ class InteractivityBuilder:
 
         self.add_javascript(svg, animation_code)
 
-    def configure_interaction(
-        self, element: ET.Element, config: InteractionConfig
-    ) -> None:
+    def configure_interaction(self, element: ET.Element, config: InteractionConfig) -> None:
         """Configure interaction settings for a specific element.
 
         Args:

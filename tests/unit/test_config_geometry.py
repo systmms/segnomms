@@ -24,9 +24,7 @@ class TestGeometryConfig:
         """Test default geometry configuration values."""
         config = GeometryConfig()
 
-        assert (
-            config.shape == ModuleShape.SQUARE
-        )  # use_enum_values=True converts to string
+        assert config.shape == ModuleShape.SQUARE  # use_enum_values=True converts to string
         assert config.corner_radius == 0.0
         assert config.connectivity == "4-way"  # use_enum_values=True converts to string
         assert config.merge == "none"  # use_enum_values=True converts to string

@@ -95,9 +95,7 @@ class MatrixManipulator:
         """
         return self.geometry.calculate_safe_reserve_size(version, error_level)
 
-    def calculate_placement_offsets(
-        self, config: CenterpieceConfig
-    ) -> Tuple[float, float]:
+    def calculate_placement_offsets(self, config: CenterpieceConfig) -> Tuple[float, float]:
         """Calculate offset_x and offset_y based on placement mode.
 
         Args:
@@ -135,12 +133,7 @@ class MatrixManipulator:
             return {"left": 0, "top": 0, "right": 0, "bottom": 0}
 
         # At this point, all bounds must be non-None since left is not None
-        assert (
-            left is not None
-            and top is not None
-            and right is not None
-            and bottom is not None
-        )
+        assert left is not None and top is not None and right is not None and bottom is not None
         return {"left": left, "top": top, "right": right, "bottom": bottom}
 
     def get_centerpiece_bounds(self, config: CenterpieceConfig) -> Dict[str, int]:
@@ -186,9 +179,7 @@ class MatrixManipulator:
         from ...config import ReserveMode
 
         # Start performance monitoring
-        perf_context = self.performance_monitor.start_operation(
-            "centerpiece_clearing", config
-        )
+        perf_context = self.performance_monitor.start_operation("centerpiece_clearing", config)
 
         try:
             logger.debug(
@@ -197,9 +188,7 @@ class MatrixManipulator:
 
             # Route to appropriate processor based on mode
             if hasattr(config, "mode") and config.mode == ReserveMode.IMPRINT:
-                result: List[List[bool]] = self.imprint_processor.apply_imprint_mode(
-                    config
-                )
+                result: List[List[bool]] = self.imprint_processor.apply_imprint_mode(config)
                 operation_type = "imprint_processing"
             else:
                 result = self.knockout_processor.apply_knockout_mode(config)
@@ -214,9 +203,7 @@ class MatrixManipulator:
 
         except Exception as e:
             # End performance monitoring with error
-            self.performance_monitor.end_operation(
-                perf_context, [f"Error during processing: {str(e)}"]
-            )
+            self.performance_monitor.end_operation(perf_context, [f"Error during processing: {str(e)}"])
             logger.error(f"Error during centerpiece processing: {e}")
             raise
 
@@ -230,14 +217,10 @@ class MatrixManipulator:
             Modified matrix with centerpiece area cleared
         """
         # Start performance monitoring
-        perf_context = self.performance_monitor.start_operation(
-            "knockout_processing", config
-        )
+        perf_context = self.performance_monitor.start_operation("knockout_processing", config)
 
         try:
-            result: List[List[bool]] = self.knockout_processor.apply_knockout_mode(
-                config
-            )
+            result: List[List[bool]] = self.knockout_processor.apply_knockout_mode(config)
 
             # End performance monitoring
             warnings = self.performance_monitor.get_performance_warnings(config)
@@ -262,9 +245,7 @@ class MatrixManipulator:
             Original matrix (modules preserved for scanability)
         """
         # Start performance monitoring
-        perf_context = self.performance_monitor.start_operation(
-            "imprint_processing", config
-        )
+        perf_context = self.performance_monitor.start_operation("imprint_processing", config)
 
         try:
             result: List[List[bool]] = self.imprint_processor.apply_imprint_mode(config)
@@ -284,9 +265,7 @@ class MatrixManipulator:
 
     # Validation methods
 
-    def validate_reserve_impact(
-        self, config: CenterpieceConfig, error_level: str
-    ) -> Dict[str, Any]:
+    def validate_reserve_impact(self, config: CenterpieceConfig, error_level: str) -> Dict[str, Any]:
         """Validate the impact of a centerpiece configuration.
 
         Args:
@@ -340,14 +319,10 @@ class MatrixManipulator:
             Tuple of (is_valid, message) indicating validation result
         """
         # Start performance monitoring
-        perf_context = self.performance_monitor.start_operation(
-            "matrix_validation", None
-        )
+        perf_context = self.performance_monitor.start_operation("matrix_validation", None)
 
         try:
-            result = self.validator.validate_reserve_impact(
-                original_matrix, modified_matrix, error_level
-            )
+            result = self.validator.validate_reserve_impact(original_matrix, modified_matrix, error_level)
 
             # End performance monitoring
             self.performance_monitor.end_operation(perf_context)
@@ -355,15 +330,11 @@ class MatrixManipulator:
             return result
 
         except Exception as e:
-            self.performance_monitor.end_operation(
-                perf_context, [f"Error during validation: {str(e)}"]
-            )
+            self.performance_monitor.end_operation(perf_context, [f"Error during validation: {str(e)}"])
             logger.error(f"Error during validation: {e}")
             raise
 
-    def validate_centerpiece_configuration(
-        self, config: CenterpieceConfig
-    ) -> Tuple[bool, List[str]]:
+    def validate_centerpiece_configuration(self, config: CenterpieceConfig) -> Tuple[bool, List[str]]:
         """Validate centerpiece configuration for potential issues.
 
         Args:
@@ -374,9 +345,7 @@ class MatrixManipulator:
         """
         return self.validator.validate_centerpiece_configuration(config)
 
-    def analyze_pattern_preservation(
-        self, config: CenterpieceConfig
-    ) -> PatternAnalysis:
+    def analyze_pattern_preservation(self, config: CenterpieceConfig) -> PatternAnalysis:
         """Analyze how well critical QR patterns are preserved.
 
         Args:
@@ -440,9 +409,7 @@ class MatrixManipulator:
                 "width": area_width,
                 "height": area_height,
                 "area_ratio": (
-                    estimated_modules / (len(self.matrix) * len(self.matrix[0]))
-                    if self.matrix
-                    else 0
+                    estimated_modules / (len(self.matrix) * len(self.matrix[0])) if self.matrix else 0
                 ),
             },
         }
@@ -456,21 +423,15 @@ class MatrixManipulator:
                 # Use comprehensive metadata from imprint operation
                 metadata.update(
                     {
-                        "imprinted_modules": imprint_metadata.get(
-                            "imprinted_modules", []
-                        ),
+                        "imprinted_modules": imprint_metadata.get("imprinted_modules", []),
                         "preserve_scanability": True,
                         "visual_effects": imprint_metadata.get("visual_effects", {}),
                         "imprint_treatments": [
                             {
                                 "x": module["col"],
                                 "y": module["row"],
-                                "opacity": module.get("visual_treatment", {}).get(
-                                    "opacity", 0.7
-                                ),
-                                "size_ratio": module.get("visual_treatment", {}).get(
-                                    "size_ratio", 1.0
-                                ),
+                                "opacity": module.get("visual_treatment", {}).get("opacity", 0.7),
+                                "size_ratio": module.get("visual_treatment", {}).get("size_ratio", 1.0),
                                 "type": module.get("type", "data"),
                             }
                             for module in imprint_metadata.get("imprinted_modules", [])
@@ -497,9 +458,7 @@ class MatrixManipulator:
                             if self.matrix[row][col]:  # Only dark modules
                                 module_type = self.detector.get_module_type(row, col)
                                 if module_type not in protected_patterns:
-                                    imprinted_modules.append(
-                                        {"row": row, "col": col, "type": module_type}
-                                    )
+                                    imprinted_modules.append({"row": row, "col": col, "type": module_type})
 
                 # Generate basic imprint treatments for fallback
                 imprint_treatments = [
@@ -526,13 +485,9 @@ class MatrixManipulator:
             for row in range(self.size):
                 for col in range(self.size):
                     if self.geometry.is_in_centerpiece(row, col, config):
-                        if self.matrix[row][
-                            col
-                        ]:  # Only dark modules that would be cleared
+                        if self.matrix[row][col]:  # Only dark modules that would be cleared
                             module_type = (
-                                self.detector.get_module_type(row, col)
-                                if self.detector
-                                else "unknown"
+                                self.detector.get_module_type(row, col) if self.detector else "unknown"
                             )
                             # Skip function patterns (they are preserved)
                             protected_patterns = {
@@ -546,13 +501,9 @@ class MatrixManipulator:
                                 "separator",
                             }
                             if module_type not in protected_patterns:
-                                cleared_modules.append(
-                                    {"row": row, "col": col, "type": module_type}
-                                )
+                                cleared_modules.append({"row": row, "col": col, "type": module_type})
 
-            metadata.update(
-                {"cleared_modules": cleared_modules, "preserve_scanability": False}
-            )
+            metadata.update({"cleared_modules": cleared_modules, "preserve_scanability": False})
 
         return {
             **metadata,
@@ -583,9 +534,7 @@ class MatrixManipulator:
         """
         return self.performance_monitor.get_performance_warnings(config)
 
-    def get_comprehensive_performance_warnings(
-        self, config: CenterpieceConfig
-    ) -> List[str]:
+    def get_comprehensive_performance_warnings(self, config: CenterpieceConfig) -> List[str]:
         """Get comprehensive performance warnings including configuration and runtime metrics.
 
         Args:
@@ -655,9 +604,7 @@ class MatrixManipulator:
         Returns:
             Dictionary with visual treatment parameters
         """
-        return self.imprint_processor._get_imprint_visual_treatment(
-            row, col, config, module_type
-        )
+        return self.imprint_processor._get_imprint_visual_treatment(row, col, config, module_type)
 
     def _calculate_imprint_opacity(self, config: CenterpieceConfig) -> float:
         """Calculate base opacity for imprinted modules.
@@ -670,9 +617,7 @@ class MatrixManipulator:
         """
         return self.imprint_processor._calculate_imprint_opacity(config)
 
-    def _calculate_imprint_color_shift(
-        self, config: CenterpieceConfig
-    ) -> Dict[str, float]:
+    def _calculate_imprint_color_shift(self, config: CenterpieceConfig) -> Dict[str, float]:
         """Calculate color shift parameters for imprinted modules.
 
         Args:
@@ -694,9 +639,7 @@ class MatrixManipulator:
         """
         return self.imprint_processor._calculate_imprint_size_ratio(config)
 
-    def _calculate_color_shift_for_distance(
-        self, normalized_distance: float
-    ) -> Dict[str, float]:
+    def _calculate_color_shift_for_distance(self, normalized_distance: float) -> Dict[str, float]:
         """Calculate color shift based on distance from centerpiece center.
 
         Args:
@@ -705,9 +648,7 @@ class MatrixManipulator:
         Returns:
             Distance-based color adjustment parameters
         """
-        return self.imprint_processor._calculate_color_shift_for_distance(
-            normalized_distance
-        )
+        return self.imprint_processor._calculate_color_shift_for_distance(normalized_distance)
 
     # Component access methods (for advanced usage)
 

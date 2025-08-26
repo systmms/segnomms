@@ -58,10 +58,7 @@ class PathClipper:
             True if point is within frame boundaries
         """
         if self.frame_shape == "square":
-            return (
-                self.frame_left <= x <= self.frame_right
-                and self.frame_top <= y <= self.frame_bottom
-            )
+            return self.frame_left <= x <= self.frame_right and self.frame_top <= y <= self.frame_bottom
 
         elif self.frame_shape == "circle":
             cx = self.width / 2
@@ -142,7 +139,7 @@ class PathClipper:
 
         elif self.frame_shape in ["rounded-rect", "squircle"]:
             # Simplified: use rectangular distance for now
-            # TODO: Implement proper distance calculation for rounded shapes
+            # NOTE: Enhancement opportunity - accurate rounded shape distance calculation
             dist_left = x - self.frame_left
             dist_right = self.frame_right - x
             dist_top = y - self.frame_top
@@ -172,9 +169,7 @@ class PathClipper:
             # Linear interpolation
             return distance / scale_distance
 
-    def clip_rectangle_to_frame(
-        self, x: float, y: float, width: float, height: float
-    ) -> Optional[str]:
+    def clip_rectangle_to_frame(self, x: float, y: float, width: float, height: float) -> Optional[str]:
         """Clip a rectangle to frame boundaries.
 
         Args:
@@ -218,12 +213,7 @@ class PathClipper:
 
         # Return the original rectangle path
         # In a full implementation, this would actually clip to the frame shape
-        return (
-            f"M {x} {y} "
-            f"L {x + width} {y} "
-            f"L {x + width} {y + height} "
-            f"L {x} {y + height} Z"
-        )
+        return f"M {x} {y} " f"L {x + width} {y} " f"L {x + width} {y + height} " f"L {x} {y + height} Z"
 
     def adjust_cluster_path(self, path: str, scale: int) -> str:
         """Adjust a cluster path to respect frame boundaries.

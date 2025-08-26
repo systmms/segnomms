@@ -38,7 +38,7 @@ See Also:
 
 # Import with graceful degradation
 try:
-    from .manifest import (
+    from .manifest import (  # noqa: F401
         CapabilityManifest,
         get_capability_manifest,
         get_supported_features,

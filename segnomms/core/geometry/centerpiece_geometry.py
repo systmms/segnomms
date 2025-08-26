@@ -50,9 +50,7 @@ class CenterpieceGeometry:
         # Use 80% of capacity for safety margin
         return capacity * 0.8
 
-    def calculate_placement_offsets(
-        self, config: CenterpieceConfig
-    ) -> Tuple[float, float]:
+    def calculate_placement_offsets(self, config: CenterpieceConfig) -> Tuple[float, float]:
         """Calculate offset_x and offset_y based on placement mode.
 
         Args:
@@ -83,9 +81,7 @@ class CenterpieceGeometry:
 
         return placement_offsets.get(config.placement, (0.0, 0.0))
 
-    def get_centerpiece_bounds(
-        self, config: CenterpieceConfig
-    ) -> Tuple[int, int, int, int]:
+    def get_centerpiece_bounds(self, config: CenterpieceConfig) -> Tuple[int, int, int, int]:
         """Calculate centerpiece bounds in module coordinates.
 
         Args:
@@ -145,9 +141,7 @@ class CenterpieceGeometry:
             if radius <= 0:
                 return False
 
-            return (abs(col - center_x) / radius) ** n + (
-                abs(row - center_y) / radius
-            ) ** n <= 1
+            return (abs(col - center_x) / radius) ** n + (abs(row - center_y) / radius) ** n <= 1
 
         # Safety fallback for unknown shapes
         return False  # type: ignore[unreachable]
@@ -216,9 +210,7 @@ class CenterpieceGeometry:
             # Clear all edge modules for clean appearance
             return True
 
-    def _is_critical_pattern_module(
-        self, row: int, col: int, matrix: List[List[bool]]
-    ) -> bool:
+    def _is_critical_pattern_module(self, row: int, col: int, matrix: List[List[bool]]) -> bool:
         """Check if a module is part of a critical QR pattern.
 
         This is a simplified check - in practice, this would use
@@ -232,10 +224,7 @@ class CenterpieceGeometry:
         ]
 
         for finder_row, finder_col in finder_positions:
-            if (
-                finder_row <= row < finder_row + 7
-                and finder_col <= col < finder_col + 7
-            ):
+            if finder_row <= row < finder_row + 7 and finder_col <= col < finder_col + 7:
                 return True
 
         # Check for timing patterns

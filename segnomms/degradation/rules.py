@@ -53,16 +53,13 @@ class ComplexShapeWithHighErrorRule(DegradationRule):
             "hexagon",
         ]
 
-        if (
-            config.geometry.shape in complex_shapes
-            and config.scale < 8
-            and not config.safe_mode
-        ):
+        if config.geometry.shape in complex_shapes and config.scale < 8 and not config.safe_mode:
 
             return DegradationWarning(
                 level=WarningLevel.WARNING,
                 feature="shape",
-                message=f"Complex shape '{config.geometry.shape}' with small scale ({config.scale}px) may impact scanability",
+                message=f"Complex shape '{config.geometry.shape}' with small scale "
+                f"({config.scale}px) may impact scanability",
                 original_value=config.geometry.shape,
                 degraded_value="square",
                 reason="Complex shapes need larger module sizes for reliable scanning",
@@ -92,11 +89,14 @@ class LowContrastRule(DegradationRule):
                 return DegradationWarning(
                     level=WarningLevel.CRITICAL,
                     feature="colors",
-                    message=f"Low contrast ratio {ratio:.2f} between dark ('{config.dark}') and light ('{config.light}') colors, minimum required: {config.min_contrast_ratio:.2f}",
+                    message=f"Low contrast ratio {ratio:.2f} between dark ('{config.dark}') "
+                    f"and light ('{config.light}') colors, "
+                    f"minimum required: {config.min_contrast_ratio:.2f}",
                     original_value={"dark": config.dark, "light": config.light},
                     degraded_value={"dark": "black", "light": "white"},
                     reason="QR codes require high contrast for reliable scanning",
-                    suggestion=f"Use colors with contrast ratio of at least {config.min_contrast_ratio:.1f}:1",
+                    suggestion=f"Use colors with contrast ratio of at least "
+                    f"{config.min_contrast_ratio:.1f}:1",
                 )
         else:
             # Fallback to simple contrast check
@@ -104,7 +104,8 @@ class LowContrastRule(DegradationRule):
                 return DegradationWarning(
                     level=WarningLevel.CRITICAL,
                     feature="colors",
-                    message=f"Low contrast between dark ('{config.dark}') and light ('{config.light}') colors",
+                    message=f"Low contrast between dark ('{config.dark}') "
+                    f"and light ('{config.light}') colors",
                     original_value={"dark": config.dark, "light": config.light},
                     degraded_value={"dark": "black", "light": "white"},
                     reason="QR codes require high contrast for reliable scanning",
@@ -134,8 +135,7 @@ class LowContrastRule(DegradationRule):
         light_lower = light.lower()
 
         return any(
-            (dark_lower == d and light_lower == l)
-            or (dark_lower == l and light_lower == d)
+            (dark_lower == d and light_lower == l) or (dark_lower == l and light_lower == d)
             for d, l in problematic
         )
 
@@ -232,10 +232,7 @@ class ExcessiveMergingRule(DegradationRule):
         self.incompatibility_type = IncompatibilityType.SCANABILITY
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
-        if (
-            config.geometry.merge == "aggressive"
-            and config.geometry.min_island_modules < 3
-        ):
+        if config.geometry.merge == "aggressive" and config.geometry.min_island_modules < 3:
             return DegradationWarning(
                 level=WarningLevel.WARNING,
                 feature="merge",

@@ -7,7 +7,7 @@ for coverage tracking and merge the results with Python coverage data.
 
 import json
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Dict
 
 import coverage
 
@@ -61,12 +61,12 @@ window.exportCoverageData = function() {
         functions: {},
         branches: {}
     };
-    
+
     // Convert Sets to Arrays for JSON serialization
     for (const [file, lines] of Object.entries(coverage.lines)) {
         result.lines[file] = Array.from(lines);
     }
-    
+
     return JSON.stringify(result);
 };
 """
@@ -77,9 +77,7 @@ window.exportCoverageData = function() {
         """Parse coverage data collected from the browser."""
         return json.loads(coverage_json)
 
-    def merge_with_python_coverage(
-        self, browser_coverage: Dict, python_cov: coverage.Coverage
-    ):
+    def merge_with_python_coverage(self, browser_coverage: Dict, python_cov: coverage.Coverage):
         """
         Merge browser coverage data with Python coverage data.
 

@@ -19,9 +19,7 @@ from .rendering import generate_interactive_svg
 MAX_QR_SIZE = 1000  # ~1000x1000 modules is very large but still reasonable
 
 
-def write(
-    qr_code: Any, out: Union[TextIO, BinaryIO, str], **kwargs: Any
-) -> Optional[Dict[str, Any]]:
+def write(qr_code: Any, out: Union[TextIO, BinaryIO, str], **kwargs: Any) -> Optional[Dict[str, Any]]:
     """Write an interactive SVG representation of the QR code.
 
     This is the main entry point for the segno plugin system. It generates
@@ -37,7 +35,8 @@ def write(
             * border (int): Number of modules for quiet zone (default: 4)
             * dark (str): Color for dark modules (default: 'black')
             * light (str): Color for light modules (default: 'white')
-            * safe_mode (bool): Force square shapes for critical QR patterns (finder, timing) to ensure scannability (default: False)
+            * safe_mode (bool): Force square shapes for critical QR patterns (finder, timing)
+                               to ensure scannability (default: False)
 
             Geometry parameters:
             * connectivity (str): '4-way' or '8-way' neighbor connectivity
@@ -176,9 +175,7 @@ def write(
         raise TypeError(f"Unsupported output type: {type(out)}")
 
 
-def write_advanced(
-    content: str, out: Union[TextIO, BinaryIO, str], **kwargs: Any
-) -> Dict[str, Any]:
+def write_advanced(content: str, out: Union[TextIO, BinaryIO, str], **kwargs: Any) -> Dict[str, Any]:
     """Write advanced QR code(s) with ECI, mask patterns, or structured append.
 
     This function provides enhanced QR code generation with advanced features
@@ -319,8 +316,7 @@ def write_advanced(
         # Validate that out is a valid string path
         if not isinstance(out, (str, Path)):
             raise TypeError(
-                f"Output must be a file path (str/Path) for sequences, "
-                f"got {type(out).__name__}"
+                f"Output must be a file path (str/Path) for sequences, " f"got {type(out).__name__}"
             )
 
         base_path = str(out)
@@ -343,14 +339,12 @@ def write_advanced(
                 seq_config.metadata["sequence_total"] = len(result.qr_codes)
 
                 config_hash = _generate_config_hash(seq_config)
-                sequence_filename = f"qr_{config_hash[:8]}_seq{i+1:02d}{extension}"
+                sequence_filename = f"qr_{config_hash[:8]}_seq{i + 1:02d}{extension}"
                 sequence_path = Path(base_path).parent / sequence_filename
             else:
                 # Standard sequence naming: base-03-01.svg, base-03-02.svg, etc.
                 total = len(result.qr_codes)
-                sequence_filename = (
-                    f"{Path(base_name).name}-{total:02d}-{i+1:02d}{extension}"
-                )
+                sequence_filename = f"{Path(base_name).name}-{total:02d}-{i + 1:02d}{extension}"
                 sequence_path = Path(base_path).parent / sequence_filename
 
             # Generate SVG for this QR
@@ -413,8 +407,7 @@ def write_advanced(
             # Validate that out is a valid string path
             if not isinstance(out, (str, Path)):
                 raise TypeError(
-                    f"Output must be a file path (str/Path) or file-like object, "
-                    f"got {type(out).__name__}"
+                    f"Output must be a file path (str/Path) or file-like object, " f"got {type(out).__name__}"
                 )
             output_path = Path(str(out))
             if use_hash_naming:
@@ -433,9 +426,7 @@ def write_advanced(
                     "content": content,
                     "advanced_config": advanced_config.model_dump(),
                 }
-                config_path = _export_configuration(
-                    rendering_config, output_path, config_format, metadata
-                )
+                config_path = _export_configuration(rendering_config, output_path, config_format, metadata)
                 if config_path:
                     config_files_created.append(str(config_path))
 

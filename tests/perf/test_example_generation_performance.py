@@ -221,9 +221,7 @@ class TestExampleGenerationPerformance:
         # Calculate overhead percentages
         baseline_time: float = performance_results[0]["avg_time_ms"]
         for result in performance_results:
-            result["overhead_pct"] = (
-                (float(result["avg_time_ms"]) - baseline_time) / baseline_time
-            ) * 100
+            result["overhead_pct"] = ((float(result["avg_time_ms"]) - baseline_time) / baseline_time) * 100
 
         # Save interactive overhead data
         perf_file = self.performance_dir / "interactive_overhead.json"

@@ -114,9 +114,7 @@ class PerformanceMonitor:
             enabled: Whether performance monitoring is active
         """
         self.enabled = enabled
-        self.thresholds: Dict[str, PerformanceThreshold] = (
-            self.DEFAULT_THRESHOLDS.copy()
-        )
+        self.thresholds: Dict[str, PerformanceThreshold] = self.DEFAULT_THRESHOLDS.copy()
         self.metrics: List[PerformanceMetric] = []
         self._active_operations: Dict[str, Tuple[float, str]] = {}
 
@@ -184,15 +182,13 @@ class PerformanceMonitor:
             if threshold.check_time(elapsed_ms):
                 metric.warning_level = threshold.warning_level
                 metric.warning_message = (
-                    f"{operation} took {elapsed_ms:.1f}ms "
-                    f"(threshold: {threshold.max_time_ms:.1f}ms)"
+                    f"{operation} took {elapsed_ms:.1f}ms " f"(threshold: {threshold.max_time_ms:.1f}ms)"
                 )
 
             elif complexity_score and threshold.check_complexity(complexity_score):
                 metric.warning_level = threshold.warning_level
                 metric.warning_message = (
-                    f"{operation} complexity {complexity_score} "
-                    f"(threshold: {threshold.max_complexity})"
+                    f"{operation} complexity {complexity_score} " f"(threshold: {threshold.max_complexity})"
                 )
 
         # Log warning if threshold exceeded
@@ -317,9 +313,7 @@ class PerformanceMonitor:
         Returns:
             List of metrics with warnings for the specified operation
         """
-        return [
-            m for m in self.metrics if m.operation == operation and m.exceeded_threshold
-        ]
+        return [m for m in self.metrics if m.operation == operation and m.exceeded_threshold]
 
     def generate_performance_recommendations(self) -> List[str]:
         """Generate performance improvement recommendations based on metrics.
@@ -495,10 +489,7 @@ def measure_centerpiece_operation(func: Callable[..., Any]) -> Callable[..., Any
             if hasattr(config, "mode"):
                 from ..config import ReserveMode
 
-                if (
-                    config.mode == ReserveMode.IMPRINT
-                    and func.__name__ == "apply_imprint_mode"
-                ):
+                if config.mode == ReserveMode.IMPRINT and func.__name__ == "apply_imprint_mode":
                     operation_type = "imprint_preprocessing"
 
         return monitor.measure_operation(

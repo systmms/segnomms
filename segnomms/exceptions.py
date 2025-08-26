@@ -210,9 +210,7 @@ class MatrixSizeError(MatrixError):
                 suggestion = "Minimum QR code size is 11x11"
             else:
                 message = f"Invalid QR matrix size {size}x{size}"
-                suggestion = (
-                    "QR codes must be 21x21 or larger with size = 4*version + 17"
-                )
+                suggestion = "QR codes must be 21x21 or larger with size = 4*version + 17"
         else:
             suggestion = None
 
@@ -244,7 +242,7 @@ class MatrixBoundsError(MatrixError):
                 "col": col,
                 "size": size,
             },
-            suggestion=f"Valid range is (0, 0) to ({size-1}, {size-1})",
+            suggestion=f"Valid range is (0, 0) to ({size - 1}, {size - 1})",
         )
         self.row = row
         self.col = col

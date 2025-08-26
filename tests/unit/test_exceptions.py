@@ -3,39 +3,39 @@
 import pytest
 
 from segnomms.exceptions import (
-    SegnoMMSError,
+    CapabilityError,
+    CapabilityManifestError,
+    ColorError,
     ConfigurationError,
-    ValidationError,
-    IntentValidationError,
-    PresetNotFoundError,
+    ContrastRatioError,
+    DependencyError,
+    FeatureNotSupportedError,
     IncompatibleConfigError,
-    RenderingError,
+    IntentDegradationError,
+    IntentProcessingError,
+    IntentTransformationError,
+    IntentValidationError,
+    InvalidColorFormatError,
+    MatrixBoundsError,
     MatrixError,
     MatrixSizeError,
-    MatrixBoundsError,
-    ShapeRenderingError,
-    SVGGenerationError,
-    PerformanceError,
-    IntentProcessingError,
-    UnsupportedIntentError,
-    IntentDegradationError,
-    IntentTransformationError,
-    ColorError,
-    InvalidColorFormatError,
-    ContrastRatioError,
-    PaletteValidationError,
-    CapabilityError,
-    FeatureNotSupportedError,
-    CapabilityManifestError,
-    DependencyError,
     MissingDependencyError,
     OptionalFeatureUnavailableError,
+    PaletteValidationError,
+    PerformanceError,
+    PresetNotFoundError,
+    RenderingError,
+    SegnoMMSError,
+    ShapeRenderingError,
+    SVGGenerationError,
+    UnsupportedIntentError,
+    ValidationError,
 )
 
 
 class TestBaseException:
     """Test base SegnoMMSError functionality."""
-    
+
     def test_basic_error(self):
         """Test basic error creation."""
         error = SegnoMMSError("Test error")
@@ -44,7 +44,7 @@ class TestBaseException:
         assert error.code == "SegnoMMSError"
         assert error.details == {}
         assert error.suggestion is None
-    
+
     def test_error_with_all_fields(self):
         """Test error with all fields populated."""
         error = SegnoMMSError(
@@ -57,7 +57,7 @@ class TestBaseException:
         assert error.code == "TEST_ERROR"
         assert error.details == {"key": "value"}
         assert error.suggestion == "Try this instead"
-    
+
     def test_to_dict(self):
         """Test converting error to dictionary."""
         error = SegnoMMSError(
@@ -77,7 +77,7 @@ class TestBaseException:
 
 class TestConfigurationErrors:
     """Test configuration-related exceptions."""
-    
+
     def test_validation_error(self):
         """Test ValidationError."""
         error = ValidationError(
@@ -90,7 +90,7 @@ class TestConfigurationErrors:
         assert error.field == "scale"
         assert error.value == -1
         assert error.details == {"field": "scale", "value": -1}
-    
+
     def test_intent_validation_error(self):
         """Test IntentValidationError."""
         error = IntentValidationError(
@@ -103,7 +103,7 @@ class TestConfigurationErrors:
         assert error.intent_path == "style.module_shape"
         assert error.original_value == "invalid"
         assert error.details["intent_path"] == "style.module_shape"
-    
+
     def test_preset_not_found_error(self):
         """Test PresetNotFoundError."""
         available = ["minimal", "standard", "premium"]
@@ -112,7 +112,7 @@ class TestConfigurationErrors:
         assert error.preset_name == "custom"
         assert error.available_presets == available
         assert "Use one of: minimal, standard, premium" in str(error)
-    
+
     def test_incompatible_config_error(self):
         """Test IncompatibleConfigError."""
         error = IncompatibleConfigError(
@@ -128,7 +128,7 @@ class TestConfigurationErrors:
 
 class TestRenderingErrors:
     """Test rendering-related exceptions."""
-    
+
     def test_matrix_size_error(self):
         """Test MatrixSizeError."""
         # Test too small
@@ -137,16 +137,16 @@ class TestRenderingErrors:
         assert error.size == 5
         assert "too small" in error.message
         assert "Minimum QR code size is 11x11" in str(error)
-        
+
         # Test invalid size
         error = MatrixSizeError(22)
         assert "Invalid QR matrix size" in error.message
-        
+
         # Test custom message
         error = MatrixSizeError(100, "Custom error message")
         assert error.message == "Custom error message"
         assert error.suggestion is None
-    
+
     def test_matrix_bounds_error(self):
         """Test MatrixBoundsError."""
         error = MatrixBoundsError(row=25, col=30, size=21)
@@ -156,7 +156,7 @@ class TestRenderingErrors:
         assert error.matrix_size == 21
         assert "Position (25, 30) out of bounds" in error.message
         assert "Valid range is (0, 0) to (20, 20)" in str(error)
-    
+
     def test_shape_rendering_error(self):
         """Test ShapeRenderingError."""
         error = ShapeRenderingError(
@@ -168,14 +168,14 @@ class TestRenderingErrors:
         assert error.shape == "complex-pattern"
         assert error.details["shape"] == "complex-pattern"
         assert error.details["phase"] == "path_generation"
-    
+
     def test_svg_generation_error(self):
         """Test SVGGenerationError."""
         error = SVGGenerationError("Failed to generate SVG", phase="style_application")
         assert error.code == "SVG_GENERATION_ERROR"
         assert error.phase == "style_application"
         assert error.details == {"phase": "style_application"}
-    
+
     def test_performance_error(self):
         """Test PerformanceError."""
         error = PerformanceError(
@@ -192,7 +192,7 @@ class TestRenderingErrors:
 
 class TestIntentProcessingErrors:
     """Test intent processing exceptions."""
-    
+
     def test_unsupported_intent_error(self):
         """Test UnsupportedIntentError."""
         error = UnsupportedIntentError(
@@ -207,7 +207,7 @@ class TestIntentProcessingErrors:
         assert error.alternatives == ["Use static SVG", "Add animations post-processing"]
         assert error.planned_version == "1.0.0"
         assert "Try: Use static SVG" in str(error)
-    
+
     def test_intent_degradation_error(self):
         """Test IntentDegradationError."""
         error = IntentDegradationError(
@@ -221,7 +221,7 @@ class TestIntentProcessingErrors:
         assert error.requested == "ultra-aggressive"
         assert error.applied == "aggressive"
         assert error.reason == "Not a valid merge strategy"
-    
+
     def test_intent_transformation_error(self):
         """Test IntentTransformationError."""
         error = IntentTransformationError(
@@ -238,21 +238,21 @@ class TestIntentProcessingErrors:
 
 class TestColorErrors:
     """Test color-related exceptions."""
-    
+
     def test_invalid_color_format_error(self):
         """Test InvalidColorFormatError."""
         error = InvalidColorFormatError("not-a-color")
         assert error.code == "INVALID_COLOR_FORMAT"
         assert error.color == "not-a-color"
         assert "hex (#RRGGBB)" in str(error)
-        
+
         # Test with custom formats
         error = InvalidColorFormatError(
             "xyz(1,2,3)",
             accepted_formats=["hex", "rgb", "hsl"],
         )
         assert error.accepted_formats == ["hex", "rgb", "hsl"]
-    
+
     def test_contrast_ratio_error(self):
         """Test ContrastRatioError."""
         error = ContrastRatioError(
@@ -269,7 +269,7 @@ class TestColorErrors:
         assert error.required_ratio == 4.5
         assert error.standard == "WCAG AA"
         assert "1.50 < 4.5 (WCAG AA)" in error.message
-    
+
     def test_palette_validation_error(self):
         """Test PaletteValidationError."""
         error = PaletteValidationError(
@@ -284,7 +284,7 @@ class TestColorErrors:
 
 class TestCapabilityErrors:
     """Test capability-related exceptions."""
-    
+
     def test_feature_not_supported_error(self):
         """Test FeatureNotSupportedError."""
         error = FeatureNotSupportedError(
@@ -297,7 +297,7 @@ class TestCapabilityErrors:
         assert error.category == "animations"
         assert error.min_version == "2.0.0"
         assert "Upgrade to version 2.0.0 or later" in str(error)
-    
+
     def test_capability_manifest_error(self):
         """Test CapabilityManifestError."""
         error = CapabilityManifestError(
@@ -311,7 +311,7 @@ class TestCapabilityErrors:
 
 class TestDependencyErrors:
     """Test dependency-related exceptions."""
-    
+
     def test_missing_dependency_error(self):
         """Test MissingDependencyError."""
         error = MissingDependencyError(
@@ -325,11 +325,11 @@ class TestDependencyErrors:
         assert error.install_command == "pip install pyzbar"
         assert "required for QR code scanning" in error.message
         assert "Install with: pip install pyzbar" in str(error)
-        
+
         # Test auto-suggestion for known packages
         error = MissingDependencyError("opencv-python")
         assert "pip install pyzbar opencv-python" in str(error)
-    
+
     def test_optional_feature_unavailable_error(self):
         """Test OptionalFeatureUnavailableError."""
         error = OptionalFeatureUnavailableError(
@@ -346,7 +346,7 @@ class TestDependencyErrors:
 
 class TestExceptionHierarchy:
     """Test exception inheritance and relationships."""
-    
+
     def test_inheritance_chain(self):
         """Test that exceptions inherit properly."""
         # All exceptions should inherit from SegnoMMSError
@@ -354,36 +354,36 @@ class TestExceptionHierarchy:
         assert isinstance(error, ConfigurationError)
         assert isinstance(error, SegnoMMSError)
         assert isinstance(error, Exception)
-        
+
         # Matrix errors should inherit from RenderingError
         error = MatrixSizeError(5)
         assert isinstance(error, MatrixError)
         assert isinstance(error, RenderingError)
         assert isinstance(error, SegnoMMSError)
-        
+
         # Intent errors should inherit properly
         error = UnsupportedIntentError("path", "feature")
         assert isinstance(error, IntentProcessingError)
         assert isinstance(error, SegnoMMSError)
-    
+
     def test_exception_catching(self):
         """Test that exceptions can be caught at different levels."""
         # Should be able to catch specific exception
         with pytest.raises(MatrixSizeError):
             raise MatrixSizeError(5)
-        
+
         # Should be able to catch parent exception
         with pytest.raises(MatrixError):
             raise MatrixBoundsError(10, 10, 5)
-        
+
         # Should be able to catch at rendering level
         with pytest.raises(RenderingError):
             raise ShapeRenderingError("circle", "Failed")
-        
+
         # Should be able to catch at base level
         with pytest.raises(SegnoMMSError):
             raise InvalidColorFormatError("not-a-color")
-    
+
     def test_error_codes_are_stable(self):
         """Test that error codes are consistent."""
         # Each error type should have a stable code
@@ -391,7 +391,7 @@ class TestExceptionHierarchy:
         assert IntentValidationError("p", "m").code == "INTENT_VALIDATION_ERROR"
         assert MatrixSizeError(5).code == "MATRIX_SIZE_ERROR"
         assert UnsupportedIntentError("p", "f").code == "UNSUPPORTED_INTENT"
-        
+
         # Custom codes should override
         error = SegnoMMSError("message", code="CUSTOM_CODE")
         assert error.code == "CUSTOM_CODE"

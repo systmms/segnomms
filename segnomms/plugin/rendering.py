@@ -48,9 +48,7 @@ class QRCodeRenderer:
 
         # Initialize components
         self.detector = ModuleDetector(self.matrix, qr_code.version)
-        self.svg_builder = InteractiveSVGBuilder(
-            accessibility_config=self.config.accessibility
-        )
+        self.svg_builder = InteractiveSVGBuilder(accessibility_config=self.config.accessibility)
         self.shape_factory = get_shape_factory()
         self.logger = logging.getLogger(__name__)
 
@@ -62,17 +60,12 @@ class QRCodeRenderer:
     def _apply_degradation(self, config: RenderingConfig) -> RenderingConfig:
         """Apply graceful degradation to the configuration."""
         degradation_manager = DegradationManager()
-        degraded_config, degradation_result = degradation_manager.apply_degradation(
-            config
-        )
+        degraded_config, degradation_result = degradation_manager.apply_degradation(config)
 
         # Log degradation warnings
         if degradation_result.warning_count > 0:
             logger = logging.getLogger(__name__)
-            logger.info(
-                f"Graceful degradation applied "
-                f"{degradation_result.warning_count} warnings"
-            )
+            logger.info(f"Graceful degradation applied " f"{degradation_result.warning_count} warnings")
 
             for warning in degradation_result.warnings:
                 logger.warning(f"Degradation: {warning}")
@@ -104,16 +97,12 @@ class QRCodeRenderer:
 
         # Extract numeric version from version string (e.g., "M3" -> 3)
         try:
-            numeric_version = int(
-                "".join(filter(str.isdigit, str(self.qr_code.version)))
-            )
+            numeric_version = int("".join(filter(str.isdigit, str(self.qr_code.version))))
         except (ValueError, TypeError):
             # Fallback if version parsing fails
             numeric_version = 3
 
-        validator = Phase4Validator(
-            numeric_version, self.qr_code.error, len(self.matrix)
-        )
+        validator = Phase4Validator(numeric_version, self.qr_code.error, len(self.matrix))
 
         # Validate Phase 4 features
         validation_result = validator.validate_all(self.config)
@@ -185,9 +174,7 @@ class QRCodeRenderer:
 
         manipulator = MatrixManipulator(self.matrix, self.detector)
         self.matrix = manipulator.clear_centerpiece_area(self.config.centerpiece)
-        self.centerpiece_metadata = manipulator.get_centerpiece_metadata(
-            self.config.centerpiece
-        )
+        self.centerpiece_metadata = manipulator.get_centerpiece_metadata(self.config.centerpiece)
 
     def _create_svg_structure(self) -> ET.Element:
         """Create the base SVG structure with accessibility features."""
@@ -231,9 +218,7 @@ class QRCodeRenderer:
         )
 
         # Add enhanced quiet zone background
-        self.svg_builder.add_quiet_zone_with_style(
-            svg, self.config.quiet_zone, svg_size, svg_size
-        )
+        self.svg_builder.add_quiet_zone_with_style(svg, self.config.quiet_zone, svg_size, svg_size)
 
         # Add styles
         self.svg_builder.add_styles(svg, self.config.style.interactive)
@@ -255,9 +240,7 @@ class QRCodeRenderer:
 
         return svg
 
-    def _apply_frame_clipping(
-        self, svg: ET.Element, modules_group: ET.Element
-    ) -> Optional[str]:
+    def _apply_frame_clipping(self, svg: ET.Element, modules_group: ET.Element) -> Optional[str]:
         """Add frame definitions and apply clipping to modules group."""
         if self.config.frame.shape == "square":
             return None
@@ -415,9 +398,7 @@ class QRCodeRenderer:
         finder_positions.append((module_count - 7, 0))
 
         # Create halos group
-        halos_group = ET.Element(
-            "g", attrib={"class": "finder-halos", "aria-hidden": "true"}
-        )
+        halos_group = ET.Element("g", attrib={"class": "finder-halos", "aria-hidden": "true"})
 
         # Insert halos group before the modules group
         parent = svg.find(".//g[@class='qr-layer-modules']/..")
@@ -466,9 +447,7 @@ class QRCodeRenderer:
                 module_count = len(list(group))
                 if module_count > 0:
                     # Apply pattern group accessibility enhancement
-                    self.svg_builder.enhance_pattern_group_accessibility(
-                        group, pattern_type, module_count
-                    )
+                    self.svg_builder.enhance_pattern_group_accessibility(group, pattern_type, module_count)
 
 
 class ModuleRenderer:
@@ -497,9 +476,7 @@ class ModuleRenderer:
         self.path_clipper = path_clipper
         self.svg_builder = svg_builder
 
-    def render_module(
-        self, row: int, col: int, module_index: Optional[int] = None
-    ) -> Optional[ET.Element]:
+    def render_module(self, row: int, col: int, module_index: Optional[int] = None) -> Optional[ET.Element]:
         """Render a single module at the given position.
 
         Args:
@@ -552,9 +529,7 @@ class ModuleRenderer:
 
         # Apply accessibility enhancements if svg_builder is available
         if self.svg_builder:
-            self.svg_builder.enhance_module_accessibility(
-                element, row, col, module_type
-            )
+            self.svg_builder.enhance_module_accessibility(element, row, col, module_type)
 
         return element  # type: ignore[no-any-return]
 
@@ -580,10 +555,7 @@ class ModuleRenderer:
         )
 
         # Legacy finder shape override (for backward compatibility)
-        if (
-            module_type in ["finder", "finder_inner"]
-            and self.config.finder.shape != FinderShape.SQUARE
-        ):
+        if module_type in ["finder", "finder_inner"] and self.config.finder.shape != FinderShape.SQUARE:
             if self.config.finder.shape == FinderShape.ROUNDED:
                 current_shape = "rounded"
             elif self.config.finder.shape == FinderShape.CIRCLE:
@@ -604,18 +576,10 @@ class ModuleRenderer:
         # Enhanced rendering for Phase 1
         if self.config.phase1.enabled and self.config.phase1.use_enhanced_shapes:
             # Get neighbor analysis
-            analysis = self.detector.get_weighted_neighbor_analysis(
-                row, col, module_type
-            )
+            analysis = self.detector.get_weighted_neighbor_analysis(row, col, module_type)
             # Adjust rendering based on analysis
-            analysis_dict = (
-                analysis.model_dump()
-                if hasattr(analysis, "model_dump")
-                else analysis.__dict__
-            )
-            render_kwargs = _get_enhanced_render_kwargs(
-                self.config, analysis_dict, module_type
-            )
+            analysis_dict = analysis.model_dump() if hasattr(analysis, "model_dump") else analysis.__dict__
+            render_kwargs = _get_enhanced_render_kwargs(self.config, analysis_dict, module_type)
         else:
             # Standard rendering
             render_kwargs = {
@@ -623,9 +587,7 @@ class ModuleRenderer:
             }
 
         # Apply pattern-specific styling enhancements
-        render_kwargs = _get_pattern_specific_render_kwargs(
-            self.config, module_type, render_kwargs
-        )
+        render_kwargs = _get_pattern_specific_render_kwargs(self.config, module_type, render_kwargs)
 
         # Add common parameters
         render_kwargs["get_neighbor"] = get_neighbor
@@ -651,16 +613,12 @@ class ModuleRenderer:
         """Create get_neighbor function based on connectivity mode."""
         if self.config.geometry.connectivity == ConnectivityMode.EIGHT_WAY:
             # 8-way connectivity includes diagonals
-            def get_neighbor(
-                x_offset: int, y_offset: int, r: int = row, c: int = col
-            ) -> bool:
+            def get_neighbor(x_offset: int, y_offset: int, r: int = row, c: int = col) -> bool:
                 return self.detector.is_module_active(r + y_offset, c + x_offset)
 
         else:
             # 4-way connectivity only includes orthogonal neighbors
-            def get_neighbor(
-                x_offset: int, y_offset: int, r: int = row, c: int = col
-            ) -> bool:
+            def get_neighbor(x_offset: int, y_offset: int, r: int = row, c: int = col) -> bool:
                 # Only allow orthogonal neighbors
                 if abs(x_offset) + abs(y_offset) == 1:
                     return self.detector.is_module_active(r + y_offset, c + x_offset)
@@ -668,18 +626,12 @@ class ModuleRenderer:
 
         return get_neighbor
 
-    def _add_shape_specific_params(
-        self, render_kwargs: Dict[str, Any], shape: str, module_type: str
-    ) -> None:
+    def _add_shape_specific_params(self, render_kwargs: Dict[str, Any], shape: str, module_type: str) -> None:
         """Add shape-specific parameters to render kwargs."""
         # Add roundness for RoundedRenderer
         if shape == "rounded":
             # Use corner_radius for roundness, defaulting to 0.3 if not set
-            roundness = (
-                self.config.geometry.corner_radius
-                if self.config.geometry.corner_radius > 0
-                else 0.3
-            )
+            roundness = self.config.geometry.corner_radius if self.config.geometry.corner_radius > 0 else 0.3
             render_kwargs["roundness"] = roundness
 
         # Add finder-specific parameters
@@ -692,9 +644,7 @@ class ModuleRenderer:
         if self.config.shape_options:
             render_kwargs.update(self.config.shape_options)
 
-    def _apply_scale_mode(
-        self, x: float, y: float, render_kwargs: Dict[str, Any]
-    ) -> bool:
+    def _apply_scale_mode(self, x: float, y: float, render_kwargs: Dict[str, Any]) -> bool:
         """Apply scale mode adjustments if enabled.
 
         Returns:
@@ -714,9 +664,7 @@ class ModuleRenderer:
             return False
         elif scale_factor < 1.0:
             # Apply scaling by modifying render_kwargs
-            render_kwargs["size_ratio"] = (
-                render_kwargs.get("size_ratio", 1.0) * scale_factor
-            )
+            render_kwargs["size_ratio"] = render_kwargs.get("size_ratio", 1.0) * scale_factor
 
         return True
 
@@ -729,9 +677,7 @@ class ModuleRenderer:
             # Legacy: only set if different from default
             element.set("fill", color)
 
-    def _add_tooltip(
-        self, element: ET.Element, module_type: str, row: int, col: int
-    ) -> None:
+    def _add_tooltip(self, element: ET.Element, module_type: str, row: int, col: int) -> None:
         """Add tooltip to the module element."""
         title = ET.SubElement(element, "title")
         title.text = f"{module_type} module at ({row}, {col})"
@@ -770,9 +716,7 @@ def _render_cluster(
 ) -> None:
     """Render a cluster as a single shape"""
     cluster_analyzer = ConnectedComponentAnalyzer()
-    path_data = cluster_analyzer.get_cluster_svg_path(
-        cluster, config.scale, config.border, path_clipper
-    )
+    path_data = cluster_analyzer.get_cluster_svg_path(cluster, config.scale, config.border, path_clipper)
 
     if path_data:
         # Get CSS classes safely
@@ -797,9 +741,7 @@ def _render_cluster(
 
         if config.style.tooltips:
             title = ET.SubElement(path, "title")
-            title.text = (
-                f"Cluster of {cluster['size']} modules ({cluster['shape_type']})"
-            )
+            title.text = f"Cluster of {cluster['size']} modules ({cluster['shape_type']})"
 
         # Apply accessibility enhancements if svg_builder is available
         if svg_builder and cluster["positions"]:
@@ -859,9 +801,7 @@ def _format_svg_string(svg_string: str) -> str:
     svg_string = re.sub(r"(<rect[^>]*/>)", r"  \1\n", svg_string)
     svg_string = re.sub(r"(<circle[^>]*/>)", r"  \1\n", svg_string)
     svg_string = re.sub(r"(<path[^>]*/>)", r"  \1\n", svg_string)
-    svg_string = re.sub(
-        r"(<style[^>]*>.*?</style>)", r"\1\n", svg_string, flags=re.DOTALL
-    )
+    svg_string = re.sub(r"(<style[^>]*>.*?</style>)", r"\1\n", svg_string, flags=re.DOTALL)
 
     return svg_string
 

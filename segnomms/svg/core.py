@@ -80,9 +80,7 @@ class CoreSVGBuilder(SVGBuilder):
             style = ET.SubElement(svg, "style", attrib={"type": "text/css"})
             style.text = f"\n<![CDATA[\n{style_content}\n]]>\n"
 
-    def add_background(
-        self, svg: ET.Element, width: int, height: int, color: str, **kwargs: Any
-    ) -> None:
+    def add_background(self, svg: ET.Element, width: int, height: int, color: str, **kwargs: Any) -> None:
         """Add a background rectangle to the SVG.
 
         Args:

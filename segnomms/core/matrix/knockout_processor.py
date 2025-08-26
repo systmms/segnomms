@@ -79,9 +79,7 @@ class KnockoutProcessor:
         }
 
         # First pass: identify all modules in centerpiece area
-        centerpiece_modules, edge_modules = self._collect_centerpiece_modules(
-            config, stats
-        )
+        centerpiece_modules, edge_modules = self._collect_centerpiece_modules(config, stats)
 
         # Second pass: clear modules with edge refinement
         modified = self._clear_modules_with_refinement(
@@ -159,9 +157,7 @@ class KnockoutProcessor:
 
         # Edge refinement: apply smart edge handling for smoother boundaries
         for row, col, module_type in edge_modules:
-            should_clear = self.geometry.should_clear_edge_module(
-                row, col, config, modified
-            )
+            should_clear = self.geometry.should_clear_edge_module(row, col, config, modified)
 
             if should_clear:
                 if modified[row][col]:  # Only count if it was dark
@@ -203,9 +199,7 @@ class KnockoutProcessor:
             "edge_modules_would_refine": 0,
         }
 
-        centerpiece_modules, edge_modules = self._collect_centerpiece_modules(
-            config, stats
-        )
+        centerpiece_modules, edge_modules = self._collect_centerpiece_modules(config, stats)
 
         # Count what would be cleared
         for row, col, module_type in centerpiece_modules:

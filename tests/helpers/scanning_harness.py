@@ -113,7 +113,8 @@ class QRScanabilityHarness:
 
         if not self.available_scanners:
             logger.warning(
-                "No QR scanning libraries available. Install PIL, opencv-python, and pyzbar for full functionality."
+                "No QR scanning libraries available. Install PIL, opencv-python, "
+                "and pyzbar for full functionality."
             )
 
     def get_standard_test_cases(self) -> List[ScanTestCase]:
@@ -133,26 +134,16 @@ class QRScanabilityHarness:
             ScanTestCase("large_scale", "Large scale factor", 150, scale_factor=2.0),
             # Rotation tests
             ScanTestCase("rotate_90", "90 degree rotation", 150, rotation_degrees=90),
-            ScanTestCase(
-                "rotate_180", "180 degree rotation", 150, rotation_degrees=180
-            ),
-            ScanTestCase(
-                "rotate_270", "270 degree rotation", 150, rotation_degrees=270
-            ),
+            ScanTestCase("rotate_180", "180 degree rotation", 150, rotation_degrees=180),
+            ScanTestCase("rotate_270", "270 degree rotation", 150, rotation_degrees=270),
             ScanTestCase("rotate_45", "45 degree rotation", 150, rotation_degrees=45),
             # Quality degradation tests
             ScanTestCase("slight_blur", "Slight blur", 150, blur_radius=0.5),
             ScanTestCase("moderate_blur", "Moderate blur", 150, blur_radius=1.0),
-            ScanTestCase(
-                "low_brightness", "Low brightness", 150, brightness_adjustment=-0.3
-            ),
-            ScanTestCase(
-                "high_brightness", "High brightness", 150, brightness_adjustment=0.3
-            ),
+            ScanTestCase("low_brightness", "Low brightness", 150, brightness_adjustment=-0.3),
+            ScanTestCase("high_brightness", "High brightness", 150, brightness_adjustment=0.3),
             ScanTestCase("low_contrast", "Low contrast", 150, contrast_adjustment=0.7),
-            ScanTestCase(
-                "high_contrast", "High contrast", 150, contrast_adjustment=1.3
-            ),
+            ScanTestCase("high_contrast", "High contrast", 150, contrast_adjustment=1.3),
             ScanTestCase("noise", "Added noise", 150, noise_level=0.1),
             # Combined stress tests
             ScanTestCase(
@@ -224,9 +215,7 @@ class QRScanabilityHarness:
                 for x in range(0, width, module_size):
                     # Simplified pattern - just for testing the harness
                     if (x // module_size + y // module_size) % 2 == 0:
-                        draw.rectangle(
-                            [x, y, x + module_size, y + module_size], fill="black"
-                        )
+                        draw.rectangle([x, y, x + module_size, y + module_size], fill="black")
 
             return image
 
@@ -234,9 +223,7 @@ class QRScanabilityHarness:
             logger.error(f"Failed to convert SVG to image: {e}")
             return None
 
-    def apply_image_effects(
-        self, image: "Image.Image", test_case: ScanTestCase
-    ) -> Optional["Image.Image"]:
+    def apply_image_effects(self, image: "Image.Image", test_case: ScanTestCase) -> Optional["Image.Image"]:
         """Apply test case effects to image.
 
         Args:
@@ -252,9 +239,7 @@ class QRScanabilityHarness:
         try:
             # Apply rotation
             if test_case.rotation_degrees != 0:
-                image = image.rotate(
-                    test_case.rotation_degrees, expand=True, fillcolor="white"
-                )
+                image = image.rotate(test_case.rotation_degrees, expand=True, fillcolor="white")
 
             # Apply blur
             if test_case.blur_radius > 0:
@@ -281,9 +266,7 @@ class QRScanabilityHarness:
                 if OPENCV_AVAILABLE:
                     # Convert to numpy array for noise
                     img_array = np.array(image)
-                    noise = np.random.normal(
-                        0, test_case.noise_level * 255, img_array.shape
-                    )
+                    noise = np.random.normal(0, test_case.noise_level * 255, img_array.shape)
                     noisy_array = np.clip(img_array + noise, 0, 255).astype(np.uint8)
                     image = Image.fromarray(noisy_array)
 
@@ -293,9 +276,7 @@ class QRScanabilityHarness:
             logger.error(f"Failed to apply image effects: {e}")
             return image  # Return original if effects fail
 
-    def scan_with_pyzbar(
-        self, image: "Image.Image"
-    ) -> Tuple[bool, Optional[str], Optional[float]]:
+    def scan_with_pyzbar(self, image: "Image.Image") -> Tuple[bool, Optional[str], Optional[float]]:
         """Scan QR code using pyzbar.
 
         Args:
@@ -327,9 +308,7 @@ class QRScanabilityHarness:
             logger.error(f"pyzbar scanning failed: {e}")
             return False, None, None
 
-    def scan_with_opencv(
-        self, image: "Image.Image"
-    ) -> Tuple[bool, Optional[str], Optional[float]]:
+    def scan_with_opencv(self, image: "Image.Image") -> Tuple[bool, Optional[str], Optional[float]]:
         """Scan QR code using OpenCV.
 
         Args:
@@ -379,9 +358,7 @@ class QRScanabilityHarness:
         """
         try:
             # Convert SVG to image
-            image = self.svg_to_image(
-                svg_content, test_case.dpi, test_case.scale_factor
-            )
+            image = self.svg_to_image(svg_content, test_case.dpi, test_case.scale_factor)
             if not image:
                 return ScanTestResult(
                     test_case=test_case,
@@ -441,9 +418,7 @@ class QRScanabilityHarness:
                 )
 
         except Exception as e:
-            return ScanTestResult(
-                test_case=test_case, result=ScanResult.ERROR, error_message=str(e)
-            )
+            return ScanTestResult(test_case=test_case, result=ScanResult.ERROR, error_message=str(e))
 
     def run_comprehensive_test(
         self,
@@ -544,9 +519,7 @@ class QRScanabilityHarness:
         Returns:
             Tuple of (meets_threshold, detailed_results)
         """
-        results = self.run_comprehensive_test(
-            config, test_data, svg_generator=svg_generator
-        )
+        results = self.run_comprehensive_test(config, test_data, svg_generator=svg_generator)
         success_rate = results.get("success_rate", 0.0)
         meets_threshold = success_rate >= minimum_success_rate
 
@@ -572,9 +545,7 @@ class QRScanabilityHarness:
             ScanTestCase("huge_scale", "Huge scale factor", 300, scale_factor=3.0),
             # Extreme rotation tests
             ScanTestCase("slight_rotation", "Slight rotation", 150, rotation_degrees=5),
-            ScanTestCase(
-                "extreme_rotation", "Extreme rotation", 150, rotation_degrees=359
-            ),
+            ScanTestCase("extreme_rotation", "Extreme rotation", 150, rotation_degrees=359),
             # Heavy degradation tests
             ScanTestCase("heavy_blur", "Heavy blur", 150, blur_radius=2.0),
             ScanTestCase(
@@ -589,9 +560,7 @@ class QRScanabilityHarness:
                 150,
                 brightness_adjustment=0.7,
             ),
-            ScanTestCase(
-                "very_low_contrast", "Very low contrast", 150, contrast_adjustment=0.5
-            ),
+            ScanTestCase("very_low_contrast", "Very low contrast", 150, contrast_adjustment=0.5),
             ScanTestCase("heavy_noise", "Heavy noise", 150, noise_level=0.3),
             # Extreme combination tests
             ScanTestCase(

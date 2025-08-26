@@ -14,10 +14,13 @@ import segno
 
 from segnomms import write
 from tests.constants import (
-    VALID_SHAPES, QR_PAYLOADS, TEST_COLORS, 
-    DEFAULT_SCALE, DEFAULT_BORDER, create_test_config
+    DEFAULT_BORDER,
+    DEFAULT_SCALE,
+    QR_PAYLOADS,
+    TEST_COLORS,
+    VALID_SHAPES,
+    create_test_config,
 )
-from tests.helpers import TestCaseGenerator, OutputManager
 
 
 class TestComprehensiveExamples:
@@ -59,7 +62,7 @@ class TestComprehensiveExamples:
                 border=DEFAULT_BORDER,
                 safe_mode=True,
                 style_interactive=True,
-                style_tooltips=True
+                style_tooltips=True,
             )
             write(qr, str(output_path_safe), **config_safe)
 
@@ -71,7 +74,7 @@ class TestComprehensiveExamples:
                 border=DEFAULT_BORDER,
                 safe_mode=False,
                 style_interactive=True,
-                style_tooltips=True
+                style_tooltips=True,
             )
             write(qr, str(output_path_unsafe), **config_unsafe)
 
@@ -213,26 +216,27 @@ class TestComprehensiveExamples:
         # Try to use the new review suite HTML generator
         try:
             from ..review.html_generator import HTMLGenerator
-            from ..review.review_suite import ReviewSuite
-            
+
             generator = HTMLGenerator()
-            
+
             # Prepare gallery items for the new format
             gallery_items = []
             for shape in shapes:
                 safe_on_path = self.shapes_dir / f"{shape}_safe_on.svg"
                 safe_off_path = self.shapes_dir / f"{shape}_safe_off.svg"
-                
+
                 if safe_on_path.exists() and safe_off_path.exists():
-                    gallery_items.append({
-                        'title': shape.replace('-', ' ').title(),
-                        'shape': shape,
-                        'comparison': True,
-                        'safe_on_svg': safe_on_path.read_text(),
-                        'safe_off_svg': safe_off_path.read_text(),
-                        'description': f'Shape type: {shape}'
-                    })
-            
+                    gallery_items.append(
+                        {
+                            "title": shape.replace("-", " ").title(),
+                            "shape": shape,
+                            "comparison": True,
+                            "safe_on_svg": safe_on_path.read_text(),
+                            "safe_off_svg": safe_off_path.read_text(),
+                            "description": f"Shape type: {shape}",
+                        }
+                    )
+
             # Generate gallery using new system
             html = generator.generate_gallery_page(
                 gallery_items=gallery_items,
@@ -242,17 +246,17 @@ class TestComprehensiveExamples:
                     "(finder, timing, alignment) are always rendered as squares to ensure scannability. "
                     "When disabled, all patterns use the selected shape."
                 ),
-                show_search=True
+                show_search=True,
             )
-            
+
             # Save to both locations
             (self.output_dir / "shape_gallery.html").write_text(html)
-            
+
             # Also save to review output directory if it exists
             review_output = Path(__file__).parent.parent / "review" / "output"
             if review_output.exists():
                 (review_output / "shape_gallery.html").write_text(html)
-                
+
         except ImportError:
             # Fallback to original implementation
             html = """
@@ -276,7 +280,7 @@ class TestComprehensiveExamples:
             <body>
                 <h1>Segno Interactive SVG - Shape Gallery with Safe Mode</h1>
                 <div class="info">
-                    <strong>Safe Mode:</strong> When enabled (default), functional QR patterns 
+                    <strong>Safe Mode:</strong> When enabled (default), functional QR patterns
                     (finder, timing, alignment) are always rendered as squares to ensure scannability.
                     When disabled, all patterns use the selected shape.
                 </div>
@@ -336,14 +340,14 @@ class TestComprehensiveExamples:
                     document.querySelectorAll('.qr-module.clickable').forEach(module => {
                         module.addEventListener('click', (e) => {
                             let row, col, type;
-                            
+
                             // Extract row/col from id attribute (e.g., "module-10-15")
                             const idMatch = module.id?.match(/module-(\\d+)-(\\d+)/);
                             if (idMatch) {
                                 row = idMatch[1];
                                 col = idMatch[2];
                             }
-                            
+
                             // Get type from title element
                             const title = module.querySelector('title')?.textContent || '';
                             if (title.includes('data module')) {
@@ -355,9 +359,9 @@ class TestComprehensiveExamples:
                             } else {
                                 type = 'unknown';
                             }
-                            
+
                             console.log(`Clicked: [${row},${col}] type=${type}`);
-                            document.getElementById('click-log').innerHTML += 
+                            document.getElementById('click-log').innerHTML +=
                                 `<div>Clicked: [${row},${col}] type=${type}</div>`;
                         });
                     });
@@ -366,7 +370,7 @@ class TestComprehensiveExamples:
             <style>
                 body { font-family: Arial, sans-serif; padding: 20px; }
                 .demo { margin: 30px 0; padding: 20px; border: 1px solid #ddd; }
-                #click-log { height: 100px; overflow-y: auto; border: 1px solid #ccc; 
+                #click-log { height: 100px; overflow-y: auto; border: 1px solid #ccc;
                             padding: 10px; margin-top: 10px; font-family: monospace; }
             </style>
         </head>
@@ -404,15 +408,11 @@ class TestComprehensiveExamples:
 
         # Standard rendering with safe mode ON
         output_path = self.advanced_dir / "phase_standard_safe_on.svg"
-        write(
-            qr, str(output_path), shape="connected", scale=15, border=3, safe_mode=True
-        )
+        write(qr, str(output_path), shape="connected", scale=15, border=3, safe_mode=True)
 
         # Standard rendering with safe mode OFF
         output_path = self.advanced_dir / "phase_standard_safe_off.svg"
-        write(
-            qr, str(output_path), shape="connected", scale=15, border=3, safe_mode=False
-        )
+        write(qr, str(output_path), shape="connected", scale=15, border=3, safe_mode=False)
 
         # Phase 1 enabled with safe mode ON
         output_path = self.advanced_dir / "phase_phase1_safe_on.svg"
@@ -462,7 +462,7 @@ class TestComprehensiveExamples:
         <body>
             <h1>Segno Interactive SVG Plugin - Generated Examples</h1>
             <p class="timestamp">Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
-            
+
             <h2>Browse Examples:</h2>
             <ul>
                 <li><a href="shape_gallery.html">Shape Gallery</a></li>
@@ -471,7 +471,7 @@ class TestComprehensiveExamples:
                 <li><a href="interactive/">Interactive Demos</a></li>
                 <li><a href="advanced/">Advanced Features</a></li>
             </ul>
-            
+
             <p><em>Note: These examples are generated during testing and excluded from git.</em></p>
         </body>
         </html>

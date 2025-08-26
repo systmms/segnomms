@@ -23,9 +23,7 @@ class ModuleDetectorConfig(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    matrix: List[List[bool]] = Field(
-        ..., description="The QR code matrix as a 2D boolean list"
-    )
+    matrix: List[List[bool]] = Field(..., description="The QR code matrix as a 2D boolean list")
 
     version: Optional[Union[int, str]] = Field(
         None,
@@ -43,8 +41,7 @@ class ModuleDetectorConfig(BaseModel):
         size = len(v)
         if not all(len(row) == size for row in v):
             raise ValueError(
-                "Matrix must be square (all rows must have the same "
-                "length as the number of rows)"
+                "Matrix must be square (all rows must have the same " "length as the number of rows)"
             )
 
         # Check if size follows QR code specification
@@ -55,8 +52,7 @@ class ModuleDetectorConfig(BaseModel):
         if not (is_micro_qr or is_regular_qr):
             if size < 11:
                 raise ValueError(
-                    f"Matrix size {size}x{size} is too small. "
-                    f"Minimum QR code size is 11x11 (Micro QR)"
+                    f"Matrix size {size}x{size} is too small. " f"Minimum QR code size is 11x11 (Micro QR)"
                 )
             else:
                 raise ValueError(
@@ -69,9 +65,7 @@ class ModuleDetectorConfig(BaseModel):
 
     @field_validator("version")
     @classmethod
-    def validate_version(
-        cls, v: Optional[Union[int, str]]
-    ) -> Optional[Union[int, str]]:
+    def validate_version(cls, v: Optional[Union[int, str]]) -> Optional[Union[int, str]]:
         """Validate version format."""
         if v is None:
             return v
@@ -83,17 +77,13 @@ class ModuleDetectorConfig(BaseModel):
             # Handle Micro QR versions
             if v.startswith("M"):
                 if v not in ["M1", "M2", "M3", "M4"]:
-                    raise ValueError(
-                        f"Invalid Micro QR version '{v}'. " f"Must be M1, M2, M3, or M4"
-                    )
+                    raise ValueError(f"Invalid Micro QR version '{v}'. " f"Must be M1, M2, M3, or M4")
             else:
                 # Try to parse as integer
                 try:
                     version_int = int(v)
                     if not 1 <= version_int <= 40:
-                        raise ValueError(
-                            f"String version must represent 1-40, got '{v}'"
-                        )
+                        raise ValueError(f"String version must represent 1-40, got '{v}'")
                 except ValueError:
                     raise ValueError(f"Invalid version string '{v}'")
 
@@ -114,9 +104,7 @@ class ModuleDetectorConfig(BaseModel):
                     pass
             elif isinstance(self.version, (int, str)):
                 # Regular QR validation
-                version_int = (
-                    int(self.version) if isinstance(self.version, str) else self.version
-                )
+                version_int = int(self.version) if isinstance(self.version, str) else self.version
                 if version_int <= 40:  # Regular QR
                     expected_size = 21 + 4 * (version_int - 1)
                     if size != expected_size:
@@ -135,40 +123,24 @@ class NeighborAnalysis(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    cardinal_count: int = Field(
-        ..., ge=0, le=4, description="Number of active cardinal neighbors"
-    )
+    cardinal_count: int = Field(..., ge=0, le=4, description="Number of active cardinal neighbors")
 
-    diagonal_count: int = Field(
-        ..., ge=0, le=4, description="Number of active diagonal neighbors"
-    )
+    diagonal_count: int = Field(..., ge=0, le=4, description="Number of active diagonal neighbors")
 
-    connectivity_strength: float = Field(
-        ..., ge=0, description="Weighted connectivity strength"
-    )
+    connectivity_strength: float = Field(..., ge=0, description="Weighted connectivity strength")
 
-    weighted_strength: float = Field(
-        ..., ge=0, description="Connectivity strength weighted by module type"
-    )
+    weighted_strength: float = Field(..., ge=0, description="Connectivity strength weighted by module type")
 
-    horizontal_flow: float = Field(
-        ..., ge=0, le=1, description="Horizontal flow strength"
-    )
+    horizontal_flow: float = Field(..., ge=0, le=1, description="Horizontal flow strength")
 
     vertical_flow: float = Field(..., ge=0, le=1, description="Vertical flow strength")
 
-    flow_direction: str = Field(
-        ..., pattern="^(horizontal|vertical)$", description="Primary flow direction"
-    )
+    flow_direction: str = Field(..., pattern="^(horizontal|vertical)$", description="Primary flow direction")
 
     isolation_level: int = Field(
         ..., ge=0, le=4, description="How isolated the module is (4 - cardinal_count)"
     )
 
-    corner_connections: int = Field(
-        ..., ge=0, le=4, description="Number of diagonal connections"
-    )
+    corner_connections: int = Field(..., ge=0, le=4, description="Number of diagonal connections")
 
-    active_neighbors: List[Tuple[int, int]] = Field(
-        ..., description="List of active neighbor positions"
-    )
+    active_neighbors: List[Tuple[int, int]] = Field(..., description="List of active neighbor positions")

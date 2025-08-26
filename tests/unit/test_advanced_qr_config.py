@@ -5,21 +5,21 @@ Tests AdvancedQRConfig, PerformanceConfig, and DebugConfig validation,
 parameters, constraints, and complex integration scenarios.
 """
 
+from unittest.mock import patch
+
 import pytest
 from pydantic import ValidationError
-from unittest.mock import patch
-import logging
 
-from segnomms.config import AdvancedQRConfig, PerformanceConfig, DebugConfig
+from segnomms.config import AdvancedQRConfig, DebugConfig, PerformanceConfig
 
 
 class TestAdvancedQRConfig:
     """Test AdvancedQRConfig validation and functionality."""
-    
+
     def test_default_advanced_qr_config(self):
         """Test default advanced QR configuration values."""
         config = AdvancedQRConfig()
-        
+
         assert config.eci_enabled is False
         assert config.encoding is None
         assert config.mask_pattern is None
@@ -34,12 +34,12 @@ class TestAdvancedQRConfig:
         config = AdvancedQRConfig(eci_enabled=True, encoding="UTF-8")
         assert config.eci_enabled is True
         assert config.encoding == "UTF-8"
-        
+
         # ECI enabled without encoding (should default to UTF-8)
         config = AdvancedQRConfig(eci_enabled=True)
         assert config.eci_enabled is True
         assert config.encoding == "UTF-8"
-        
+
         # Encoding without ECI (should log info)
         config = AdvancedQRConfig(encoding="ISO-8859-1")
         assert config.eci_enabled is False
@@ -52,24 +52,35 @@ class TestAdvancedQRConfig:
         for encoding in utf_encodings:
             config = AdvancedQRConfig(encoding=encoding)
             assert config.encoding == encoding
-        
+
         # ISO-8859 series
         iso_encodings = [
-            "ISO-8859-1", "ISO-8859-2", "ISO-8859-3", "ISO-8859-4",
-            "ISO-8859-5", "ISO-8859-6", "ISO-8859-7", "ISO-8859-8",
-            "ISO-8859-9", "ISO-8859-10", "ISO-8859-11", "ISO-8859-13",
-            "ISO-8859-14", "ISO-8859-15", "ISO-8859-16"
+            "ISO-8859-1",
+            "ISO-8859-2",
+            "ISO-8859-3",
+            "ISO-8859-4",
+            "ISO-8859-5",
+            "ISO-8859-6",
+            "ISO-8859-7",
+            "ISO-8859-8",
+            "ISO-8859-9",
+            "ISO-8859-10",
+            "ISO-8859-11",
+            "ISO-8859-13",
+            "ISO-8859-14",
+            "ISO-8859-15",
+            "ISO-8859-16",
         ]
         for encoding in iso_encodings:
             config = AdvancedQRConfig(encoding=encoding)
             assert config.encoding == encoding
-        
+
         # Asian encodings
         asian_encodings = ["Shift_JIS", "CP932", "EUC-JP", "GB2312", "GBK", "GB18030", "BIG5"]
         for encoding in asian_encodings:
             config = AdvancedQRConfig(encoding=encoding)
             assert config.encoding == encoding
-        
+
         # Other common encodings
         other_encodings = ["CP1252", "ASCII"]
         for encoding in other_encodings:
@@ -81,20 +92,20 @@ class TestAdvancedQRConfig:
         # Case variations should work
         config = AdvancedQRConfig(encoding="utf-8")
         assert config.encoding == "utf-8"
-        
+
         config = AdvancedQRConfig(encoding="iso-8859-1")
         assert config.encoding == "iso-8859-1"
-        
+
         # With spaces and hyphens
         config = AdvancedQRConfig(encoding="Shift JIS")
         assert config.encoding == "Shift JIS"
 
     def test_encoding_warning_for_unsupported(self):
         """Test warning for potentially unsupported encodings."""
-        with patch('segnomms.config.models.advanced.logger') as mock_logger:
+        with patch("segnomms.config.models.advanced.logger") as mock_logger:
             config = AdvancedQRConfig(encoding="UNKNOWN-ENCODING")
             assert config.encoding == "UNKNOWN-ENCODING"
-            
+
             # Should have logged a warning
             mock_logger.warning.assert_called_once()
             warning_message = mock_logger.warning.call_args[0][0]
@@ -109,14 +120,14 @@ class TestAdvancedQRConfig:
             config = AdvancedQRConfig(mask_pattern=pattern)
             assert config.mask_pattern == pattern
             assert config.auto_mask is False  # Should be disabled automatically
-        
+
         # Invalid mask patterns
         invalid_patterns = [-1, 8, 10, 100]
         for pattern in invalid_patterns:
             with pytest.raises(ValidationError) as exc_info:
                 AdvancedQRConfig(mask_pattern=pattern)
             assert "mask_pattern" in str(exc_info.value).lower()
-        
+
         # Auto mask by default
         config = AdvancedQRConfig()
         assert config.auto_mask is True
@@ -128,7 +139,7 @@ class TestAdvancedQRConfig:
         config = AdvancedQRConfig(mask_pattern=3, auto_mask=True)
         assert config.mask_pattern == 3
         assert config.auto_mask is False  # Should be overridden
-        
+
         # No mask pattern keeps auto_mask enabled
         config = AdvancedQRConfig(auto_mask=True)
         assert config.mask_pattern is None
@@ -140,18 +151,18 @@ class TestAdvancedQRConfig:
         config = AdvancedQRConfig(structured_append=True)
         assert config.structured_append is True
         assert config.symbol_count == 2
-        
+
         # Structured append with explicit symbol count
         config = AdvancedQRConfig(structured_append=True, symbol_count=4)
         assert config.structured_append is True
         assert config.symbol_count == 4
-        
+
         # Symbol count without structured append (should warn)
-        with patch('segnomms.config.models.advanced.logger') as mock_logger:
+        with patch("segnomms.config.models.advanced.logger") as mock_logger:
             config = AdvancedQRConfig(symbol_count=3)
             assert config.structured_append is False
             assert config.symbol_count == 3
-            
+
             # Should have logged a warning
             mock_logger.warning.assert_called_once()
 
@@ -162,7 +173,7 @@ class TestAdvancedQRConfig:
         for count in valid_counts:
             config = AdvancedQRConfig(structured_append=True, symbol_count=count)
             assert config.symbol_count == count
-        
+
         # Invalid symbol counts
         invalid_counts = [0, 1, 17, 20, 100]
         for count in invalid_counts:
@@ -176,13 +187,13 @@ class TestAdvancedQRConfig:
         config = AdvancedQRConfig(eci_enabled=True)
         assert config.eci_enabled is True
         assert config.encoding == "UTF-8"
-        
+
         # Encoding specified without ECI (should log info)
-        with patch('segnomms.config.models.advanced.logger') as mock_logger:
+        with patch("segnomms.config.models.advanced.logger") as mock_logger:
             config = AdvancedQRConfig(encoding="ISO-8859-1")
             assert config.eci_enabled is False
             assert config.encoding == "ISO-8859-1"
-            
+
             # Should have logged an info message
             mock_logger.info.assert_called_once()
             info_message = mock_logger.info.call_args[0][0]
@@ -197,9 +208,9 @@ class TestAdvancedQRConfig:
             mask_pattern=5,
             structured_append=True,
             symbol_count=8,
-            boost_error=False
+            boost_error=False,
         )
-        
+
         assert config.eci_enabled is True
         assert config.encoding == "UTF-8"
         assert config.mask_pattern == 5
@@ -213,11 +224,11 @@ class TestAdvancedQRConfig:
         # Japanese with Shift_JIS
         config = AdvancedQRConfig(eci_enabled=True, encoding="Shift_JIS")
         assert config.encoding == "Shift_JIS"
-        
+
         # Chinese with GB18030
         config = AdvancedQRConfig(eci_enabled=True, encoding="GB18030")
         assert config.encoding == "GB18030"
-        
+
         # European with ISO-8859-15
         config = AdvancedQRConfig(eci_enabled=True, encoding="ISO-8859-15")
         assert config.encoding == "ISO-8859-15"
@@ -227,15 +238,15 @@ class TestAdvancedQRConfig:
         # Minimum mask pattern
         config = AdvancedQRConfig(mask_pattern=0)
         assert config.mask_pattern == 0
-        
+
         # Maximum mask pattern
         config = AdvancedQRConfig(mask_pattern=7)
         assert config.mask_pattern == 7
-        
+
         # Minimum symbol count
         config = AdvancedQRConfig(structured_append=True, symbol_count=2)
         assert config.symbol_count == 2
-        
+
         # Maximum symbol count
         config = AdvancedQRConfig(structured_append=True, symbol_count=16)
         assert config.symbol_count == 16
@@ -253,7 +264,7 @@ class TestPerformanceConfig:
     def test_default_performance_config(self):
         """Test default performance configuration."""
         config = PerformanceConfig()
-        
+
         assert config.enable_caching is True
         assert config.max_cache_size == 100
         assert config.enable_parallel_processing is False
@@ -266,7 +277,7 @@ class TestPerformanceConfig:
         config = PerformanceConfig(enable_caching=True, max_cache_size=500)
         assert config.enable_caching is True
         assert config.max_cache_size == 500
-        
+
         # Caching disabled
         config = PerformanceConfig(enable_caching=False)
         assert config.enable_caching is False
@@ -279,7 +290,7 @@ class TestPerformanceConfig:
         for size in valid_sizes:
             config = PerformanceConfig(max_cache_size=size)
             assert config.max_cache_size == size
-        
+
         # Invalid cache sizes
         invalid_sizes = [0, -1, -100]
         for size in invalid_sizes:
@@ -292,7 +303,7 @@ class TestPerformanceConfig:
         # Parallel processing enabled
         config = PerformanceConfig(enable_parallel_processing=True)
         assert config.enable_parallel_processing is True
-        
+
         # Parallel processing disabled (default)
         config = PerformanceConfig()
         assert config.enable_parallel_processing is False
@@ -304,14 +315,14 @@ class TestPerformanceConfig:
         for limit in valid_limits:
             config = PerformanceConfig(memory_limit_mb=limit)
             assert config.memory_limit_mb == limit
-        
+
         # Invalid memory limits
         invalid_limits = [0, -1, -512]
         for limit in invalid_limits:
             with pytest.raises(ValidationError) as exc_info:
                 PerformanceConfig(memory_limit_mb=limit)
             assert "memory_limit_mb" in str(exc_info.value).lower()
-        
+
         # None is valid (no limit)
         config = PerformanceConfig(memory_limit_mb=None)
         assert config.memory_limit_mb is None
@@ -321,7 +332,7 @@ class TestPerformanceConfig:
         # Debug timing enabled
         config = PerformanceConfig(debug_timing=True)
         assert config.debug_timing is True
-        
+
         # Debug timing disabled (default)
         config = PerformanceConfig()
         assert config.debug_timing is False
@@ -333,9 +344,9 @@ class TestPerformanceConfig:
             max_cache_size=2000,
             enable_parallel_processing=True,
             memory_limit_mb=8192,
-            debug_timing=True
+            debug_timing=True,
         )
-        
+
         assert config.enable_caching is True
         assert config.max_cache_size == 2000
         assert config.enable_parallel_processing is True
@@ -350,28 +361,22 @@ class TestPerformanceConfig:
             max_cache_size=10000,
             enable_parallel_processing=True,
             memory_limit_mb=16384,
-            debug_timing=False
+            debug_timing=False,
         )
         assert high_perf.enable_caching is True
         assert high_perf.max_cache_size == 10000
         assert high_perf.enable_parallel_processing is True
-        
+
         # Memory-constrained scenario
         low_mem = PerformanceConfig(
-            enable_caching=True,
-            max_cache_size=50,
-            memory_limit_mb=512,
-            enable_parallel_processing=False
+            enable_caching=True, max_cache_size=50, memory_limit_mb=512, enable_parallel_processing=False
         )
         assert low_mem.max_cache_size == 50
         assert low_mem.memory_limit_mb == 512
         assert low_mem.enable_parallel_processing is False
-        
+
         # Debug scenario
-        debug = PerformanceConfig(
-            debug_timing=True,
-            enable_caching=False
-        )
+        debug = PerformanceConfig(debug_timing=True, enable_caching=False)
         assert debug.debug_timing is True
         assert debug.enable_caching is False
 
@@ -380,7 +385,7 @@ class TestPerformanceConfig:
         # Minimum cache size
         config = PerformanceConfig(max_cache_size=1)
         assert config.max_cache_size == 1
-        
+
         # Minimum memory limit
         config = PerformanceConfig(memory_limit_mb=1)
         assert config.memory_limit_mb == 1
@@ -398,12 +403,12 @@ class TestDebugConfig:
     def test_default_debug_config(self):
         """Test default debug configuration."""
         config = DebugConfig()
-        
+
         assert config.debug_mode is False
         assert config.debug_stroke is False
         assert config.save_intermediate_results is False
         assert config.verbose_logging is False
-        
+
         # Check default debug colors
         expected_colors = {
             "contour": "red",
@@ -417,7 +422,7 @@ class TestDebugConfig:
         # Debug mode enabled
         config = DebugConfig(debug_mode=True)
         assert config.debug_mode is True
-        
+
         # Debug mode disabled (default)
         config = DebugConfig()
         assert config.debug_mode is False
@@ -427,7 +432,7 @@ class TestDebugConfig:
         # Debug stroke enabled
         config = DebugConfig(debug_stroke=True)
         assert config.debug_stroke is True
-        
+
         # Debug stroke disabled (default)
         config = DebugConfig()
         assert config.debug_stroke is False
@@ -440,7 +445,7 @@ class TestDebugConfig:
             "enhanced": "#2ecc71",
             "custom_element": "#9b59b6",
         }
-        
+
         config = DebugConfig(debug_colors=custom_colors)
         assert config.debug_colors == custom_colors
 
@@ -450,7 +455,7 @@ class TestDebugConfig:
             "contour": "orange",
             "custom": "purple",
         }
-        
+
         config = DebugConfig(debug_colors=partial_colors)
         assert config.debug_colors == partial_colors
 
@@ -463,7 +468,7 @@ class TestDebugConfig:
             "timing": "#ffff00",
             "finder": "#ff00ff",
         }
-        
+
         config = DebugConfig(debug_colors=hex_colors)
         assert config.debug_colors == hex_colors
 
@@ -472,7 +477,7 @@ class TestDebugConfig:
         # Save intermediate results enabled
         config = DebugConfig(save_intermediate_results=True)
         assert config.save_intermediate_results is True
-        
+
         # Save intermediate results disabled (default)
         config = DebugConfig()
         assert config.save_intermediate_results is False
@@ -482,7 +487,7 @@ class TestDebugConfig:
         # Verbose logging enabled
         config = DebugConfig(verbose_logging=True)
         assert config.verbose_logging is True
-        
+
         # Verbose logging disabled (default)
         config = DebugConfig()
         assert config.verbose_logging is False
@@ -497,15 +502,15 @@ class TestDebugConfig:
             "finder": "#9b59b6",
             "alignment": "#e67e22",
         }
-        
+
         config = DebugConfig(
             debug_mode=True,
             debug_stroke=True,
             debug_colors=custom_colors,
             save_intermediate_results=True,
-            verbose_logging=True
+            verbose_logging=True,
         )
-        
+
         assert config.debug_mode is True
         assert config.debug_stroke is True
         assert config.debug_colors == custom_colors
@@ -515,15 +520,11 @@ class TestDebugConfig:
     def test_debug_development_scenarios(self):
         """Test different debug and development scenarios."""
         # Development scenario
-        dev_config = DebugConfig(
-            debug_mode=True,
-            verbose_logging=True,
-            save_intermediate_results=True
-        )
+        dev_config = DebugConfig(debug_mode=True, verbose_logging=True, save_intermediate_results=True)
         assert dev_config.debug_mode is True
         assert dev_config.verbose_logging is True
         assert dev_config.save_intermediate_results is True
-        
+
         # Visual debugging scenario
         visual_config = DebugConfig(
             debug_mode=True,
@@ -533,18 +534,14 @@ class TestDebugConfig:
                 "cluster": "blue",
                 "enhanced": "green",
                 "highlight": "yellow",
-            }
+            },
         )
         assert visual_config.debug_mode is True
         assert visual_config.debug_stroke is True
         assert "highlight" in visual_config.debug_colors
-        
+
         # Production debugging scenario (minimal)
-        prod_config = DebugConfig(
-            debug_mode=False,
-            verbose_logging=False,
-            save_intermediate_results=False
-        )
+        prod_config = DebugConfig(debug_mode=False, verbose_logging=False, save_intermediate_results=False)
         assert prod_config.debug_mode is False
         assert prod_config.verbose_logging is False
         assert prod_config.save_intermediate_results is False
@@ -560,7 +557,7 @@ class TestDebugConfig:
             "alignment": "cyan",
             "data": "orange",
         }
-        
+
         config = DebugConfig(debug_colors=named_colors)
         assert config.debug_colors == named_colors
 
@@ -571,7 +568,7 @@ class TestDebugConfig:
             "cluster": "rgb(0, 0, 255)",
             "enhanced": "rgb(0, 255, 0)",
         }
-        
+
         config = DebugConfig(debug_colors=rgb_colors)
         assert config.debug_colors == rgb_colors
 
@@ -594,26 +591,21 @@ class TestAdvancedConfigIntegration:
         """Test coordinated advanced configuration across models."""
         # High-performance configuration with debugging
         advanced_qr = AdvancedQRConfig(
-            eci_enabled=True,
-            encoding="UTF-8",
-            mask_pattern=None,  # Auto-optimized
-            auto_mask=True
+            eci_enabled=True, encoding="UTF-8", mask_pattern=None, auto_mask=True  # Auto-optimized
         )
-        
+
         performance = PerformanceConfig(
             enable_caching=True,
             max_cache_size=5000,
             enable_parallel_processing=True,
             memory_limit_mb=8192,
-            debug_timing=True
+            debug_timing=True,
         )
-        
+
         debug = DebugConfig(
-            debug_mode=False,  # Production mode
-            verbose_logging=False,
-            save_intermediate_results=False
+            debug_mode=False, verbose_logging=False, save_intermediate_results=False  # Production mode
         )
-        
+
         assert advanced_qr.eci_enabled is True
         assert advanced_qr.auto_mask is True
         assert performance.enable_parallel_processing is True
@@ -627,15 +619,15 @@ class TestAdvancedConfigIntegration:
             eci_enabled=True,
             encoding="UTF-8",
             structured_append=False,
-            mask_pattern=None  # Let auto-mask optimize
+            mask_pattern=None,  # Let auto-mask optimize
         )
-        
+
         performance = PerformanceConfig(
             enable_caching=False,  # Disable for consistent results
             debug_timing=True,
-            memory_limit_mb=1024  # Conservative limit
+            memory_limit_mb=1024,  # Conservative limit
         )
-        
+
         debug = DebugConfig(
             debug_mode=True,
             debug_stroke=True,
@@ -646,9 +638,9 @@ class TestAdvancedConfigIntegration:
                 "cluster": "#3498db",
                 "enhanced": "#2ecc71",
                 "timing": "#f39c12",
-            }
+            },
         )
-        
+
         assert advanced_qr.encoding == "UTF-8"
         assert performance.enable_caching is False
         assert performance.debug_timing is True
@@ -662,24 +654,21 @@ class TestAdvancedConfigIntegration:
             eci_enabled=False,  # Broader compatibility
             auto_mask=True,  # Optimize automatically
             structured_append=False,
-            boost_error=True
+            boost_error=True,
         )
-        
+
         performance = PerformanceConfig(
             enable_caching=True,
             max_cache_size=10000,
             enable_parallel_processing=True,
             memory_limit_mb=16384,
-            debug_timing=False
+            debug_timing=False,
         )
-        
+
         debug = DebugConfig(
-            debug_mode=False,
-            debug_stroke=False,
-            verbose_logging=False,
-            save_intermediate_results=False
+            debug_mode=False, debug_stroke=False, verbose_logging=False, save_intermediate_results=False
         )
-        
+
         assert advanced_qr.eci_enabled is False
         assert performance.enable_caching is True
         assert performance.max_cache_size == 10000
@@ -692,15 +681,13 @@ class TestAdvancedConfigIntegration:
             max_cache_size=25,  # Small cache
             enable_parallel_processing=False,  # Single-threaded
             memory_limit_mb=256,  # Limited memory
-            debug_timing=False
+            debug_timing=False,
         )
-        
+
         debug = DebugConfig(
-            debug_mode=False,
-            save_intermediate_results=False,  # Save memory
-            verbose_logging=False
+            debug_mode=False, save_intermediate_results=False, verbose_logging=False  # Save memory
         )
-        
+
         assert performance.max_cache_size == 25
         assert performance.enable_parallel_processing is False
         assert performance.memory_limit_mb == 256
@@ -715,16 +702,16 @@ class TestAdvancedConfigIntegration:
             structured_append=True,
             symbol_count=4,
             boost_error=True,  # Better error correction for international use
-            auto_mask=True
+            auto_mask=True,
         )
-        
+
         performance = PerformanceConfig(
             enable_caching=True,
             max_cache_size=1000,  # Moderate cache
             enable_parallel_processing=True,  # Speed up multi-symbol generation
-            debug_timing=False
+            debug_timing=False,
         )
-        
+
         assert advanced_qr.eci_enabled is True
         assert advanced_qr.encoding == "UTF-8"
         assert advanced_qr.structured_append is True
@@ -740,7 +727,7 @@ class TestAdvancedConfigEdgeCases:
         # Very large cache
         config = PerformanceConfig(max_cache_size=1000000)
         assert config.max_cache_size == 1000000
-        
+
         # Very large memory limit
         config = PerformanceConfig(memory_limit_mb=65536)  # 64 GB
         assert config.memory_limit_mb == 65536
@@ -752,10 +739,10 @@ class TestAdvancedConfigEdgeCases:
             "very_long_component_name_with_underscores": "#123456",
             "contour": "rgba(255, 0, 0, 0.8)",
         }
-        
+
         config = DebugConfig(debug_colors=long_colors)
         assert config.debug_colors == long_colors
-        
+
         # Single color
         config = DebugConfig(debug_colors={"single": "red"})
         assert config.debug_colors == {"single": "red"}
@@ -765,7 +752,7 @@ class TestAdvancedConfigEdgeCases:
         # Maximum symbol count
         config = AdvancedQRConfig(structured_append=True, symbol_count=16)
         assert config.symbol_count == 16
-        
+
         # Minimum symbol count
         config = AdvancedQRConfig(structured_append=True, symbol_count=2)
         assert config.symbol_count == 2
@@ -775,10 +762,10 @@ class TestAdvancedConfigEdgeCases:
         # Integer to boolean coercion works in Pydantic
         config = AdvancedQRConfig(eci_enabled=1)
         assert config.eci_enabled is True
-        
+
         config = AdvancedQRConfig(eci_enabled=0)
         assert config.eci_enabled is False
-        
+
         # String to int coercion for numeric fields
         config = PerformanceConfig(max_cache_size="500")
         assert config.max_cache_size == 500
@@ -791,11 +778,11 @@ class TestAdvancedConfigEdgeCases:
         assert config.encoding is None
         assert config.mask_pattern is None
         assert config.symbol_count is None
-        
+
         # None allowed for optional performance fields
         config = PerformanceConfig(memory_limit_mb=None)
         assert config.memory_limit_mb is None
-        
+
         # None not allowed for required fields
         with pytest.raises(ValidationError):
             PerformanceConfig(enable_caching=None)
@@ -809,15 +796,15 @@ class TestAdvancedConfigValidationMessages:
         # Test mask_pattern validation error
         with pytest.raises(ValidationError) as exc_info:
             AdvancedQRConfig(mask_pattern=10)
-        
+
         error_message = str(exc_info.value)
         assert "mask_pattern" in error_message.lower()
         assert "7" in error_message  # Maximum value mentioned
-        
+
         # Test symbol_count validation error
         with pytest.raises(ValidationError) as exc_info:
             AdvancedQRConfig(symbol_count=20)
-        
+
         error_message = str(exc_info.value)
         assert "symbol_count" in error_message.lower()
 
@@ -826,7 +813,7 @@ class TestAdvancedConfigValidationMessages:
         # Test max_cache_size validation error
         with pytest.raises(ValidationError) as exc_info:
             PerformanceConfig(max_cache_size=0)
-        
+
         error_message = str(exc_info.value)
         assert "max_cache_size" in error_message.lower()
         assert "greater" in error_message.lower()
@@ -834,11 +821,8 @@ class TestAdvancedConfigValidationMessages:
     def test_multiple_validation_errors_advanced(self):
         """Test handling of multiple validation errors in advanced configs."""
         with pytest.raises(ValidationError) as exc_info:
-            AdvancedQRConfig(
-                mask_pattern=10,  # Invalid: > 7
-                symbol_count=20  # Invalid: > 16
-            )
-        
+            AdvancedQRConfig(mask_pattern=10, symbol_count=20)  # Invalid: > 7  # Invalid: > 16
+
         error_message = str(exc_info.value)
         # Should contain information about multiple fields
         assert "mask_pattern" in error_message.lower()

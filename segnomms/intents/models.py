@@ -26,17 +26,11 @@ class PayloadConfig(BaseModel):
     email: Optional[str] = Field(default=None, description="Email address to encode")
     phone: Optional[str] = Field(default=None, description="Phone number to encode")
     sms: Optional[str] = Field(default=None, description="SMS content to encode")
-    wifi_ssid: Optional[str] = Field(
-        default=None, description="WiFi SSID for network config"
-    )
-    wifi_password: Optional[str] = Field(
-        default=None, description="WiFi password for network config"
-    )
+    wifi_ssid: Optional[str] = Field(default=None, description="WiFi SSID for network config")
+    wifi_password: Optional[str] = Field(default=None, description="WiFi password for network config")
 
     # Advanced QR features (client requirement)
-    eci: Optional[int] = Field(
-        default=None, description="ECI mode for international characters"
-    )
+    eci: Optional[int] = Field(default=None, description="ECI mode for international characters")
     error_correction: Optional[Literal["L", "M", "Q", "H"]] = Field(
         default=None, description="Error correction level override"
     )
@@ -94,9 +88,7 @@ class StyleIntents(BaseModel):
     module_shape: Optional[str] = Field(default=None, description="Module shape type")
     merge: Optional[str] = Field(default=None, description="Module merging strategy")
     connectivity: Optional[str] = Field(default=None, description="Connectivity mode")
-    corner_radius: Optional[float] = Field(
-        default=None, ge=0.0, le=1.0, description="Corner radius"
-    )
+    corner_radius: Optional[float] = Field(default=None, ge=0.0, le=1.0, description="Corner radius")
 
     # Pattern-specific styling (client requirement)
     patterns: Optional[Dict[str, str]] = Field(
@@ -104,9 +96,7 @@ class StyleIntents(BaseModel):
     )
 
     # Color configuration
-    palette: Optional[Dict[str, str]] = Field(
-        default=None, description="Color palette (fg, bg, accent)"
-    )
+    palette: Optional[Dict[str, str]] = Field(default=None, description="Color palette (fg, bg, accent)")
 
 
 class FrameIntents(BaseModel):
@@ -114,36 +104,22 @@ class FrameIntents(BaseModel):
 
     shape: Optional[str] = Field(default=None, description="Frame shape type")
     clip_mode: Optional[str] = Field(default=None, description="Frame clipping mode")
-    corner_radius: Optional[float] = Field(
-        default=None, ge=0.0, le=1.0, description="Frame corner radius"
-    )
-    fade_distance: Optional[int] = Field(
-        default=None, ge=0, description="Fade distance for fade mode"
-    )
-    scale_distance: Optional[int] = Field(
-        default=None, ge=0, description="Scale distance for scale mode"
-    )
+    corner_radius: Optional[float] = Field(default=None, ge=0.0, le=1.0, description="Frame corner radius")
+    fade_distance: Optional[int] = Field(default=None, ge=0, description="Fade distance for fade mode")
+    scale_distance: Optional[int] = Field(default=None, ge=0, description="Scale distance for scale mode")
 
 
 class ReserveIntents(BaseModel):
     """Reserve area intent configuration."""
 
-    area_pct: Optional[float] = Field(
-        default=None, ge=0.0, le=50.0, description="Reserve area percentage"
-    )
+    area_pct: Optional[float] = Field(default=None, ge=0.0, le=50.0, description="Reserve area percentage")
     shape: Optional[str] = Field(default=None, description="Reserve area shape")
     placement: Optional[str] = Field(default=None, description="Placement mode")
-    mode: Optional[Literal["knockout", "imprint"]] = Field(
-        default=None, description="Reserve area mode"
-    )
+    mode: Optional[Literal["knockout", "imprint"]] = Field(default=None, description="Reserve area mode")
 
     # Position overrides
-    offset_x: Optional[float] = Field(
-        default=None, ge=-0.5, le=0.5, description="X offset"
-    )
-    offset_y: Optional[float] = Field(
-        default=None, ge=-0.5, le=0.5, description="Y offset"
-    )
+    offset_x: Optional[float] = Field(default=None, ge=-0.5, le=0.5, description="X offset")
+    offset_y: Optional[float] = Field(default=None, ge=-0.5, le=0.5, description="Y offset")
 
 
 class AccessibilityIntents(BaseModel):
@@ -159,60 +135,38 @@ class AccessibilityIntents(BaseModel):
 class ValidationIntents(BaseModel):
     """Validation intent configuration."""
 
-    enforce_scanability: Optional[bool] = Field(
-        default=None, description="Enforce scanability validation"
-    )
-    min_contrast: Optional[float] = Field(
-        default=None, ge=1.0, le=21.0, description="Minimum contrast ratio"
-    )
+    enforce_scanability: Optional[bool] = Field(default=None, description="Enforce scanability validation")
+    min_contrast: Optional[float] = Field(default=None, ge=1.0, le=21.0, description="Minimum contrast ratio")
     quiet_zone: Optional[int] = Field(default=None, ge=0, description="Quiet zone size")
 
 
 class InteractivityIntents(BaseModel):
     """Interactivity intent configuration."""
 
-    hover_effects: Optional[bool] = Field(
-        default=None, description="Enable hover effects on modules"
-    )
-    hover_scale: Optional[float] = Field(
-        default=None, ge=1.0, le=2.0, description="Hover scale factor"
-    )
+    hover_effects: Optional[bool] = Field(default=None, description="Enable hover effects on modules")
+    hover_scale: Optional[float] = Field(default=None, ge=1.0, le=2.0, description="Hover scale factor")
     hover_brightness: Optional[float] = Field(
         default=None, ge=0.5, le=2.0, description="Hover brightness adjustment"
     )
-    click_handlers: Optional[bool] = Field(
-        default=None, description="Enable click event handlers"
-    )
+    click_handlers: Optional[bool] = Field(default=None, description="Enable click event handlers")
     tooltips: Optional[bool] = Field(default=None, description="Enable module tooltips")
-    tooltip_template: Optional[str] = Field(
-        default=None, description="Tooltip content template"
-    )
-    cursor_style: Optional[str] = Field(
-        default=None, description="Cursor style on hover"
-    )
+    tooltip_template: Optional[str] = Field(default=None, description="Tooltip content template")
+    cursor_style: Optional[str] = Field(default=None, description="Cursor style on hover")
 
 
 class AnimationIntents(BaseModel):
     """Animation intent configuration."""
 
-    fade_in: Optional[bool] = Field(
-        default=None, description="Enable fade-in animation"
-    )
+    fade_in: Optional[bool] = Field(default=None, description="Enable fade-in animation")
     fade_duration: Optional[float] = Field(
         default=None, ge=0.1, le=5.0, description="Fade duration in seconds"
     )
-    stagger_animation: Optional[bool] = Field(
-        default=None, description="Stagger module animations"
-    )
+    stagger_animation: Optional[bool] = Field(default=None, description="Stagger module animations")
     stagger_delay: Optional[float] = Field(
         default=None, ge=0.01, le=0.5, description="Delay between module animations"
     )
-    pulse_effect: Optional[bool] = Field(
-        default=None, description="Enable pulse effect on special patterns"
-    )
-    transition_timing: Optional[str] = Field(
-        default=None, description="CSS transition timing function"
-    )
+    pulse_effect: Optional[bool] = Field(default=None, description="Enable pulse effect on special patterns")
+    transition_timing: Optional[str] = Field(default=None, description="CSS transition timing function")
 
 
 class PerformanceIntents(BaseModel):
@@ -227,58 +181,36 @@ class PerformanceIntents(BaseModel):
     simplify_paths: Optional[bool] = Field(
         default=None, description="Simplify complex paths for smaller files"
     )
-    inline_styles: Optional[bool] = Field(
-        default=None, description="Inline CSS vs external styles"
-    )
+    inline_styles: Optional[bool] = Field(default=None, description="Inline CSS vs external styles")
     precision: Optional[int] = Field(
         default=None, ge=0, le=6, description="Decimal precision for coordinates"
     )
-    lazy_rendering: Optional[bool] = Field(
-        default=None, description="Enable progressive rendering hints"
-    )
+    lazy_rendering: Optional[bool] = Field(default=None, description="Enable progressive rendering hints")
 
 
 class BrandingIntents(BaseModel):
     """Branding and customization intent configuration."""
 
-    logo_url: Optional[str] = Field(
-        default=None, description="Logo URL for centerpiece"
-    )
-    logo_padding: Optional[float] = Field(
-        default=None, ge=0.0, le=0.5, description="Padding around logo"
-    )
-    brand_colors: Optional[Dict[str, str]] = Field(
-        default=None, description="Brand color palette"
-    )
-    watermark: Optional[str] = Field(
-        default=None, description="Watermark text or pattern"
-    )
+    logo_url: Optional[str] = Field(default=None, description="Logo URL for centerpiece")
+    logo_padding: Optional[float] = Field(default=None, ge=0.0, le=0.5, description="Padding around logo")
+    brand_colors: Optional[Dict[str, str]] = Field(default=None, description="Brand color palette")
+    watermark: Optional[str] = Field(default=None, description="Watermark text or pattern")
     custom_patterns: Optional[Dict[str, Dict[str, Any]]] = Field(
         default=None, description="Custom pattern definitions"
     )
-    theme_preset: Optional[str] = Field(
-        default=None, description="Predefined theme name"
-    )
+    theme_preset: Optional[str] = Field(default=None, description="Predefined theme name")
 
 
 class AdvancedIntents(BaseModel):
     """Advanced intent configuration."""
 
-    mask_pattern: Optional[int] = Field(
-        default=None, ge=0, le=7, description="QR mask pattern"
-    )
+    mask_pattern: Optional[int] = Field(default=None, ge=0, le=7, description="QR mask pattern")
     structured_append: Optional[Dict[str, Any]] = Field(
         default=None, description="Structured append configuration"
     )
-    micro_qr: Optional[bool] = Field(
-        default=None, description="Use Micro QR format if possible"
-    )
-    force_version: Optional[int] = Field(
-        default=None, ge=1, le=40, description="Force specific QR version"
-    )
-    boost_ecc: Optional[bool] = Field(
-        default=None, description="Boost error correction for damaged codes"
-    )
+    micro_qr: Optional[bool] = Field(default=None, description="Use Micro QR format if possible")
+    force_version: Optional[int] = Field(default=None, ge=1, le=40, description="Force specific QR version")
+    boost_ecc: Optional[bool] = Field(default=None, description="Boost error correction for damaged codes")
 
 
 class IntentsConfig(BaseModel):
@@ -291,30 +223,18 @@ class IntentsConfig(BaseModel):
 
     style: Optional[StyleIntents] = Field(default=None, description="Styling intents")
     frame: Optional[FrameIntents] = Field(default=None, description="Frame intents")
-    reserve: Optional[ReserveIntents] = Field(
-        default=None, description="Reserve area intents"
-    )
-    accessibility: Optional[AccessibilityIntents] = Field(
-        default=None, description="Accessibility intents"
-    )
-    validation: Optional[ValidationIntents] = Field(
-        default=None, description="Validation intents"
-    )
-    interactivity: Optional[InteractivityIntents] = Field(
-        default=None, description="Interactivity intents"
-    )
-    animation: Optional[AnimationIntents] = Field(
-        default=None, description="Animation intents"
-    )
+    reserve: Optional[ReserveIntents] = Field(default=None, description="Reserve area intents")
+    accessibility: Optional[AccessibilityIntents] = Field(default=None, description="Accessibility intents")
+    validation: Optional[ValidationIntents] = Field(default=None, description="Validation intents")
+    interactivity: Optional[InteractivityIntents] = Field(default=None, description="Interactivity intents")
+    animation: Optional[AnimationIntents] = Field(default=None, description="Animation intents")
     performance: Optional[PerformanceIntents] = Field(
         default=None, description="Performance optimization intents"
     )
     branding: Optional[BrandingIntents] = Field(
         default=None, description="Branding and customization intents"
     )
-    advanced: Optional[AdvancedIntents] = Field(
-        default=None, description="Advanced intents"
-    )
+    advanced: Optional[AdvancedIntents] = Field(default=None, description="Advanced intents")
 
     model_config = {"extra": "ignore", "validate_default": True}  # Ignore unknown keys
 
@@ -325,8 +245,8 @@ class TransformationStep(BaseModel):
     intent_path: str = Field(description="Path to the intent being transformed")
     original_value: Any = Field(description="Original intent value")
     transformed_value: Any = Field(description="Transformed/degraded value")
-    transformation_type: Literal["accepted", "degraded", "rejected", "modified"] = (
-        Field(description="Type of transformation applied")
+    transformation_type: Literal["accepted", "degraded", "rejected", "modified"] = Field(
+        description="Type of transformation applied"
     )
     reason: Optional[str] = Field(default=None, description="Reason for transformation")
     confidence: Optional[float] = Field(
@@ -341,16 +261,10 @@ class DegradationDetail(BaseModel):
 
     intent_path: str = Field(description="Path to degraded intent")
     requested_feature: str = Field(description="Feature that was requested")
-    applied_feature: Optional[str] = Field(
-        default=None, description="Feature that was applied instead"
-    )
+    applied_feature: Optional[str] = Field(default=None, description="Feature that was applied instead")
     degradation_reason: str = Field(description="Why degradation was necessary")
-    alternatives: List[str] = Field(
-        default_factory=list, description="Alternative approaches available"
-    )
-    impact_level: Literal["minor", "moderate", "major"] = Field(
-        description="Impact level of the degradation"
-    )
+    alternatives: List[str] = Field(default_factory=list, description="Alternative approaches available")
+    impact_level: Literal["minor", "moderate", "major"] = Field(description="Impact level of the degradation")
 
     model_config = {"frozen": True}
 
@@ -362,15 +276,9 @@ class CompatibilityInfo(BaseModel):
     support_level: Literal["full", "partial", "unsupported", "experimental"] = Field(
         description="Current support level"
     )
-    available_since: Optional[str] = Field(
-        default=None, description="Version when feature became available"
-    )
-    planned_support: Optional[str] = Field(
-        default=None, description="When full support is planned"
-    )
-    workarounds: List[str] = Field(
-        default_factory=list, description="Available workarounds"
-    )
+    available_since: Optional[str] = Field(default=None, description="Version when feature became available")
+    planned_support: Optional[str] = Field(default=None, description="When full support is planned")
+    workarounds: List[str] = Field(default_factory=list, description="Available workarounds")
 
     model_config = {"frozen": True}
 
@@ -379,13 +287,9 @@ class WarningInfo(BaseModel):
     """Structured warning information."""
 
     code: str = Field(description="Stable warning code")
-    path: Optional[str] = Field(
-        default=None, description="JSON path to problematic intent"
-    )
+    path: Optional[str] = Field(default=None, description="JSON path to problematic intent")
     detail: str = Field(description="Human-readable warning message")
-    suggestion: Optional[str] = Field(
-        default=None, description="Suggested fix or alternative"
-    )
+    suggestion: Optional[str] = Field(default=None, description="Suggested fix or alternative")
     severity: Optional[Literal["info", "warning", "error"]] = Field(
         default="warning", description="Warning severity level"
     )
@@ -396,28 +300,14 @@ class WarningInfo(BaseModel):
 class PerformanceMetrics(BaseModel):
     """Performance metrics for rendering operation."""
 
-    rendering_time_ms: Optional[float] = Field(
-        default=None, description="Total rendering time"
-    )
-    validation_time_ms: Optional[float] = Field(
-        default=None, description="Validation time"
-    )
-    svg_generation_time_ms: Optional[float] = Field(
-        default=None, description="SVG generation time"
-    )
+    rendering_time_ms: Optional[float] = Field(default=None, description="Total rendering time")
+    validation_time_ms: Optional[float] = Field(default=None, description="Validation time")
+    svg_generation_time_ms: Optional[float] = Field(default=None, description="SVG generation time")
 
-    estimated_scanability: Optional[str] = Field(
-        default=None, description="Scanability assessment"
-    )
-    min_module_px: Optional[int] = Field(
-        default=None, description="Minimum module size in pixels"
-    )
-    contrast_ratio: Optional[float] = Field(
-        default=None, description="Actual contrast ratio"
-    )
-    actual_quiet_zone: Optional[int] = Field(
-        default=None, description="Actual quiet zone size"
-    )
+    estimated_scanability: Optional[str] = Field(default=None, description="Scanability assessment")
+    min_module_px: Optional[int] = Field(default=None, description="Minimum module size in pixels")
+    contrast_ratio: Optional[float] = Field(default=None, description="Actual contrast ratio")
+    actual_quiet_zone: Optional[int] = Field(default=None, description="Actual quiet zone size")
 
     model_config = {"frozen": True}
 
@@ -434,9 +324,7 @@ class IntentTranslationReport(BaseModel):
     compatibility_info: List[CompatibilityInfo] = Field(
         default_factory=list, description="Compatibility information for intents"
     )
-    intent_summary: Dict[str, str] = Field(
-        default_factory=dict, description="Summary of intent processing"
-    )
+    intent_summary: Dict[str, str] = Field(default_factory=dict, description="Summary of intent processing")
 
     model_config = {"frozen": True}
 
@@ -453,14 +341,10 @@ class RenderingResult(BaseModel):
         default_factory=list, description="Warnings generated during processing"
     )
     metrics: PerformanceMetrics = Field(description="Performance and quality metrics")
-    used_options: Dict[str, Any] = Field(
-        description="Actually used configuration options"
-    )
+    used_options: Dict[str, Any] = Field(description="Actually used configuration options")
 
     # Client requirement fields
-    degradation_applied: bool = Field(
-        default=False, description="Whether graceful degradation was applied"
-    )
+    degradation_applied: bool = Field(default=False, description="Whether graceful degradation was applied")
     unsupported_intents: List[str] = Field(
         default_factory=list, description="List of unsupported intent paths"
     )
@@ -475,9 +359,7 @@ class RenderingResult(BaseModel):
     feature_impact: Optional[Dict[str, str]] = Field(
         default=None, description="Performance/quality impact of features"
     )
-    scanability_prediction: Optional[str] = Field(
-        default=None, description="Predicted scanability level"
-    )
+    scanability_prediction: Optional[str] = Field(default=None, description="Predicted scanability level")
 
     model_config = {"frozen": True}
 

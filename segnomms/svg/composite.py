@@ -73,9 +73,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         # Apply SVG accessibility (native <title> and <desc> elements)
         # This ensures the SVG is accessible even when standalone
         if accessibility_title or accessibility_description:
-            self._add_svg_accessibility_elements(
-                svg, accessibility_title, accessibility_description
-            )
+            self._add_svg_accessibility_elements(svg, accessibility_title, accessibility_description)
 
         return svg
 
@@ -88,9 +86,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         """Add CSS styles to the SVG."""
         self.core_builder.add_styles(svg, interactive, animation_config)
 
-    def add_background(
-        self, svg: ET.Element, width: int, height: int, color: str, **kwargs: Any
-    ) -> None:
+    def add_background(self, svg: ET.Element, width: int, height: int, color: str, **kwargs: Any) -> None:
         """Add a background rectangle to the SVG."""
         self.core_builder.add_background(svg, width, height, color, **kwargs)
 
@@ -98,9 +94,7 @@ class InteractiveSVGBuilder(SVGBuilder):
     def add_definitions(
         self,
         svg: ET.Element,
-        definitions_or_gradients: Optional[
-            Union[Dict[str, Any], List[GradientConfig]]
-        ] = None,
+        definitions_or_gradients: Optional[Union[Dict[str, Any], List[GradientConfig]]] = None,
         patterns: Optional[List[Dict[str, Any]]] = None,
         filters: Optional[List[Dict[str, Any]]] = None,
     ) -> ET.Element:
@@ -126,9 +120,7 @@ class InteractiveSVGBuilder(SVGBuilder):
                 for grad_id, grad_config in gradients_data.items():
                     if isinstance(grad_config, dict):
                         # Transform test format to GradientConfig format
-                        transformed_config = self._transform_gradient_config(
-                            grad_id, grad_config
-                        )
+                        transformed_config = self._transform_gradient_config(grad_id, grad_config)
                         gradients_list.append(transformed_config)
 
             # Convert patterns dictionary to list
@@ -149,14 +141,10 @@ class InteractiveSVGBuilder(SVGBuilder):
                         filter_config_copy["id"] = filter_id  # Add missing id field
                         filters_list.append(filter_config_copy)
 
-            return self.definitions_builder.add_definitions(
-                svg, gradients_list, patterns_list, filters_list
-            )
+            return self.definitions_builder.add_definitions(svg, gradients_list, patterns_list, filters_list)
         else:
             # Handle original format: individual lists
-            return self.definitions_builder.add_definitions(
-                svg, definitions_or_gradients, patterns, filters
-            )
+            return self.definitions_builder.add_definitions(svg, definitions_or_gradients, patterns, filters)
 
     # Delegate accessibility methods
     def add_svg_accessibility_elements(
@@ -235,13 +223,9 @@ class InteractiveSVGBuilder(SVGBuilder):
         qr_size = min(width, height) - (2 * border_pixels)
         # Estimate module count from size (this is approximate)
         module_count = max(21, int(qr_size / 10))  # Reasonable default
-        return self.frame_visual_builder.add_frame_definitions(
-            svg, frame_config, qr_size, module_count
-        )
+        return self.frame_visual_builder.add_frame_definitions(svg, frame_config, qr_size, module_count)
 
-    def add_quiet_zone_with_style(
-        self, svg: ET.Element, config: Any, width: int, height: int
-    ) -> None:
+    def add_quiet_zone_with_style(self, svg: ET.Element, config: Any, width: int, height: int) -> None:
         """Add styled quiet zone to the SVG."""
         # Convert width/height to qr_bounds format for the frame_visual builder
         qr_bounds = (0, 0, width, height)
@@ -263,9 +247,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         width = bounds.get("width", 0) * scale
         height = bounds.get("height", 0) * scale
         qr_bounds = (x, y, width, height)
-        self.frame_visual_builder.add_centerpiece_metadata(
-            svg, config, qr_bounds, scale
-        )
+        self.frame_visual_builder.add_centerpiece_metadata(svg, config, qr_bounds, scale)
 
     # Delegate accessibility structure methods
     def create_layered_structure(self, svg: ET.Element) -> Dict[str, ET.Element]:
@@ -276,9 +258,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         self, element: ET.Element, row: int, col: int, module_type: str = "data"
     ) -> None:
         """Enhance accessibility for individual QR modules."""
-        self.accessibility_builder.enhance_module_accessibility(
-            element, row, col, module_type
-        )
+        self.accessibility_builder.enhance_module_accessibility(element, row, col, module_type)
 
     def enhance_pattern_group_accessibility(
         self, group_element: ET.Element, pattern_type: str, module_count: int
@@ -296,9 +276,7 @@ class InteractiveSVGBuilder(SVGBuilder):
         """Validate accessibility compliance."""
         return self.accessibility_builder.validate_accessibility()
 
-    def _transform_gradient_config(
-        self, grad_id: str, grad_config: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    def _transform_gradient_config(self, grad_id: str, grad_config: Dict[str, Any]) -> Dict[str, Any]:
         """Transform test format gradient config to GradientConfig format.
 
         This method doesn't create a GradientConfig object but returns a dictionary

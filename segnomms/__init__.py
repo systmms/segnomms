@@ -13,15 +13,21 @@ backward compatibility.
 
 Features:
 
-* **Intent-Based Configuration**: Structured, type-safe configuration with automatic validation
-* **Multiple Shape Renderers**: 14+ shapes including squares, circles, stars, and connected shapes
+* **Intent-Based Configuration**: Structured, type-safe configuration with
+  automatic validation
+* **Multiple Shape Renderers**: 14+ shapes including squares, circles, stars,
+  and connected shapes
 * **Context-Aware Shapes**: Adaptive shapes based on neighboring modules
-* **Safe Mode**: Preserves QR code scannability using simple shapes for critical patterns
+* **Safe Mode**: Preserves QR code scannability using simple shapes for
+  critical patterns
 * **CSS Classes & Interactivity**: Full styling and animation support
 * **Graceful Degradation**: Automatic fallbacks with detailed warning system
-* **Performance Optimization**: Multi-phase processing pipeline with clustering algorithms
-* **Phase 4 Features**: Custom frames, centerpiece areas, and gradient backgrounds
-* **Comprehensive Error Handling**: Structured exceptions with suggestions and alternatives
+* **Performance Optimization**: Multi-phase processing pipeline with
+  clustering algorithms
+* **Phase 4 Features**: Custom frames, centerpiece areas, and gradient
+  backgrounds
+* **Comprehensive Error Handling**: Structured exceptions with suggestions
+  and alternatives
 
 Example:
     Modern Intent-Based API (Recommended)::
@@ -128,7 +134,7 @@ from .svg import InteractiveSVGBuilder
 
 # Import capability discovery (with graceful degradation)
 try:
-    from .capabilities import (
+    from .capabilities import (  # noqa: F401
         CapabilityManifest,
         get_capability_manifest,
         get_supported_features,
@@ -140,7 +146,7 @@ except ImportError:
 
 # Import intent-based API (with graceful degradation)
 try:
-    from .intents import (
+    from .intents import (  # noqa: F401
         IntentsConfig,
         PayloadConfig,
         RenderingResult,
@@ -153,7 +159,7 @@ except ImportError:
     _intents_available = False
 
 # Version information
-__version__ = "0.0.0b4"
+__version__ = "0.1.0"
 __author__ = "QRCodeMMS"
 
 # Export main functionality

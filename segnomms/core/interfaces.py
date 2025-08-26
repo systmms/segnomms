@@ -91,9 +91,7 @@ class AlgorithmProcessor(ABC):
     """
 
     @abstractmethod
-    def process(
-        self, matrix: List[List[bool]], detector: Any, **kwargs: Any
-    ) -> List[Dict[str, Any]]:
+    def process(self, matrix: List[List[bool]], detector: Any, **kwargs: Any) -> List[Dict[str, Any]]:
         """
         Process the QR matrix using the specific algorithm.
 
@@ -195,9 +193,7 @@ class SVGBuilder(ABC):
         """
 
     @abstractmethod
-    def add_background(
-        self, svg: ET.Element, width: int, height: int, color: str
-    ) -> None:
+    def add_background(self, svg: ET.Element, width: int, height: int, color: str) -> None:
         """Add background to the SVG.
 
         Args:

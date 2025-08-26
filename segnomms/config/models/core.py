@@ -100,22 +100,13 @@ class RenderingConfig(BaseModel):
     model_config = ConfigDict(validate_default=True, extra="forbid")
 
     # Basic QR code parameters
-    scale: int = Field(
-        default=1, ge=1, le=100, description="Size of each module in pixels"
-    )
-    border: int = Field(
-        default=4, ge=0, le=20, description="Quiet zone border thickness in modules"
-    )
-    dark: str = Field(
-        default="#000000", description="Primary foreground color (hex, rgb, or named)"
-    )
-    light: str = Field(
-        default="#ffffff", description="Primary background color (hex, rgb, or named)"
-    )
+    scale: int = Field(default=1, ge=1, le=100, description="Size of each module in pixels")
+    border: int = Field(default=4, ge=0, le=20, description="Quiet zone border thickness in modules")
+    dark: str = Field(default="#000000", description="Primary foreground color (hex, rgb, or named)")
+    light: str = Field(default="#ffffff", description="Primary background color (hex, rgb, or named)")
     safe_mode: bool = Field(
         default=False,
-        description="Force square shapes for critical QR patterns (finder, timing) "
-        "to ensure scannability",
+        description="Force square shapes for critical QR patterns (finder, timing) " "to ensure scannability",
     )
 
     # Configuration subsections
@@ -183,12 +174,8 @@ class RenderingConfig(BaseModel):
         le=21.0,
         description="Minimum WCAG contrast ratio requirement",
     )
-    enable_palette_validation: bool = Field(
-        default=False, description="Validate color accessibility"
-    )
-    enforce_wcag_standards: bool = Field(
-        default=False, description="Enforce WCAG AA/AAA compliance"
-    )
+    enable_palette_validation: bool = Field(default=False, description="Validate color accessibility")
+    enforce_wcag_standards: bool = Field(default=False, description="Enforce WCAG AA/AAA compliance")
 
     # Optional metadata for tracking purposes
     metadata: Optional[Dict[str, Any]] = Field(
@@ -487,16 +474,11 @@ class RenderingConfig(BaseModel):
 
             # Try to identify and fix common validation errors
             if "geometry.shape" in str(e) and "shape" in kwargs:
-                logger.warning(
-                    f"Invalid shape '{kwargs['shape']}', falling back to 'square'"
-                )
+                logger.warning(f"Invalid shape '{kwargs['shape']}', falling back to 'square'")
                 config_data["geometry"]["shape"] = "square"
 
             if "frame.shape" in str(e) and "frame_shape" in kwargs:
-                logger.warning(
-                    f"Invalid frame shape '{kwargs['frame_shape']}', "
-                    f"falling back to 'square'"
-                )
+                logger.warning(f"Invalid frame shape '{kwargs['frame_shape']}', " f"falling back to 'square'")
                 config_data["frame"]["shape"] = "square"
 
             # Retry validation with corrected values
@@ -504,9 +486,7 @@ class RenderingConfig(BaseModel):
                 config = cls.model_validate(config_data)
             except ValueError:
                 # If still failing, create a basic default config
-                logger.warning(
-                    "Using minimal default configuration due to validation errors"
-                )
+                logger.warning("Using minimal default configuration due to validation errors")
                 config = cls()
 
         # Auto-enable phases based on configuration
@@ -515,9 +495,7 @@ class RenderingConfig(BaseModel):
         return config
 
     @classmethod
-    def _auto_enable_phases(
-        cls, config: "RenderingConfig", kwargs: Dict[str, Any]
-    ) -> None:
+    def _auto_enable_phases(cls, config: "RenderingConfig", kwargs: Dict[str, Any]) -> None:
         """Auto-enable phases based on configuration settings."""
         # Only auto-enable if not explicitly set in kwargs
         enable_phase1 = kwargs.get("enable_phase1")
@@ -526,10 +504,7 @@ class RenderingConfig(BaseModel):
 
         # Phase 1: Auto-enable when shape != "square" or corner_radius > 0
         if enable_phase1 is None and not config.phase1.enabled:
-            needs_phase1 = (
-                config.geometry.shape != ModuleShape.SQUARE
-                or config.geometry.corner_radius > 0
-            )
+            needs_phase1 = config.geometry.shape != ModuleShape.SQUARE or config.geometry.corner_radius > 0
             if needs_phase1:
                 config.phase1.enabled = True
                 config.phase1.use_enhanced_shapes = True
@@ -587,11 +562,7 @@ class RenderingConfig(BaseModel):
             ]
 
             for color in pattern_colors:
-                if (
-                    color
-                    and color not in accent_colors
-                    and color not in [self.dark, self.light]
-                ):
+                if color and color not in accent_colors and color not in [self.dark, self.light]:
                     accent_colors.append(color)
 
         return accent_colors
@@ -761,9 +732,7 @@ class PerformanceConfig(BaseModel):
     enable_caching: bool = True
     max_cache_size: int = Field(default=100, ge=1, description="Maximum cache size")
     enable_parallel_processing: bool = False
-    memory_limit_mb: Optional[int] = Field(
-        default=None, ge=1, description="Memory limit in MB"
-    )
+    memory_limit_mb: Optional[int] = Field(default=None, ge=1, description="Memory limit in MB")
     debug_timing: bool = False
 
 

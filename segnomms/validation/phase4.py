@@ -68,9 +68,7 @@ class Phase4Validator:
         self.error_level = config.error_level
         self.matrix_size = config.matrix_size
 
-    def validate_frame_safety(
-        self, frame_config: FrameConfig, border_modules: int
-    ) -> List[str]:
+    def validate_frame_safety(self, frame_config: FrameConfig, border_modules: int) -> List[str]:
         """Validate frame configuration for QR code safety.
 
         Args:
@@ -115,9 +113,7 @@ class Phase4Validator:
 
         return warnings
 
-    def validate_centerpiece_safety(
-        self, centerpiece_config: CenterpieceConfig
-    ) -> List[str]:
+    def validate_centerpiece_safety(self, centerpiece_config: CenterpieceConfig) -> List[str]:
         """Validate centerpiece size against error correction capacity.
 
         Args:
@@ -133,9 +129,7 @@ class Phase4Validator:
 
         # Calculate safe size
         geometry = CenterpieceGeometry(self.matrix_size)
-        safe_size = geometry.calculate_safe_reserve_size(
-            self.qr_version, self.error_level
-        )
+        safe_size = geometry.calculate_safe_reserve_size(self.qr_version, self.error_level)
 
         # Check if size exceeds safe limit
         if centerpiece_config.size > safe_size:
@@ -181,9 +175,7 @@ class Phase4Validator:
 
         return errors
 
-    def validate_contrast_ratio(
-        self, config: RenderingConfig, min_ratio: float = 3.0
-    ) -> List[str]:
+    def validate_contrast_ratio(self, config: RenderingConfig, min_ratio: float = 3.0) -> List[str]:
         """Validate color contrast ratio for scanability.
 
         Args:
@@ -200,9 +192,7 @@ class Phase4Validator:
         light_color = getattr(config, "light", "white")
 
         # Validate contrast
-        is_valid, actual_ratio, message = validate_qr_contrast(
-            dark_color, light_color, min_ratio
-        )
+        is_valid, actual_ratio, message = validate_qr_contrast(dark_color, light_color, min_ratio)
 
         if not is_valid:
             errors.append(message)
@@ -253,8 +243,7 @@ class Phase4Validator:
         # Density validation based on total pixel count
         if total_pixels < 441:  # 21x21 minimum for readability
             warnings.append(
-                f"Very small QR code ({total_pixels} total pixels). "
-                "May be difficult to scan reliably."
+                f"Very small QR code ({total_pixels} total pixels). " "May be difficult to scan reliably."
             )
         elif total_pixels > 1000000:  # 1000x1000 maximum practical size
             warnings.append(
@@ -309,10 +298,7 @@ class Phase4Validator:
         harness = get_scanability_harness()
         if not harness:
             # No scanning libraries available - skip test
-            logger.warning(
-                "Automated scanability testing skipped - no scanning libraries "
-                "available"
-            )
+            logger.warning("Automated scanability testing skipped - no scanning libraries " "available")
             errors.append(
                 "Automated scanability testing unavailable. "
                 "Install PIL, opencv-python, and pyzbar for comprehensive validation."
@@ -381,11 +367,7 @@ class Phase4Validator:
         warnings = []
 
         # Circle frame with large centerpiece
-        if (
-            config.frame.shape == "circle"
-            and config.centerpiece.enabled
-            and config.centerpiece.size > 0.3
-        ):
+        if config.frame.shape == "circle" and config.centerpiece.enabled and config.centerpiece.size > 0.3:
             warnings.append(
                 "Large centerpiece with circle frame may significantly impact "
                 "scannability, especially at frame edges. Consider using a "
@@ -393,10 +375,7 @@ class Phase4Validator:
             )
 
         # Aggressive merging with centerpiece
-        if (
-            config.geometry.merge == MergeStrategy.AGGRESSIVE
-            and config.centerpiece.enabled
-        ):
+        if config.geometry.merge == MergeStrategy.AGGRESSIVE and config.centerpiece.enabled:
             warnings.append(
                 "Aggressive module merging with centerpiece reserve may create "
                 "scanning issues. Consider using 'soft' or 'none' merge strategy."
@@ -411,10 +390,7 @@ class Phase4Validator:
 
         # Fade mode with interactive features
         if config.frame.clip_mode == "fade" and config.style.interactive:
-            warnings.append(
-                "Fade frame mode may interfere with interactive hover effects "
-                "at frame edges."
-            )
+            warnings.append("Fade frame mode may interfere with interactive hover effects " "at frame edges.")
 
         # Low error correction with multiple advanced features
         feature_count = sum(
@@ -473,8 +449,7 @@ class Phase4Validator:
 
             if config.centerpiece.shape == "rect" and config.frame.shape == "circle":
                 recommendations.append(
-                    "Consider using circular centerpiece to match circle frame "
-                    "for better visual harmony."
+                    "Consider using circular centerpiece to match circle frame " "for better visual harmony."
                 )
 
         # Performance recommendations
@@ -518,11 +493,7 @@ class Phase4Validator:
 
         # Automated scanability testing (optional, expensive)
         if run_scanability_tests:
-            errors.extend(
-                self.run_automated_scanability_test(
-                    config, min_scanability_success_rate
-                )
-            )
+            errors.extend(self.run_automated_scanability_test(config, min_scanability_success_rate))
 
         # Existing safety validation
         warnings.extend(self.validate_frame_safety(config.frame, config.border))

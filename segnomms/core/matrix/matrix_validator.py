@@ -5,7 +5,7 @@ QR code functionality while providing detailed feedback about validation results
 """
 
 import logging
-from typing import Any, Dict, List, Tuple, TypedDict
+from typing import Any, List, Tuple, TypedDict
 
 from ..detector import ModuleDetector
 from ..geometry import CenterpieceGeometry
@@ -120,9 +120,7 @@ class MatrixValidator:
             cleared_percentage = 0
 
         # Get safe threshold
-        safe_threshold = (
-            self.ERROR_CORRECTION_CAPACITY.get(error_level.upper(), 0.15) * 0.8
-        )
+        safe_threshold = self.ERROR_CORRECTION_CAPACITY.get(error_level.upper(), 0.15) * 0.8
 
         if cleared_percentage > safe_threshold:
             return False, (
@@ -149,20 +147,14 @@ class MatrixValidator:
 
         # Check size limits
         if config.size > 0.4:
-            warnings.append(
-                f"Large centerpiece size ({config.size:.1%}) may severely impact scanability"
-            )
+            warnings.append(f"Large centerpiece size ({config.size:.1%}) may severely impact scanability")
             is_valid = False
         elif config.size > 0.3:
-            warnings.append(
-                f"Centerpiece size ({config.size:.1%}) approaches safe limits"
-            )
+            warnings.append(f"Centerpiece size ({config.size:.1%}) approaches safe limits")
 
         # Check margin constraints
         if config.margin > 10:
-            warnings.append(
-                f"Large margin ({config.margin} modules) significantly increases impact area"
-            )
+            warnings.append(f"Large margin ({config.margin} modules) significantly increases impact area")
         elif config.margin < 0:
             warnings.append("Negative margin may cause visual artifacts")
             is_valid = False
@@ -170,16 +162,15 @@ class MatrixValidator:
         # Check offset bounds
         if abs(config.offset_x) > 0.5 or abs(config.offset_y) > 0.5:
             warnings.append(
-                f"Large offsets ({config.offset_x}, {config.offset_y}) may place centerpiece near critical patterns"
+                f"Large offsets ({config.offset_x}, {config.offset_y}) "
+                f"may place centerpiece near critical patterns"
             )
 
         # Validate shape-specific constraints
         if config.shape == "squircle":
             area = self._estimate_centerpiece_area(config)
             if area > 200:  # Arbitrary threshold for complex calculations
-                warnings.append(
-                    "Complex squircle shapes with large areas may impact performance"
-                )
+                warnings.append("Complex squircle shapes with large areas may impact performance")
 
         # Check for potential finder pattern conflicts
         if self._conflicts_with_finder_patterns(config):
@@ -224,8 +215,7 @@ class MatrixValidator:
 
         if total_critical > 0:
             preservation_score = (
-                analysis["finder_patterns"]["preserved"]
-                + analysis["timing_patterns"]["preserved"]
+                analysis["finder_patterns"]["preserved"] + analysis["timing_patterns"]["preserved"]
             ) / total_critical
             analysis["preservation_score"] = preservation_score
         else:
@@ -233,9 +223,7 @@ class MatrixValidator:
 
         return analysis
 
-    def validate_matrix_integrity(
-        self, modified_matrix: List[List[bool]]
-    ) -> Tuple[bool, IntegrityReport]:
+    def validate_matrix_integrity(self, modified_matrix: List[List[bool]]) -> Tuple[bool, IntegrityReport]:
         """Validate the structural integrity of a modified matrix.
 
         Args:
@@ -265,9 +253,7 @@ class MatrixValidator:
         # Check data region accessibility
         if not self._verify_data_accessibility(modified_matrix):
             integrity_report["data_regions_accessible"] = False
-            integrity_report["structural_issues"].append(
-                "Critical data regions inaccessible"
-            )
+            integrity_report["structural_issues"].append("Critical data regions inaccessible")
 
         # Generate recommendations
         if integrity_report["structural_issues"]:
@@ -330,9 +316,7 @@ class MatrixValidator:
         )
 
         # Generate recommendations based on scores
-        assessment["recommendations"] = self._generate_scanability_recommendations(
-            assessment
-        )
+        assessment["recommendations"] = self._generate_scanability_recommendations(assessment)
 
         # Identify risk factors
         assessment["risk_factors"] = self._identify_risk_factors(config, assessment)
@@ -388,34 +372,24 @@ class MatrixValidator:
     def _analyze_timing_patterns(self, config: Any, analysis: PatternAnalysis) -> None:
         """Analyze timing pattern preservation."""
         # Check row 6 (horizontal timing)
-        row_affected = any(
-            self.geometry.is_in_centerpiece(6, col, config) for col in range(self.size)
-        )
+        row_affected = any(self.geometry.is_in_centerpiece(6, col, config) for col in range(self.size))
 
         # Check column 6 (vertical timing)
-        col_affected = any(
-            self.geometry.is_in_centerpiece(row, 6, config) for row in range(self.size)
-        )
+        col_affected = any(self.geometry.is_in_centerpiece(row, 6, config) for row in range(self.size))
 
         if row_affected:
             analysis["timing_patterns"]["affected"] += 1
-            analysis["critical_violations"].append(
-                "Horizontal timing pattern (row 6) affected"
-            )
+            analysis["critical_violations"].append("Horizontal timing pattern (row 6) affected")
         else:
             analysis["timing_patterns"]["preserved"] += 1
 
         if col_affected:
             analysis["timing_patterns"]["affected"] += 1
-            analysis["critical_violations"].append(
-                "Vertical timing pattern (column 6) affected"
-            )
+            analysis["critical_violations"].append("Vertical timing pattern (column 6) affected")
         else:
             analysis["timing_patterns"]["preserved"] += 1
 
-    def _analyze_alignment_patterns(
-        self, config: Any, analysis: PatternAnalysis
-    ) -> None:
+    def _analyze_alignment_patterns(self, config: Any, analysis: PatternAnalysis) -> None:
         """Analyze alignment pattern preservation (for larger QR codes)."""
         # Simplified - would need actual QR version to determine alignment positions
         # For now, assume no alignment patterns in smaller codes
@@ -475,32 +449,22 @@ class MatrixValidator:
         # Need at least 50% of modules to remain for basic functionality
         return remaining_modules >= (total_modules * 0.5)
 
-    def _generate_integrity_recommendations(
-        self, integrity_report: IntegrityReport
-    ) -> List[str]:
+    def _generate_integrity_recommendations(self, integrity_report: IntegrityReport) -> List[str]:
         """Generate recommendations for integrity issues."""
         recommendations = []
 
         if not integrity_report["finder_patterns_intact"]:
-            recommendations.append(
-                "Reduce centerpiece size to avoid finder pattern conflicts"
-            )
+            recommendations.append("Reduce centerpiece size to avoid finder pattern conflicts")
 
         if not integrity_report["timing_patterns_intact"]:
-            recommendations.append(
-                "Adjust centerpiece position to preserve timing patterns"
-            )
+            recommendations.append("Adjust centerpiece position to preserve timing patterns")
 
         if not integrity_report["data_regions_accessible"]:
-            recommendations.append(
-                "Significantly reduce centerpiece size to preserve data capacity"
-            )
+            recommendations.append("Significantly reduce centerpiece size to preserve data capacity")
 
         return recommendations
 
-    def _calculate_data_preservation_score(
-        self, modified_matrix: List[List[bool]]
-    ) -> float:
+    def _calculate_data_preservation_score(self, modified_matrix: List[List[bool]]) -> float:
         """Calculate score based on how much data capacity is preserved."""
         original_data_modules = sum(sum(row) for row in self.matrix)
         remaining_data_modules = sum(sum(row) for row in modified_matrix)
@@ -522,9 +486,7 @@ class MatrixValidator:
         else:
             return 0.2
 
-    def _calculate_visual_clarity_score(
-        self, config: Any, modified_matrix: List[List[bool]]
-    ) -> float:
+    def _calculate_visual_clarity_score(self, config: Any, modified_matrix: List[List[bool]]) -> float:
         """Calculate score based on visual clarity of the result."""
         # Higher scores for configurations that create clear, well-defined centerpieces
         score = 1.0
@@ -565,47 +527,33 @@ class MatrixValidator:
         else:
             return 0.1
 
-    def _generate_scanability_recommendations(
-        self, assessment: ScanabilityAssessment
-    ) -> List[str]:
+    def _generate_scanability_recommendations(self, assessment: ScanabilityAssessment) -> List[str]:
         """Generate recommendations to improve scanability."""
         recommendations = []
 
         if assessment["overall_score"] < 0.7:
-            recommendations.append(
-                "Consider reducing centerpiece size for better scanability"
-            )
+            recommendations.append("Consider reducing centerpiece size for better scanability")
 
         if assessment["pattern_integrity"] < 0.8:
-            recommendations.append(
-                "Adjust centerpiece position to avoid critical QR patterns"
-            )
+            recommendations.append("Adjust centerpiece position to avoid critical QR patterns")
 
         if assessment["data_preservation"] < 0.6:
-            recommendations.append(
-                "Centerpiece clears too much data - reduce size significantly"
-            )
+            recommendations.append("Centerpiece clears too much data - reduce size significantly")
 
         if assessment["visual_clarity"] < 0.7:
-            recommendations.append(
-                "Consider using simpler centerpiece shape for better clarity"
-            )
+            recommendations.append("Consider using simpler centerpiece shape for better clarity")
 
         if assessment["error_tolerance"] < 0.5:
             recommendations.append("Centerpiece exceeds safe error correction limits")
 
         return recommendations
 
-    def _identify_risk_factors(
-        self, config: Any, assessment: ScanabilityAssessment
-    ) -> List[str]:
+    def _identify_risk_factors(self, config: Any, assessment: ScanabilityAssessment) -> List[str]:
         """Identify risk factors that might affect scanning reliability."""
         risk_factors = []
 
         if config.size > 0.25:
-            risk_factors.append(
-                "Large centerpiece size increases scanning failure risk"
-            )
+            risk_factors.append("Large centerpiece size increases scanning failure risk")
 
         if assessment["pattern_integrity"] < 0.9:
             risk_factors.append("Critical pattern interference detected")

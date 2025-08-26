@@ -12,7 +12,6 @@ from typing import Any, Dict, List, Optional, Tuple
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ..exceptions import (
-    ContrastRatioError,
     InvalidColorFormatError,
     PaletteValidationError,
 )
@@ -135,34 +134,22 @@ class PaletteConfig(BaseModel):
     )
 
     # Palette settings
-    palette_type: PaletteType = Field(
-        default=PaletteType.CUSTOM, description="Type of color palette"
-    )
+    palette_type: PaletteType = Field(default=PaletteType.CUSTOM, description="Type of color palette")
 
     min_contrast_ratio: float = Field(
         default=4.5, ge=1.0, le=21.0, description="Minimum required contrast ratio"
     )
 
-    color_space: ColorSpace = Field(
-        default=ColorSpace.SRGB, description="Target color space"
-    )
+    color_space: ColorSpace = Field(default=ColorSpace.SRGB, description="Target color space")
 
-    enforce_standards: bool = Field(
-        default=True, description="Enforce WCAG contrast standards"
-    )
+    enforce_standards: bool = Field(default=True, description="Enforce WCAG contrast standards")
 
     # Validation settings
-    validate_accessibility: bool = Field(
-        default=True, description="Validate colors for accessibility"
-    )
+    validate_accessibility: bool = Field(default=True, description="Validate colors for accessibility")
 
-    allow_similar_colors: bool = Field(
-        default=False, description="Allow colors that are too similar"
-    )
+    allow_similar_colors: bool = Field(default=False, description="Allow colors that are too similar")
 
-    max_colors: int = Field(
-        default=10, ge=2, le=50, description="Maximum number of colors in palette"
-    )
+    max_colors: int = Field(default=10, ge=2, le=50, description="Maximum number of colors in palette")
 
     @field_validator("dark", "light")
     @classmethod
@@ -197,9 +184,7 @@ class PaletteConfig(BaseModel):
             raise PaletteValidationError(
                 message=f"Invalid accent color format(s): {', '.join(invalid_colors)}",
                 invalid_colors=invalid_colors,
-                validation_errors=[
-                    f"Cannot parse color: {color}" for color in invalid_colors
-                ],
+                validation_errors=[f"Cannot parse color: {color}" for color in invalid_colors],
             )
 
         return v
@@ -230,17 +215,11 @@ class PaletteValidationResult(BaseModel):
         default=None, description="Contrast analysis for primary colors"
     )
 
-    issues: List[str] = Field(
-        default_factory=list, description="List of validation issues"
-    )
+    issues: List[str] = Field(default_factory=list, description="List of validation issues")
 
-    warnings: List[str] = Field(
-        default_factory=list, description="List of validation warnings"
-    )
+    warnings: List[str] = Field(default_factory=list, description="List of validation warnings")
 
-    suggestions: List[str] = Field(
-        default_factory=list, description="Suggestions for improvement"
-    )
+    suggestions: List[str] = Field(default_factory=list, description="Suggestions for improvement")
 
     color_info: Dict[str, Dict[str, Any]] = Field(
         default_factory=dict, description="Detailed information about each color"
@@ -312,9 +291,7 @@ def validate_palette(palette: PaletteConfig) -> PaletteValidationResult:
                 issues.append("Primary colors do not meet WCAG AA standards (4.5:1)")
             elif not primary_contrast.meets_qr_optimal:
                 warnings.append("Primary colors do not meet optimal QR contrast (8:1)")
-                suggestions.append(
-                    "Consider using higher contrast colors for better scanability"
-                )
+                suggestions.append("Consider using higher contrast colors for better scanability")
 
     # Build contrast matrix for all color pairs
     for i, color1 in enumerate(all_colors):
@@ -332,26 +309,19 @@ def validate_palette(palette: PaletteConfig) -> PaletteValidationResult:
         similar_pairs = []
         for color1 in all_colors:
             for color2 in all_colors:
-                if (
-                    color1 != color2
-                    and color1 in contrast_matrix
-                    and color2 in contrast_matrix[color1]
-                ):
+                if color1 != color2 and color1 in contrast_matrix and color2 in contrast_matrix[color1]:
                     ratio = contrast_matrix[color1][color2]
                     if ratio is not None and ratio < 2.0:  # Very similar colors
                         pair = tuple(sorted([color1, color2]))
                         if pair not in similar_pairs:
                             similar_pairs.append(pair)
                             warnings.append(
-                                f"Colors '{color1}' and '{color2}' are very similar "
-                                f"(ratio: {ratio:.2f})"
+                                f"Colors '{color1}' and '{color2}' are very similar " f"(ratio: {ratio:.2f})"
                             )
 
     # Check palette size
     if len(all_colors) > palette.max_colors:
-        issues.append(
-            f"Palette has {len(all_colors)} colors, maximum is {palette.max_colors}"
-        )
+        issues.append(f"Palette has {len(all_colors)} colors, maximum is {palette.max_colors}")
 
     # Color distribution analysis
     dark_colors = [c for c, info in parsed_colors.items() if info.is_dark]
@@ -411,8 +381,8 @@ def generate_palette_suggestions(
         # Generate monochrome variations
         suggestions.extend(
             [
-                f"rgb({r//4}, {g//4}, {b//4})",  # Darker
-                f"rgb({min(255, r*2)}, {min(255, g*2)}, {min(255, b*2)})",  # Lighter
+                f"rgb({r // 4}, {g // 4}, {b // 4})",  # Darker
+                f"rgb({min(255, r * 2)}, {min(255, g * 2)}, {min(255, b * 2)})",  # Lighter
                 "white" if info.is_dark else "black",  # Opposite
             ]
         )

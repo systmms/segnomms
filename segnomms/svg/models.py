@@ -128,9 +128,7 @@ class BackgroundConfig(BaseModel):
             "currentColor",
         }
 
-        if v.lower() in common_colors or any(
-            re.match(pattern, v) for pattern in patterns
-        ):
+        if v.lower() in common_colors or any(re.match(pattern, v) for pattern in patterns):
             return v
 
         # Allow other values but don't validate strictly
@@ -154,9 +152,7 @@ class GradientConfig(BaseModel):
         description="Unique gradient ID",
     )
 
-    gradient_type: Literal["linear", "radial"] = Field(
-        ..., description="Type of gradient"
-    )
+    gradient_type: Literal["linear", "radial"] = Field(..., description="Type of gradient")
 
     colors: List[str] = Field(
         ...,
@@ -165,38 +161,20 @@ class GradientConfig(BaseModel):
         description="List of colors for gradient stops",
     )
 
-    stops: Optional[List[float]] = Field(
-        None, description="Optional gradient stop positions (0.0-1.0)"
-    )
+    stops: Optional[List[float]] = Field(None, description="Optional gradient stop positions (0.0-1.0)")
 
-    x1: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Linear gradient start X"
-    )
-    y1: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Linear gradient start Y"
-    )
-    x2: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Linear gradient end X"
-    )
-    y2: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Linear gradient end Y"
-    )
+    x1: Optional[float] = Field(None, ge=0.0, le=1.0, description="Linear gradient start X")
+    y1: Optional[float] = Field(None, ge=0.0, le=1.0, description="Linear gradient start Y")
+    x2: Optional[float] = Field(None, ge=0.0, le=1.0, description="Linear gradient end X")
+    y2: Optional[float] = Field(None, ge=0.0, le=1.0, description="Linear gradient end Y")
 
-    cx: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Radial gradient center X"
-    )
-    cy: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Radial gradient center Y"
-    )
-    r: Optional[float] = Field(
-        None, ge=0.0, le=1.0, description="Radial gradient radius"
-    )
+    cx: Optional[float] = Field(None, ge=0.0, le=1.0, description="Radial gradient center X")
+    cy: Optional[float] = Field(None, ge=0.0, le=1.0, description="Radial gradient center Y")
+    r: Optional[float] = Field(None, ge=0.0, le=1.0, description="Radial gradient radius")
 
     @field_validator("stops")
     @classmethod
-    def validate_stops(
-        cls, v: Optional[List[float]], info: ValidationInfo
-    ) -> Optional[List[float]]:
+    def validate_stops(cls, v: Optional[List[float]], info: ValidationInfo) -> Optional[List[float]]:
         """Validate gradient stops match color count."""
         if v is not None and "colors" in info.data:
             if len(v) != len(info.data["colors"]):
@@ -218,13 +196,9 @@ class TitleDescriptionConfig(BaseModel):
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
-    title: str = Field(
-        ..., min_length=1, max_length=100, description="SVG title for accessibility"
-    )
+    title: str = Field(..., min_length=1, max_length=100, description="SVG title for accessibility")
 
-    description: Optional[str] = Field(
-        None, max_length=500, description="Optional detailed description"
-    )
+    description: Optional[str] = Field(None, max_length=500, description="Optional detailed description")
 
 
 class InteractionConfig(BaseModel):
@@ -236,17 +210,13 @@ class InteractionConfig(BaseModel):
 
     model_config = ConfigDict(validate_default=True)
 
-    interactive: bool = Field(
-        default=False, description="Enable interactive hover effects"
-    )
+    interactive: bool = Field(default=False, description="Enable interactive hover effects")
 
     tooltips: bool = Field(default=False, description="Enable tooltip display on hover")
 
     hover_effects: bool = Field(default=False, description="Enable CSS hover effects")
 
-    click_handlers: bool = Field(
-        default=False, description="Enable JavaScript click handlers"
-    )
+    click_handlers: bool = Field(default=False, description="Enable JavaScript click handlers")
 
 
 class FrameDefinitionConfig(BaseModel):
@@ -258,8 +228,8 @@ class FrameDefinitionConfig(BaseModel):
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
-    frame_shape: Literal["square", "circle", "rounded-rect", "squircle", "custom"] = (
-        Field(..., description="Type of frame shape")
+    frame_shape: Literal["square", "circle", "rounded-rect", "squircle", "custom"] = Field(
+        ..., description="Type of frame shape"
     )
 
     width: int = Field(..., gt=0, description="Frame width in pixels")
@@ -272,9 +242,7 @@ class FrameDefinitionConfig(BaseModel):
         None, ge=0.0, le=1.0, description="Corner radius for rounded frames"
     )
 
-    custom_path: Optional[str] = Field(
-        None, min_length=1, description="SVG path string for custom frames"
-    )
+    custom_path: Optional[str] = Field(None, min_length=1, description="SVG path string for custom frames")
 
 
 class LayerStructureConfig(BaseModel):
@@ -294,13 +262,9 @@ class LayerStructureConfig(BaseModel):
 
     modules_layer: bool = Field(default=True, description="Include modules layer")
 
-    centerpiece_layer: bool = Field(
-        default=True, description="Include centerpiece layer"
-    )
+    centerpiece_layer: bool = Field(default=True, description="Include centerpiece layer")
 
-    overlay_layer: bool = Field(
-        default=False, description="Include overlay layer for additional elements"
-    )
+    overlay_layer: bool = Field(default=False, description="Include overlay layer for additional elements")
 
     @property
     def layer_names(self) -> List[str]:

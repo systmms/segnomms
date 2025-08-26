@@ -28,9 +28,7 @@ class Phase4ValidatorConfig(BaseModel):
 
     qr_version: int = Field(..., ge=1, le=40, description="QR code version (1-40)")
 
-    error_level: Literal["L", "M", "Q", "H"] = Field(
-        ..., description="Error correction level"
-    )
+    error_level: Literal["L", "M", "Q", "H"] = Field(..., description="Error correction level")
 
     matrix_size: int = Field(
         ...,
@@ -67,8 +65,7 @@ class Phase4ValidatorConfig(BaseModel):
             return v
 
         raise ValueError(
-            f"Invalid QR matrix size {v}. Must be 11, 13, 15, 17 (Micro QR) "
-            "or 21+4*n (Regular QR)"
+            f"Invalid QR matrix size {v}. Must be 11, 13, 15, 17 (Micro QR) " "or 21+4*n (Regular QR)"
         )
 
 
@@ -89,13 +86,9 @@ class ValidationResult(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    errors: list[str] = Field(
-        default_factory=list, description="List of validation errors"
-    )
+    errors: list[str] = Field(default_factory=list, description="List of validation errors")
 
-    warnings: list[str] = Field(
-        default_factory=list, description="List of validation warnings"
-    )
+    warnings: list[str] = Field(default_factory=list, description="List of validation warnings")
 
     recommendations: list[str] = Field(
         default_factory=list, description="List of recommendations for improvement"

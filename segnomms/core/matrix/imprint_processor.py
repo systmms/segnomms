@@ -209,9 +209,7 @@ class ImprintProcessor:
         max_radius = config.size * self.size / 2
 
         # Normalize distance (0.0 = center, 1.0 = edge of centerpiece)
-        normalized_distance = (
-            min(dist_from_center / max_radius, 1.0) if max_radius > 0 else 0.0
-        )
+        normalized_distance = min(dist_from_center / max_radius, 1.0) if max_radius > 0 else 0.0
 
         # Calculate visual effects based on distance and module type
         base_opacity = 0.3  # Base opacity for imprinted modules
@@ -228,21 +226,13 @@ class ImprintProcessor:
             "alignment": {"opacity_boost": 0.1, "size_factor": 0.95},
         }
 
-        adjustment = type_adjustments.get(
-            module_type, {"opacity_boost": 0.0, "size_factor": 1.0}
-        )
+        adjustment = type_adjustments.get(module_type, {"opacity_boost": 0.0, "size_factor": 1.0})
 
         return {
-            "opacity": min(
-                base_opacity + distance_opacity_boost + adjustment["opacity_boost"], 1.0
-            ),
+            "opacity": min(base_opacity + distance_opacity_boost + adjustment["opacity_boost"], 1.0),
             "size_ratio": adjustment["size_factor"],
-            "color_shift": self._calculate_color_shift_for_distance(
-                normalized_distance
-            ),
-            "blur_radius": max(
-                0, (1.0 - normalized_distance) * 0.5
-            ),  # More blur at center
+            "color_shift": self._calculate_color_shift_for_distance(normalized_distance),
+            "blur_radius": max(0, (1.0 - normalized_distance) * 0.5),  # More blur at center
             "distance_from_center": normalized_distance,
         }
 
@@ -268,9 +258,7 @@ class ImprintProcessor:
         else:
             return 0.2  # Very large centerpiece, very subtle modules
 
-    def _calculate_imprint_color_shift(
-        self, config: CenterpieceConfig
-    ) -> Dict[str, float]:
+    def _calculate_imprint_color_shift(self, config: CenterpieceConfig) -> Dict[str, float]:
         """Calculate color shift parameters for imprinted modules.
 
         Args:
@@ -309,9 +297,7 @@ class ImprintProcessor:
         else:
             return 0.8  # Maximum reduction for very large centerpieces
 
-    def _calculate_color_shift_for_distance(
-        self, normalized_distance: float
-    ) -> Dict[str, float]:
+    def _calculate_color_shift_for_distance(self, normalized_distance: float) -> Dict[str, float]:
         """Calculate color shift based on distance from centerpiece center.
 
         Args:
@@ -326,8 +312,7 @@ class ImprintProcessor:
         return {
             "brightness_boost": center_intensity * 0.2,  # Brighten center modules
             "alpha_reduction": center_intensity * 0.3,  # More transparency at center
-            "edge_sharpness": normalized_distance
-            * 0.5,  # Sharper edges away from center
+            "edge_sharpness": normalized_distance * 0.5,  # Sharper edges away from center
         }
 
     def get_imprint_metadata(self) -> Dict[str, Any]:

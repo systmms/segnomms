@@ -124,9 +124,7 @@ def _export_configuration(
                 import yaml
 
                 with open(config_path, "w", encoding="utf-8") as f:
-                    yaml.dump(
-                        config_data, f, default_flow_style=False, allow_unicode=True
-                    )
+                    yaml.dump(config_data, f, default_flow_style=False, allow_unicode=True)
             except ImportError:
                 # Fall back to JSON if yaml not available
                 config_path = svg_path.parent / (svg_path.stem + "_config.json")

@@ -30,12 +30,8 @@ class Phase1Config(BaseModel):
 
     enabled: bool = False
     use_enhanced_shapes: bool = False
-    roundness: float = Field(
-        default=0.3, ge=0.0, le=1.0, description="Corner roundness factor"
-    )
-    size_ratio: float = Field(
-        default=0.9, ge=0.1, le=1.0, description="Module size relative to grid size"
-    )
+    roundness: float = Field(default=0.3, ge=0.0, le=1.0, description="Corner roundness factor")
+    size_ratio: float = Field(default=0.9, ge=0.1, le=1.0, description="Module size relative to grid size")
     flow_weights: Dict[str, float] = Field(
         default_factory=lambda: {
             "finder": 0.5,
@@ -71,9 +67,7 @@ class Phase2Config(BaseModel):
         default_factory=lambda: ["data"],
         description="Module types to include in clustering",
     )
-    min_cluster_size: int = Field(
-        default=3, ge=1, description="Minimum modules required to form a cluster"
-    )
+    min_cluster_size: int = Field(default=3, ge=1, description="Minimum modules required to form a cluster")
     density_threshold: float = Field(
         default=0.5, ge=0.0, le=1.0, description="Minimum density for valid clusters"
     )
@@ -110,13 +104,9 @@ class Phase3Config(BaseModel):
         description="Module types to generate contours for",
     )
     contour_mode: ContourMode = ContourMode.BEZIER
-    contour_smoothing: float = Field(
-        default=0.3, ge=0.0, le=1.0, description="Smoothing factor for contours"
-    )
+    contour_smoothing: float = Field(default=0.3, ge=0.0, le=1.0, description="Smoothing factor for contours")
     bezier_optimization: OptimizationLevel = OptimizationLevel.MEDIUM
-    tension: float = Field(
-        default=0.3, ge=0.0, le=1.0, description="Bezier curve tension"
-    )
+    tension: float = Field(default=0.3, ge=0.0, le=1.0, description="Bezier curve tension")
     point_reduction: float = Field(
         default=0.7, ge=0.0, le=1.0, description="Factor for reducing control points"
     )

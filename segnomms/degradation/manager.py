@@ -23,9 +23,7 @@ class DegradationManager:
         self.rules = rules or DEGRADATION_RULES
         self.enabled = True  # Can be disabled for testing
 
-    def apply_degradation(
-        self, config: RenderingConfig
-    ) -> Tuple[RenderingConfig, DegradationResult]:
+    def apply_degradation(self, config: RenderingConfig) -> Tuple[RenderingConfig, DegradationResult]:
         """
         Apply all degradation rules to a configuration.
 
@@ -111,9 +109,7 @@ class DegradationManager:
 
             if isinstance(before_value, dict) and isinstance(after_value, dict):
                 # Recurse into nested dictionaries
-                nested_changes = self._find_changes(
-                    before_value, after_value, current_path
-                )
+                nested_changes = self._find_changes(before_value, after_value, current_path)
                 changes.update(nested_changes)
             elif before_value != after_value:
                 # Value changed

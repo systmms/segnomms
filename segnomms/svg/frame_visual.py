@@ -57,9 +57,7 @@ class FrameVisualBuilder:
                 frame_element = generator.generate_circle_clip(qr_size, qr_size)
             elif frame_config.shape == "rounded-rect":
                 corner_radius = getattr(frame_config, "corner_radius", 0.0)
-                frame_element = generator.generate_rounded_rect_clip(
-                    qr_size, qr_size, 0, corner_radius
-                )
+                frame_element = generator.generate_rounded_rect_clip(qr_size, qr_size, 0, corner_radius)
             elif frame_config.shape == "squircle":
                 frame_element = generator.generate_squircle_clip(qr_size, qr_size)
             elif frame_config.shape == "custom":
@@ -68,9 +66,7 @@ class FrameVisualBuilder:
                     frame_element = f'<path d="{custom_path}"/>'
                 else:
                     # Fallback to square if no custom path provided
-                    frame_element = (
-                        f'<rect x="0" y="0" width="{qr_size}" height="{qr_size}"/>'
-                    )
+                    frame_element = f'<rect x="0" y="0" width="{qr_size}" height="{qr_size}"/>'
             else:
                 frame_element = None
 
@@ -85,10 +81,7 @@ class FrameVisualBuilder:
                 clipPath.append(shape_elem)
 
                 # Add fade mask if needed and return appropriate URL
-                if (
-                    hasattr(frame_config, "clip_mode")
-                    and frame_config.clip_mode == "fade"
-                ):
+                if hasattr(frame_config, "clip_mode") and frame_config.clip_mode == "fade":
                     mask_id = self._add_fade_mask(defs, clip_id, frame_config, qr_size)
                     return f"url(#{mask_id})"
                 else:
@@ -233,19 +226,13 @@ class FrameVisualBuilder:
 
         # Add offset information if available
         if hasattr(cp, "offset_x") and hasattr(cp, "offset_y"):
-            offset_x_element = ET.SubElement(
-                config_element, "{https://segnomms.io/ns/qr}offset-x"
-            )
+            offset_x_element = ET.SubElement(config_element, "{https://segnomms.io/ns/qr}offset-x")
             offset_x_element.text = str(cp.offset_x)
 
-            offset_y_element = ET.SubElement(
-                config_element, "{https://segnomms.io/ns/qr}offset-y"
-            )
+            offset_y_element = ET.SubElement(config_element, "{https://segnomms.io/ns/qr}offset-y")
             offset_y_element.text = str(cp.offset_y)
 
-    def _add_fade_mask(
-        self, defs: ET.Element, clip_id: str, frame_config: FrameConfig, qr_size: int
-    ) -> str:
+    def _add_fade_mask(self, defs: ET.Element, clip_id: str, frame_config: FrameConfig, qr_size: int) -> str:
         """Add fade mask for frame clipping.
 
         Args:
@@ -287,9 +274,7 @@ class FrameVisualBuilder:
                 "stop",
                 attrib={"offset": str(max(0, fade_start)), "stop-color": "white"},
             )
-            ET.SubElement(
-                gradient, "stop", attrib={"offset": "100%", "stop-color": "black"}
-            )
+            ET.SubElement(gradient, "stop", attrib={"offset": "100%", "stop-color": "black"})
 
         else:
             # Linear gradient for rectangular fade (simplified to single gradient)
@@ -323,9 +308,7 @@ class FrameVisualBuilder:
                 "stop",
                 attrib={"offset": f"{100 - fade_pct}%", "stop-color": "white"},
             )
-            ET.SubElement(
-                gradient, "stop", attrib={"offset": "100%", "stop-color": "black"}
-            )
+            ET.SubElement(gradient, "stop", attrib={"offset": "100%", "stop-color": "black"})
 
         # Apply gradient to mask
         ET.SubElement(
@@ -387,11 +370,7 @@ class FrameVisualBuilder:
             colors = gradient_config["colors"]
             stops = []
             for i, color in enumerate(colors):
-                offset = (
-                    f"{int(i * 100 / max(1, len(colors) - 1))}%"
-                    if len(colors) > 1
-                    else "0%"
-                )
+                offset = f"{int(i * 100 / max(1, len(colors) - 1))}%" if len(colors) > 1 else "0%"
                 if isinstance(color, dict):
                     # Color with opacity: {"color": "#ffffff", "opacity": 1.0}
                     stops.append(

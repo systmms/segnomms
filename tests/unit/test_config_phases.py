@@ -8,8 +8,8 @@ constraints, and complex processing pipeline scenarios.
 import pytest
 from pydantic import ValidationError
 
+from segnomms.config.enums import OptimizationLevel
 from segnomms.config.models.phases import Phase1Config, Phase2Config, Phase3Config
-from segnomms.config.enums import ContourMode, OptimizationLevel
 
 
 class TestPhase1Config:
@@ -18,12 +18,12 @@ class TestPhase1Config:
     def test_default_phase1_config(self):
         """Test default phase1 configuration."""
         config = Phase1Config()
-        
+
         assert config.enabled is False
         assert config.use_enhanced_shapes is False
         assert config.roundness == 0.3
         assert config.size_ratio == 0.9
-        
+
         # Check default flow weights
         expected_flow_weights = {
             "finder": 0.5,
@@ -37,13 +37,8 @@ class TestPhase1Config:
 
     def test_phase1_enabled_configuration(self):
         """Test enabled phase1 configuration."""
-        config = Phase1Config(
-            enabled=True,
-            use_enhanced_shapes=True,
-            roundness=0.5,
-            size_ratio=0.8
-        )
-        
+        config = Phase1Config(enabled=True, use_enhanced_shapes=True, roundness=0.5, size_ratio=0.8)
+
         assert config.enabled is True
         assert config.use_enhanced_shapes is True
         assert config.roundness == 0.5
@@ -53,14 +48,14 @@ class TestPhase1Config:
         """Test roundness parameter validation."""
         # Valid roundness values
         valid_roundness = [0.0, 0.2, 0.5, 0.8, 1.0]
-        
+
         for roundness in valid_roundness:
             config = Phase1Config(roundness=roundness)
             assert config.roundness == roundness
-        
+
         # Invalid roundness values
         invalid_roundness = [-0.1, 1.1, 2.0, -1.0]
-        
+
         for roundness in invalid_roundness:
             with pytest.raises(ValidationError) as exc_info:
                 Phase1Config(roundness=roundness)
@@ -70,14 +65,14 @@ class TestPhase1Config:
         """Test size_ratio parameter validation."""
         # Valid size_ratio values
         valid_ratios = [0.1, 0.3, 0.5, 0.9, 1.0]
-        
+
         for ratio in valid_ratios:
             config = Phase1Config(size_ratio=ratio)
             assert config.size_ratio == ratio
-        
+
         # Invalid size_ratio values
         invalid_ratios = [0.05, 1.1, 2.0, -0.1, 0.0]
-        
+
         for ratio in invalid_ratios:
             with pytest.raises(ValidationError) as exc_info:
                 Phase1Config(size_ratio=ratio)
@@ -93,7 +88,7 @@ class TestPhase1Config:
             "alignment": 0.7,
             "format": 0.8,
         }
-        
+
         config = Phase1Config(flow_weights=custom_weights)
         assert config.flow_weights == custom_weights
 
@@ -103,7 +98,7 @@ class TestPhase1Config:
             "finder": 0.9,
             "data": 0.8,
         }
-        
+
         config = Phase1Config(flow_weights=partial_weights)
         assert config.flow_weights == partial_weights
 
@@ -119,7 +114,7 @@ class TestPhase1Config:
             "custom_type": 0.9,
             "special_pattern": 0.4,
         }
-        
+
         config = Phase1Config(flow_weights=extended_weights)
         assert config.flow_weights == extended_weights
 
@@ -131,7 +126,7 @@ class TestPhase1Config:
             "finder": 1.0,
             "timing": 1.5,  # Values > 1.0 should be allowed for emphasis
         }
-        
+
         config = Phase1Config(flow_weights=valid_weights)
         assert config.flow_weights == valid_weights
 
@@ -150,9 +145,9 @@ class TestPhase1Config:
                 "alignment": 0.8,
                 "format": 0.9,
                 "custom": 0.6,
-            }
+            },
         )
-        
+
         assert config.enabled is True
         assert config.use_enhanced_shapes is True
         assert config.roundness == 0.7
@@ -164,18 +159,12 @@ class TestPhase1Config:
     def test_phase1_boundary_values(self):
         """Test phase1 boundary values."""
         # Minimum boundary values
-        config = Phase1Config(
-            roundness=0.0,
-            size_ratio=0.1
-        )
+        config = Phase1Config(roundness=0.0, size_ratio=0.1)
         assert config.roundness == 0.0
         assert config.size_ratio == 0.1
-        
+
         # Maximum boundary values
-        config = Phase1Config(
-            roundness=1.0,
-            size_ratio=1.0
-        )
+        config = Phase1Config(roundness=1.0, size_ratio=1.0)
         assert config.roundness == 1.0
         assert config.size_ratio == 1.0
 
@@ -192,7 +181,7 @@ class TestPhase2Config:
     def test_default_phase2_config(self):
         """Test default phase2 configuration."""
         config = Phase2Config()
-        
+
         assert config.enabled is False
         assert config.use_cluster_rendering is False
         assert config.cluster_module_types == ["data"]
@@ -208,9 +197,9 @@ class TestPhase2Config:
             cluster_module_types=["data", "timing"],
             min_cluster_size=5,
             density_threshold=0.7,
-            aspect_ratio_tolerance=0.4
+            aspect_ratio_tolerance=0.4,
         )
-        
+
         assert config.enabled is True
         assert config.use_cluster_rendering is True
         assert config.cluster_module_types == ["data", "timing"]
@@ -223,11 +212,11 @@ class TestPhase2Config:
         # Single module type
         config = Phase2Config(cluster_module_types=["data"])
         assert config.cluster_module_types == ["data"]
-        
+
         # Multiple module types
         config = Phase2Config(cluster_module_types=["data", "timing", "alignment"])
         assert config.cluster_module_types == ["data", "timing", "alignment"]
-        
+
         # All standard module types
         all_types = ["finder", "finder_inner", "timing", "data", "alignment", "format"]
         config = Phase2Config(cluster_module_types=all_types)
@@ -237,14 +226,14 @@ class TestPhase2Config:
         """Test min_cluster_size parameter validation."""
         # Valid cluster sizes
         valid_sizes = [1, 3, 5, 10, 50]
-        
+
         for size in valid_sizes:
             config = Phase2Config(min_cluster_size=size)
             assert config.min_cluster_size == size
-        
+
         # Invalid cluster sizes
         invalid_sizes = [0, -1, -5]
-        
+
         for size in invalid_sizes:
             with pytest.raises(ValidationError) as exc_info:
                 Phase2Config(min_cluster_size=size)
@@ -254,14 +243,14 @@ class TestPhase2Config:
         """Test density_threshold parameter validation."""
         # Valid density thresholds
         valid_thresholds = [0.0, 0.3, 0.5, 0.8, 1.0]
-        
+
         for threshold in valid_thresholds:
             config = Phase2Config(density_threshold=threshold)
             assert config.density_threshold == threshold
-        
+
         # Invalid density thresholds
         invalid_thresholds = [-0.1, 1.1, 2.0, -1.0]
-        
+
         for threshold in invalid_thresholds:
             with pytest.raises(ValidationError) as exc_info:
                 Phase2Config(density_threshold=threshold)
@@ -271,14 +260,14 @@ class TestPhase2Config:
         """Test aspect_ratio_tolerance parameter validation."""
         # Valid aspect ratio tolerances
         valid_tolerances = [0.0, 0.1, 0.3, 0.7, 1.0]
-        
+
         for tolerance in valid_tolerances:
             config = Phase2Config(aspect_ratio_tolerance=tolerance)
             assert config.aspect_ratio_tolerance == tolerance
-        
+
         # Invalid aspect ratio tolerances
         invalid_tolerances = [-0.1, 1.1, 2.0, -1.0]
-        
+
         for tolerance in invalid_tolerances:
             with pytest.raises(ValidationError) as exc_info:
                 Phase2Config(aspect_ratio_tolerance=tolerance)
@@ -292,9 +281,9 @@ class TestPhase2Config:
             cluster_module_types=["data", "timing", "alignment"],
             min_cluster_size=4,
             density_threshold=0.6,
-            aspect_ratio_tolerance=0.25
+            aspect_ratio_tolerance=0.25,
         )
-        
+
         assert config.enabled is True
         assert config.use_cluster_rendering is True
         assert "data" in config.cluster_module_types
@@ -307,20 +296,13 @@ class TestPhase2Config:
     def test_phase2_boundary_values(self):
         """Test phase2 boundary values."""
         # Minimum boundary values
-        config = Phase2Config(
-            min_cluster_size=1,
-            density_threshold=0.0,
-            aspect_ratio_tolerance=0.0
-        )
+        config = Phase2Config(min_cluster_size=1, density_threshold=0.0, aspect_ratio_tolerance=0.0)
         assert config.min_cluster_size == 1
         assert config.density_threshold == 0.0
         assert config.aspect_ratio_tolerance == 0.0
-        
+
         # Maximum boundary values
-        config = Phase2Config(
-            density_threshold=1.0,
-            aspect_ratio_tolerance=1.0
-        )
+        config = Phase2Config(density_threshold=1.0, aspect_ratio_tolerance=1.0)
         assert config.density_threshold == 1.0
         assert config.aspect_ratio_tolerance == 1.0
 
@@ -342,7 +324,7 @@ class TestPhase3Config:
     def test_default_phase3_config(self):
         """Test default phase3 configuration."""
         config = Phase3Config()
-        
+
         assert config.enabled is False
         assert config.use_marching_squares is False
         assert config.contour_module_types == ["data"]
@@ -362,9 +344,9 @@ class TestPhase3Config:
             contour_smoothing=0.5,
             bezier_optimization="high",
             tension=0.4,
-            point_reduction=0.8
+            point_reduction=0.8,
         )
-        
+
         assert config.enabled is True
         assert config.use_marching_squares is True
         assert config.contour_module_types == ["data", "timing"]
@@ -378,7 +360,7 @@ class TestPhase3Config:
         """Test contour mode validation."""
         # Valid contour modes
         valid_modes = ["bezier", "combined", "overlay"]
-        
+
         for mode in valid_modes:
             config = Phase3Config(contour_mode=mode)
             assert config.contour_mode == mode
@@ -387,7 +369,7 @@ class TestPhase3Config:
         """Test bezier optimization level validation."""
         # Valid optimization levels
         valid_levels = ["low", "medium", "high"]
-        
+
         for level in valid_levels:
             config = Phase3Config(bezier_optimization=level)
             assert config.bezier_optimization == level
@@ -397,11 +379,11 @@ class TestPhase3Config:
         # Single module type
         config = Phase3Config(contour_module_types=["data"])
         assert config.contour_module_types == ["data"]
-        
+
         # Multiple module types
         config = Phase3Config(contour_module_types=["data", "timing", "alignment"])
         assert config.contour_module_types == ["data", "timing", "alignment"]
-        
+
         # All standard module types
         all_types = ["finder", "finder_inner", "timing", "data", "alignment", "format"]
         config = Phase3Config(contour_module_types=all_types)
@@ -411,14 +393,14 @@ class TestPhase3Config:
         """Test contour_smoothing parameter validation."""
         # Valid smoothing values
         valid_smoothing = [0.0, 0.2, 0.5, 0.8, 1.0]
-        
+
         for smoothing in valid_smoothing:
             config = Phase3Config(contour_smoothing=smoothing)
             assert config.contour_smoothing == smoothing
-        
+
         # Invalid smoothing values
         invalid_smoothing = [-0.1, 1.1, 2.0, -1.0]
-        
+
         for smoothing in invalid_smoothing:
             with pytest.raises(ValidationError) as exc_info:
                 Phase3Config(contour_smoothing=smoothing)
@@ -428,14 +410,14 @@ class TestPhase3Config:
         """Test tension parameter validation."""
         # Valid tension values
         valid_tensions = [0.0, 0.1, 0.3, 0.7, 1.0]
-        
+
         for tension in valid_tensions:
             config = Phase3Config(tension=tension)
             assert config.tension == tension
-        
+
         # Invalid tension values
         invalid_tensions = [-0.1, 1.1, 2.0, -1.0]
-        
+
         for tension in invalid_tensions:
             with pytest.raises(ValidationError) as exc_info:
                 Phase3Config(tension=tension)
@@ -445,14 +427,14 @@ class TestPhase3Config:
         """Test point_reduction parameter validation."""
         # Valid point reduction values
         valid_reductions = [0.0, 0.3, 0.5, 0.9, 1.0]
-        
+
         for reduction in valid_reductions:
             config = Phase3Config(point_reduction=reduction)
             assert config.point_reduction == reduction
-        
+
         # Invalid point reduction values
         invalid_reductions = [-0.1, 1.1, 2.0, -1.0]
-        
+
         for reduction in invalid_reductions:
             with pytest.raises(ValidationError) as exc_info:
                 Phase3Config(point_reduction=reduction)
@@ -468,9 +450,9 @@ class TestPhase3Config:
             contour_smoothing=0.4,
             bezier_optimization="high",
             tension=0.5,
-            point_reduction=0.8
+            point_reduction=0.8,
         )
-        
+
         assert config.enabled is True
         assert config.use_marching_squares is True
         assert "data" in config.contour_module_types
@@ -484,21 +466,13 @@ class TestPhase3Config:
     def test_phase3_boundary_values(self):
         """Test phase3 boundary values."""
         # Minimum boundary values
-        config = Phase3Config(
-            contour_smoothing=0.0,
-            tension=0.0,
-            point_reduction=0.0
-        )
+        config = Phase3Config(contour_smoothing=0.0, tension=0.0, point_reduction=0.0)
         assert config.contour_smoothing == 0.0
         assert config.tension == 0.0
         assert config.point_reduction == 0.0
-        
+
         # Maximum boundary values
-        config = Phase3Config(
-            contour_smoothing=1.0,
-            tension=1.0,
-            point_reduction=1.0
-        )
+        config = Phase3Config(contour_smoothing=1.0, tension=1.0, point_reduction=1.0)
         assert config.contour_smoothing == 1.0
         assert config.tension == 1.0
         assert config.point_reduction == 1.0
@@ -521,35 +495,30 @@ class TestPhaseConfigIntegration:
     def test_coordinated_phase_configuration(self):
         """Test coordinated multi-phase configuration."""
         # Configure all phases for a comprehensive rendering pipeline
-        phase1 = Phase1Config(
-            enabled=True,
-            use_enhanced_shapes=True,
-            roundness=0.4,
-            size_ratio=0.85
-        )
-        
+        phase1 = Phase1Config(enabled=True, use_enhanced_shapes=True, roundness=0.4, size_ratio=0.85)
+
         phase2 = Phase2Config(
             enabled=True,
             use_cluster_rendering=True,
             cluster_module_types=["data", "timing"],
             min_cluster_size=4,
-            density_threshold=0.6
+            density_threshold=0.6,
         )
-        
+
         phase3 = Phase3Config(
             enabled=True,
             use_marching_squares=True,
             contour_module_types=["data"],
             contour_mode="bezier",
             bezier_optimization="high",
-            tension=0.4
+            tension=0.4,
         )
-        
+
         # Verify all phases are configured
         assert phase1.enabled is True
         assert phase2.enabled is True
         assert phase3.enabled is True
-        
+
         # Verify coordinated settings
         assert phase1.use_enhanced_shapes is True
         assert phase2.use_cluster_rendering is True
@@ -563,29 +532,29 @@ class TestPhaseConfigIntegration:
             "phase2": Phase2Config(enabled=False),
             "phase3": Phase3Config(enabled=False),
         }
-        
+
         assert basic_phases["phase1"].enabled is True
         assert basic_phases["phase2"].enabled is False
         assert basic_phases["phase3"].enabled is False
-        
+
         # Clustering enhancement (Phase 1 + 2)
         cluster_phases = {
             "phase1": Phase1Config(enabled=True, roundness=0.4),
             "phase2": Phase2Config(enabled=True, min_cluster_size=3),
             "phase3": Phase3Config(enabled=False),
         }
-        
+
         assert cluster_phases["phase1"].enabled is True
         assert cluster_phases["phase2"].enabled is True
         assert cluster_phases["phase3"].enabled is False
-        
+
         # Full enhancement (All phases)
         full_phases = {
             "phase1": Phase1Config(enabled=True, roundness=0.5),
             "phase2": Phase2Config(enabled=True, min_cluster_size=5),
             "phase3": Phase3Config(enabled=True, contour_mode="bezier"),
         }
-        
+
         assert full_phases["phase1"].enabled is True
         assert full_phases["phase2"].enabled is True
         assert full_phases["phase3"].enabled is True
@@ -594,19 +563,11 @@ class TestPhaseConfigIntegration:
         """Test module type consistency across different phases."""
         # Configure phases to work on the same module types
         shared_module_types = ["data", "timing"]
-        
-        phase2 = Phase2Config(
-            enabled=True,
-            cluster_module_types=shared_module_types,
-            min_cluster_size=3
-        )
-        
-        phase3 = Phase3Config(
-            enabled=True,
-            contour_module_types=shared_module_types,
-            contour_mode="bezier"
-        )
-        
+
+        phase2 = Phase2Config(enabled=True, cluster_module_types=shared_module_types, min_cluster_size=3)
+
+        phase3 = Phase3Config(enabled=True, contour_module_types=shared_module_types, contour_mode="bezier")
+
         # Verify consistent module types
         assert phase2.cluster_module_types == shared_module_types
         assert phase3.contour_module_types == shared_module_types
@@ -614,30 +575,18 @@ class TestPhaseConfigIntegration:
     def test_optimization_level_progression(self):
         """Test optimization level progression across phases."""
         # Low optimization for speed
-        low_opt_phase3 = Phase3Config(
-            enabled=True,
-            bezier_optimization="low",
-            point_reduction=0.5
-        )
-        
+        low_opt_phase3 = Phase3Config(enabled=True, bezier_optimization="low", point_reduction=0.5)
+
         # Medium optimization for balance
-        med_opt_phase3 = Phase3Config(
-            enabled=True,
-            bezier_optimization="medium",
-            point_reduction=0.7
-        )
-        
+        med_opt_phase3 = Phase3Config(enabled=True, bezier_optimization="medium", point_reduction=0.7)
+
         # High optimization for quality
-        high_opt_phase3 = Phase3Config(
-            enabled=True,
-            bezier_optimization="high",
-            point_reduction=0.9
-        )
-        
+        high_opt_phase3 = Phase3Config(enabled=True, bezier_optimization="high", point_reduction=0.9)
+
         assert low_opt_phase3.bezier_optimization == "low"
         assert med_opt_phase3.bezier_optimization == "medium"
         assert high_opt_phase3.bezier_optimization == "high"
-        
+
         assert low_opt_phase3.point_reduction == 0.5
         assert med_opt_phase3.point_reduction == 0.7
         assert high_opt_phase3.point_reduction == 0.9
@@ -655,18 +604,18 @@ class TestPhaseConfigIntegration:
                 "timing": 1.0,
                 "data": 1.2,
                 "alignment": 0.7,
-            }
+            },
         )
-        
+
         phase2 = Phase2Config(
             enabled=True,
             use_cluster_rendering=True,
             cluster_module_types=["data", "timing", "alignment"],
             min_cluster_size=5,
             density_threshold=0.7,
-            aspect_ratio_tolerance=0.2
+            aspect_ratio_tolerance=0.2,
         )
-        
+
         phase3 = Phase3Config(
             enabled=True,
             use_marching_squares=True,
@@ -675,9 +624,9 @@ class TestPhaseConfigIntegration:
             contour_smoothing=0.5,
             bezier_optimization="high",
             tension=0.4,
-            point_reduction=0.8
+            point_reduction=0.8,
         )
-        
+
         # Verify complex configuration
         assert phase1.flow_weights["data"] == 1.2  # Emphasis on data modules
         assert phase2.min_cluster_size == 5  # Larger clusters
@@ -695,17 +644,17 @@ class TestPhaseConfigEdgeCases:
             "data": 0.0,
             "finder": 0.01,
         }
-        
+
         config = Phase1Config(flow_weights=low_weights)
         assert config.flow_weights["data"] == 0.0
         assert config.flow_weights["finder"] == 0.01
-        
+
         # Very high weights
         high_weights = {
             "data": 5.0,
             "finder": 10.0,
         }
-        
+
         config = Phase1Config(flow_weights=high_weights)
         assert config.flow_weights["data"] == 5.0
         assert config.flow_weights["finder"] == 10.0
@@ -719,12 +668,8 @@ class TestPhaseConfigEdgeCases:
     def test_precision_boundary_values(self):
         """Test high-precision boundary values."""
         # Very precise decimal values at boundaries
-        config = Phase3Config(
-            contour_smoothing=0.0001,
-            tension=0.9999,
-            point_reduction=0.5000
-        )
-        
+        config = Phase3Config(contour_smoothing=0.0001, tension=0.9999, point_reduction=0.5000)
+
         assert config.contour_smoothing == 0.0001
         assert config.tension == 0.9999
         assert config.point_reduction == 0.5000
@@ -732,20 +677,14 @@ class TestPhaseConfigEdgeCases:
     def test_type_coercion_edge_cases(self):
         """Test type coercion for numeric parameters."""
         # String to float coercion
-        config = Phase1Config(
-            roundness="0.5",
-            size_ratio="0.8"
-        )
+        config = Phase1Config(roundness="0.5", size_ratio="0.8")
         assert config.roundness == 0.5
         assert isinstance(config.roundness, float)
         assert config.size_ratio == 0.8
         assert isinstance(config.size_ratio, float)
-        
+
         # Integer to float coercion
-        config = Phase3Config(
-            contour_smoothing=1,
-            tension=0
-        )
+        config = Phase3Config(contour_smoothing=1, tension=0)
         assert config.contour_smoothing == 1.0
         assert config.tension == 0.0
 
@@ -754,10 +693,10 @@ class TestPhaseConfigEdgeCases:
         # None should not be allowed for required fields
         with pytest.raises(ValidationError):
             Phase1Config(roundness=None)
-        
+
         with pytest.raises(ValidationError):
             Phase2Config(min_cluster_size=None)
-        
+
         with pytest.raises(ValidationError):
             Phase3Config(tension=None)
 
@@ -765,12 +704,12 @@ class TestPhaseConfigEdgeCases:
         """Test edge cases for list parameters."""
         # Very long module type lists
         long_type_list = [f"type_{i}" for i in range(100)]
-        
+
         config = Phase2Config(cluster_module_types=long_type_list)
         assert len(config.cluster_module_types) == 100
         assert config.cluster_module_types[0] == "type_0"
         assert config.cluster_module_types[-1] == "type_99"
-        
+
         # Duplicate module types should be preserved
         duplicate_types = ["data", "data", "timing", "data"]
         config = Phase3Config(contour_module_types=duplicate_types)
@@ -781,18 +720,18 @@ class TestPhaseConfigEdgeCases:
         # Empty flow weights
         config = Phase1Config(flow_weights={})
         assert config.flow_weights == {}
-        
+
         # Single flow weight
         config = Phase1Config(flow_weights={"data": 1.0})
         assert config.flow_weights == {"data": 1.0}
-        
+
         # Flow weights with special characters in keys
         special_weights = {
             "data_module": 1.0,
             "finder-pattern": 0.8,
             "type.special": 0.6,
         }
-        
+
         config = Phase1Config(flow_weights=special_weights)
         assert config.flow_weights == special_weights
 
@@ -805,15 +744,15 @@ class TestPhaseConfigValidationMessages:
         # Test roundness validation error
         with pytest.raises(ValidationError) as exc_info:
             Phase1Config(roundness=2.0)
-        
+
         error_message = str(exc_info.value)
         assert "roundness" in error_message.lower()
         assert "1" in error_message  # Maximum value mentioned
-        
+
         # Test size_ratio validation error
         with pytest.raises(ValidationError) as exc_info:
             Phase1Config(size_ratio=0.05)
-        
+
         error_message = str(exc_info.value)
         assert "size_ratio" in error_message.lower()
 
@@ -822,7 +761,7 @@ class TestPhaseConfigValidationMessages:
         # Test min_cluster_size validation error
         with pytest.raises(ValidationError) as exc_info:
             Phase2Config(min_cluster_size=0)
-        
+
         error_message = str(exc_info.value)
         assert "min_cluster_size" in error_message.lower()
         assert "greater" in error_message.lower()
@@ -832,7 +771,7 @@ class TestPhaseConfigValidationMessages:
         # Test contour_mode validation error
         with pytest.raises(ValidationError) as exc_info:
             Phase3Config(contour_mode="invalid_mode")
-        
+
         error_message = str(exc_info.value)
         assert "contour_mode" in error_message.lower()
         # Should mention valid options
@@ -844,9 +783,9 @@ class TestPhaseConfigValidationMessages:
             Phase3Config(
                 contour_smoothing=2.0,  # Invalid: > 1.0
                 tension=-0.5,  # Invalid: < 0.0
-                point_reduction=1.5  # Invalid: > 1.0
+                point_reduction=1.5,  # Invalid: > 1.0
             )
-        
+
         error_message = str(exc_info.value)
         # Should contain information about multiple fields
         assert "contour_smoothing" in error_message.lower()

@@ -63,7 +63,7 @@ interactive_svg = "segnomms.plugin:write"
 path = "segnomms/__init__.py"
 
 [tool.black]
-line-length = 88
+line-length = 110
 target-version = ['py39']
 include = '\.pyi?$'
 extend-exclude = '''
@@ -90,7 +90,7 @@ use_parentheses = true
 ensure_newline_before_comments = true
 
 [tool.flake8]
-max-line-length = 88
+max-line-length = 110
 extend-ignore = ["E203", "W503"]
 exclude = [
     ".git",
@@ -269,8 +269,8 @@ output = "coverage.xml"
 dev-dependencies = [
     # Build tools
     "build>=1.0.0",
-    "twine>=4.0.0",  # For deploying to package registries
-    "keyrings.google-artifactregistry-auth>=1.0.0",  # For Google Artifact Registry
+    "twine>=4.0.0", # For deploying to package registries
+    "keyrings.google-artifactregistry-auth>=1.0.0", # For Google Artifact Registry
     # Testing - Core
     "pytest>=8.0.0",
     "pytest-cov>=4.0.0",
@@ -289,7 +289,7 @@ dev-dependencies = [
     "black>=23.0.0",
     "isort>=5.0.0",
     "mypy>=1.0.0",
-    "types-PyYAML>=6.0.0",  # Type stubs for yaml import
+    "types-PyYAML>=6.0.0", # Type stubs for yaml import
     # Documentation
     "sphinx>=7.0.0",
     "sphinx-rtd-theme>=2.0.0",
@@ -302,6 +302,7 @@ dev-dependencies = [
     # Development tools
     "lefthook>=1.0.0",
     "beautifulsoup4>=4.0.0",
-    "lxml>=4.0.0",  # For XML/SVG parsing in tests
-    "psutil>=5.0.0",  # For performance benchmarking
+    "lxml>=4.0.0", # For XML/SVG parsing in tests
+    "psutil>=5.0.0", # For performance benchmarking
+    "types-psutil>=7.0.0.20250822",
 ]

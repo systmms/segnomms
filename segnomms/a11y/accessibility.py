@@ -79,32 +79,18 @@ class AccessibilityConfig(BaseModel):
 
     # ID generation
     id_prefix: str = Field(default="qr", description="Prefix for generated IDs")
-    use_stable_ids: bool = Field(
-        default=True, description="Generate stable, predictable IDs"
-    )
-    include_coordinates: bool = Field(
-        default=False, description="Include row/col coordinates in IDs"
-    )
+    use_stable_ids: bool = Field(default=True, description="Generate stable, predictable IDs")
+    include_coordinates: bool = Field(default=False, description="Include row/col coordinates in IDs")
 
     # ARIA support
     enable_aria: bool = Field(default=True, description="Enable ARIA attributes")
-    root_role: ARIARole = Field(
-        default=ARIARole.IMG, description="ARIA role for root SVG element"
-    )
-    module_role: Optional[ARIARole] = Field(
-        default=None, description="ARIA role for individual modules"
-    )
+    root_role: ARIARole = Field(default=ARIARole.IMG, description="ARIA role for root SVG element")
+    module_role: Optional[ARIARole] = Field(default=None, description="ARIA role for individual modules")
 
     # Labels and descriptions
-    root_label: str = Field(
-        default="QR Code", description="ARIA label for root element"
-    )
-    root_description: Optional[str] = Field(
-        default=None, description="Description of QR code content"
-    )
-    include_module_labels: bool = Field(
-        default=False, description="Add labels to individual modules"
-    )
+    root_label: str = Field(default="QR Code", description="ARIA label for root element")
+    root_description: Optional[str] = Field(default=None, description="Description of QR code content")
+    include_module_labels: bool = Field(default=False, description="Add labels to individual modules")
     include_pattern_labels: bool = Field(
         default=True, description="Add labels to QR patterns (finder, timing, etc.)"
     )
@@ -116,14 +102,10 @@ class AccessibilityConfig(BaseModel):
     group_similar_elements: bool = Field(
         default=True, description="Group similar elements for better navigation"
     )
-    add_structural_markup: bool = Field(
-        default=True, description="Add structural markup for complex layouts"
-    )
+    add_structural_markup: bool = Field(default=True, description="Add structural markup for complex layouts")
 
     # Interactive features
-    enable_keyboard_navigation: bool = Field(
-        default=False, description="Enable keyboard navigation"
-    )
+    enable_keyboard_navigation: bool = Field(default=False, description="Enable keyboard navigation")
     focus_visible_elements: List[str] = Field(
         default_factory=lambda: ["root"],
         description="Elements that should be focusable",
@@ -166,9 +148,7 @@ class AccessibilityConfig(BaseModel):
         }
         for element in v:
             if element not in valid_elements:
-                raise ValueError(
-                    f"Invalid focus element: {element}. Must be one of {valid_elements}"
-                )
+                raise ValueError(f"Invalid focus element: {element}. Must be one of {valid_elements}")
         return v
 
 
@@ -185,9 +165,7 @@ class IDGenerator:
         base_id = f"{self.config.id_prefix}-root"
         return self._ensure_unique(base_id)
 
-    def generate_module_id(
-        self, row: int, col: int, module_type: str = "module"
-    ) -> str:
+    def generate_module_id(self, row: int, col: int, module_type: str = "module") -> str:
         """Generate ID for a QR module."""
         if self.config.include_coordinates:
             base_id = f"{self.config.id_prefix}-{module_type}-{row}-{col}"
@@ -197,9 +175,7 @@ class IDGenerator:
 
         return self._ensure_unique(base_id)
 
-    def generate_pattern_id(
-        self, pattern_type: str, index: Optional[int] = None
-    ) -> str:
+    def generate_pattern_id(self, pattern_type: str, index: Optional[int] = None) -> str:
         """Generate ID for a QR pattern (finder, timing, etc.)."""
         if index is not None:
             base_id = f"{self.config.id_prefix}-{pattern_type}-{index}"
@@ -296,10 +272,7 @@ class AccessibilityEnhancer:
             accessibility.aria_describedby = desc_id
 
         # Add keyboard navigation if enabled
-        if (
-            self.config.enable_keyboard_navigation
-            and "root" in self.config.focus_visible_elements
-        ):
+        if self.config.enable_keyboard_navigation and "root" in self.config.focus_visible_elements:
             accessibility.tabindex = 0
 
         # Apply attributes
@@ -340,16 +313,12 @@ class AccessibilityEnhancer:
         # Create accessibility info
         accessibility = ElementAccessibility(
             element_id=element_id,
-            aria_role=(
-                self.config.module_role.value if self.config.module_role else None
-            ),
+            aria_role=(self.config.module_role.value if self.config.module_role else None),
         )
 
         # Add label if enabled
         if self.config.include_module_labels:
-            accessibility.aria_label = (
-                f"{module_type} module at row {row}, column {col}"
-            )
+            accessibility.aria_label = f"{module_type} module at row {row}, column {col}"
 
         # Add title for hover information
         if module_type != "data":  # Add titles for special patterns
@@ -387,25 +356,15 @@ class AccessibilityEnhancer:
         # Add pattern-specific labels
         if self.config.include_pattern_labels:
             labels = {
-                "finder": (
-                    f"Finder pattern {index + 1}"
-                    if index is not None
-                    else "Finder pattern"
-                ),
+                "finder": (f"Finder pattern {index + 1}" if index is not None else "Finder pattern"),
                 "timing": "Timing pattern",
-                "alignment": (
-                    f"Alignment pattern {index + 1}"
-                    if index is not None
-                    else "Alignment pattern"
-                ),
+                "alignment": (f"Alignment pattern {index + 1}" if index is not None else "Alignment pattern"),
                 "format": "Format information",
                 "version": "Version information",
                 "data": "Data modules",
                 "quiet": "Quiet zone",
             }
-            accessibility.aria_label = labels.get(
-                pattern_type, f"{pattern_type} pattern"
-            )
+            accessibility.aria_label = labels.get(pattern_type, f"{pattern_type} pattern")
 
         # Apply attributes
         self._apply_accessibility_attributes(group_element, accessibility)
@@ -415,9 +374,7 @@ class AccessibilityEnhancer:
 
         return accessibility
 
-    def create_description_element(
-        self, parent_element: Any, description: str, ref_id: str
-    ) -> str:
+    def create_description_element(self, parent_element: Any, description: str, ref_id: str) -> str:
         """Create a description element and return its ID."""
         import xml.etree.ElementTree as ET
 
@@ -433,16 +390,10 @@ class AccessibilityEnhancer:
             "enabled": self.config.enabled,
             "compliance_target": self.config.target_compliance.value,
             "total_elements": len(self.element_registry),
-            "elements_with_aria": sum(
-                1 for elem in self.element_registry.values() if elem.aria_role
-            ),
-            "elements_with_labels": sum(
-                1 for elem in self.element_registry.values() if elem.aria_label
-            ),
+            "elements_with_aria": sum(1 for elem in self.element_registry.values() if elem.aria_role),
+            "elements_with_labels": sum(1 for elem in self.element_registry.values() if elem.aria_label),
             "focusable_elements": sum(
-                1
-                for elem in self.element_registry.values()
-                if elem.tabindex is not None
+                1 for elem in self.element_registry.values() if elem.tabindex is not None
             ),
             "features": {
                 "stable_ids": self.config.use_stable_ids,
@@ -473,9 +424,7 @@ class AccessibilityEnhancer:
             return self._validate_svg_element(svg_root)
 
         # Check for root element
-        root_elements = [
-            elem for elem in self.element_registry.values() if "root" in elem.element_id
-        ]
+        root_elements = [elem for elem in self.element_registry.values() if "root" in elem.element_id]
         if not root_elements:
             issues.append("No root element found with accessibility attributes")
 
@@ -491,15 +440,9 @@ class AccessibilityEnhancer:
 
         # Check keyboard navigation
         if self.config.enable_keyboard_navigation:
-            focusable = [
-                elem
-                for elem in self.element_registry.values()
-                if elem.tabindex is not None
-            ]
+            focusable = [elem for elem in self.element_registry.values() if elem.tabindex is not None]
             if not focusable:
-                issues.append(
-                    "Keyboard navigation enabled but no focusable elements found"
-                )
+                issues.append("Keyboard navigation enabled but no focusable elements found")
 
         # Check for proper labeling
         if self.config.target_compliance in [
@@ -542,9 +485,7 @@ class AccessibilityEnhancer:
 
         return issues
 
-    def _apply_accessibility_attributes(
-        self, element: Any, accessibility: ElementAccessibility
-    ) -> None:
+    def _apply_accessibility_attributes(self, element: Any, accessibility: ElementAccessibility) -> None:
         """Apply accessibility attributes to an SVG element."""
         attributes = accessibility.to_attributes()
 

@@ -52,9 +52,7 @@ class DegradationResult(BaseModel):
     changes_made: Dict[str, Dict[str, Any]] = Field(
         default_factory=dict, description="Map of configuration paths to their changes"
     )
-    degradation_applied: bool = Field(
-        default=False, description="Whether any degradation was applied"
-    )
+    degradation_applied: bool = Field(default=False, description="Whether any degradation was applied")
 
     @property
     def warning_count(self) -> int:

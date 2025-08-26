@@ -112,9 +112,7 @@ class AdvancedQRConfig(BaseModel):
         normalized = v.upper().replace("-", "_").replace(" ", "_")
 
         # Check if it's a known encoding
-        if normalized not in {
-            enc.upper().replace("-", "_") for enc in supported_encodings
-        }:
+        if normalized not in {enc.upper().replace("-", "_") for enc in supported_encodings}:
             logger.warning(f"Encoding '{v}' may not be supported by all QR scanners")
 
         return v
@@ -148,8 +146,6 @@ class AdvancedQRConfig(BaseModel):
             self.encoding = "UTF-8"
 
         if self.encoding and not self.eci_enabled:
-            logger.info(
-                f"Using encoding '{self.encoding}' without ECI mode for broader compatibility"
-            )
+            logger.info(f"Using encoding '{self.encoding}' without ECI mode for broader compatibility")
 
         return self
