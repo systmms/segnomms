@@ -151,7 +151,8 @@ class PerformanceMonitor:
             memory_usage = memory_after - memory_before
 
             if self.enable_cpu_monitoring:
-                cpu_percent = self.process.cpu_percent()
+                cpu_after = self.process.cpu_percent()
+                cpu_percent = cpu_after - cpu_before if cpu_before else cpu_after
             else:
                 cpu_percent = 0.0
 
@@ -421,7 +422,7 @@ class PerformanceTestPlugin:
         # Generate performance report
         if self.monitor.metrics:
             report_file = Path("tests/perf/performance_report.txt")
-            report = self.monitor.generate_performance_report(report_file)
+            self.monitor.generate_performance_report(report_file)
             print(f"\nPerformance report saved to: {report_file}")
 
             # Check for regressions

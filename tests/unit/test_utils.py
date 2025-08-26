@@ -7,6 +7,7 @@ structure is correct and all components are accessible.
 
 import pytest
 
+import segnomms
 from tests.constants import (
     DEFAULT_BORDER,
     DEFAULT_SCALE,

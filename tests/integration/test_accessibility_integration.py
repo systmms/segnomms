@@ -12,8 +12,6 @@ import pytest
 from segnomms.a11y.accessibility import (
     AccessibilityConfig,
     AccessibilityEnhancer,
-    AccessibilityLevel,
-    ARIARole,
 )
 from segnomms.config import RenderingConfig
 from segnomms.svg.composite import InteractiveSVGBuilder

@@ -21,14 +21,12 @@ from segnomms.config import (
     ModuleShape,
     PatternStyleConfig,
     RenderingConfig,
-    StyleConfig,
 )
 from segnomms.plugin import (
     _export_configuration,
     _get_pattern_specific_render_kwargs,
     _get_pattern_specific_style,
     generate_interactive_svg,
-    write,
     write_advanced,
 )
 

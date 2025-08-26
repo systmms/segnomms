@@ -76,8 +76,6 @@ class TestSVGRootCreation:
     def test_create_svg_root_with_class(self, builder):
         """Test creating SVG root with CSS class."""
         # Create builder with disabled accessibility to test base functionality
-        from segnomms.a11y.accessibility import AccessibilityConfig
-
         disabled_config = AccessibilityConfig(enabled=False)
         disabled_builder = InteractiveSVGBuilder(disabled_config)
 
@@ -116,8 +114,6 @@ class TestSVGRootCreation:
         config = SVGElementConfig(width=300, height=300, id="config-test", **{"class": "config-class"})
 
         # Create builder with disabled accessibility to test base functionality
-        from segnomms.a11y.accessibility import AccessibilityConfig
-
         disabled_config = AccessibilityConfig(enabled=False)
         disabled_builder = InteractiveSVGBuilder(disabled_config)
 
