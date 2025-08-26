@@ -259,6 +259,7 @@ class TestPhase4Integration:
 
         # Generate SVG (should log warnings)
         svg_content = generate_interactive_svg(test_qr, config)
+        assert "<svg" in svg_content  # Validate SVG was generated
 
         # Check warnings were logged
         warning_messages = [record.message for record in caplog.records if record.levelname == "WARNING"]

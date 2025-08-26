@@ -31,6 +31,7 @@ def main():
         monitor = PerformanceMonitor()
         report_path = Path("tests/perf/performance_report.txt")
         report = monitor.generate_performance_report(report_path)
+        assert report is not None  # Validate performance report generated
 
         print("📊 Performance report generated at: tests/perf/performance_report.txt")
 

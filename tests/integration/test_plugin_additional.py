@@ -310,6 +310,8 @@ class TestFrameScaleMode:
         # Generate SVG
         svg_content = generate_interactive_svg(mock_qr, config)
 
+        assert "<svg" in svg_content  # Validate SVG generated with frame effects
+
         # Verify scale factors were requested
         assert mock_clipper.get_scale_factor.called
         assert mock_clipper.get_scale_factor.call_count >= 3

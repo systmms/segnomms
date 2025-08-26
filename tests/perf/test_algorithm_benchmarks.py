@@ -87,7 +87,7 @@ class PerformanceBenchmarker:
 
                 times.append(end_time - start_time)
                 success_count += 1
-            except Exception as e:
+            except Exception:
                 # Record failed iterations but continue
                 times.append(float("inf"))
 

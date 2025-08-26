@@ -20,6 +20,8 @@ class TestPayloadErrorHandling:
         # Pydantic validates at creation time, so we expect ValueError
         with pytest.raises(ValueError) as exc_info:
             payload = PayloadConfig()  # No content specified
+            # This line should never execute, but if it does, payload should be None
+            assert payload is None, "PayloadConfig should have raised ValueError"
 
         assert "at least one content type must be specified" in str(exc_info.value).lower()
 
@@ -222,6 +224,8 @@ class TestExceptionPropagation:
         # Pydantic validates at creation time
         with pytest.raises(ValueError) as exc_info:
             payload = PayloadConfig()  # Empty payload
+            # This line should never execute, but validates payload creation failed
+            assert payload is None, "PayloadConfig should have raised ValueError for empty payload"
 
         assert "at least one content type must be specified" in str(exc_info.value).lower()
 

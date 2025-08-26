@@ -498,6 +498,7 @@ class TestCenterpieceConfig:
             "left-center",
             "right-center",
         ]
+        assert len(placements) == 9  # Validate all placement modes defined
 
         placement_mappings = {
             "center": PlacementMode.CENTER,
