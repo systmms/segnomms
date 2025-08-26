@@ -12,12 +12,10 @@ import pytest
 
 from segnomms.a11y.accessibility import (
     AccessibilityConfig,
-    create_basic_accessibility,
     create_enhanced_accessibility,
 )
 from segnomms.svg.models import (
     BackgroundConfig,
-    GradientConfig,
     InteractionConfig,
     SVGElementConfig,
     TitleDescriptionConfig,

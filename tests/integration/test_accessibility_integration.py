@@ -207,6 +207,7 @@ class TestSVGBuilderIntegration:
 
         # Create some elements
         svg = builder.create_svg_root(200, 200, title="QR Code")
+        assert svg.tag == "svg"  # Validate created element
         rect = ET.Element("rect")
         builder.enhance_module_accessibility(rect, 0, 0, "finder")
 
@@ -225,6 +226,7 @@ class TestSVGBuilderIntegration:
 
         # Create root element
         svg = builder.create_svg_root(200, 200, title="QR Code")
+        assert svg.get("title") == "QR Code"  # Validate title was set
 
         # Validate
         issues = builder.validate_accessibility()
@@ -398,9 +400,9 @@ class TestRenderingIntegration:
                     f.name,
                     scale=8,
                     merge="soft",  # Enable clustering
-                    accessibility_enabled=True,
-                    accessibility_enable_aria=True,
-                    accessibility_use_stable_ids=True,
+                    accessibility_enabled=config.enabled,
+                    accessibility_enable_aria=config.enable_aria,
+                    accessibility_use_stable_ids=config.use_stable_ids,
                 )
 
                 with open(f.name, "r") as svg_file:

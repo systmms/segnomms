@@ -16,8 +16,6 @@ from segnomms import write
 from tests.constants import (
     DEFAULT_BORDER,
     DEFAULT_SCALE,
-    QR_PAYLOADS,
-    TEST_COLORS,
     VALID_SHAPES,
     create_test_config,
 )

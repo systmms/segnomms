@@ -129,6 +129,9 @@ class TestMatrixManipulator:
         assert manipulator.is_in_centerpiece(x1 + 0.1, y1 + 0.1, config) is True
         # Points just outside bounds
         assert manipulator.is_in_centerpiece(x1 - 0.1, y1 - 0.1, config) is False
+        # Validate all coordinates are meaningful
+        assert x2 > x1  # Right boundary is right of left
+        assert y2 > y1  # Bottom boundary is below top
 
     def test_is_in_centerpiece_circle(self, manipulator):
         """Test circular centerpiece containment."""

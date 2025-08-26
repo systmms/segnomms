@@ -12,7 +12,6 @@ from tests.constants import (
     DEFAULT_BORDER,
     DEFAULT_SCALE,
     TEST_COLORS,
-    FinderShape,
     ModuleShape,
 )
 

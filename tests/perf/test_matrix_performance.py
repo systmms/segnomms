@@ -83,7 +83,10 @@ class TestMatrixPerformanceWarnings:
         if "performance_warnings" in metadata:
             warnings = metadata["performance_warnings"]
             complex_shape_warning = any("squircle" in w.lower() or "complex" in w.lower() for w in warnings)
-            # May or may not trigger depending on implementation
+            # Performance warnings are implementation-dependent - log for debugging
+            if complex_shape_warning:
+                complex_warnings = [w for w in warnings if "squircle" in w.lower() or "complex" in w.lower()]
+                print(f"Complex shape warning detected: {complex_warnings}")
 
     def test_performance_warnings_imprint_mode(self, large_manipulator):
         """Test performance warnings for imprint mode processing."""
@@ -104,6 +107,9 @@ class TestMatrixPerformanceWarnings:
         if "performance_warnings" in metadata:
             warnings = metadata["performance_warnings"]
             imprint_warning = any("imprint" in w.lower() for w in warnings)
+            # Log imprint warnings for performance monitoring
+            if imprint_warning:
+                print(f"Imprint complexity warning: {[w for w in warnings if 'imprint' in w.lower()]}")
 
     def test_performance_warnings_large_margin(self, large_manipulator):
         """Test performance warnings for large margin calculations."""
@@ -139,6 +145,8 @@ class TestMatrixPerformanceWarnings:
         # Perform multiple expensive operations
         metadata = large_manipulator.get_centerpiece_metadata(config)
         validation = large_manipulator.validate_reserve_impact(config, "M")
+        assert "area_info" in metadata  # Validate metadata generated
+        assert "safe" in validation  # Validate validation result
 
         # Test some containment checks
         for i in range(50):  # Limited sample for performance

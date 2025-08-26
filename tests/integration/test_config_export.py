@@ -251,6 +251,8 @@ class TestConfigurationExport:
         """Test configuration export with custom metadata."""
         qr = segno.make("Test")
         output_file = tmp_path / "test.svg"
+        assert qr.version >= 1  # Validate QR was generated
+        assert output_file.suffix == ".svg"  # Validate output path
 
         # Create config with metadata
         from segnomms.config import RenderingConfig

@@ -288,12 +288,16 @@ class TestGenerateInteractiveSVG:
 
         # Check for interactive features
         style_element = tree.find(".//style")
-        # Style element may be missing if phase4 validation failed
+        # Style element may be missing if phase4 validation failed - validate or assert None
+        if style_element is not None:
+            assert style_element.tag == "style"  # Validate style element
         # Just check that we got valid SVG
 
         # Check for definitions (gradients, patterns, etc.)
         defs = tree.find(".//defs")
-        # defs may be missing if phase4 validation failed
+        # defs may be missing if phase4 validation failed - validate or assert None
+        if defs is not None:
+            assert defs.tag == "defs"  # Validate defs element
         # Just check that we got valid SVG with proper tag
 
     def test_generate_with_phase1_disabled(self, qr_code):

@@ -143,6 +143,7 @@ class TestReserveModeIntegration:
 
         # Clear centerpiece (should not modify in imprint mode)
         modified = manipulator.clear_centerpiece_area(config)
+        assert modified is False or modified is None  # Imprint mode should not modify matrix
 
         # Get metadata
         metadata = manipulator.get_centerpiece_metadata(config)
