@@ -7,6 +7,7 @@ refinement and statistical tracking for optimal scanability preservation.
 import logging
 from typing import Any, Dict, List, Tuple
 
+from ...config import CenterpieceConfig
 from ..detector import ModuleDetector
 from ..geometry import CenterpieceGeometry
 from ..performance import measure_centerpiece_operation
@@ -53,7 +54,7 @@ class KnockoutProcessor:
         }
 
     @measure_centerpiece_operation
-    def apply_knockout_mode(self, config) -> List[List[bool]]:
+    def apply_knockout_mode(self, config: CenterpieceConfig) -> List[List[bool]]:
         """Apply knockout mode - clear modules completely from reserve area.
 
         This implementation provides enhanced edge handling and statistical tracking
@@ -93,8 +94,8 @@ class KnockoutProcessor:
         return modified
 
     def _collect_centerpiece_modules(
-        self, config, stats: Dict[str, Any]
-    ) -> Tuple[List, List]:
+        self, config: CenterpieceConfig, stats: Dict[str, Any]
+    ) -> Tuple[List[Tuple[int, int, str]], List[Tuple[int, int, str]]]:
         """Collect centerpiece and edge modules for processing.
 
         Args:
@@ -133,9 +134,9 @@ class KnockoutProcessor:
     def _clear_modules_with_refinement(
         self,
         modified: List[List[bool]],
-        centerpiece_modules: List,
-        edge_modules: List,
-        config,
+        centerpiece_modules: List[Tuple[int, int, str]],
+        edge_modules: List[Tuple[int, int, str]],
+        config: CenterpieceConfig,
         stats: Dict[str, Any],
     ) -> List[List[bool]]:
         """Clear centerpiece modules with edge refinement.
@@ -185,7 +186,7 @@ class KnockoutProcessor:
                 f"Consider reducing size for optimal scanability."
             )
 
-    def get_clearing_statistics(self, config) -> Dict[str, Any]:
+    def get_clearing_statistics(self, config: CenterpieceConfig) -> Dict[str, Any]:
         """Get statistics about what would be cleared without modifying the matrix.
 
         Args:

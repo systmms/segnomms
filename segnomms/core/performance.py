@@ -232,7 +232,7 @@ class PerformanceMonitor:
             complexity = None
             if complexity_func:
                 try:
-                    complexity = complexity_func()
+                    complexity = complexity_func(result, *args, **kwargs)
                 except Exception as e:
                     logger.debug(f"Failed to calculate complexity for {operation}: {e}")
 
@@ -455,9 +455,9 @@ def measure_matrix_operation(func: Callable[..., Any]) -> Callable[..., Any]:
         monitor = get_performance_monitor()
 
         # Create simpler complexity calculator
-        def complexity_calc() -> int:
-            if args and hasattr(args[0], "size"):
-                return int(getattr(args[0], "size", 1)) ** 2
+        def complexity_calc(result: Any, *call_args: Any, **call_kwargs: Any) -> int:
+            if call_args and hasattr(call_args[0], "size"):
+                return int(getattr(call_args[0], "size", 1)) ** 2
             return 1
 
         return monitor.measure_operation(
@@ -485,7 +485,7 @@ def measure_centerpiece_operation(func: Callable[..., Any]) -> Callable[..., Any
         monitor = get_performance_monitor()
 
         # Simplified complexity calculation
-        def complexity_calc() -> int:
+        def complexity_calc(result: Any, *call_args: Any, **call_kwargs: Any) -> int:
             return 100  # Fixed complexity for centerpiece operations
 
         # Determine operation type based on function name and config
@@ -522,7 +522,7 @@ def measure_imprint_rendering(func: Callable[..., Any]) -> Callable[..., Any]:
         monitor = get_performance_monitor()
 
         # Simplified complexity calculation
-        def complexity_calc() -> int:
+        def complexity_calc(result: Any, *call_args: Any, **call_kwargs: Any) -> int:
             return 100  # Fixed complexity for imprint rendering
 
         return monitor.measure_operation(

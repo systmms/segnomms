@@ -26,7 +26,8 @@ class PathClipper:
         """Initialize the path clipper.
 
         Args:
-            frame_shape: Frame shape type ('square', 'circle', 'rounded-rect', 'squircle')
+            frame_shape: Frame shape type ('square', 'circle', 'rounded-rect',
+                'squircle')
             width: Total SVG width in pixels
             height: Total SVG height in pixels
             border: Border size in pixels
@@ -67,7 +68,7 @@ class PathClipper:
             cy = self.height / 2
             r = min(self.width, self.height) / 2
             dist = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
-            return dist <= r
+            return float(dist) <= r
 
         elif self.frame_shape == "rounded-rect":
             # Check if in main rectangle area
@@ -93,7 +94,7 @@ class PathClipper:
             if x < self.frame_left + corner_r and y < self.frame_top + corner_r:
                 cx = self.frame_left + corner_r
                 cy = self.frame_top + corner_r
-                return ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 <= corner_r
+                return float(((x - cx) ** 2 + (y - cy) ** 2) ** 0.5) <= corner_r
 
             # Similar checks for other corners...
             return True  # Simplified for now
@@ -121,7 +122,8 @@ class PathClipper:
             y: Y coordinate
 
         Returns:
-            Distance in pixels from the nearest frame edge (0 = on edge, positive = inside)
+            Distance in pixels from the nearest frame edge (0 = on edge,
+            positive = inside)
         """
         if self.frame_shape == "square":
             # Distance to nearest edge
@@ -136,7 +138,7 @@ class PathClipper:
             cy = self.height / 2
             r = min(self.width, self.height) / 2
             dist_from_center = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
-            return r - dist_from_center
+            return float(r - dist_from_center)
 
         elif self.frame_shape in ["rounded-rect", "squircle"]:
             # Simplified: use rectangular distance for now

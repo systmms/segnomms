@@ -164,6 +164,34 @@ This modernization provides:
 
 ---
 
+## 🔧 Development Standards and Practices
+
+**⚠️ IMPORTANT:** These development practices must be followed without exception.
+
+### Git Commit Standards
+
+**NEVER use `--no-verify` flag with git commits.**
+- Pre-commit hooks exist to maintain code quality and consistency
+- All formatting, linting, and type checking issues must be resolved before committing
+- If pre-commit hooks fail, fix the underlying issues rather than bypassing them
+- This ensures consistent code quality across all contributions
+
+**Before committing:**
+1. Run `black`, `isort`, and `flake8` to fix formatting issues
+2. Ensure MyPy passes without errors
+3. Fix any trailing whitespace or other formatting issues
+4. Only commit when all pre-commit hooks pass successfully
+
+### Code Quality Requirements
+
+- **MyPy:** All code must pass strict type checking with zero errors
+- **Black:** All Python code must be formatted with Black
+- **isort:** All imports must be properly sorted and organized
+- **flake8:** All code must pass linting checks
+- **Tests:** All existing tests must pass before committing
+
+---
+
 ## 📚 Documentation Strategy and Policy
 
 **⚠️ IMPORTANT:** This project uses a **Sphinx-first documentation strategy** to prevent documentation sprawl.

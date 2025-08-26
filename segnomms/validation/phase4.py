@@ -5,7 +5,10 @@ frame shapes, centerpiece reserves, and quiet zone enhancements.
 """
 
 import logging
-from typing import List, Literal
+from typing import TYPE_CHECKING, List, Literal, Optional
+
+if TYPE_CHECKING:
+    from tests.helpers.scanning_harness import QRScanabilityHarness
 
 from ..color.color_analysis import suggest_color_improvements, validate_qr_contrast
 from ..config import CenterpieceConfig, FrameConfig, MergeStrategy, RenderingConfig
@@ -13,11 +16,12 @@ from ..core.geometry import CenterpieceGeometry
 from .models import Phase4ValidatorConfig, ValidationResult
 
 try:
-    # Import from test helpers - graceful degradation if not available in testing environment
-    from ...tests.helpers.scanning_harness import get_scanability_harness
+    # Import from test helpers - graceful degradation if not available in
+    # testing environment
+    from tests.helpers.scanning_harness import get_scanability_harness
 except ImportError:
     # Fallback if tests module is not available
-    def get_scanability_harness() -> None:
+    def get_scanability_harness() -> Optional["QRScanabilityHarness"]:
         return None
 
 
@@ -31,13 +35,22 @@ class Phase4Validator:
     reserves, and their interaction with existing QR code features.
 
     Example:
-        >>> validator = Phase4Validator(qr_version=7, error_level='M', matrix_size=45)
+        >>> validator = Phase4Validator(
+        ...     qr_version=7, error_level='M', matrix_size=45
+        ... )
         >>> # Or using Pydantic model
-        >>> config = Phase4ValidatorConfig(qr_version=7, error_level='m', matrix_size=45)
+        >>> config = Phase4ValidatorConfig(
+        ...     qr_version=7, error_level='m', matrix_size=45
+        ... )
         >>> validator = Phase4Validator(**config.model_dump())
     """
 
-    def __init__(self, qr_version: int, error_level: Literal['L', 'M', 'Q', 'H'], matrix_size: int):
+    def __init__(
+        self,
+        qr_version: int,
+        error_level: Literal["L", "M", "Q", "H"],
+        matrix_size: int,
+    ):
         """Initialize the validator.
 
         Args:
@@ -96,7 +109,8 @@ class Phase4Validator:
             if frame_config.corner_radius > 0.5:
                 warnings.append(
                     f"Large corner radius ({frame_config.corner_radius}) may impact "
-                    "scannability. Consider using values <= 0.3 for better compatibility."
+                    "scannability. Consider using values <= 0.3 for better "
+                    "compatibility."
                 )
 
         return warnings
@@ -235,9 +249,9 @@ class Phase4Validator:
 
         # Module size vs QR version compatibility
         total_pixels = self.matrix_size * scale
-        
+
         # Density validation based on total pixel count
-        if total_pixels < 441:  # 21x21 minimum for readability 
+        if total_pixels < 441:  # 21x21 minimum for readability
             warnings.append(
                 f"Very small QR code ({total_pixels} total pixels). "
                 "May be difficult to scan reliably."
@@ -259,7 +273,8 @@ class Phase4Validator:
         if self.matrix_size > 50 and scale < 5:
             warnings.append(
                 f"Large QR code ({self.matrix_size}x{self.matrix_size}) with small "
-                f"modules ({scale}px) may be difficult to scan. Consider larger modules."
+                f"modules ({scale}px) may be difficult to scan. Consider larger "
+                f"modules."
             )
 
         # Frame shape interaction with module size
@@ -295,7 +310,8 @@ class Phase4Validator:
         if not harness:
             # No scanning libraries available - skip test
             logger.warning(
-                "Automated scanability testing skipped - no scanning libraries available"
+                "Automated scanability testing skipped - no scanning libraries "
+                "available"
             )
             errors.append(
                 "Automated scanability testing unavailable. "
@@ -318,9 +334,11 @@ class Phase4Validator:
             if not meets_threshold:
                 success_rate = results.get("success_rate", 0)
                 errors.append(
-                    f"Automated scanability test failed: {success_rate:.1%} success rate "
+                    f"Automated scanability test failed: {success_rate:.1%} success "
+                    f"rate "
                     f"(minimum {minimum_success_rate:.1%} required). "
-                    f"Configuration may not scan reliably across devices and conditions."
+                    f"Configuration may not scan reliably across devices and "
+                    f"conditions."
                 )
 
                 # Add specific failure information
@@ -341,8 +359,8 @@ class Phase4Validator:
                 # Test passed - log success
                 success_rate = results.get("success_rate", 0)
                 logger.info(
-                    f"Automated scanability test passed: {success_rate:.1%} success rate "
-                    f"across {results.get('total_tests', 0)} test conditions"
+                    f"Automated scanability test passed: {success_rate:.1%} success "
+                    f"rate across {results.get('total_tests', 0)} test conditions"
                 )
 
         except Exception as e:
@@ -480,8 +498,10 @@ class Phase4Validator:
         Args:
             config: Complete rendering configuration
             min_contrast_ratio: Minimum contrast ratio for scanability (default: 3.0)
-            run_scanability_tests: Whether to run automated scanning tests (default: False)
-            min_scanability_success_rate: Minimum success rate for scanning tests (default: 0.8)
+            run_scanability_tests: Whether to run automated scanning tests
+                (default: False)
+            min_scanability_success_rate: Minimum success rate for scanning tests
+                (default: 0.8)
 
         Returns:
             ValidationResult with errors, warnings, and recommendations

@@ -5,7 +5,7 @@ root elements, adding styles, and managing backgrounds.
 """
 
 import xml.etree.ElementTree as ET
-from typing import Optional
+from typing import Any, Dict, Optional
 
 from ..core.interfaces import SVGBuilder
 from .models import BackgroundConfig, SVGElementConfig
@@ -18,7 +18,7 @@ class CoreSVGBuilder(SVGBuilder):
     adding CSS styles, and managing background elements.
     """
 
-    def create_svg_root(self, width: int, height: int, **kwargs) -> ET.Element:
+    def create_svg_root(self, width: int, height: int, **kwargs: Any) -> ET.Element:
         """Create the root SVG element with proper attributes and namespaces.
 
         Args:
@@ -56,7 +56,12 @@ class CoreSVGBuilder(SVGBuilder):
 
         return svg
 
-    def add_styles(self, svg: ET.Element, interactive: bool = False, animation_config: Optional[dict] = None) -> None:
+    def add_styles(
+        self,
+        svg: ET.Element,
+        interactive: bool = False,
+        animation_config: Optional[Dict[str, Any]] = None,
+    ) -> None:
         """Add CSS styles to the SVG.
 
         Args:
@@ -76,7 +81,7 @@ class CoreSVGBuilder(SVGBuilder):
             style.text = f"\n<![CDATA[\n{style_content}\n]]>\n"
 
     def add_background(
-        self, svg: ET.Element, width: int, height: int, color: str, **kwargs
+        self, svg: ET.Element, width: int, height: int, color: str, **kwargs: Any
     ) -> None:
         """Add a background rectangle to the SVG.
 
@@ -103,7 +108,9 @@ class CoreSVGBuilder(SVGBuilder):
             },
         )
 
-    def _generate_css_styles(self, interactive: bool, animation_config: Optional[dict] = None) -> str:
+    def _generate_css_styles(
+        self, interactive: bool, animation_config: Optional[Dict[str, Any]] = None
+    ) -> str:
         """Generate CSS styles for the SVG.
 
         Args:
@@ -122,7 +129,7 @@ class CoreSVGBuilder(SVGBuilder):
             pointer-events: none;
         }
         /* Transform geometry fixes to prevent wiggle during animations */
-        .qr-root, .qr-module, .qr-finder, .qr-timing, .qr-data, 
+        .qr-root, .qr-module, .qr-finder, .qr-timing, .qr-data,
         .qr-alignment, .qr-format, .qr-cluster, .qr-contour {
             transform-box: fill-box;
             transform-origin: center;
@@ -214,7 +221,7 @@ class CoreSVGBuilder(SVGBuilder):
 
         return "\n".join(styles)
 
-    def _generate_animation_styles(self, config: dict) -> str:
+    def _generate_animation_styles(self, config: Dict[str, Any]) -> str:
         """Generate CSS animation styles based on configuration.
 
         Args:
@@ -224,7 +231,7 @@ class CoreSVGBuilder(SVGBuilder):
             CSS animation styles string
         """
         animation_styles = []
-        
+
         # Extract animation settings
         fade_in = config.get("animation_fade_in", False)
         fade_duration = config.get("animation_fade_duration", 0.5)
@@ -232,10 +239,11 @@ class CoreSVGBuilder(SVGBuilder):
         stagger_delay = config.get("animation_stagger_delay", 0.02)
         pulse = config.get("animation_pulse", False)
         timing = config.get("animation_timing", "ease")
-        
+
         # Fade-in animation
         if fade_in:
-            animation_styles.append(f"""
+            animation_styles.append(
+                f"""
             @keyframes qrFadeIn {{
                 from {{
                     opacity: 0;
@@ -246,28 +254,32 @@ class CoreSVGBuilder(SVGBuilder):
                     transform: scale(1);
                 }}
             }}
-            
+
             .qr-module {{
                 animation: qrFadeIn {fade_duration}s {timing} both;
             }}
-            """)
-            
+            """
+            )
+
             # Stagger support using CSS variables
             if stagger:
-                animation_styles.append(f"""
+                animation_styles.append(
+                    f"""
             /* Staggered animation delays using CSS variables */
             .qr-root {{
                 --stagger-step: {stagger_delay}s;
             }}
-            
+
             .qr-module {{
                 animation-delay: calc(var(--i, 0) * var(--stagger-step));
             }}
-            """)
-        
+            """
+                )
+
         # Pulse effect for finder patterns (using halos)
         if pulse:
-            animation_styles.append(f"""
+            animation_styles.append(
+                f"""
             @keyframes qrPulse {{
                 0%, 100% {{
                     transform: scale(1);
@@ -278,26 +290,28 @@ class CoreSVGBuilder(SVGBuilder):
                     opacity: 0.1;
                 }}
             }}
-            
+
             /* Pulse effect on finder halos only, not the actual patterns */
             .finder-halo {{
                 animation: qrPulse 2s {timing} infinite;
                 transform-origin: center;
                 pointer-events: none;
             }}
-            
+
             .finder-halo:nth-child(1) {{ animation-delay: 0s; }}
             .finder-halo:nth-child(2) {{ animation-delay: 0.66s; }}
             .finder-halo:nth-child(3) {{ animation-delay: 1.33s; }}
-            
+
             /* Ensure actual finder patterns are not animated */
             .qr-finder {{
                 animation: none !important;
             }}
-            """)
-        
+            """
+            )
+
         # Respect reduced motion preferences
-        animation_styles.append("""
+        animation_styles.append(
+            """
         @media (prefers-reduced-motion: reduce) {
             .qr-root * {
                 animation: none !important;
@@ -311,6 +325,7 @@ class CoreSVGBuilder(SVGBuilder):
                 transition: none !important;
             }
         }
-        """)
-        
+        """
+        )
+
         return "\n".join(animation_styles)

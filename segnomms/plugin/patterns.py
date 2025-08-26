@@ -4,7 +4,7 @@ This module handles pattern-specific shape and color mapping, as well as
 specialized rendering parameters for different QR code pattern types.
 """
 
-from typing import Tuple
+from typing import Any, Dict, Tuple
 
 from ..config import RenderingConfig
 
@@ -60,8 +60,8 @@ def _get_pattern_specific_style(
 
 
 def _get_pattern_specific_render_kwargs(
-    config: RenderingConfig, module_type: str, base_kwargs: dict
-) -> dict:
+    config: RenderingConfig, module_type: str, base_kwargs: Dict[str, Any]
+) -> Dict[str, Any]:
     """Get pattern-specific rendering parameters.
 
     Args:

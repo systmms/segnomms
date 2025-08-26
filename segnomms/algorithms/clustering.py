@@ -122,40 +122,39 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
 
         return clusters
 
-    def cluster_modules(self, modules, **kwargs):
+    def cluster_modules(self, modules: Any, **kwargs: Any) -> List[Dict[str, Any]]:
         """Alias for process() method for backward compatibility.
-        
+
         Args:
             modules: Either a 2D matrix or list of (row, col, active) tuples
             **kwargs: Additional parameters passed to process()
-            
+
         Returns:
             List of cluster dictionaries
         """
         # Convert list of tuples to matrix format if needed
         if isinstance(modules, list) and modules and len(modules[0]) == 3:
             # Convert (row, col, active) tuples to matrix
-            if not modules:
-                return []
-            
+
             max_row = max(pos[0] for pos in modules)
             max_col = max(pos[1] for pos in modules)
             matrix = [[False for _ in range(max_col + 1)] for _ in range(max_row + 1)]
-            
+
             for row, col, active in modules:
                 if active:
                     matrix[row][col] = True
         else:
             matrix = modules
-            
+
         # Use a mock detector for compatibility
-        from ..core.detector import ModuleDetector
         from unittest.mock import Mock
-        
+
+        from ..core.detector import ModuleDetector
+
         mock_detector = Mock(spec=ModuleDetector)
         mock_detector.get_module_type.return_value = "data"
         mock_detector.get_neighbors.return_value = []
-        
+
         return self.process(matrix, mock_detector, **kwargs)
 
     def _find_connected_component(
@@ -522,7 +521,10 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
             )
         else:
             # Simple rectangle
-            path = f"M {x} {y} L {x + width} {y} L {x + width} {y + height} L {x} {y + height} Z"
+            path = (
+                f"M {x} {y} L {x + width} {y} "
+                f"L {x + width} {y + height} L {x} {y + height} Z"
+            )
 
         # Apply frame clipping if needed
         if path_clipper and path_clipper.frame_shape != "square":
