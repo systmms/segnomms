@@ -6,7 +6,14 @@ for automatic validation and type safety.
 
 from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator, ValidationInfo
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
 
 
 class SVGElementConfig(BaseModel):
@@ -44,7 +51,7 @@ class SVGElementConfig(BaseModel):
     )
 
     @model_validator(mode="before")
-    @classmethod  
+    @classmethod
     def handle_css_class_aliases(cls, values: Any) -> Any:
         """Handle both 'css_class' and 'class' parameter names."""
         if isinstance(values, dict):
@@ -187,7 +194,9 @@ class GradientConfig(BaseModel):
 
     @field_validator("stops")
     @classmethod
-    def validate_stops(cls, v: Optional[List[float]], info: ValidationInfo) -> Optional[List[float]]:
+    def validate_stops(
+        cls, v: Optional[List[float]], info: ValidationInfo
+    ) -> Optional[List[float]]:
         """Validate gradient stops match color count."""
         if v is not None and "colors" in info.data:
             if len(v) != len(info.data["colors"]):

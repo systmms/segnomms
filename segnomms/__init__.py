@@ -14,7 +14,7 @@ backward compatibility.
 Features:
 
 * **Intent-Based Configuration**: Structured, type-safe configuration with automatic validation
-* **Multiple Shape Renderers**: 14+ shapes including squares, circles, stars, and connected shapes  
+* **Multiple Shape Renderers**: 14+ shapes including squares, circles, stars, and connected shapes
 * **Context-Aware Shapes**: Adaptive shapes based on neighboring modules
 * **Safe Mode**: Preserves QR code scannability using simple shapes for critical patterns
 * **CSS Classes & Interactivity**: Full styling and animation support
@@ -40,7 +40,7 @@ Example:
 
         # Generate with comprehensive error handling
         result = render_with_intents(payload, intents)
-        
+
         # Check for warnings and degradations
         if result.has_warnings:
             for warning in result.warnings:
@@ -133,7 +133,7 @@ try:
         get_capability_manifest,
         get_supported_features,
     )
-    
+
     _capabilities_available = True
 except ImportError:
     _capabilities_available = False
@@ -147,7 +147,7 @@ try:
         process_intents,
         render_with_intents,
     )
-    
+
     _intents_available = True
 except ImportError:
     _intents_available = False

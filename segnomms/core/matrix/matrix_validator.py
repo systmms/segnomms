@@ -13,12 +13,14 @@ from ..geometry import CenterpieceGeometry
 
 class PatternStats(TypedDict):
     """Statistics for pattern preservation analysis."""
+
     preserved: int
     affected: int
 
 
 class PatternAnalysis(TypedDict):
     """Analysis of QR pattern preservation."""
+
     finder_patterns: PatternStats
     timing_patterns: PatternStats
     alignment_patterns: PatternStats
@@ -30,6 +32,7 @@ class PatternAnalysis(TypedDict):
 
 class IntegrityReport(TypedDict):
     """Matrix integrity validation report."""
+
     finder_patterns_intact: bool
     timing_patterns_intact: bool
     data_regions_accessible: bool
@@ -39,6 +42,7 @@ class IntegrityReport(TypedDict):
 
 class ScanabilityAssessment(TypedDict):
     """Comprehensive scanability assessment."""
+
     overall_score: float
     pattern_integrity: float
     data_preservation: float
@@ -46,6 +50,7 @@ class ScanabilityAssessment(TypedDict):
     error_tolerance: float
     recommendations: List[str]
     risk_factors: List[str]
+
 
 logger = logging.getLogger(__name__)
 
@@ -408,7 +413,9 @@ class MatrixValidator:
         else:
             analysis["timing_patterns"]["preserved"] += 1
 
-    def _analyze_alignment_patterns(self, config: Any, analysis: PatternAnalysis) -> None:
+    def _analyze_alignment_patterns(
+        self, config: Any, analysis: PatternAnalysis
+    ) -> None:
         """Analyze alignment pattern preservation (for larger QR codes)."""
         # Simplified - would need actual QR version to determine alignment positions
         # For now, assume no alignment patterns in smaller codes
@@ -589,7 +596,9 @@ class MatrixValidator:
 
         return recommendations
 
-    def _identify_risk_factors(self, config: Any, assessment: ScanabilityAssessment) -> List[str]:
+    def _identify_risk_factors(
+        self, config: Any, assessment: ScanabilityAssessment
+    ) -> List[str]:
         """Identify risk factors that might affect scanning reliability."""
         risk_factors = []
 

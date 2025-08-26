@@ -50,7 +50,9 @@ class ModuleDetector(QRCodeAnalyzer):
         >>> print(module_type)  # 'data'
     """
 
-    def __init__(self, matrix: List[List[bool]], version: Optional[Union[int, str]] = None):
+    def __init__(
+        self, matrix: List[List[bool]], version: Optional[Union[int, str]] = None
+    ):
         """Initialize the detector with QR code matrix and optional version.
 
         Args:

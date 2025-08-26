@@ -227,9 +227,7 @@ def _get_validation_capabilities() -> ValidationCapabilities:
     """Discover validation capabilities from existing implementation."""
 
     return ValidationCapabilities(
-        scanability_validation=FeatureSupport(
-            supported=True, version_added="0.0.0b3"
-        ),
+        scanability_validation=FeatureSupport(supported=True, version_added="0.0.0b3"),
         contrast_validation=FeatureSupport(supported=False),
         frame_safety=FeatureSupport(supported=True),
         centerpiece_safety=FeatureSupport(supported=True),
@@ -253,9 +251,7 @@ def _get_api_capabilities() -> APICapabilities:
     """Discover API capabilities from existing implementation."""
 
     return APICapabilities(
-        pydantic_validation=FeatureSupport(
-            supported=True, version_added="0.0.0b3"
-        ),
+        pydantic_validation=FeatureSupport(supported=True, version_added="0.0.0b3"),
         json_schema=FeatureSupport(supported=True),
         configuration_presets=FeatureSupport(supported=True),
         serialization=FeatureSupport(supported=True),

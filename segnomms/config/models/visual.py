@@ -5,9 +5,9 @@ centerpieces, quiet zones, and pattern-specific styling.
 """
 
 from typing import Any, Dict, Literal, Optional
-from typing_extensions import Self
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from typing_extensions import Self
 
 from ..enums import PlacementMode, ReserveMode
 
@@ -319,7 +319,9 @@ class StyleConfig(BaseModel):
 
     @field_validator("css_classes")
     @classmethod
-    def validate_css_classes(cls, v: Optional[Dict[str, str]]) -> Optional[Dict[str, str]]:
+    def validate_css_classes(
+        cls, v: Optional[Dict[str, str]]
+    ) -> Optional[Dict[str, str]]:
         """Validate CSS class names."""
         if v is not None:
             # Valid keys with qr_ prefix (new format)
@@ -327,7 +329,7 @@ class StyleConfig(BaseModel):
                 "qr_module",
                 "qr_finder",
                 "qr_finder_inner",
-                "qr_timing", 
+                "qr_timing",
                 "qr_alignment",
                 "qr_alignment_center",
                 "qr_format",
@@ -349,7 +351,7 @@ class StyleConfig(BaseModel):
                 "cluster",
             ]
             valid_keys = prefixed_keys + unprefixed_keys
-            
+
             for key in v.keys():
                 if key not in valid_keys:
                     raise ValueError(

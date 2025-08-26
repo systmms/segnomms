@@ -21,6 +21,7 @@ from ..config import AdvancedQRConfig
 
 class SegnoMakeParams(TypedDict, total=False):
     """Type definition for segno.make() parameters."""
+
     error: Optional[str]
     version: Optional[int]
     encoding: Optional[str]
@@ -30,6 +31,7 @@ class SegnoMakeParams(TypedDict, total=False):
 
 class SegnoSequenceParams(TypedDict, total=False):
     """Type definition for segno.make_sequence() parameters."""
+
     error: Optional[str]
     boost_error: bool  # segno expects bool, not Optional[bool]
     encoding: Optional[str]
@@ -40,6 +42,7 @@ class SegnoSequenceParams(TypedDict, total=False):
 
 class AnalysisDict(TypedDict, total=False):
     """Type definition for encoding analysis results."""
+
     ascii_compatible: bool
     latin1_compatible: bool
     requires_unicode: bool
@@ -51,10 +54,12 @@ class AnalysisDict(TypedDict, total=False):
 
 class RecommendationsDict(TypedDict):
     """Type definition for encoding recommendations."""
+
     recommended_encoding: Optional[str]
     needs_eci: bool
     analysis: AnalysisDict
     alternatives: List[str]
+
 
 logger = logging.getLogger(__name__)
 
@@ -298,7 +303,10 @@ class AdvancedQRGenerator:
         """Generate structured append QR code sequence."""
 
         # Prepare Segno parameters for sequence
-        sequence_params: SegnoSequenceParams = {"error": error, "boost_error": config.boost_error}
+        sequence_params: SegnoSequenceParams = {
+            "error": error,
+            "boost_error": config.boost_error,
+        }
 
         # Add encoding if specified
         if config.encoding:
@@ -310,7 +318,7 @@ class AdvancedQRGenerator:
         if config.eci_enabled:
             metadata["eci_enabled"] = True
             warnings.append("ECI mode not supported for structured append sequences")
-            
+
             if not config.encoding:
                 sequence_params["encoding"] = "UTF-8"
                 metadata["encoding"] = "UTF-8"
@@ -386,7 +394,7 @@ class AdvancedQRGenerator:
             )
 
         except Exception as e:
-            # Try fallback - since ECI is already not in sequence_params, 
+            # Try fallback - since ECI is already not in sequence_params,
             # try without encoding if encoding was the issue
             if config.encoding and "encoding" in sequence_params:
                 logger.info(

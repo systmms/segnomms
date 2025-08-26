@@ -118,8 +118,8 @@ class AccessibilityBuilder:
             "g",
             attrib={
                 "id": "segnomms-background",
-                "class": "qr-layer-background", 
-                "aria-hidden": "true"
+                "class": "qr-layer-background",
+                "aria-hidden": "true",
             },
         )
         layers["background"] = bg_group
@@ -130,8 +130,8 @@ class AccessibilityBuilder:
             "g",
             attrib={
                 "id": "segnomms-quiet-zone",
-                "class": "qr-layer-quiet-zone", 
-                "aria-hidden": "true"
+                "class": "qr-layer-quiet-zone",
+                "aria-hidden": "true",
             },
         )
         layers["quiet_zone"] = qz_group
@@ -142,8 +142,8 @@ class AccessibilityBuilder:
             "g",
             attrib={
                 "id": "segnomms-modules",
-                "class": "qr-modules", 
-                "role": "presentation"
+                "class": "qr-modules",
+                "role": "presentation",
             },
         )
         layers["modules"] = modules_group
@@ -151,7 +151,7 @@ class AccessibilityBuilder:
         # Pattern groups within modules (also returned as accessible layers)
         for pattern_type in [
             "finder",
-            "timing", 
+            "timing",
             "alignment",
             "format",
             "version",
@@ -171,19 +171,19 @@ class AccessibilityBuilder:
         # Effects layer (direct child of SVG - for frame effects, overlays, etc.)
         effects_group = ET.SubElement(
             svg,
-            "g", 
+            "g",
             attrib={
                 "id": "segnomms-frame-effects",
-                "class": "frame-effects", 
-                "pointer-events": "none"
-            }
+                "class": "frame-effects",
+                "pointer-events": "none",
+            },
         )
         layers["effects"] = effects_group
 
         # Frame layer (for backward compatibility)
         layers["frame"] = effects_group
 
-        # Interactive overlay layer (for backward compatibility)  
+        # Interactive overlay layer (for backward compatibility)
         layers["overlay"] = effects_group
 
         return layers

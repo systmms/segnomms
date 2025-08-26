@@ -95,10 +95,11 @@ def _export_configuration(
         # Prepare configuration data
         try:
             from .. import __version__
+
             segnomms_version = __version__
         except ImportError:
             segnomms_version = "unknown"
-            
+
         config_data = {
             "segnomms_version": segnomms_version,
             "schema_version": "1.0",

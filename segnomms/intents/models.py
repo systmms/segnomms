@@ -21,13 +21,17 @@ class PayloadConfig(BaseModel):
     text: Optional[str] = Field(default=None, description="Text content to encode")
     url: Optional[str] = Field(default=None, description="URL to encode")
     data: Optional[bytes] = Field(default=None, description="Binary data to encode")
-    
+
     # Common payload types
     email: Optional[str] = Field(default=None, description="Email address to encode")
     phone: Optional[str] = Field(default=None, description="Phone number to encode")
     sms: Optional[str] = Field(default=None, description="SMS content to encode")
-    wifi_ssid: Optional[str] = Field(default=None, description="WiFi SSID for network config")
-    wifi_password: Optional[str] = Field(default=None, description="WiFi password for network config")
+    wifi_ssid: Optional[str] = Field(
+        default=None, description="WiFi SSID for network config"
+    )
+    wifi_password: Optional[str] = Field(
+        default=None, description="WiFi password for network config"
+    )
 
     # Advanced QR features (client requirement)
     eci: Optional[int] = Field(
@@ -42,7 +46,17 @@ class PayloadConfig(BaseModel):
     @model_validator(mode="after")
     def validate_content_specified(self) -> "PayloadConfig":
         """Ensure at least one content type is specified."""
-        if not any([self.text, self.url, self.data, self.email, self.phone, self.sms, self.wifi_ssid]):
+        if not any(
+            [
+                self.text,
+                self.url,
+                self.data,
+                self.email,
+                self.phone,
+                self.sms,
+                self.wifi_ssid,
+            ]
+        ):
             raise ValueError("At least one content type must be specified")
         return self
 

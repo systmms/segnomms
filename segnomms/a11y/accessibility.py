@@ -525,7 +525,7 @@ class AccessibilityEnhancer:
         if title_elem is None:
             issues.append("Missing title element for accessibility")
 
-        # Check for description element (optional but good for comprehensive 
+        # Check for description element (optional but good for comprehensive
         # accessibility)
         # desc_elem = svg_root.find("desc")  # Not currently used
 

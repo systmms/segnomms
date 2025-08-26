@@ -9,6 +9,7 @@ import time
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from typing import Any, DefaultDict, Dict, List, Optional, Tuple, Union
+
 from ..performance import get_performance_monitor
 
 logger = logging.getLogger(__name__)
@@ -43,8 +44,12 @@ class CenterpiecePerformanceMonitor:
         """
         self.max_history = max_history
         self.matrix_size = matrix_size
-        self.metrics_history: deque[CenterpiecePerformanceMetric] = deque(maxlen=max_history)
-        self.operation_stats: DefaultDict[str, List[CenterpiecePerformanceMetric]] = defaultdict(list)
+        self.metrics_history: deque[CenterpiecePerformanceMetric] = deque(
+            maxlen=max_history
+        )
+        self.operation_stats: DefaultDict[str, List[CenterpiecePerformanceMetric]] = (
+            defaultdict(list)
+        )
 
         # Performance thresholds (in seconds)
         self.performance_thresholds = {
@@ -191,7 +196,12 @@ class CenterpiecePerformanceMonitor:
                 f"Consider reducing size or using imprint mode."
             )
 
-        if config and hasattr(config, 'shape') and config.shape == "squircle" and area > 15:  # Lower threshold for squircles
+        if (
+            config
+            and hasattr(config, "shape")
+            and config.shape == "squircle"
+            and area > 15
+        ):  # Lower threshold for squircles
             warnings.append(
                 "Squircle shapes with large areas require complex calculations. "
                 "Consider using circle or rect for better performance."
