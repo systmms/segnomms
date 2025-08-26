@@ -57,7 +57,7 @@ tests/coverage/
 example_*.svg
 example_*.py
 
-# Test SVG files in root directory  
+# Test SVG files in root directory
 test_*.svg
 test_coordinates*.svg
 test_coordinates*.json
@@ -140,6 +140,10 @@ site/
 *_IMPLEMENTATION.md
 *_PLAN.md
 REQUIREMENTS_*.md
+
+# Generated documentation reports
+doc-coverage.md
+docs/doc-coverage.md
 
 # Performance profiling
 *.prof
