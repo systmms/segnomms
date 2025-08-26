@@ -22,10 +22,10 @@ pre-commit:
       exclude: "examples/**/*.py"
       # Temporary ignores - working to systematically remove these rules:
       # F401: Unused imports, F841: Unused variables (Priority 1) - PARTIAL
-      # E226: Operator spacing, E712: Boolean comparison, E501: Line length (Priority 2)
       # E402: Import placement, F541: f-string placeholders, E722: Bare except (Priority 3)
       # REMOVED: F821 (undefined names), F811 (redefinitions) - FIXED ✅
-      run: flake8 --extend-ignore=E402,F841,F541,E501,E722,F401,E226,E712 {staged_files}
+      # REMOVED: E226 (operator spacing), E712 (boolean comparison), E501 (line length) - FIXED ✅
+      run: flake8 --extend-ignore=E402,F841,F541,E722,F401 {staged_files}
     # General file checks
     trailing-whitespace:
       run: |
