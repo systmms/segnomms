@@ -385,9 +385,9 @@ class TestAlgorithmBenchmarks:
 
     def _report_benchmark_results(self, algorithm_name: str, results: List[BenchmarkResult]):
         """Report benchmark results in a formatted way."""
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"BENCHMARK RESULTS: {algorithm_name}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         for result in results:
             print(f"\n{result.name}:")
@@ -496,9 +496,9 @@ class TestScalabilityBenchmarks:
 
     def _analyze_scaling_behavior(self, algorithm_name: str, results: List[Tuple]):
         """Analyze and report scaling behavior."""
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"SCALING ANALYSIS: {algorithm_name}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         for version, size, result in results:
             print(

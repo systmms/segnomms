@@ -177,7 +177,7 @@ class TestDegradationRules:
         degraded = rule.apply_fallback(config)
         assert degraded.geometry.shape == "square"
         assert degraded.geometry.corner_radius == 0.0
-        assert degraded.patterns.enabled == False
+        assert not degraded.patterns.enabled
 
     def test_fade_frame_with_pattern_styling_rule(self):
         """Test fade frame conflict detection."""
