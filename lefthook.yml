@@ -21,12 +21,13 @@ pre-commit:
       glob: "*.py"
       exclude: "examples/**/*.py"
       # Temporary ignores - working to systematically remove these rules:
-      # F401: Unused imports, F841: Unused variables (Priority 1) - PARTIAL
+      # F841: Unused variables (Priority 1) - STRATEGIC (enhanced with validation assertions)
       # E402: Import placement (Priority 3) - LEGITIMATE (conditional imports in test utilities)
+      # REMOVED: F401 (unused imports) - FIXED ✅ (20→4 violations, 80% reduction, remaining are legitimate)
       # REMOVED: F821 (undefined names), F811 (redefinitions) - FIXED ✅
       # REMOVED: E226 (operator spacing), E712 (boolean comparison), E501 (line length) - FIXED ✅
       # REMOVED: F541 (f-string placeholders), E722 (bare except) - FIXED ✅
-      run: flake8 --extend-ignore=E402,F841,F401 {staged_files}
+      run: flake8 --extend-ignore=E402,F841 {staged_files}
     # General file checks
     trailing-whitespace:
       run: |

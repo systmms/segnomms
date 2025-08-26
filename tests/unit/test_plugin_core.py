@@ -29,10 +29,7 @@ from segnomms.plugin import (
     _render_cluster,
 )
 from tests.constants import (
-    DEFAULT_BORDER,
-    DEFAULT_SCALE,
     TEST_COLORS,
-    create_test_config,
 )
 
 

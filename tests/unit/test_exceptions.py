@@ -3,12 +3,9 @@
 import pytest
 
 from segnomms.exceptions import (
-    CapabilityError,
     CapabilityManifestError,
-    ColorError,
     ConfigurationError,
     ContrastRatioError,
-    DependencyError,
     FeatureNotSupportedError,
     IncompatibleConfigError,
     IntentDegradationError,

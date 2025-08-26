@@ -2,11 +2,7 @@
 
 import pytest
 
-from segnomms.exceptions import (
-    ConfigurationError,
-    IntentValidationError,
-    UnsupportedIntentError,
-)
+# Custom exceptions would be imported here if needed for specific error testing
 from segnomms.intents import (
     IntentsConfig,
     PayloadConfig,

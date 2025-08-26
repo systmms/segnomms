@@ -6,7 +6,6 @@ from segnomms.config import (
     CenterpieceConfig,
     FrameConfig,
     MergeStrategy,
-    ModuleShape,
     QuietZoneConfig,
     RenderingConfig,
 )

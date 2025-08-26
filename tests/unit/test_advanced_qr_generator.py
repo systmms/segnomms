@@ -9,7 +9,6 @@ import pytest
 
 from segnomms.config import AdvancedQRConfig
 from segnomms.core.advanced_qr import (
-    AdvancedQRGenerator,
     QRGenerationResult,
     create_advanced_qr_generator,
 )
