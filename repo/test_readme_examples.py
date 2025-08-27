@@ -52,16 +52,45 @@ def test_code_block(code: str, block_number: int) -> bool:
         return True
 
     # Create temporary file for the code
+    temp_file = None
     try:
         with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
-            f.write(code)
+            # Add necessary imports and setup at the beginning
+            setup_code = """
+import sys
+import os
+# Add the project root to Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+"""
+            f.write(setup_code + code)
             temp_file = f.name
 
-        # Execute the code with timeout
-        result = subprocess.run([sys.executable, temp_file], capture_output=True, text=True, timeout=30)
+        # Set up environment for subprocess
+        env = os.environ.copy()
+        project_root = str(Path(__file__).parent.parent.absolute())
+
+        # Add project root to PYTHONPATH
+        pythonpath = env.get("PYTHONPATH", "")
+        if pythonpath:
+            env["PYTHONPATH"] = f"{project_root}:{pythonpath}"
+        else:
+            env["PYTHONPATH"] = project_root
+
+        # Execute the code with timeout and proper environment
+        result = subprocess.run(
+            [sys.executable, temp_file], capture_output=True, text=True, timeout=30, env=env
+        )
 
         if result.returncode == 0:
             print(f"  ✅ Code block {block_number} executed successfully")
+            if result.stdout.strip():
+                # Show first few lines of output
+                output_lines = result.stdout.strip().split("\n")[:2]
+                for line in output_lines:
+                    print(f"     Output: {line}")
             return True
         else:
             print(f"  ❌ Code block {block_number} failed:")
@@ -79,7 +108,7 @@ def test_code_block(code: str, block_number: int) -> bool:
         return False
     finally:
         # Clean up temporary file
-        if "temp_file" in locals():
+        if temp_file:
             try:
                 os.unlink(temp_file)
             except OSError:

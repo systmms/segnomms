@@ -16,58 +16,27 @@ jobs:
   coverage-analysis:
     name: Coverage Analysis
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Run comprehensive test coverage
-      run: |
-        # Run all tests with coverage
-        uv run pytest tests/ \
-          --cov=segnomms \
-          --cov-report=html \
-          --cov-report=xml \
-          --cov-report=term-missing \
-          --cov-fail-under=80 \
-          --cov-branch \
-          -v
-          
+      run: repo/run_comprehensive_coverage.sh
+
     - name: Generate coverage badge
-      run: |
-        # Extract coverage percentage
-        COVERAGE=$(uv run coverage report --format=total)
-        echo "Coverage: ${COVERAGE}%"
-        
-        # Create badge color based on coverage
-        if [ "$COVERAGE" -ge 90 ]; then
-          COLOR="brightgreen"
-        elif [ "$COVERAGE" -ge 80 ]; then
-          COLOR="green"
-        elif [ "$COVERAGE" -ge 70 ]; then
-          COLOR="yellowgreen"
-        elif [ "$COVERAGE" -ge 60 ]; then
-          COLOR="yellow"
-        elif [ "$COVERAGE" -ge 50 ]; then
-          COLOR="orange"
-        else
-          COLOR="red"
-        fi
-        
-        # Generate badge URL
-        echo "COVERAGE_BADGE=https://img.shields.io/badge/coverage-${COVERAGE}%25-${COLOR}" >> $GITHUB_ENV
-        echo "COVERAGE_PERCENT=${COVERAGE}" >> $GITHUB_ENV
-        
+      run: repo/generate_coverage_badge.sh
+
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4
       with:
@@ -75,31 +44,16 @@ jobs:
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
-        
+
     - name: Upload HTML coverage report
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report-html
         path: htmlcov/
-        
+
     - name: Generate coverage summary
-      run: |
-        echo "## 📊 Coverage Report" > coverage-summary.md
-        echo "" >> coverage-summary.md
-        echo "**Overall Coverage: ${{ env.COVERAGE_PERCENT }}%**" >> coverage-summary.md
-        echo "" >> coverage-summary.md
-        echo "![Coverage Badge](${{ env.COVERAGE_BADGE }})" >> coverage-summary.md
-        echo "" >> coverage-summary.md
-        
-        # Add detailed module coverage
-        echo "### Module Coverage Details" >> coverage-summary.md
-        echo "" >> coverage-summary.md
-        echo "| Module | Coverage | Missing Lines |" >> coverage-summary.md
-        echo "|--------|----------|---------------|" >> coverage-summary.md
-        
-        # Parse coverage report for module details
-        uv run coverage report --format=markdown >> coverage-summary.md || true
-        
+      run: repo/generate_coverage_summary.sh
+
     - name: Comment coverage on PR
       if: github.event_name == 'pull_request'
       uses: actions/github-script@v7
@@ -108,7 +62,7 @@ jobs:
           const fs = require('fs');
           try {
             const summary = fs.readFileSync('coverage-summary.md', 'utf8');
-            
+
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -123,29 +77,29 @@ jobs:
     name: Coverage Diff
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    
+
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Run coverage for current branch
       run: |
         uv run pytest tests/ --cov=segnomms --cov-report=xml:coverage-current.xml -q
         CURRENT_COVERAGE=$(uv run coverage report --format=total)
-        echo "CURRENT_COVERAGE=${CURRENT_COVERAGE}" >> $GITHUB_ENV
-        
+        echo "CURRENT_COVERAGE=${CURRENT_COVERAGE}" >> "${GITHUB_ENV}"
+
     - name: Run coverage for base branch
       run: |
         git checkout origin/${{ github.base_ref }}
@@ -153,24 +107,11 @@ jobs:
         uv pip install -e .
         uv run pytest tests/ --cov=segnomms --cov-report=xml:coverage-base.xml -q || true
         BASE_COVERAGE=$(uv run coverage report --format=total 2>/dev/null || echo "0")
-        echo "BASE_COVERAGE=${BASE_COVERAGE}" >> $GITHUB_ENV
-        
+        echo "BASE_COVERAGE=${BASE_COVERAGE}" >> "${GITHUB_ENV}"
+
     - name: Calculate coverage diff
-      run: |
-        DIFF=$((CURRENT_COVERAGE - BASE_COVERAGE))
-        echo "COVERAGE_DIFF=${DIFF}" >> $GITHUB_ENV
-        
-        if [ "$DIFF" -gt 0 ]; then
-          echo "DIFF_ICON=📈" >> $GITHUB_ENV
-          echo "DIFF_COLOR=green" >> $GITHUB_ENV
-        elif [ "$DIFF" -lt 0 ]; then
-          echo "DIFF_ICON=📉" >> $GITHUB_ENV  
-          echo "DIFF_COLOR=red" >> $GITHUB_ENV
-        else
-          echo "DIFF_ICON=➡️" >> $GITHUB_ENV
-          echo "DIFF_COLOR=gray" >> $GITHUB_ENV
-        fi
-        
+      run: repo/calculate_coverage_diff.sh
+
     - name: Comment coverage diff
       uses: actions/github-script@v7
       with:
@@ -179,21 +120,21 @@ jobs:
           const current = process.env.CURRENT_COVERAGE;
           const base = process.env.BASE_COVERAGE;
           const icon = process.env.DIFF_ICON;
-          
+
           const diffText = diff > 0 ? `+${diff}%` : `${diff}%`;
-          
+
           const body = `## ${icon} Coverage Comparison
-          
+
           | | Coverage |
           |---|---|
           | **Current Branch** | ${current}% |
           | **Base Branch** | ${base}% |
           | **Difference** | ${diffText} |
-          
+
           ${diff < -5 ? '⚠️ **Warning:** Significant coverage decrease detected!' : ''}
           ${diff > 5 ? '🎉 **Great!** Coverage improved significantly!' : ''}
           `;
-          
+
           await github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
@@ -206,14 +147,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [coverage-analysis, coverage-diff]
     if: always()
-    
+
     steps:
     - name: Check coverage requirements
       run: |
         echo "Coverage quality gate evaluation:"
-        
+
         # This is a placeholder for more sophisticated quality gate logic
         # In a real implementation, you would check the coverage results
         # and fail the job if coverage falls below thresholds
-        
+
         echo "✅ Coverage quality gate passed"

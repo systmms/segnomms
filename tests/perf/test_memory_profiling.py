@@ -132,8 +132,8 @@ class TestMemoryProfiling:
         """Create QR matrices for memory testing."""
         matrices = {}
 
-        # Small matrix
-        matrices["small"] = [[True, False] * 10 for _ in range(21)]
+        # Small matrix (21x21)
+        matrices["small"] = [[i % 2 == 0 for i in range(21)] for _ in range(21)]
 
         # Medium matrix
         matrices["medium"] = [[i % 2 == 0 for i in range(57)] for _ in range(57)]
@@ -155,6 +155,8 @@ class TestMemoryProfiling:
         for size_name, matrix in qr_matrices.items():
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
+            # Mock get_neighbors to return empty list (no neighbors to process)
+            detector.get_neighbors.return_value = []
 
             # Create manipulator and take snapshot
             manipulator = MatrixManipulator(matrix, detector)
@@ -193,6 +195,8 @@ class TestMemoryProfiling:
         for size_name, matrix in qr_matrices.items():
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
+            # Mock get_neighbors to return empty list (no neighbors to process)
+            detector.get_neighbors.return_value = []
 
             # Perform clustering and monitor memory
             clusters = analyzer.process(matrix, detector)
@@ -361,6 +365,8 @@ class TestMemoryLeakDetection:
             matrix = [[True, False] * 10 for _ in range(20)]
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
+            # Mock get_neighbors to return empty list (no neighbors to process)
+            detector.get_neighbors.return_value = []
 
             manipulator = MatrixManipulator(matrix, detector)
             bounds = manipulator.get_module_bounds()
@@ -394,6 +400,8 @@ class TestMemoryLeakDetection:
             matrix = [[True] * size for _ in range(size)]  # Dense matrix
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
+            # Mock get_neighbors to return empty list (no neighbors to process)
+            detector.get_neighbors.return_value = []
 
             clusters = analyzer.process(matrix, detector)
 

@@ -158,6 +158,8 @@ class TestAlgorithmBenchmarks:
         for size_name, matrix in qr_matrices.items():
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
+            # Mock get_neighbors to return empty list (no neighbors to process)
+            detector.get_neighbors.return_value = []
             detectors[size_name] = detector
         return detectors
 
@@ -222,7 +224,7 @@ class TestAlgorithmBenchmarks:
     def test_path_clipper_benchmarks(self, benchmarker):
         """Benchmark PathClipper operations."""
         results = []
-        clipper = PathClipper()
+        clipper = PathClipper(frame_shape="square", width=200, height=200, border=10)
 
         # Test different coordinate scenarios
         coordinate_sets = [
@@ -270,7 +272,7 @@ class TestAlgorithmBenchmarks:
         """Benchmark IntentProcessor operations."""
         results = []
         config = RenderingConfig()
-        processor = IntentProcessor(config)
+        processor = IntentProcessor()
 
         # Test different intent complexity levels
         intent_scenarios = [

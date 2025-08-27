@@ -29,15 +29,15 @@ jobs:
             segno-version: '1.5.2'
           - os: macos-latest
             segno-version: '1.5.2'
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -47,11 +47,11 @@ jobs:
           pip install segno==${{ matrix.segno-version }}
         fi
         pip install -e ".[test]"
-    
+
     - name: Run tests
       run: |
         pytest tests/ -v --cov=segnomms --cov-report=xml --cov-report=term
-    
+
     - name: Upload coverage to Codecov
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
       uses: codecov/codecov-action@v4
@@ -60,122 +60,56 @@ jobs:
         flags: unittests
         name: codecov-umbrella
 
-  test-pyodide:
+  test-wheel:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    
-    - name: Install Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-    
-    - name: Build package for Pyodide
+
+    - name: Build package wheel
       run: |
         pip install build wheel
         python -m build --wheel
-    
-    - name: Install test dependencies
-      run: |
-        pip install playwright pytest-playwright
-        npx playwright install chromium
-    
-    - name: Run comprehensive Pyodide tests
-      run: |
-        WHEEL_FILE=$(ls dist/*.whl | head -1)
-        python scripts/test_pyodide_full.py "$WHEEL_FILE" --verbose
-    
-    - name: Test with pytest-pyodide (fallback)
-      if: failure()
-      run: |
-        npm install pyodide@0.24.1
-        python -m pip install --upgrade pip
-        pip install pytest pytest-pyodide selenium
-        
-        cat > test_pyodide.py << 'EOF'
-        import pytest
-        
-        @pytest.mark.asyncio
-        async def test_segnomms_in_pyodide(selenium_standalone, wheel_file):
-            selenium = selenium_standalone
-            
-            # Load Pyodide
-            selenium.run_js("""
-                let pyodide = await loadPyodide();
-                await pyodide.loadPackage(['micropip']);
-                globalThis.pyodide = pyodide;
-            """)
-            
-            # Install the wheel
-            selenium.run_js(f"""
-                await pyodide.runPythonAsync(`
-                    import micropip
-                    await micropip.install('file://{wheel_file}')
-                `);
-            """)
-            
-            # Test import
-            result = selenium.run_js("""
-                return await pyodide.runPythonAsync(`
-                    import segnomms
-                    import segno
-                    
-                    # Test plugin registration
-                    qr = segno.make('Test')
-                    has_plugin = hasattr(qr, 'interactive_svg')
-                    
-                    # Test SVG generation
-                    if has_plugin:
-                        svg = qr.interactive_svg()
-                        svg_valid = svg is not None and '<svg' in str(svg)
-                    else:
-                        svg_valid = False
-                    
-                    f"Plugin: {has_plugin}, SVG: {svg_valid}"
-                `);
-            """)
-            
-            assert "Plugin: True" in result
-            assert "SVG: True" in result
-        EOF
-        
-        WHEEL_FILE=$(realpath dist/*.whl)
-        python -m pytest test_pyodide.py -v --wheel-file="$WHEEL_FILE"
+
+    - name: Test wheel installation
+      run: repo/test_wheel_installation.sh
 
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -e ".[dev]"
-    
+        uv sync
+        uv pip install -e .
+
     - name: Lint with flake8
       run: |
-        flake8 segnomms tests
-    
+        uv run flake8 segnomms tests
+
     - name: Check formatting with black
       run: |
-        black --check segnomms tests
-    
+        uv run black --check segnomms tests
+
     - name: Check import order with isort
       run: |
-        isort --check-only segnomms tests
-    
+        uv run isort --check-only segnomms tests
+
     - name: Type check with mypy
       run: |
-        mypy segnomms
+        uv run mypy segnomms
