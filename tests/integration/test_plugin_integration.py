@@ -320,7 +320,6 @@ class TestExportConfiguration:
 
     def test_export_to_file(self, basic_config, tmp_path):
         """Test exporting configuration to file."""
-        config_file = tmp_path / "config.json"
         metadata = {"test": "value", "modules": 123}
 
         svg_file = tmp_path / "test.svg"
@@ -340,8 +339,6 @@ class TestExportConfiguration:
 
     def test_export_config_only(self, full_config, tmp_path):
         """Test exporting configuration without metadata."""
-        config_file = tmp_path / "config.json"
-
         svg_file = tmp_path / "test.svg"
         result_path = _export_configuration(full_config, svg_file)
 
@@ -418,7 +415,6 @@ class TestIntegrationPipeline:
     def test_full_pipeline_with_all_features(self, tmp_path):
         """Test complete pipeline with all features enabled."""
         output_file = str(tmp_path / "full_features.svg")
-        config_file = str(tmp_path / "config.json")
 
         content = "https://example.com/full-test"
 
@@ -473,12 +469,10 @@ class TestIntegrationPipeline:
         assert tree.tag.endswith("svg")
 
         # Check for interactive elements
-        style = tree.find(".//style")
         # Style element may be missing due to validation warnings
         # Just verify we got a valid QR code structure
 
         # Check for frame elements - defs may be missing if phase4 validation failed
-        defs = tree.find(".//defs")
         # Just verify we got a valid SVG structure
         assert tree.tag.endswith("svg")
 

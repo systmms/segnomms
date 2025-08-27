@@ -98,7 +98,7 @@ class TestPhase4ValidatorAdditional:
             )
 
             with caplog.at_level(logging.WARNING):
-                errors = validator.validate_centerpiece_safety(centerpiece_config)
+                validator.validate_centerpiece_safety(centerpiece_config)
 
             assert "Large centerpiece margin" in caplog.text
 

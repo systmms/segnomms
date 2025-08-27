@@ -271,7 +271,7 @@ class TestModuleStructure:
         """Test that importing utils doesn't cause circular imports."""
         # This test passing means we can import without circular dependency issues
         try:
-            import segnomms.utils
+            import segnomms.utils  # noqa: F401
         except ImportError as e:
             pytest.fail(f"Circular import detected: {e}")
 
@@ -357,7 +357,7 @@ class TestErrorHandling:
         # This test just verifies the imports work
         # Real import errors would be caught during module loading
         try:
-            import segnomms.utils
+            import segnomms.utils  # noqa: F401
         except ImportError as e:
             pytest.fail(f"Unexpected import error: {e}")
 

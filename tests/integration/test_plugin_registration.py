@@ -193,10 +193,7 @@ class TestPluginIntegration:
 
         # Check for phase 4 features (if validation passed)
         # These may or may not be present depending on validation
-        svg_has_styles = "<style>" in content
-        svg_has_defs = "<defs>" in content
-
-        # At minimum we should have valid SVG
+        # Just verify we have valid SVG structure
         assert content.strip().endswith("</svg>")
 
     def test_error_handling_invalid_shape(self, output_dir):

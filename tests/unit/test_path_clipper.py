@@ -183,9 +183,6 @@ class TestPathClipper:
 
     def test_squircle_edge_cases(self, squircle_clipper):
         """Test squircle point detection edge cases."""
-        # Test with zero radius (should still work)
-        clipper_zero = PathClipper("squircle", 200, 200, 20, 0.0)
-
         # Center point with zero-size frame
         tiny_clipper = PathClipper("squircle", 20, 20, 10, 0.0)
         # Frame size is 0, so radius is 0

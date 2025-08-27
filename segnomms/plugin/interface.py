@@ -450,18 +450,39 @@ def write_advanced(content: str, out: Union[TextIO, BinaryIO, str], **kwargs: An
 def register_with_segno() -> bool:
     """Register the SegnoMMS plugin with Segno.
 
-    This function registers the write function as a plugin for the Segno
-    library, allowing it to be used via segno.plugins.
+    This function attempts to register the write function as a plugin for the Segno
+    library. Note that in modern Segno versions, plugin registration typically
+    happens automatically via entry points defined in pyproject.toml.
 
     Returns:
-        bool: True if registration successful, False otherwise
+        bool: True if registration successful or already registered, False otherwise
     """
     try:
-        import segno.plugins
+        import segno
 
-        segno.plugins.register(write, "segnomms")
-        logging.info("SegnoMMS plugin registered successfully with Segno")
-        return True
+        # Check if the plugin is already registered via entry points
+        qr = segno.make("test")
+        if hasattr(qr, "to_interactive_svg"):
+            logging.info("SegnoMMS plugin already registered via entry points")
+            return True
+
+        # Try legacy plugin registration (for older Segno versions)
+        try:
+            import segno.plugins
+
+            segno.plugins.register(write, "interactive_svg")
+            logging.info("SegnoMMS plugin registered successfully with legacy API")
+            return True
+        except ImportError:
+            # Modern Segno versions don't have segno.plugins
+            # Entry point registration should handle this automatically
+            logging.info("Using entry point registration (modern Segno)")
+            return True
+        except AttributeError:
+            # Plugin method doesn't exist in this Segno version
+            logging.warning("Legacy plugin registration not supported in this Segno version")
+            return False
+
     except ImportError:
         logging.warning("Segno not available - plugin registration skipped")
         return False

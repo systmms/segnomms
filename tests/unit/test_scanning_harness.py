@@ -410,8 +410,6 @@ class TestScanningHarnessIntegration:
 
     def test_custom_test_case_generation(self):
         """Test generating custom test cases."""
-        harness = QRScanabilityHarness()
-
         # Test custom test case creation
         custom_cases = []
 

@@ -115,19 +115,7 @@ def test_basic_shapes():
 
             analysis = analyze_svg_structure(svg_content)
 
-            # Verify expected characteristics
-            expected_elements = {
-                "square": ["rect"],
-                "circle": ["circle"],
-                "rounded": ["rect", "path"],  # Rounded rectangles often use paths
-                "dot": ["circle"],
-                "diamond": ["path", "polygon"],
-                "star": ["path", "polygon"],
-                "hexagon": ["path", "polygon"],
-                "triangle": ["path", "polygon"],
-                "cross": ["path", "polygon"],
-                "squircle": ["path"],
-            }
+            # Just verify we got some SVG elements for this shape
 
             print(f"   ✓ Generated SVG with {analysis['module_count']} elements")
             print(f"   ✓ Colors used: {analysis['colors_used']}")
@@ -187,10 +175,11 @@ def test_corner_radius_configurations():
             has_curves = rounded_elements > 0 or path_curves > 0
 
             if expected_curves == has_curves:
-                print(f"   ✅ Corner radius behavior matches expectation")
+                print("   ✅ Corner radius behavior matches expectation")
             else:
                 print(
-                    f"   ⚠️  Corner radius behavior unexpected (expected curves: {expected_curves}, found: {has_curves})"
+                    f"   ⚠️  Corner radius behavior unexpected "
+                    f"(expected curves: {expected_curves}, found: {has_curves})"
                 )
 
             results.append(
@@ -257,9 +246,9 @@ def test_safe_mode_comparison():
 
             # Safe mode should have more rectangles (squares) for functional patterns
             if config["safe_mode"]:
-                print(f"   ✅ Safe mode: Functional patterns likely preserved as squares")
+                print("   ✅ Safe mode: Functional patterns likely preserved as squares")
             else:
-                print(f"   ✅ Advanced mode: All patterns use custom shapes")
+                print("   ✅ Advanced mode: All patterns use custom shapes")
 
             results.append(
                 {
@@ -327,9 +316,9 @@ def test_color_configurations():
             print(f"   ✓ Color matches: {len(color_match)} / {len(expected_colors)}")
 
             if len(color_match) >= 1:  # At least one color should match
-                print(f"   ✅ Colors applied correctly")
+                print("   ✅ Colors applied correctly")
             else:
-                print(f"   ⚠️  Color configuration may not be applied as expected")
+                print("   ⚠️  Color configuration may not be applied as expected")
 
             results.append(
                 {
@@ -415,14 +404,12 @@ def test_finder_pattern_customization():
             print(f"   ✓ Finder elements found: {len(finder_elements)}")
             print(f"   ✓ Total finder patterns in analysis: {analysis['finder_patterns']}")
 
-            # Check for expected characteristics
-            expected_shape_elements = {"square": "rect", "rounded": ["rect", "path"], "circle": "circle"}
-
+            # Check for stroke elements if stroke is configured
             if finder_test["finder_stroke"] > 0:
                 stroke_elements = [elem for elem in finder_elements if elem["has_stroke"]]
                 print(f"   ✓ Elements with stroke: {len(stroke_elements)}")
 
-            print(f"   ✅ Finder pattern customization applied")
+            print("   ✅ Finder pattern customization applied")
 
             results.append(
                 {
@@ -483,14 +470,14 @@ def test_interactive_features():
 
             # Verify expectations
             if test_config["interactive"] == analysis["has_interactive_elements"]:
-                print(f"   ✅ Interactive setting matches result")
+                print("   ✅ Interactive setting matches result")
             else:
-                print(f"   ⚠️  Interactive setting mismatch")
+                print("   ⚠️  Interactive setting mismatch")
 
             if test_config["tooltips"] == analysis["has_tooltips"]:
-                print(f"   ✅ Tooltip setting matches result")
+                print("   ✅ Tooltip setting matches result")
             else:
-                print(f"   ⚠️  Tooltip setting mismatch")
+                print("   ⚠️  Tooltip setting mismatch")
 
             results.append(
                 {"test_config": test_config, "analysis": analysis, "svg_path": svg_path, "success": True}
@@ -538,7 +525,7 @@ def generate_summary_report(all_results):
                 error = failure.get("error", "Unknown error")
                 print(f"   - {error}")
 
-    print(f"\n🎯 OVERALL RESULTS")
+    print("\n🎯 OVERALL RESULTS")
     print(f"Total tests: {total_tests}")
     print(f"Successful: {successful_tests}")
     print(

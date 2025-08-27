@@ -164,9 +164,8 @@ class TestMatrixManipulator:
         # - Exclude points that a rectangle would include (at edges)
 
         bounds = manipulator.get_centerpiece_bounds(config)
-        x1, y1, x2, y2 = bounds["left"], bounds["top"], bounds["right"], bounds["bottom"]
-        corner_x = x2  # right edge
-        corner_y = y2  # bottom edge
+        corner_x = bounds["right"]  # right edge
+        corner_y = bounds["bottom"]  # bottom edge
 
         # Corner point should be outside squircle but inside rect
         rect_config = CenterpieceConfig(enabled=True, size=0.2, shape="rect")

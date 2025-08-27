@@ -118,6 +118,10 @@ jobs:
         uv sync
         uv pip install -e .
 
+    - name: Install documentation dependencies
+      run: |
+        uv pip install -r docs/requirements.txt
+
     - name: Test documentation build
       run: |
         make test-docs

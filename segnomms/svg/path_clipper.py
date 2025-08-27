@@ -229,6 +229,29 @@ class PathClipper:
         # In a full implementation, this would parse the path and clip it
         return path
 
+    def clip_path(self, path_data: str) -> str:
+        """Clip an SVG path to frame boundaries.
+
+        Args:
+            path_data: SVG path string to clip
+
+        Returns:
+            Clipped SVG path string
+
+        Note:
+            This is a basic implementation that returns the original path
+            for most cases. Full path parsing and clipping is a complex
+            operation that would require substantial geometry libraries.
+        """
+        # For square frames, return the original path (no complex clipping needed)
+        if self.frame_shape == "square":
+            return path_data
+
+        # For other frame shapes, we would need sophisticated path clipping
+        # For now, return the original path as a fallback
+        # TODO: Implement proper SVG path parsing and clipping
+        return path_data
+
     def get_frame_aware_bounds(
         self, positions: List[Tuple[int, int]], scale: int
     ) -> Tuple[int, int, int, int]:

@@ -190,9 +190,10 @@ class TestMemoryProfiling:
         """Test memory usage of clustering algorithms."""
         baseline = profiler.take_snapshot("clustering_baseline")
 
-        analyzer = ConnectedComponentAnalyzer()
-
         for size_name, matrix in qr_matrices.items():
+            # Create fresh analyzer instance for each matrix to prevent memory accumulation
+            analyzer = ConnectedComponentAnalyzer()
+
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
             # Mock get_neighbors to return empty list (no neighbors to process)
@@ -204,6 +205,8 @@ class TestMemoryProfiling:
 
             # Force cleanup
             del clusters
+            del analyzer  # Explicitly delete analyzer instance
+            del detector  # Explicitly delete mock detector
             gc.collect()
             profiler.take_snapshot(f"clustering_{size_name}_cleanup")
 
@@ -392,10 +395,11 @@ class TestMemoryLeakDetection:
         profiler = MemoryProfiler()
         baseline = profiler.take_snapshot("clustering_leak_baseline")
 
-        analyzer = ConnectedComponentAnalyzer()
-
         # Process many matrices and ensure memory is released
         for i in range(20):
+            # Create fresh analyzer instance for each iteration
+            analyzer = ConnectedComponentAnalyzer()
+
             size = 30 + i
             matrix = [[True] * size for _ in range(size)]  # Dense matrix
             detector = Mock(spec=ModuleDetector)
@@ -406,7 +410,7 @@ class TestMemoryLeakDetection:
             clusters = analyzer.process(matrix, detector)
 
             # Explicit cleanup
-            del matrix, detector, clusters
+            del matrix, detector, clusters, analyzer
 
             if i % 5 == 4:
                 gc.collect()

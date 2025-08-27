@@ -302,6 +302,7 @@ class TestTypeHints:
             coord: CoordinateType,
             bbox: BoundingBoxType,
             attrs: SVGAttributesType,
+            centerpiece: CenterpieceConfigType,
             metrics: PerformanceMetricsType,
             result: ValidationResultType,
         ) -> bool:

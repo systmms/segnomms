@@ -98,7 +98,9 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
                 - is_rectangular: Whether cluster forms a rectangle
         """
         cluster_module_types = kwargs.get("cluster_module_types", ["data"])
-        self.visited = set()
+
+        # Reset visited set to prevent memory accumulation
+        self.visited.clear()
         clusters = []
 
         for row in range(len(matrix)):
@@ -116,6 +118,8 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
                             if cluster_info["density"] >= self.density_threshold:
                                 clusters.append(cluster_info)
 
+        # Explicit cleanup of visited set after processing
+        self.visited.clear()
         return clusters
 
     def cluster_modules(self, modules: Any, **kwargs: Any) -> List[Dict[str, Any]]:
@@ -151,7 +155,15 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         mock_detector.get_module_type.return_value = "data"
         mock_detector.get_neighbors.return_value = []
 
-        return self.process(matrix, mock_detector, **kwargs)
+        try:
+            result = self.process(matrix, mock_detector, **kwargs)
+        finally:
+            # Explicit cleanup to prevent memory leaks
+            del mock_detector
+            if isinstance(modules, list) and modules and len(modules[0]) == 3:
+                del matrix  # Clean up converted matrix
+
+        return result
 
     def _find_connected_component(
         self,
