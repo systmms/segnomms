@@ -145,7 +145,9 @@ class DefinitionsBuilder:
                 if coord in gradient:
                     attrib[coord] = str(gradient[coord])
 
-            grad_elem = ET.SubElement(defs, "linearGradient", attrib=attrib)
+            # Filter out None values for ET.SubElement compatibility
+            filtered_attrib = {k: v for k, v in attrib.items() if v is not None}
+            grad_elem = ET.SubElement(defs, "linearGradient", attrib=filtered_attrib)
         else:  # radial
             # Build attributes for radial gradient
             attrib = {"id": gradient_id}
@@ -155,7 +157,9 @@ class DefinitionsBuilder:
                 if coord in gradient:
                     attrib[coord] = str(gradient[coord])
 
-            grad_elem = ET.SubElement(defs, "radialGradient", attrib=attrib)
+            # Filter out None values for ET.SubElement compatibility
+            filtered_attrib = {k: v for k, v in attrib.items() if v is not None}
+            grad_elem = ET.SubElement(defs, "radialGradient", attrib=filtered_attrib)
 
         # Add gradient stops from test format
         stops = gradient.get("stops", [])

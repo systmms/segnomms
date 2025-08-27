@@ -62,7 +62,7 @@ jobs:
 
     - name: Install documentation dependencies
       run: |
-        uv pip install -r docs/requirements.txt
+        uv pip install -e ".[docs]"
 
     - name: Check documentation dependencies
       run: python repo/check_doc_dependencies.py
