@@ -32,20 +32,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
           pip install build twine
-      
+
       - name: Build package
         run: python -m build
-      
+
       - name: Publish to GitHub Packages
         env:
           TWINE_USERNAME: __token__
@@ -64,18 +64,18 @@ jobs:
         segno-version: ['1.5.2', '1.6.0', 'latest']
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Configure pip for GitHub Packages
         run: |
           echo "[global]" > ~/.pypirc
           echo "index-url = https://pypi.org/simple" >> ~/.pypirc
           echo "extra-index-url = https://npm.pkg.github.com/" >> ~/.pypirc
-      
+
       - name: Install from GitHub Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -83,14 +83,14 @@ jobs:
           pip install --index-url https://npm.pkg.github.com/ \
                       --extra-index-url https://pypi.org/simple \
                       segnomms==${{ needs.release-please.outputs.version }}
-          
+
           # Install specific Segno version
           if [ "${{ matrix.segno-version }}" = "latest" ]; then
             pip install segno
           else
             pip install segno==${{ matrix.segno-version }}
           fi
-      
+
       - name: Run tests
         run: |
           python -m pytest tests/ -v
@@ -104,23 +104,23 @@ jobs:
     environment: pypi
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Download from GitHub Packages and re-upload to PyPI
         run: |
           python -m pip install --upgrade pip
           pip install twine
-          
+
           # Download the already built package from GitHub Packages
           pip download --index-url https://npm.pkg.github.com/ \
                        --no-deps \
                        --dest ./dist \
                        segnomms==${{ needs.release-please.outputs.version }}
-      
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
@@ -139,14 +139,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Wait for PyPI availability
         run: sleep 60
-      
+
       - name: Install from PyPI
         run: |
           pip install segnomms==${{ needs.release-please.outputs.version }}
-      
+
       - name: Validate installation
         run: |
           python -c "import segnomms; print(f'✅ Successfully validated segnomms {segnomms.__version__} from PyPI')"

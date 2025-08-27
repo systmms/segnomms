@@ -51,10 +51,10 @@ jobs:
         run: |
           # Get commits in this PR
           COMMITS=$(git log --format="%s" origin/${{ github.base_ref }}..HEAD)
-          
+
           # Conventional commit regex pattern
           PATTERN='^(feat|fix|perf|deps|docs|test|build|ci|chore|style|refactor|revert)(\(.+\))?: .+'
-          
+
           # Check each commit
           INVALID_COMMITS=""
           while IFS= read -r commit; do
@@ -62,7 +62,7 @@ jobs:
               INVALID_COMMITS="${INVALID_COMMITS}\n  - ${commit}"
             fi
           done <<< "$COMMITS"
-          
+
           if [ -n "$INVALID_COMMITS" ]; then
             echo "❌ The following commits don't follow conventional commit format:"
             echo -e "$INVALID_COMMITS"
@@ -73,5 +73,5 @@ jobs:
             echo "📚 Valid types: feat, fix, perf, deps, docs, test, build, ci, chore, style, refactor, revert"
             exit 1
           fi
-          
+
           echo "✅ All commits follow conventional commit format!"

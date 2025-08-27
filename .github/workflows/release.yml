@@ -27,47 +27,47 @@ jobs:
     name: Prepare Release
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
-    
+
     outputs:
       new_version: ${{ steps.version.outputs.new_version }}
       current_version: ${{ steps.version.outputs.current_version }}
-      
+
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         token: ${{ secrets.GITHUB_TOKEN }}
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Get current version
       id: current
       run: |
         CURRENT_VERSION=$(python -c "import segnomms; print(segnomms.__version__)")
-        echo "version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+        echo "version=${CURRENT_VERSION}" >> "$GITHUB_OUTPUT"
         echo "Current version: ${CURRENT_VERSION}"
-        
+
     - name: Calculate new version
       id: version
       run: |
         CURRENT="${{ steps.current.outputs.version }}"
         RELEASE_TYPE="${{ github.event.inputs.release_type }}"
-        
+
         # Simple version bumping (in production, use a proper tool like bump2version)
         IFS='.' read -ra VERSION_PARTS <<< "$CURRENT"
         MAJOR=${VERSION_PARTS[0]}
         MINOR=${VERSION_PARTS[1]}
         PATCH=${VERSION_PARTS[2]}
-        
+
         case $RELEASE_TYPE in
           "major")
             MAJOR=$((MAJOR + 1))
@@ -85,49 +85,49 @@ jobs:
             PATCH="${PATCH}-rc.$(date +%Y%m%d%H%M%S)"
             ;;
         esac
-        
+
         NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
-        echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-        echo "current_version=${CURRENT}" >> $GITHUB_OUTPUT
+        echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+        echo "current_version=${CURRENT}" >> "$GITHUB_OUTPUT"
         echo "New version will be: ${NEW_VERSION}"
 
   test-before-release:
     name: Pre-Release Testing
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-      
-    - name: Install uv  
+
+    - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Run comprehensive test suite
       run: |
         # Run all tests
         make test-all
-        
+
     - name: Run compatibility tests
       run: |
         make test-segno-compatibility
-        
+
     - name: Run visual regression tests
       run: |
         sudo apt-get update
         sudo apt-get install -y librsvg2-bin
         make test-visual || echo "Visual tests completed with differences"
-        
+
     - name: Run example generation
       run: |
         make test-examples
-        
+
     - name: Validate package build
       run: |
         uv run python -m build
@@ -137,29 +137,29 @@ jobs:
     name: Build Package
     runs-on: ubuntu-latest
     needs: test-before-release
-    
+
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install build dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Build package
       run: |
         uv run python -m build
-        
+
     - name: Verify package
       run: |
         uv run twine check dist/*
-        
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -172,14 +172,14 @@ jobs:
     needs: build-package
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.ref, '-rc'))
     environment: test-pypi
-    
+
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
         name: package-distributions
         path: dist/
-        
+
     - name: Publish to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
@@ -193,14 +193,14 @@ jobs:
     needs: build-package
     if: github.event_name == 'release' && github.event.action == 'published'
     environment: production-pypi
-    
+
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
         name: package-distributions
         path: dist/
-        
+
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
@@ -211,45 +211,48 @@ jobs:
     runs-on: ubuntu-latest
     needs: [prepare-release, test-before-release, build-package]
     if: github.event_name == 'workflow_dispatch'
-    
+
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-        
+
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
         name: package-distributions
         path: dist/
-        
+
     - name: Generate release notes
       id: release_notes
       run: |
         # Generate release notes from git log
         NEW_VERSION="${{ needs.prepare-release.outputs.new_version }}"
         CURRENT_VERSION="${{ needs.prepare-release.outputs.current_version }}"
-        
-        echo "## What's Changed" > release_notes.md
-        echo "" >> release_notes.md
-        
-        # Get commits since last tag
-        if git describe --tags --abbrev=0 2>/dev/null; then
-          LAST_TAG=$(git describe --tags --abbrev=0)
-          echo "Changes since ${LAST_TAG}:" >> release_notes.md
-          git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%an)" --no-merges >> release_notes.md
-        else
-          echo "Initial release" >> release_notes.md
-        fi
-        
-        echo "" >> release_notes.md
-        echo "## Package Information" >> release_notes.md
-        echo "- **Version:** ${NEW_VERSION}" >> release_notes.md
-        echo "- **Previous Version:** ${CURRENT_VERSION}" >> release_notes.md
-        echo "- **Python Support:** 3.9, 3.10, 3.11, 3.12, 3.13" >> release_notes.md
-        echo "- **Segno Compatibility:** 1.5.2 - 1.6.6" >> release_notes.md
-        
+
+        {
+          echo "## What's Changed"
+          echo ""
+
+          # Get commits since last tag
+          if git describe --tags --abbrev=0 2>/dev/null; then
+            LAST_TAG=$(git describe --tags --abbrev=0)
+            echo "Changes since ${LAST_TAG}:"
+            git log "${LAST_TAG}..HEAD" --pretty=format:"- %s (%an)" --no-merges
+          else
+            echo "Initial release"
+          fi
+
+          echo ""
+          echo "## Package Information"
+          echo "- **Version:** ${NEW_VERSION}"
+          echo "- **Previous Version:** ${CURRENT_VERSION}"
+          echo "- **Python Support:** 3.9, 3.10, 3.11, 3.12, 3.13"
+          echo "- **Segno Compatibility:** 1.5.2 - 1.6.6"
+        } > release_notes.md
+
     - name: Create Release
+      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -259,7 +262,7 @@ jobs:
         body_path: release_notes.md
         draft: false
         prerelease: ${{ contains(needs.prepare-release.outputs.new_version, 'rc') }}
-        
+
     - name: Upload release assets
       uses: actions/upload-release-asset@v1
       env:
@@ -275,42 +278,42 @@ jobs:
     runs-on: ubuntu-latest
     needs: [publish-pypi, create-github-release]
     if: always() && (needs.publish-pypi.result == 'success' || needs.create-github-release.result == 'success')
-    
+
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Wait for package availability
       run: |
         echo "Waiting for package to be available on PyPI..."
         sleep 60  # Wait for PyPI to process the upload
-        
+
     - name: Test installation from PyPI
       run: |
         # Create clean environment and test installation
         uv venv test-env
         source test-env/bin/activate
-        
+
         # Try to install from PyPI
         pip install segnomms --upgrade
-        
+
         # Test basic functionality
         python -c "
         import segnomms
         print(f'Successfully installed SegnoMMS version: {segnomms.__version__}')
-        
+
         # Test basic QR generation
         import segno
         qr = segno.make('Hello World')
         svg = qr.save(None, kind='interactive_svg', scale=10)
         print('✅ Basic QR generation test passed')
         "
-        
+
     - name: Update documentation
       run: |
         echo "📦 Release validation completed successfully"

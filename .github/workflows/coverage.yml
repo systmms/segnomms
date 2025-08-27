@@ -3,11 +3,16 @@ name: Coverage Tracking
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'segnomms/**/*.py'
+      - 'tests/**/*.py'
+      - 'pyproject.toml'
   pull_request:
     branches: [ main, develop ]
-  schedule:
-    # Run coverage analysis weekly on Sundays at 3 AM UTC
-    - cron: '0 3 * * 0'
+    paths:
+      - 'segnomms/**/*.py'
+      - 'tests/**/*.py'
+      - 'pyproject.toml'
 
 env:
   PYTHON_VERSION: "3.11"
@@ -158,3 +163,4 @@ jobs:
         # and fail the job if coverage falls below thresholds
 
         echo "✅ Coverage quality gate passed"
+

@@ -3,8 +3,20 @@ name: Continuous Integration
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'segnomms/**/*.py'
+      - 'tests/**/*.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/ci.yml'
   pull_request:
     branches: [ main, develop ]
+    paths:
+      - 'segnomms/**/*.py'
+      - 'tests/**/*.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/ci.yml'
 
 env:
   PYTHON_VERSION: "3.11"
@@ -16,43 +28,43 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        
+
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
       with:
         version: "latest"
-        
+
     - name: Set up Python ${{ matrix.python-version }}
       run: uv python install ${{ matrix.python-version }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Run linting
       run: |
         make test-lint
-        
+
     - name: Run type checking
       run: |
         make test-typecheck
-        
+
     - name: Run unit tests
       run: |
         make test-unit
-        
+
     - name: Run integration tests
       run: |
         make test-integration
-        
+
     - name: Run structural tests
       run: |
         make test-structural
-        
+
     - name: Upload coverage to Codecov
       if: matrix.python-version == '3.11'
       uses: codecov/codecov-action@v4
@@ -67,26 +79,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Test documentation build
       run: |
         make test-docs
-        
+
     - name: Build documentation
       run: |
         make docs
-        
+
     - name: Upload documentation artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -98,18 +110,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Test Segno compatibility
       run: |
         make test-segno-compatibility
@@ -121,27 +133,27 @@ jobs:
     - uses: actions/checkout@v4
       with:
         lfs: true
-        
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y librsvg2-bin
-        
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Run visual regression tests
       run: |
         make test-visual
-        
+
     - name: Upload visual test artifacts
       if: failure()
       uses: actions/upload-artifact@v4
@@ -156,27 +168,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y librsvg2-bin
-        
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Generate examples
       run: |
         make test-examples
-        
+
     - name: Upload example artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -188,23 +200,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      
+
     - name: Install uv
       uses: astral-sh/setup-uv@v3
-      
+
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
-      
+
     - name: Install dependencies
       run: |
         uv sync
         uv pip install -e .
-        
+
     - name: Run security scan with bandit
       run: |
         uv pip install bandit
         uv run bandit -r segnomms/ -f json -o bandit-report.json
-        
+
     - name: Upload security scan results
       uses: actions/upload-artifact@v4
       with:
@@ -223,30 +235,32 @@ jobs:
           echo "❌ Test suite failed"
           exit 1
         fi
-        
+
         if [[ "${{ needs.documentation.result }}" != "success" ]]; then
-          echo "❌ Documentation build failed" 
+          echo "❌ Documentation build failed"
           exit 1
         fi
-        
+
         if [[ "${{ needs.compatibility.result }}" != "success" ]]; then
           echo "❌ Segno compatibility tests failed"
           exit 1
         fi
-        
+
         if [[ "${{ needs.visual-regression.result }}" != "success" ]]; then
           echo "⚠️  Visual regression tests failed - review required"
           # Don't exit on visual failures as they may be intentional
         fi
-        
+
         if [[ "${{ needs.examples.result }}" != "success" ]]; then
           echo "⚠️  Example generation failed"
           # Don't exit on example failures
         fi
-        
+
         if [[ "${{ needs.security.result }}" != "success" ]]; then
           echo "⚠️  Security scan encountered issues"
           # Don't exit on security scan failures in CI
         fi
-        
+
         echo "✅ Quality gate passed"
+
+

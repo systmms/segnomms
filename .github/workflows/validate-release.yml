@@ -32,26 +32,26 @@ jobs:
             segno-version: "1.5.2"
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ "${{ matrix.segno-version }}" = "latest" ]; then
             pip install segno
-          else  
+          else
             pip install segno==${{ matrix.segno-version }}
           fi
           pip install -e ".[test]"
-      
+
       - name: Run tests
         run: |
           pytest tests/ -v --cov=segnomms --cov-report=xml
-      
+
       - name: Upload coverage
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
         uses: codecov/codecov-action@v4
@@ -66,31 +66,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
           pip install build twine wheel check-wheel-contents
-      
+
       - name: Build package
         run: python -m build
-      
+
       - name: Check package with twine
         run: twine check dist/*
-      
+
       - name: Check wheel contents
         run: |
           check-wheel-contents dist/*.whl
-      
+
       - name: Validate package metadata
         run: |
           python scripts/validate_release.py
-      
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -103,26 +103,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyodide-build pytest
-      
+
       - name: Build wheel for Pyodide
         run: |
           python -m pip install build
           python -m build --wheel
-      
+
       - name: Test Pyodide compatibility
         run: |
           python scripts/test_pyodide_compatibility.py
-      
+
       - name: Run full Pyodide test suite
         run: |
           python scripts/test_pyodide_full.py
@@ -137,34 +137,34 @@ jobs:
         python-version: ["3.8", "3.11"]
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
-      
+
       - name: Install from wheel
         run: |
           python -m pip install --upgrade pip
           pip install dist/*.whl
-      
+
       - name: Test import and basic usage
         run: |
           python -c "import segnomms; print(f'Version: {segnomms.__version__}')"
           python -c "
-import segno
-from segnomms import write
-qr = segno.make('Test')
-write(qr, 'test.svg', shape='rounded')
-print('Basic functionality works!')
-"
-      
+          import segno
+          from segnomms import write
+          qr = segno.make('Test')
+          write(qr, 'test.svg', shape='rounded')
+          print('Basic functionality works!')
+          "
+
       - name: Run example scripts
         run: |
           # Install segno if needed
@@ -178,34 +178,34 @@ print('Basic functionality works!')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install tools
         run: |
           python -m pip install --upgrade pip
           pip install safety bandit flake8 mypy black isort
-      
+
       - name: Security check with safety
         run: |
           pip install -e .
           safety check || true  # Don't fail on vulnerabilities, just report
-      
+
       - name: Security check with bandit
         run: |
           bandit -r segnomms -ll || true  # Low severity and higher
-      
+
       - name: Lint with flake8
         run: |
           flake8 segnomms --count --statistics || true
-      
+
       - name: Type check with mypy
         run: |
           mypy segnomms --ignore-missing-imports || true
-      
+
       - name: Check formatting
         run: |
           black --check .
@@ -226,7 +226,7 @@ print('Basic functionality works!')
           echo "Pyodide Tests: ${{ needs.test-pyodide.result }}"
           echo "Install Tests: ${{ needs.test-install.result }}"
           echo "Quality Checks: ${{ needs.quality-checks.result }}"
-          
+
           # Fail if any required check failed
           if [[ "${{ needs.test-matrix.result }}" != "success" ]] || \
              [[ "${{ needs.validate-package.result }}" != "success" ]] || \

@@ -3,9 +3,19 @@ name: Test
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'segnomms/**/*.py'
+      - 'tests/**/*.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened]
+    paths:
+      - 'segnomms/**/*.py'
+      - 'tests/**/*.py'
+      - 'pyproject.toml'
+      - 'uv.lock'
   workflow_call:
     inputs:
       python-version:
@@ -113,3 +123,4 @@ jobs:
     - name: Type check with mypy
       run: |
         uv run mypy segnomms
+
