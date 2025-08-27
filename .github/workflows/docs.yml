@@ -43,13 +43,7 @@ jobs:
         uv pip install -r docs/requirements.txt
 
     - name: Check documentation dependencies
-      run: |
-        python -c "
-        import sphinx
-        import sphinx_rtd_theme
-        print(f'Sphinx version: {sphinx.__version__}')
-        print('✅ Documentation dependencies installed successfully')
-        "
+      run: python repo/check_doc_dependencies.py
 
     - name: Build HTML documentation
       run: |
@@ -105,24 +99,7 @@ jobs:
       run: python repo/test_readme_examples.py
 
     - name: Generate example QR codes
-      run: |
-        mkdir -p example-outputs
-
-        # Generate examples mentioned in documentation
-        python -c "
-        import segno
-
-        # Basic example
-        qr = segno.make('Hello World')
-        qr.save('example-outputs/basic.svg', kind='interactive_svg', scale=10)
-
-        # Styled example
-        qr.save('example-outputs/styled.svg', kind='interactive_svg',
-                scale=15, dark='#1a1a2e', shape='rounded',
-                corner_radius=0.3, interactive=True)
-
-        print('✅ Example QR codes generated successfully')
-        "
+      run: python repo/generate_example_qrs.py
 
     - name: Upload example outputs
       uses: actions/upload-artifact@v4
