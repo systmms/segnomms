@@ -48,15 +48,37 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Install system dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install cairo pkg-config
+        echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:\$PKG_CONFIG_PATH" >> "$GITHUB_ENV"
+
+    - name: Install system dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        # Install Cairo using chocolatey
+        choco install pkgconfiglite -y
+        # Use pre-built Cairo binaries for Windows
+        curl -L -o cairo-windows.zip "https://github.com/preshing/cairo-windows/releases/download/v1.15.12/cairo-windows-1.15.12.zip"
+        7z x cairo-windows.zip -o"C:\cairo" -y
+        echo "C:\cairo\bin" >> $GITHUB_PATH
+        echo "PKG_CONFIG_PATH=C:\cairo\lib\pkgconfig" >> $GITHUB_ENV
+        echo "CAIRO_ROOT=C:\cairo" >> $GITHUB_ENV
+      shell: pwsh
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ "${{ matrix.segno-version }}" = "latest" ]; then
-          pip install segno
-        else
-          pip install segno==${{ matrix.segno-version }}
-        fi
         pip install -e ".[test]"
+
+    - name: Install Segno (latest)
+      if: matrix.segno-version == 'latest'
+      run: pip install segno
+
+    - name: Install Segno (specific version)
+      if: matrix.segno-version != 'latest'
+      run: pip install segno==${{ matrix.segno-version }}
 
     - name: Run tests
       run: |

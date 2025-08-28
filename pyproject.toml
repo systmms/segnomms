@@ -61,7 +61,7 @@ docs = [
     "sphinx>=7.0.0",
     "sphinx-rtd-theme>=2.0.0",
     "sphinx-autodoc-typehints>=1.19.0",
-    "myst-parser>=2.0.0",
+    "myst-parser>=0.18.0",
 ]
 # Legacy dev dependencies kept for compatibility
 # All development dependencies are now in [tool.uv]

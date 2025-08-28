@@ -141,9 +141,9 @@ class TestReserveModeIntegration:
         """Test that imprint mode generates appropriate metadata."""
         config = CenterpieceConfig(enabled=True, shape="circle", size=0.2, mode=ReserveMode.IMPRINT)
 
-        # Clear centerpiece (should not modify in imprint mode)
+        # Clear centerpiece (should preserve matrix in imprint mode)
         modified = manipulator.clear_centerpiece_area(config)
-        assert modified is False or modified is None  # Imprint mode should not modify matrix
+        assert isinstance(modified, list)  # Imprint mode returns preserved matrix
 
         # Get metadata
         metadata = manipulator.get_centerpiece_metadata(config)

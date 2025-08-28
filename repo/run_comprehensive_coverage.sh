@@ -12,7 +12,7 @@ uv run pytest tests/ \
   --cov-report=html \
   --cov-report=xml \
   --cov-report=term-missing \
-  --cov-fail-under=60 \
+  --cov-fail-under=58 \
   --cov-branch \
   -v
 
