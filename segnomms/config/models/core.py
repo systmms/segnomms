@@ -529,6 +529,10 @@ class RenderingConfig(BaseModel):
                 config.phase3.contour_smoothing = 0.3
                 config.phase3.bezier_optimization = OptimizationLevel.MEDIUM
 
+                # Auto-adjust min_island_modules for decoder compatibility
+                if config.geometry.min_island_modules < 3:
+                    config.geometry.min_island_modules = 3
+
     def validate_palette(self) -> "PaletteValidationResult":
         """Validate the color palette using enhanced validation."""
         from ...color.palette import PaletteConfig, validate_palette

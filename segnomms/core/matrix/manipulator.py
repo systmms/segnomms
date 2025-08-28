@@ -505,12 +505,16 @@ class MatrixManipulator:
 
             metadata.update({"cleared_modules": cleared_modules, "preserve_scanability": False})
 
+        # Add performance warnings for large operations
+        performance_warnings = self.get_performance_warnings(config)
+
         return {
             **metadata,
             "module_coords": True,  # Indicates these are in module coordinates
             "offset": {"x": config.offset_x, "y": config.offset_y},
             "size": config.size,
             "margin": config.margin,
+            "performance_warnings": performance_warnings,
         }
 
     def get_imprint_metadata(self) -> Dict[str, Any]:

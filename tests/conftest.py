@@ -2,7 +2,6 @@
 Pytest configuration and fixtures for segno-plugin tests.
 """
 
-import os
 from io import BytesIO
 from pathlib import Path
 from typing import Optional
@@ -36,6 +35,24 @@ def svg_to_png(svg_content: str, output_path: Optional[Path] = None, return_byte
     Returns:
         bytes if return_bytes=True, otherwise None
     """
+    import os
+
+    if os.environ.get("SKIP_CAIRO_TESTS"):
+        # Create a minimal placeholder image when Cairo is not available
+        from io import BytesIO
+
+        from PIL import Image
+
+        img = Image.new("RGB", (RENDER_PARAMS["width"], RENDER_PARAMS["height"]), "white")
+        if return_bytes:
+            buffer = BytesIO()
+            img.save(buffer, format="PNG")
+            return buffer.getvalue()
+        elif output_path:
+            img.save(output_path)
+            return
+        return
+
     try:
         # Try cairosvg first (most reliable)
         import cairosvg

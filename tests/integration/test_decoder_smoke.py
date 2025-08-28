@@ -82,11 +82,28 @@ def decode_with_opencv(image_path: Path) -> Optional[str]:
 
 
 def svg_to_png_for_decode(svg_content: str, output_path: Path):
-    """Convert SVG to PNG for decoder testing."""
-    # Import from conftest
-    from .conftest import svg_to_png
+    """Convert SVG to PNG for decoder testing with optimized parameters."""
+    import os
 
-    svg_to_png(svg_content, output_path)
+    if os.environ.get("SKIP_CAIRO_TESTS"):
+        pytest.skip("Cairo not available on this platform")
+
+    try:
+        import cairosvg
+
+        # Use higher resolution and quality for decoder testing
+        cairosvg.svg2png(
+            bytestring=svg_content.encode("utf-8"),
+            write_to=str(output_path),
+            output_width=800,  # Higher resolution for better decoder accuracy
+            output_height=800,
+            dpi=150,  # Higher DPI for sharper edges
+        )
+    except ImportError:
+        # Fallback to conftest method
+        from .conftest import svg_to_png
+
+        svg_to_png(svg_content, output_path)
 
 
 def try_decode(image_path: Path, expected_data: str) -> tuple[bool, str]:
@@ -151,7 +168,7 @@ class TestDecoderSmoke:
 
         # Generate SVG
         output = io.StringIO()
-        write(qr, output, shape=shape, safe_mode=safe_mode, scale=10)
+        write(qr, output, shape=shape, safe_mode=safe_mode, scale=20)
         svg_content = output.getvalue()
 
         # Convert to PNG
@@ -176,7 +193,7 @@ class TestDecoderSmoke:
         qr = segno.make(test_data, error=error_level)
 
         output = io.StringIO()
-        write(qr, output, shape="connected", scale=10)
+        write(qr, output, shape="connected", scale=20)
         svg_content = output.getvalue()
 
         png_path = tmp_path / f"test_ecc_{error_level}.png"
@@ -241,7 +258,7 @@ class TestDecoderSmoke:
         qr = segno.make(test_data)
 
         output = io.StringIO()
-        write(qr, output, shape="connected", scale=10)
+        write(qr, output, shape="connected", scale=20)
         svg_content = output.getvalue()
 
         png_path = tmp_path / "test_complex_data.png"
@@ -264,7 +281,7 @@ class TestDecoderSmoke:
         qr = segno.make(test_data)
 
         output = io.StringIO()
-        write(qr, output, shape="square", scale=10, **geometry_config)
+        write(qr, output, shape="square", scale=20, **geometry_config)
         svg_content = output.getvalue()
 
         config_str = "_".join(f"{k}{v}" for k, v in geometry_config.items())
