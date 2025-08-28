@@ -84,28 +84,12 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
+    - uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install from PyPI
-      run: |
-        # Wait a bit for PyPI to update
-        sleep 60
-        python -m pip install --upgrade pip
-        pip install segnomms
-
-    - name: Test import
-      run: |
-        python -c "import segnomms; print(f'Successfully imported segnomms version {segnomms.__version__}')"
-
-    - name: Test basic usage
-      run: |
-        python -c "
-        import segno
-        # Test that the plugin is registered
-        qr = segno.make('Hello World')
-        # This should work if the plugin is properly installed
-        print('Plugin is available')
-        "
+    - name: Test PyPI installation
+      run: ./repo/test_pypi_install.sh --wait=60 --verbose

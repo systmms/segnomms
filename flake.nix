@@ -27,7 +27,6 @@
           isort
           flake8
           mypy
-          
           # Testing dependencies
           hypothesis          # Property-based testing
           pytest-randomly     # Randomized test order
@@ -35,13 +34,11 @@
           pytest-xdist        # Parallel test execution
           # Note: pytest-image-snapshot not available in nixpkgs, installed via uv
           beautifulsoup4      # HTML parsing in tests
-          
           # Visual testing and processing
           pillow             # Image processing
           numpy              # Array operations for image comparison
           cairosvg           # SVG to PNG conversion
           lxml               # XML/SVG parsing
-          
           # QR code decoding
           # Note: zxing-cpp is available as zxing-cpp in nixpkgs
           zxing-cpp          # Modern QR decoder
@@ -56,7 +53,6 @@
           # Basic build tools
           setuptools
           wheel
-          
           # Note: The following are better managed by uv:
           # - build (for building packages)
           # - twine (for uploading to registries)
@@ -86,14 +82,15 @@
             # Optional tools (comment out if not needed)
             nodejs_20    # For any JS tooling
             docker       # For containerized testing
-            
             # GitHub Actions tools (optional - for local testing)
             act          # GitHub Actions local runner
             actionlint   # GitHub Actions workflow linter
 
             # Visual regression testing tools
             librsvg      # Provides rsvg-convert for SVG to PNG conversion
-            
+            # Documentation tools
+            aspell          # Spell checker for documentation
+            aspellDicts.en  # English dictionary for aspell
             # System libraries for Python packages
             zbar         # Required for pyzbar QR code decoding
           ];
@@ -114,6 +111,7 @@
             echo "  • Visual regression testing (pytest-image-snapshot)"
             echo "  • QR decoders: zxing-cpp, opencv4"
             echo "  • SVG tools: cairosvg, rsvg-convert"
+            echo "  • Documentation: Sphinx, spell checking (aspell)"
             echo ""
             echo "Code quality:"
             echo "  • black (formatter)"
@@ -121,9 +119,20 @@
             echo "  • flake8 (linter)"
             echo "  • mypy (type checker)"
             echo ""
-            
             # Set up Python environment
             export PYTHONPATH="$PWD:$PYTHONPATH"
+            # Configure aspell to find dictionaries
+            export ASPELL_CONF="data-dir ${pkgs.aspell}/lib/aspell;dict-dir ${pkgs.aspellDicts.en}/lib/aspell"
+            # Verify aspell configuration
+            if command -v aspell >/dev/null 2>&1; then
+              if aspell dicts | grep -q "en" 2>/dev/null; then
+                echo "✅ Aspell with English dictionary configured"
+              else
+                echo "⚠️  Aspell found but English dictionary not available"
+              fi
+            else
+              echo "⚠️  Aspell not found in development environment"
+            fi
 
             # Check git hooks
             if [ ! -f .git/hooks/pre-commit ]; then
@@ -142,7 +151,7 @@
               echo "✅ Virtual environment exists (.venv)"
               # Note: .envrc will handle activation and uv sync
             fi
-            
+
             echo ""
             echo "Quick start:"
             echo "  1. uv sync          - Install all dependencies"

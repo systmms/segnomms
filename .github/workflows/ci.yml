@@ -9,6 +9,10 @@ on:
       - 'pyproject.toml'
       - 'uv.lock'
       - '.github/workflows/ci.yml'
+      - 'repo/setup_apt_fallback.sh'
+      - 'repo/quality_gate_checker.sh'
+      - 'repo/test_segno_compatibility.py'
+      - 'repo/generate_example_qrs.py'
   pull_request:
     branches: [ main, develop ]
     paths:
@@ -17,6 +21,10 @@ on:
       - 'pyproject.toml'
       - 'uv.lock'
       - '.github/workflows/ci.yml'
+      - 'repo/setup_apt_fallback.sh'
+      - 'repo/quality_gate_checker.sh'
+      - 'repo/test_segno_compatibility.py'
+      - 'repo/generate_example_qrs.py'
 
 env:
   PYTHON_VERSION: "3.11"
@@ -115,12 +123,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        uv sync
+        uv sync --extra docs
         uv pip install -e .
-
-    - name: Install documentation dependencies
-      run: |
-        uv pip install -r docs/requirements.txt
 
     - name: Test documentation build
       run: |
@@ -206,12 +210,7 @@ jobs:
         version: 1.0
 
     - name: Install system dependencies (fallback)
-      run: |
-        # Fallback if cache action fails
-        if ! command -v rsvg-convert &> /dev/null; then
-          sudo apt-get update
-          sudo apt-get install -y librsvg2-bin
-        fi
+      run: ./repo/setup_apt_fallback.sh librsvg2-bin
 
     - name: Install dependencies
       run: |
@@ -264,12 +263,7 @@ jobs:
         version: 1.0
 
     - name: Install system dependencies (fallback)
-      run: |
-        # Fallback if cache action fails
-        if ! command -v rsvg-convert &> /dev/null; then
-          sudo apt-get update
-          sudo apt-get install -y librsvg2-bin
-        fi
+      run: ./repo/setup_apt_fallback.sh librsvg2-bin
 
     - name: Install dependencies
       run: |
@@ -334,38 +328,15 @@ jobs:
     needs: [test, documentation, compatibility, visual-regression, examples, security]
     if: always()
     steps:
-    - name: Check test results
+    - uses: actions/checkout@v4
+
+    - name: Evaluate quality gate
       run: |
-        if [[ "${{ needs.test.result }}" != "success" ]]; then
-          echo "❌ Test suite failed"
-          exit 1
-        fi
-
-        if [[ "${{ needs.documentation.result }}" != "success" ]]; then
-          echo "❌ Documentation build failed"
-          exit 1
-        fi
-
-        if [[ "${{ needs.compatibility.result }}" != "success" ]]; then
-          echo "❌ Segno compatibility tests failed"
-          exit 1
-        fi
-
-        if [[ "${{ needs.visual-regression.result }}" != "success" ]]; then
-          echo "⚠️  Visual regression tests failed - review required"
-          # Don't exit on visual failures as they may be intentional
-        fi
-
-        if [[ "${{ needs.examples.result }}" != "success" ]]; then
-          echo "⚠️  Example generation failed"
-          # Don't exit on example failures
-        fi
-
-        if [[ "${{ needs.security.result }}" != "success" ]]; then
-          echo "⚠️  Security scan encountered issues"
-          # Don't exit on security scan failures in CI
-        fi
-
-        echo "✅ Quality gate passed"
-
-
+        ./repo/quality_gate_checker.sh \
+          --test="${{ needs.test.result }}" \
+          --docs="${{ needs.documentation.result }}" \
+          --compatibility="${{ needs.compatibility.result }}" \
+          --visual="${{ needs.visual-regression.result }}" \
+          --examples="${{ needs.examples.result }}" \
+          --security="${{ needs.security.result }}" \
+          --verbose

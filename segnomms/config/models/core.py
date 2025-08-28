@@ -530,8 +530,9 @@ class RenderingConfig(BaseModel):
                 config.phase3.bezier_optimization = OptimizationLevel.MEDIUM
 
                 # Auto-adjust min_island_modules for decoder compatibility
-                if config.geometry.min_island_modules < 3:
-                    config.geometry.min_island_modules = 3
+                # Aggressive merge needs higher threshold for reliable decoding
+                if config.geometry.min_island_modules < 5:
+                    config.geometry.min_island_modules = 5
 
     def validate_palette(self) -> "PaletteValidationResult":
         """Validate the color palette using enhanced validation."""

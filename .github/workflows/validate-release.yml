@@ -152,6 +152,7 @@ jobs:
 
       - name: Test import and basic usage
         run: |
+          # Use the wheel we just downloaded, not PyPI
           python -c "import segnomms; print(f'Version: {segnomms.__version__}')"
           python -c "
           import segno
@@ -214,20 +215,14 @@ jobs:
     needs: [test-matrix, validate-package, test-pyodide, test-install, quality-checks]
     if: always()
     steps:
+      - uses: actions/checkout@v4
+
       - name: Check validation results
         run: |
-          echo "All validation checks completed!"
-          echo "Test Matrix: ${{ needs.test-matrix.result }}"
-          echo "Package Validation: ${{ needs.validate-package.result }}"
-          echo "Pyodide Tests: ${{ needs.test-pyodide.result }}"
-          echo "Install Tests: ${{ needs.test-install.result }}"
-          echo "Quality Checks: ${{ needs.quality-checks.result }}"
-
-          # Fail if any required check failed
-          if [[ "${{ needs.test-matrix.result }}" != "success" ]] || \
-             [[ "${{ needs.validate-package.result }}" != "success" ]] || \
-             [[ "${{ needs.test-pyodide.result }}" != "success" ]] || \
-             [[ "${{ needs.test-install.result }}" != "success" ]]; then
-            echo "::error::One or more validation checks failed"
-            exit 1
-          fi
+          ./repo/validate_release_status.sh \
+            --test-matrix="${{ needs.test-matrix.result }}" \
+            --package="${{ needs.validate-package.result }}" \
+            --pyodide="${{ needs.test-pyodide.result }}" \
+            --install="${{ needs.test-install.result }}" \
+            --quality="${{ needs.quality-checks.result }}" \
+            --verbose

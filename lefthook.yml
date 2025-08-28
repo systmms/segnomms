@@ -1,6 +1,11 @@
 # Lefthook configuration for segnomms
 # See https://github.com/evilmartians/lefthook for more information
 
+commit-msg:
+  commands:
+    conventional-commits:
+      run: ./repo/validate_conventional_commits.sh --commit-msg="{1}" --local-mode
+
 pre-commit:
   parallel: true
   commands:
@@ -29,24 +34,12 @@ pre-commit:
       # REMOVED: F541 (f-string placeholders), E722 (bare except) - FIXED ✅
       # 🎯 ACHIEVEMENT: 90% rule reduction (10→1 rules) with hierarchical configuration
       run: flake8 --extend-ignore=F841 {staged_files}
-    # General file checks
+    # General file checks - using pre-commit-hooks for autofix
     trailing-whitespace:
-      run: |
-        for file in {staged_files}; do
-          if grep -q '[[:space:]]$' "$file"; then
-            echo "Trailing whitespace found in $file"
-            exit 1
-          fi
-        done
+      run: python -m pre_commit_hooks.trailing_whitespace_fixer {staged_files}
 
     end-of-file:
-      run: |
-        for file in {staged_files}; do
-          if [ -n "$(tail -c 1 "$file")" ]; then
-            echo "No newline at end of file: $file"
-            exit 1
-          fi
-        done
+      run: python -m pre_commit_hooks.end_of_file_fixer {staged_files}
 
     check-yaml:
       glob: "*.{yml,yaml}"
@@ -87,3 +80,43 @@ pre-commit:
       glob: "*.py"
       exclude: "tests/|examples/|repo/"
       run: mypy {staged_files}
+
+    # Repository scripts should trigger when changed
+    repo-scripts:
+      glob: "repo/*.py"
+      run: |
+        echo "Repository script changed: {staged_files}"
+        echo "Consider running relevant tests if scripts are modified"
+
+    # Documentation dependency check (for docs changes)
+    doc-dependencies:
+      glob: "docs/**/*.{rst,md,py}"
+      run: python repo/check_doc_dependencies.py
+
+    # Documentation build test (optional - can be skipped with LEFTHOOK_EXCLUDE)
+    doc-build:
+      glob: "docs/**/*.{rst,md,py}"
+      run: python repo/check_doc_build.py --skip-if-missing-deps --quiet
+
+    # Documentation spell checking (optional - can be skipped with LEFTHOOK_EXCLUDE)
+    spell-check:
+      glob: "docs/**/*.rst"
+      run: |
+        # Install spell checker if needed
+        if ! command -v aspell &> /dev/null; then
+          echo "Installing spell checker..."
+          ./repo/setup_spell_checker.sh
+        fi
+        # Run spell check on documentation files
+        python repo/spell_check_docs.py --files {staged_files} --quiet
+
+    # Project dictionary changes should trigger spell check
+    spell-check-dict:
+      glob: "repo/aspell_project_dict.txt"
+      run: |
+        echo "Project dictionary updated - running full spell check"
+        if ! command -v aspell &> /dev/null; then
+          echo "Installing spell checker..."
+          ./repo/setup_spell_checker.sh
+        fi
+        python repo/spell_check_docs.py --quiet

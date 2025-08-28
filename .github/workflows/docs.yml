@@ -10,6 +10,14 @@ on:
     - 'segnomms/**/*.py'
     - 'README.md'
     - 'CHANGELOG.md'
+    - 'repo/check_doc_*.py'
+    - 'repo/spell_check_docs.py'
+    - 'repo/aspell_project_dict.txt'
+    - 'repo/setup_spell_checker.sh'
+    - 'repo/test_readme_examples.py'
+    - 'repo/generate_example_qrs.py'
+    - 'repo/docs_quality_gate.sh'
+    - '.github/workflows/docs.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -145,12 +153,16 @@ jobs:
         version: 1.0
 
     - name: Install spell checker (fallback)
+      run: ./repo/setup_spell_checker.sh
+
+    - name: Verify aspell installation
       run: |
-        # Fallback if cache action fails
-        if ! command -v aspell &> /dev/null; then
-          sudo apt-get update
-          sudo apt-get install -y aspell aspell-en
-        fi
+        echo "🔍 Verifying aspell installation..."
+        aspell --version || echo "❌ aspell not available"
+        echo "📚 Available dictionaries:"
+        aspell dicts || echo "❌ No dictionaries found"
+        echo "🧪 Testing dictionary access:"
+        echo "test hello wrold" | aspell list || echo "❌ Dictionary test failed"
 
     - name: Check spelling in documentation
       run: python repo/spell_check_docs.py
@@ -220,34 +232,12 @@ jobs:
     if: always()
 
     steps:
+    - uses: actions/checkout@v4
+
     - name: Evaluate documentation quality
       run: |
-        echo "Documentation Quality Gate Evaluation:"
-        echo "=================================="
-
-        BUILD_STATUS="${{ needs.build-docs.result }}"
-        EXAMPLES_STATUS="${{ needs.test-examples.result }}"
-        SPELL_STATUS="${{ needs.spell-check.result }}"
-
-        echo "📖 Documentation Build: $BUILD_STATUS"
-        echo "💡 Examples Testing: $EXAMPLES_STATUS"
-        echo "🔤 Spell Check: $SPELL_STATUS"
-
-        # Quality gate logic
-        if [[ "$BUILD_STATUS" != "success" ]]; then
-          echo "❌ Documentation build failed - Quality gate FAILED"
-          exit 1
-        fi
-
-        if [[ "$EXAMPLES_STATUS" != "success" ]]; then
-          echo "⚠️ Examples testing failed - Quality gate WARNING"
-          # Don't fail on examples, just warn
-        fi
-
-        if [[ "$SPELL_STATUS" != "success" ]]; then
-          echo "⚠️ Spell check issues detected - Quality gate WARNING"
-          # Don't fail on spelling, just warn
-        fi
-
-        echo "✅ Documentation quality gate PASSED"
-
+        ./repo/docs_quality_gate.sh \
+          --build="${{ needs.build-docs.result }}" \
+          --examples="${{ needs.test-examples.result }}" \
+          --spell="${{ needs.spell-check.result }}" \
+          --verbose

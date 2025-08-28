@@ -313,6 +313,7 @@ dev-dependencies = [
     "black>=23.0.0",
     "isort>=5.0.0",
     "mypy>=1.0.0",
+    "pre-commit-hooks>=4.0.0",  # For trailing whitespace and other file formatting
     "types-PyYAML>=6.0.0", # Type stubs for yaml import
     # Documentation
     "sphinx>=7.0.0",
