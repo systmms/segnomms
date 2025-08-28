@@ -278,6 +278,7 @@ class TestMatrixManipulator:
         config.offset_y = 0.0
         config.shape = "circle"
         config.mode = ReserveMode.KNOCKOUT
+        config.matrix_size = 21
 
         # Mock geometry bounds method
         with patch.object(manipulator.geometry, "get_centerpiece_bounds") as mock_bounds:

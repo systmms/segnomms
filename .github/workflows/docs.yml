@@ -61,7 +61,7 @@ jobs:
         uv pip install -e .
 
     - name: Check documentation dependencies
-      run: python repo/check_doc_dependencies.py
+      run: uv run python repo/check_doc_dependencies.py
 
     - name: Build HTML documentation
       run: |
@@ -128,10 +128,10 @@ jobs:
         sudo apt-get install -y librsvg2-bin
 
     - name: Test README examples
-      run: python repo/test_readme_examples.py
+      run: uv run python repo/test_readme_examples.py
 
     - name: Generate example QR codes
-      run: python repo/generate_example_qrs.py
+      run: uv run python repo/generate_example_qrs.py
 
     - name: Upload example outputs
       uses: actions/upload-artifact@v4
@@ -165,7 +165,7 @@ jobs:
         echo "test hello wrold" | aspell list || echo "❌ Dictionary test failed"
 
     - name: Check spelling in documentation
-      run: python repo/spell_check_docs.py
+      run: uv run python repo/spell_check_docs.py
 
   deploy-docs:
     name: Deploy Documentation
