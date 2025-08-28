@@ -16,11 +16,13 @@ pre-commit:
     # Python code formatting - Black
     black:
       glob: "*.py"
-      run: black --check {staged_files}
+      run: black {staged_files}
+      stage_fixed: true
     # Python import sorting - isort
     isort:
       glob: "*.py"
-      run: isort --check-only --profile black {staged_files}
+      run: isort --profile black {staged_files}
+      stage_fixed: true
     # Python linting - Flake8
     flake8:
       glob: "*.py"
@@ -37,9 +39,11 @@ pre-commit:
     # General file checks - using pre-commit-hooks for autofix
     trailing-whitespace:
       run: python -m pre_commit_hooks.trailing_whitespace_fixer {staged_files}
+      stage_fixed: true
 
     end-of-file:
       run: python -m pre_commit_hooks.end_of_file_fixer {staged_files}
+      stage_fixed: true
 
     check-yaml:
       glob: "*.{yml,yaml}"
