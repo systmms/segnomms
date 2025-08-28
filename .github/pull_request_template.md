@@ -43,7 +43,6 @@
 
 - [ ] Unit tests pass
 - [ ] Integration tests pass
-- [ ] Tested in Pyodide environment (if applicable)
 - [ ] Manual testing completed
 
 ## Related Issues

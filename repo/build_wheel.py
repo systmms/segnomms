@@ -1,114 +1,57 @@
 #!/usr/bin/env python3
 """Build a wheel package for the segnomms plugin."""
 
-import shutil
 import subprocess
-import tempfile
+import sys
 from pathlib import Path
 
 
 def build_wheel():
-    """Build a wheel package that can be loaded by micropip in Pyodide."""
+    """Build wheel and source distribution packages using standard Python tools."""
 
-    # Create temporary build directory
-    with tempfile.TemporaryDirectory() as tmpdir:
-        build_dir = Path(tmpdir) / "segnomms_wheel"
-        build_dir.mkdir()
+    # Ensure we're in the project root
+    project_root = Path(__file__).parent.parent
 
-        # First create the bundle
-        print("Creating bundle...")
-        subprocess.run(["python", "scripts/bundle_for_pyodide.py"], check=True)
+    print(f"Building packages from: {project_root}")
+    print("=" * 50)
 
-        # Copy bundled file as package
-        bundle_src = Path("dist/segnomms_bundled.py")
+    try:
+        # Clean any previous builds
+        print("🧹 Cleaning previous builds...")
+        dist_dir = project_root / "dist"
+        if dist_dir.exists():
+            import shutil
 
-        # Create package structure
-        pkg_dir = build_dir / "segnomms"
-        pkg_dir.mkdir()
+            shutil.rmtree(dist_dir)
 
-        # Create __init__.py that imports everything from bundle
-        init_content = '''"""Segno Interactive SVG Plugin"""
-
-# Import everything from the bundled module
-from .bundle import *
-
-__version__ = "0.0.0-beta003"
-__all__ = [
-    'write',
-    'generate_interactive_svg',
-    'RenderingConfig',
-    'ModuleDetector',
-    'InteractiveSVGBuilder',
-    'ShapeRenderer',
-]
-'''
-
-        (pkg_dir / "__init__.py").write_text(init_content)
-
-        # Copy bundle as bundle.py
-        shutil.copy(bundle_src, pkg_dir / "bundle.py")
-
-        # Create setup.py
-        setup_content = """from setuptools import setup, find_packages
-
-setup(
-    name="segno-interactive-svg",
-    version="0.0.0-beta003",
-    packages=find_packages(),
-    python_requires=">=3.7",
-    install_requires=[],  # No dependencies for Pyodide
-    description="Interactive SVG plugin for Segno QR codes",
-    author="QR Code MMS Team",
-    url="https://github.com/yourusername/segno-interactive-svg",
-    classifiers=[
-        "Development Status :: 4 - Beta",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-    ],
-)
-"""
-
-        (build_dir / "setup.py").write_text(setup_content)
-
-        # Create pyproject.toml for modern packaging
-        pyproject_content = """[build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "segno-interactive-svg"
-version = "0.0.0-beta003"
-description = "Interactive SVG plugin for Segno QR codes"
-requires-python = ">=3.7"
-"""
-
-        (build_dir / "pyproject.toml").write_text(pyproject_content)
-
-        # Build the wheel
-        print("Building wheel...")
-        subprocess.run(
-            [
-                "python",
-                "-m",
-                "pip",
-                "wheel",
-                "--no-deps",  # Don't include dependencies
-                "--wheel-dir",
-                "dist",
-                str(build_dir),
-            ],
-            check=True,
+        # Build using python -m build (modern standard)
+        print("📦 Building wheel and source distribution...")
+        result = subprocess.run(
+            [sys.executable, "-m", "build"], cwd=project_root, capture_output=True, text=True
         )
 
-    print("Wheel built successfully!")
-    print("You can now use: await micropip.install('./dist/segnomms-0.1.0-py3-none-any.whl')")
+        if result.returncode != 0:
+            print(f"❌ Build failed: {result.stderr}")
+            return False
+
+        # List built packages
+        print("\n✅ Build completed successfully!")
+        print("\nBuilt packages:")
+        for file in dist_dir.glob("*"):
+            print(f"  📦 {file.name}")
+
+        print("\n💡 Next steps:")
+        print("  • Run validation: python repo/validate_release.py dist/")
+        print("  • Test installation: pip install dist/*.whl")
+        print("  • Publish to PyPI: twine upload dist/*")
+
+        return True
+
+    except Exception as e:
+        print(f"❌ Error during build: {e}")
+        return False
 
 
 if __name__ == "__main__":
-    build_wheel()
+    success = build_wheel()
+    sys.exit(0 if success else 1)

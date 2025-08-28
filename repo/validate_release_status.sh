@@ -12,7 +12,6 @@ VERBOSE=false
 # Job status variables
 TEST_MATRIX_STATUS=""
 PACKAGE_STATUS=""
-PYODIDE_STATUS=""
 INSTALL_STATUS=""
 QUALITY_STATUS=""
 
@@ -29,14 +28,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --validate-package=*)
             PACKAGE_STATUS="${1#*=}"
-            shift
-            ;;
-        --pyodide=*)
-            PYODIDE_STATUS="${1#*=}"
-            shift
-            ;;
-        --test-pyodide=*)
-            PYODIDE_STATUS="${1#*=}"
             shift
             ;;
         --install=*)
@@ -65,7 +56,6 @@ while [[ $# -gt 0 ]]; do
             echo "Required options:"
             echo "  --test-matrix=STATUS       Cross-platform test matrix result"
             echo "  --package=STATUS           Package validation result"
-            echo "  --pyodide=STATUS           Pyodide compatibility test result"
             echo "  --install=STATUS           Package installation test result"
             echo ""
             echo "Optional options:"
@@ -125,9 +115,6 @@ validate_parameters() {
         missing_params+=(--package)
     fi
 
-    if [[ -z "$PYODIDE_STATUS" ]]; then
-        missing_params+=(--pyodide)
-    fi
 
     if [[ -z "$INSTALL_STATUS" ]]; then
         missing_params+=(--install)
@@ -176,15 +163,13 @@ evaluate_release_validation() {
     echo ""
 
     # Display all job results
-    local test_emoji package_emoji pyodide_emoji install_emoji quality_emoji
+    local test_emoji package_emoji install_emoji quality_emoji
     test_emoji=$(get_status_emoji "$TEST_MATRIX_STATUS")
     package_emoji=$(get_status_emoji "$PACKAGE_STATUS")
-    pyodide_emoji=$(get_status_emoji "$PYODIDE_STATUS")
     install_emoji=$(get_status_emoji "$INSTALL_STATUS")
 
     echo "$test_emoji Test Matrix: $(get_status_description "$TEST_MATRIX_STATUS")"
     echo "$package_emoji Package Validation: $(get_status_description "$PACKAGE_STATUS")"
-    echo "$pyodide_emoji Pyodide Tests: $(get_status_description "$PYODIDE_STATUS")"
     echo "$install_emoji Install Tests: $(get_status_description "$INSTALL_STATUS")"
 
     if [[ -n "$QUALITY_STATUS" ]]; then
@@ -199,7 +184,6 @@ evaluate_release_validation() {
     local required_jobs=(
         "Test Matrix:$TEST_MATRIX_STATUS"
         "Package Validation:$PACKAGE_STATUS"
-        "Pyodide Tests:$PYODIDE_STATUS"
         "Install Tests:$INSTALL_STATUS"
     )
 
@@ -240,7 +224,6 @@ evaluate_release_validation() {
         echo "  Required Jobs (must pass):"
         echo "    - Test Matrix: $(get_status_description "$TEST_MATRIX_STATUS")"
         echo "    - Package Validation: $(get_status_description "$PACKAGE_STATUS")"
-        echo "    - Pyodide Tests: $(get_status_description "$PYODIDE_STATUS")"
         echo "    - Install Tests: $(get_status_description "$INSTALL_STATUS")"
         if [[ -n "$QUALITY_STATUS" ]]; then
             echo "  Optional Jobs (informational):"
@@ -272,7 +255,6 @@ evaluate_release_validation() {
         echo "📋 Successful validation means:"
         echo "   - Cross-platform compatibility verified"
         echo "   - Package build and metadata validated"
-        echo "   - Pyodide compatibility confirmed"
         echo "   - Installation and basic functionality working"
         echo "   - Ready for production release!"
         return 0

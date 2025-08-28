@@ -74,9 +74,6 @@ Repository = "https://github.com/systmms/segnomms.git"
 Changelog = "https://github.com/systmms/segnomms/blob/main/CHANGELOG.md"
 Documentation = "https://github.com/systmms/segnomms#readme"
 
-[tool.pyodide]
-# Pyodide-specific configuration
-packages = ["segno"]
 # Pure Python package - no binary dependencies
 pure = true
 

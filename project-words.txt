@@ -323,4 +323,3 @@ OpenAPI
 MyPy
 TypedDict
 pre
-Pyodide

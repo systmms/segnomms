@@ -2,22 +2,11 @@
   "name": "@systmms/segnomms",
   "version": "0.0.0b4",
   "description": "Advanced QR code generation plugin for Segno with custom shapes, styling, and interactivity",
-  "main": "dist/segnomms_bundled.py",
-  "module": "dist/segnomms_bundled.py",
-  "types": "dist/index.d.ts",
   "files": [
-    "dist",
     "segnomms"
   ],
   "scripts": {
-    "build": "npm run build:python && npm run build:types",
-    "build:python": "python scripts/bundle_for_pyodide.py",
-    "build:types": "echo '# Python bundle - no TypeScript types needed' > dist/README.md",
-    "clean": "rm -rf dist",
-    "prebuild": "npm run clean && mkdir -p dist",
-    "prepare": "npm run build",
     "test": "pytest tests/",
-    "watch": "nodemon --watch segnomms --watch scripts --ext py --exec 'npm run build'",
     "spell-check": "cspell '**/*'",
     "spell-check:docs": "cspell 'docs/**/*' '*.md' '*.rst'"
   },

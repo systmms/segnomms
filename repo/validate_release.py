@@ -7,7 +7,6 @@ This script performs comprehensive validation of built packages including:
 - Version consistency
 - Import testing
 - Basic functionality testing
-- Pyodide compatibility
 """
 
 import argparse

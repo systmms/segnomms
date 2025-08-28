@@ -50,7 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for different shapes per QR component (finder patterns, data modules, etc.)
 - Comprehensive test suite with visual regression testing
 - Full documentation with examples
-- Pyodide compatibility for browser-based usage
 
 ### Changed
 - Renamed from segno-interactive-svg to segnomms
