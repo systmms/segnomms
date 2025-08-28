@@ -7,6 +7,7 @@ and can be decoded by standard QR code readers.
 
 import io
 from pathlib import Path
+from typing import Optional
 
 import pytest
 import segno
@@ -38,7 +39,7 @@ except ImportError:
     cv2 = None
 
 
-def decode_with_zxingcpp(image_path: Path) -> str | None:
+def decode_with_zxingcpp(image_path: Path) -> Optional[str]:
     """Decode QR code using zxing-cpp."""
     if not zxingcpp:
         return None
@@ -53,7 +54,7 @@ def decode_with_zxingcpp(image_path: Path) -> str | None:
     return None
 
 
-def decode_with_pyzbar(image_path: Path) -> str | None:
+def decode_with_pyzbar(image_path: Path) -> Optional[str]:
     """Decode QR code using pyzbar."""
     if not pyzbar:
         return None
@@ -68,7 +69,7 @@ def decode_with_pyzbar(image_path: Path) -> str | None:
     return None
 
 
-def decode_with_opencv(image_path: Path) -> str | None:
+def decode_with_opencv(image_path: Path) -> Optional[str]:
     """Decode QR code using OpenCV."""
     if not cv2:
         return None

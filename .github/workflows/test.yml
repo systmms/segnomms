@@ -51,20 +51,48 @@ jobs:
     - name: Install system dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install cairo pkg-config
-        echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:\$PKG_CONFIG_PATH" >> "$GITHUB_ENV"
+        # Install Cairo and related libraries
+        brew install cairo pkg-config gobject-introspection
+
+        # Set up environment for both x86_64 and ARM64 Macs
+        if [[ "$(uname -m)" == "arm64" ]]; then
+          # Apple Silicon (M1/M2) - Homebrew uses /opt/homebrew
+          echo "PKG_CONFIG_PATH=/opt/homebrew/lib/pkgconfig:/opt/homebrew/share/pkgconfig:\$PKG_CONFIG_PATH" >> "$GITHUB_ENV"
+          echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib:\$DYLD_LIBRARY_PATH" >> "$GITHUB_ENV"
+        else
+          # Intel Macs - Homebrew uses /usr/local
+          echo "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:\$PKG_CONFIG_PATH" >> "$GITHUB_ENV"
+          echo "DYLD_LIBRARY_PATH=/usr/local/lib:\$DYLD_LIBRARY_PATH" >> "$GITHUB_ENV"
+        fi
+
+        # Verify Cairo installation
+        pkg-config --exists cairo
+        echo "Cairo version: $(pkg-config --modversion cairo)"
 
     - name: Install system dependencies (Windows)
       if: runner.os == 'Windows'
       run: |
-        # Install Cairo using chocolatey
+        # Install Cairo dependencies
         choco install pkgconfiglite -y
-        # Use pre-built Cairo binaries for Windows
-        curl -L -o cairo-windows.zip "https://github.com/preshing/cairo-windows/releases/download/v1.15.12/cairo-windows-1.15.12.zip"
-        7z x cairo-windows.zip -o"C:\cairo" -y
-        echo "C:\cairo\bin" >> $GITHUB_PATH
-        echo "PKG_CONFIG_PATH=C:\cairo\lib\pkgconfig" >> $GITHUB_ENV
-        echo "CAIRO_ROOT=C:\cairo" >> $GITHUB_ENV
+
+        # Download and install pre-built Cairo binaries
+        Invoke-WebRequest -Uri "https://github.com/preshing/cairo-windows/releases/download/v1.15.12/cairo-windows-1.15.12.zip" -OutFile "cairo-windows.zip"
+        Expand-Archive -Path "cairo-windows.zip" -DestinationPath "C:\cairo"
+
+        # Set up environment variables
+        echo "C:\cairo\bin" >> $env:GITHUB_PATH
+        echo "PKG_CONFIG_PATH=C:\cairo\lib\pkgconfig" >> $env:GITHUB_ENV
+        echo "CAIRO_ROOT=C:\cairo" >> $env:GITHUB_ENV
+        echo "CAIRO_INCLUDE_PATH=C:\cairo\include" >> $env:GITHUB_ENV
+        echo "CAIRO_LIB_PATH=C:\cairo\lib" >> $env:GITHUB_ENV
+
+        # Verify installation
+        if (Test-Path "C:\cairo\bin\libcairo-2.dll") {
+          Write-Host "Cairo DLL found successfully"
+        } else {
+          Write-Host "WARNING: Cairo DLL not found at expected path"
+          Get-ChildItem -Path "C:\cairo" -Recurse -Name "*.dll" | Where-Object { $_ -like "*cairo*" }
+        }
       shell: pwsh
 
     - name: Install dependencies
