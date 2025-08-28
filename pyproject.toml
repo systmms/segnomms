@@ -313,7 +313,7 @@ dev-dependencies = [
     "black>=23.0.0",
     "isort>=5.0.0",
     "mypy>=1.0.0",
-    "pre-commit-hooks>=4.0.0",  # For trailing whitespace and other file formatting
+    "pre-commit-hooks>=4.0.0", # For trailing whitespace and other file formatting
     "types-PyYAML>=6.0.0", # Type stubs for yaml import
     # Documentation
     "sphinx>=7.0.0",
@@ -330,4 +330,5 @@ dev-dependencies = [
     "lxml>=4.0.0", # For XML/SVG parsing in tests
     "psutil>=5.0.0", # For performance benchmarking
     "types-psutil>=7.0.0.20250822",
+    "bandit>=1.8.6",
 ]

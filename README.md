@@ -83,6 +83,8 @@ write(qr, 'output.svg',
 ### Accessibility Features
 
 ```python
+import segno
+from segnomms import write
 from segnomms.a11y.accessibility import create_enhanced_accessibility
 
 # Generate QR code with comprehensive accessibility
@@ -136,7 +138,7 @@ write(qr, 'custom-accessible.svg', accessibility=custom_a11y)
 
 ## Requirements
 
-- Python >= 3.8  
+- Python >= 3.8
 - Segno >= 1.5.2 (tested with 1.5.2, 1.6.0, and 1.6.6)
 - Pydantic >= 2.0.0 (for configuration validation and JSON Schema)
 
@@ -163,7 +165,7 @@ SegnoMMS features comprehensive **Pydantic-powered configuration** with automati
 ### Type-Safe Configuration with Full Validation
 
 ```python
-from segnomms.config.schema import RenderingConfig
+from segnomms.config.models.core import RenderingConfig
 from segnomms.validation.models import Phase4ValidatorConfig
 from segnomms.algorithms.models import ClusteringConfig
 from pydantic import ValidationError
@@ -203,6 +205,15 @@ except ValidationError as e:
 from segnomms.core.models import NeighborAnalysis
 from segnomms.algorithms.models import ClusterInfo
 from segnomms.validation.models import ValidationResult
+from segnomms.core.detector import ModuleDetector
+from segnomms.config.models.core import RenderingConfig
+
+# Example setup
+config = RenderingConfig.from_kwargs()
+# Create a minimal QR matrix for version 1 (21x21)
+matrix = [[True] * 21 for _ in range(21)]
+detector = ModuleDetector(matrix, version=1)
+row, col = 10, 10
 
 # Structured returns instead of dictionaries
 analysis = detector.get_weighted_neighbor_analysis(row, col)
@@ -214,12 +225,16 @@ cluster = ClusterInfo(
     positions=[(0,0), (0,1), (1,0)],
     bounds=(0, 0, 1, 1),
     module_count=3,
-    density=0.75
+    density=0.75,
+    aspect_ratio=1.0,
+    is_rectangular=False
 )
 print(f"Cluster size: {cluster.width}x{cluster.height}")
 print(f"Fill ratio: {cluster.fill_ratio}")
 
 # Comprehensive validation results
+from segnomms.validation.phase4 import Phase4Validator
+validator = Phase4Validator(qr_version=1, error_level='M', matrix_size=21)
 result = validator.validate_all(config)
 print(f"Valid: {result.valid}")
 print(f"Issues: {result.total_issues}")
@@ -228,6 +243,9 @@ print(f"Issues: {result.total_issues}")
 ### JSON Schema Generation & Integration
 
 ```python
+from segnomms.config.models.core import RenderingConfig
+from segnomms.algorithms.models import ClusteringConfig
+
 # Generate JSON Schema for any configuration
 schema = RenderingConfig.model_json_schema()
 clustering_schema = ClusteringConfig.model_json_schema()
@@ -237,21 +255,32 @@ print(schema['properties']['scale'])
 # Output: {'type': 'integer', 'minimum': 1, 'maximum': 100, 'description': 'Size of each module in pixels'}
 
 # Perfect for FastAPI integration
-from fastapi import FastAPI
-app = FastAPI()
+try:
+    from fastapi import FastAPI
+    app = FastAPI()
 
-@app.post("/qr/generate")
-def generate_qr(config: RenderingConfig):
-    return {"svg": generate_svg(config)}
+    @app.post("/qr/generate")
+    def generate_qr(config: RenderingConfig):
+        return {"svg": f"<svg>Generated QR with {config.geometry.shape}</svg>"}
 
-@app.get("/qr/schema")
-def get_schema():
-    return RenderingConfig.model_json_schema()
+    @app.get("/qr/schema")
+    def get_schema():
+        return RenderingConfig.model_json_schema()
+    print("FastAPI integration ready")
+except ImportError:
+    print("FastAPI not available - install with: pip install fastapi")
 ```
 
 ### Configuration Serialization & Presets
 
 ```python
+from segnomms.config.models.core import RenderingConfig
+from segnomms.algorithms.models import ClusteringConfig
+
+# Create example configurations
+config = RenderingConfig.from_kwargs(shape='squircle', corner_radius=0.4)
+clustering_config = ClusteringConfig()
+
 # Serialize any configuration to JSON
 json_string = config.model_dump_json()
 cluster_json = clustering_config.model_dump_json()
@@ -280,13 +309,15 @@ PRESET_CLASSIC = RenderingConfig.from_kwargs(
 All models provide complete type hints and IDE auto-completion:
 
 ```python
+from segnomms.config.models.core import RenderingConfig
+
 # Full IDE support with type checking
 def process_qr(config: RenderingConfig) -> str:
     # IDE knows all available fields and their types
     scale: int = config.scale
     shape: str = config.geometry.shape
     # Automatic validation ensures type safety
-    return generate_svg(config)
+    return f"<svg>Generated SVG with {shape} at scale {scale}</svg>"
 ```
 
 ## License

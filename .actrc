@@ -1,0 +1,29 @@
+# nektos/act configuration for SegnoMMS project
+# Optimized for Apple M-series architecture with GitHub Actions testing
+
+# Container architecture for M-series Mac compatibility
+--container-architecture linux/amd64
+
+# Artifact and cache paths for local testing
+--artifact-server-path ./artifacts
+--cache-server-path ./.actcache
+
+# Event simulation settings
+--actor systmms-ci-test
+--defaultbranch main
+
+# Environment configuration
+--env-file .env.act.detailed
+
+# Container management
+--rm
+--network host
+--pull=false
+
+# Platform mappings for consistent container usage
+--platform ubuntu-latest=catthehacker/ubuntu:act-latest
+--platform ubuntu-22.04=catthehacker/ubuntu:act-22.04
+--platform ubuntu-20.04=catthehacker/ubuntu:act-20.04
+
+# Verbose output for debugging
+--verbose

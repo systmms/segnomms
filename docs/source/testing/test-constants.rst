@@ -35,11 +35,11 @@ Before: Using String Literals
    # ❌ Brittle string literals
    def test_circle_shape():
        write(qr, output, shape="circle", scale=10)
-       
+
    # ❌ Typo causes runtime error
    def test_squircle_shape():
-       write(qr, output, shape="squirle")  # Oops! Typo!
-       
+       write(qr, output, shape="squirle")  # cspell:disable-line - intentional typo example
+
    # ❌ Inconsistent test data
    def test_colors():
        test_cases = [
@@ -53,17 +53,17 @@ After: Using Constants
 .. code-block:: python
 
    from tests.constants import ModuleShape, create_test_config, TEST_COLORS
-   
+
    # ✅ Type-safe enum values
    def test_circle_shape():
        config = create_test_config(shape=ModuleShape.CIRCLE.value)
        write(qr, output, **config)
-       
+
    # ✅ IDE autocomplete prevents typos
    def test_squircle_shape():
        config = create_test_config(shape=ModuleShape.SQUIRCLE.value)
        write(qr, output, **config)
-       
+
    # ✅ Consistent test data
    def test_colors():
        config = create_test_config(
@@ -81,7 +81,7 @@ Testing All Shapes
 .. code-block:: python
 
    from tests.constants import VALID_SHAPES
-   
+
    @pytest.mark.parametrize("shape", VALID_SHAPES)
    def test_all_shapes(shape):
        config = create_test_config(shape=shape)
@@ -94,13 +94,13 @@ Testing Shape Categories
 .. code-block:: python
 
    from tests.constants import BASIC_SHAPES, CONNECTED_SHAPES
-   
+
    def test_basic_shapes_only():
        for shape in BASIC_SHAPES:
            # Basic shapes should work with safe mode
            config = create_test_config(shape=shape, safe_mode=True)
            write(qr, output, **config)
-   
+
    def test_connected_shapes():
        for shape in CONNECTED_SHAPES:
            # Connected shapes need special handling
@@ -117,7 +117,7 @@ Using Predefined Test Cases
 .. code-block:: python
 
    from tests.constants import SHAPE_TEST_CASES
-   
+
    @pytest.mark.parametrize("test_case", SHAPE_TEST_CASES)
    def test_shape_configurations(test_case):
        config = create_test_config(
@@ -125,7 +125,7 @@ Using Predefined Test Cases
            corner_radius=test_case["corner_radius"]
        )
        write(qr, output, **config)
-       
+
        # Use test case metadata for assertions
        if test_case["supports_merging"]:
            assert "merge" in result
@@ -136,11 +136,11 @@ Testing with Common Payloads
 .. code-block:: python
 
    from tests.constants import QR_PAYLOADS
-   
+
    def test_url_encoding():
        qr = segno.make(QR_PAYLOADS["url"])
        # Test URL-specific behavior
-       
+
    def test_unicode_support():
        qr = segno.make(QR_PAYLOADS["unicode"])
        # Test Unicode handling
@@ -155,7 +155,7 @@ Best Practices
 
    # Import specific constants
    from tests.constants import ModuleShape, DEFAULT_SCALE
-   
+
    # Or import categories
    from tests.constants import VALID_SHAPES, COLOR_TEST_CASES
 
@@ -166,7 +166,7 @@ Best Practices
 
    # ✅ Good: Use enum value
    shape = ModuleShape.CIRCLE.value
-   
+
    # ❌ Avoid: Direct string
    shape = "circle"
 
@@ -182,7 +182,7 @@ When adding new test cases, add them to the constants module:
        {"config": {...}, "expected": ...},
        {"config": {...}, "expected": ...},
    ]
-   
+
    # In your test
    from tests.constants import NEW_FEATURE_TEST_CASES
 
@@ -194,7 +194,7 @@ Use type hints with enums for better IDE support:
 .. code-block:: python
 
    from tests.constants import ModuleShape
-   
+
    def create_qr_with_shape(shape: str) -> str:
        # shape should be ModuleShape.XXX.value
        config = create_test_config(shape=shape)
@@ -268,16 +268,16 @@ SegnoMMS also provides test helper classes for advanced testing scenarios:
 .. code-block:: python
 
    from tests.helpers import get_scanability_harness
-   
+
    def test_qr_scanability():
        qr = segno.make("Test content")
        config = create_test_config(shape=ModuleShape.CIRCLE.value)
-       
+
        # Generate SVG
        output = StringIO()
        write(qr, output, **config)
        svg_content = output.getvalue()
-       
+
        # Validate scanability
        harness = get_scanability_harness()
        result = harness.validate_svg(svg_content, "Test content")
@@ -288,11 +288,11 @@ SegnoMMS also provides test helper classes for advanced testing scenarios:
 .. code-block:: python
 
    from tests.helpers import TestCaseGenerator, TestCategory
-   
+
    def test_shape_gallery():
        # Get all shape test cases
        test_cases = TestCaseGenerator.get_shape_test_cases()
-       
+
        for test_case in test_cases:
            qr = TestCaseGenerator.generate_qr(test_case)
            # Test each shape configuration...
@@ -302,10 +302,10 @@ SegnoMMS also provides test helper classes for advanced testing scenarios:
 .. code-block:: python
 
    from tests.helpers import TestOutputManager
-   
+
    def test_visual_regression():
        output_manager = TestOutputManager(Path("test_output"))
-       
+
        # Generate organized output with SVG, PNG, and config JSON
        outputs = output_manager.generate_test_output(
            test_case_id="shape_circle_safe_mode",
@@ -349,10 +349,10 @@ Before
        # ❌ String literals, inconsistent configs
        for shape in ["square", "circle", "rounded"]:
            write(qr, output, shape=shape, scale=10, border=4)
-           
+
        # ❌ Magic numbers
        write(qr, output, shape="squircle", corner_radius=0.3, scale=8)
-       
+
        # ❌ Duplicate color definitions
        write(qr, output, dark="#000000", light="#FFFFFF")
 
@@ -362,25 +362,25 @@ After
 .. code-block:: python
 
    from tests.constants import (
-       BASIC_SHAPES, 
+       BASIC_SHAPES,
        create_test_config,
        ModuleShape,
        TEST_COLORS
    )
-   
+
    def test_various_shapes():
        # ✅ Type-safe shapes, consistent config
        for shape in BASIC_SHAPES:
            config = create_test_config(shape=shape)
            write(qr, output, **config)
-           
+
        # ✅ Named constants
        squircle_config = create_test_config(
            shape=ModuleShape.SQUIRCLE.value,
            corner_radius=0.3
        )
        write(qr, output, **squircle_config)
-       
+
        # ✅ Predefined test data
        color_config = create_test_config(
            dark=TEST_COLORS["brand_primary"],

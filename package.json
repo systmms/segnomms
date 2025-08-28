@@ -17,7 +17,9 @@
     "prebuild": "npm run clean && mkdir -p dist",
     "prepare": "npm run build",
     "test": "pytest tests/",
-    "watch": "nodemon --watch segnomms --watch scripts --ext py --exec 'npm run build'"
+    "watch": "nodemon --watch segnomms --watch scripts --ext py --exec 'npm run build'",
+    "spell-check": "cspell '**/*'",
+    "spell-check:docs": "cspell 'docs/**/*' '*.md' '*.rst'"
   },
   "keywords": [
     "qr",
@@ -29,7 +31,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^3.0.0"
+    "nodemon": "^3.0.0",
+    "cspell": "^8.0.0"
   },
   "engines": {
     "node": ">=16.0.0"

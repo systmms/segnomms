@@ -1,0 +1,26 @@
+# Bandit configuration for SegnoMMS
+# See https://bandit.readthedocs.io/en/latest/config.html
+
+# Skip tests for XML-related false positives - we only generate SVG, never parse untrusted XML
+# B405: xml.etree.ElementTree imports - we generate trusted SVG content only
+# B314: xml.etree.ElementTree.fromstring - we only parse trusted SVG strings we create
+skips:
+  - B405
+  - B314
+
+# Paths to exclude from scanning
+exclude_dirs:
+  - tests
+  - docs
+  - examples
+  - build
+  - dist
+  - .git
+  - .venv
+  - venv
+
+# Report only HIGH confidence issues to reduce false positives
+confidence: HIGH
+
+# Minimum severity level to report
+severity: MEDIUM

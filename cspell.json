@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": "./project-words.txt",
+      "description": "Project-specific technical terms and vocabulary",
+      "addWords": true
+    }
+  ],
+  "dictionaries": [
+    "bash",
+    "css",
+    "en_us",
+    "en-gb",
+    "fonts",
+    "html",
+    "python",
+    "node",
+    "typescript",
+    "project-words"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "build/**",
+    "dist/**",
+    "docs/build/**",
+    ".git/**",
+    ".venv/**",
+    "venv/**",
+    "__pycache__/**",
+    "*.egg-info/**",
+    ".pytest_cache/**",
+    ".coverage/**",
+    "htmlcov/**",
+    ".mypy_cache/**",
+    ".ruff_cache/**"
+  ],
+  "files": [
+    "**/*.{py,rst,md,yml,yaml,json,txt,sh}",
+    "*.{py,rst,md,yml,yaml,json,txt,sh}"
+  ],
+  "enableFiletypes": [
+    "python",
+    "markdown",
+    "restructuredtext",
+    "yaml",
+    "json",
+    "shellscript"
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.py",
+      "dictionaries": [
+        "python",
+        "en_us",
+        "project-words"
+      ]
+    },
+    {
+      "filename": "**/*.{rst,md}",
+      "dictionaries": [
+        "en_us",
+        "html",
+        "css",
+        "python",
+        "project-words"
+      ]
+    },
+    {
+      "filename": "**/*.{yml,yaml}",
+      "dictionaries": [
+        "en_us",
+        "bash",
+        "node",
+        "project-words"
+      ]
+    }
+  ],
+  "ignoreWords": [
+    "pypi",
+    "conda",
+    "mamba",
+    "pipx"
+  ],
+  "patterns": [
+    {
+      "name": "sha-hash",
+      "pattern": "\\b[0-9a-f]{7,40}\\b",
+      "description": "Git SHA hashes"
+    },
+    {
+      "name": "hex-color",
+      "pattern": "#[0-9a-fA-F]{3,8}",
+      "description": "Hex color codes"
+    },
+    {
+      "name": "uuid",
+      "pattern": "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\b",
+      "description": "UUIDs"
+    }
+  ],
+  "ignoreRegExpList": [
+    "sha-hash",
+    "hex-color",
+    "uuid"
+  ]
+}

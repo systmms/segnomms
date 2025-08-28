@@ -11,9 +11,10 @@ on:
     - 'README.md'
     - 'CHANGELOG.md'
     - 'repo/check_doc_*.py'
-    - 'repo/spell_check_docs.py'
-    - 'repo/aspell_project_dict.txt'
-    - 'repo/setup_spell_checker.sh'
+    - 'repo/spell_check_docs_cspell.py'
+    - 'project-words.txt'
+    - 'cspell.json'
+    - 'repo/setup_cspell.sh'
     - 'repo/test_readme_examples.py'
     - 'repo/generate_example_qrs.py'
     - 'repo/docs_quality_gate.sh'
@@ -140,32 +141,32 @@ jobs:
         path: example-outputs/
 
   spell-check:
-    name: Spell Check Documentation
+    name: Spell Check Documentation (cspell)
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Cache APT packages
-      uses: awalsh128/cache-apt-pkgs-action@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        packages: aspell aspell-en
-        version: 1.0
+        node-version: '18'
+        cache: 'npm'
 
-    - name: Install spell checker (fallback)
-      run: ./repo/setup_spell_checker.sh
+    - name: Install cspell dependencies
+      run: npm install
 
-    - name: Verify aspell installation
+    - name: Verify cspell installation
       run: |
-        echo "🔍 Verifying aspell installation..."
-        aspell --version || echo "❌ aspell not available"
+        echo "🔍 Verifying cspell installation..."
+        npx cspell --version || echo "❌ cspell not available"
         echo "📚 Available dictionaries:"
-        aspell dicts || echo "❌ No dictionaries found"
-        echo "🧪 Testing dictionary access:"
-        echo "test hello wrold" | aspell list || echo "❌ Dictionary test failed"
+        npx cspell --show-config --config cspell.json | head -20 || echo "❌ Configuration error"
+        echo "🧪 Testing spell checking functionality:"
+        echo "test hello wrold" | npx cspell stdin --no-progress || echo "✅ Correctly detected spelling errors"
 
     - name: Check spelling in documentation
-      run: uv run python repo/spell_check_docs.py
+      run: python repo/spell_check_docs_cspell.py
 
   deploy-docs:
     name: Deploy Documentation

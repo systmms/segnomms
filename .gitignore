@@ -125,6 +125,8 @@ result-*
 *.act.yml
 .github/workflows/act/
 act-runner/
+.actcache/
+artifacts/
 
 # Pre-commit
 .pre-commit-config.yaml.bak
@@ -156,3 +158,18 @@ profile_*.txt
 .env.test
 .env.production
 secrets.json
+
+# Node.js dependencies and cspell
+node_modules/
+
+# Generated security and analysis reports
+bandit-report.json
+*.security.json
+
+# Generated SVG examples and test outputs (root level)
+output.svg
+output_config.json
+accessible.svg
+accessible_config.json
+custom-*.svg
+custom-*_config.json

@@ -1,0 +1,32 @@
+{
+  "inputs": {
+    "python-version": "3.11"
+  },
+  "ref": "main",
+  "repository": {
+    "id": 123456789,
+    "node_id": "MDEwOlJlcG9zaXRvcnkxMjM0NTY3ODk=",
+    "name": "segnomms",
+    "full_name": "systmms/segnomms",
+    "private": false,
+    "owner": {
+      "login": "systmms",
+      "id": 87654321,
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjg3NjU0MzIx",
+      "avatar_url": "https://avatars.githubusercontent.com/u/87654321?v=4",
+      "type": "Organization"
+    },
+    "html_url": "https://github.com/systmms/segnomms",
+    "description": "Advanced QR code generation plugin for Segno with custom shapes, styling, and interactivity",
+    "fork": false,
+    "url": "https://github.com/systmms/segnomms",
+    "default_branch": "main"
+  },
+  "sender": {
+    "login": "systmms-ci-test",
+    "id": 12345,
+    "node_id": "MDQ6VXNlcjEyMzQ1",
+    "avatar_url": "https://avatars.githubusercontent.com/u/12345?v=4",
+    "type": "User"
+  }
+}

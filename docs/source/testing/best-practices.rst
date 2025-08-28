@@ -6,7 +6,7 @@ This section outlines best practices for testing SegnoMMS applications and contr
 Development Testing Principles
 -------------------------------
 
-1. **Use Test Constants** 
+1. **Use Test Constants**
    Always import from ``tests.constants`` instead of using string literals for better maintainability and IDE support.
 
 2. **Follow Testing Pyramid**
@@ -30,7 +30,7 @@ Always use the centralized test constants for consistent, validated test data:
 
    # ✅ Good - Type-safe with validation
    from tests.constants import ModuleShape, TEST_COLORS, QR_PAYLOADS
-   
+
    def test_shape_rendering():
        qr = segno.make(QR_PAYLOADS["url"])
        config = create_test_config(
@@ -42,7 +42,7 @@ Always use the centralized test constants for consistent, validated test data:
    # ❌ Avoid - String literals without validation
    def test_shape_rendering_bad():
        qr = segno.make("https://example.com")  # Magic string
-       write(qr, output, shape="cirle")        # Typo-prone
+       write(qr, output, shape="cirle")        # cspell:disable-line - intentional typo example
 
 Error Handling Testing
 ----------------------
@@ -54,25 +54,25 @@ Test both success and error paths with the intent-based API:
    def test_intent_error_handling():
        """Test comprehensive error handling patterns."""
        from segnomms.exceptions import IntentValidationError, UnsupportedIntentError
-       
+
        renderer = SegnoMMS()
-       
+
        # Test validation errors
        with pytest.raises(IntentValidationError) as exc_info:
            invalid_intents = IntentsConfig(
                style=StyleIntents(corner_radius=5.0)  # Out of range
            )
            renderer.render_with_intents("test", invalid_intents)
-       
+
        assert "corner_radius" in str(exc_info.value)
-       
+
        # Test unsupported features
        with pytest.raises(UnsupportedIntentError) as exc_info:
            unsupported_intents = IntentsConfig(
                style=StyleIntents(module_shape="pyramid")  # Unsupported
            )
            renderer.render_with_intents("test", unsupported_intents)
-       
+
        assert exc_info.value.alternatives  # Should suggest alternatives
 
 Visual Regression Testing Guidelines
@@ -100,17 +100,17 @@ Example visual regression test:
        """Test that shape rendering matches expected output."""
        qr = segno.make(QR_PAYLOADS["text"])
        output_path = tmp_path / "shape_test.svg"
-       
+
        config = create_test_config(
            shape=ModuleShape.SQUIRCLE.value,
            scale=DEFAULT_SCALE
        )
-       
+
        write(qr, output_path, **config)
-       
+
        # Convert to PNG for pixel comparison
        png_path = convert_svg_to_png(output_path)
-       
+
        # Compare with baseline (pytest-image-snapshot)
        assert_image_matches_baseline(png_path, "squircle_shape.png")
 
@@ -123,17 +123,17 @@ Include performance considerations in your tests:
 
    import time
    from tests.helpers.benchmarks import performance_test
-   
+
    @performance_test(max_duration_ms=100)
    def test_qr_generation_performance():
        """Test that QR generation completes within performance targets."""
        qr = segno.make(QR_PAYLOADS["long_text"])
-       
+
        start_time = time.time()
        config = create_test_config(shape=ModuleShape.CONNECTED.value)
        write(qr, output, **config)
        duration_ms = (time.time() - start_time) * 1000
-       
+
        assert duration_ms < 100, f"Generation took {duration_ms}ms, expected < 100ms"
 
 Test Organization Best Practices
@@ -159,26 +159,26 @@ Example test organization:
 
    class TestShapeRendering:
        """Tests for shape rendering functionality."""
-       
+
        def test_basic_shapes_render_successfully(self):
            """All basic shapes should render without errors."""
            # Test happy path
-           
+
        def test_invalid_shape_raises_validation_error(self):
            """Invalid shape names should raise clear errors."""
            # Test error handling
-           
+
        def test_shape_parameters_are_validated(self):
            """Shape-specific parameters should be validated."""
            # Test parameter validation
 
    class TestColorConfiguration:
        """Tests for color configuration and validation."""
-       
+
        @pytest.fixture
        def color_test_cases(self):
            return TEST_COLORS["accessibility_compliant"]
-           
+
        def test_valid_colors_accepted(self, color_test_cases):
            """Valid color formats should be accepted."""
            # Use fixture data
@@ -213,19 +213,19 @@ Use consistent naming patterns:
    # Unit tests - test specific behavior
    def test_circle_shape_generates_circular_modules():
        pass
-   
-   # Integration tests - test component interaction  
+
+   # Integration tests - test component interaction
    def test_shape_renderer_integrates_with_svg_builder():
        pass
-   
+
    # Error handling - test specific error conditions
    def test_invalid_corner_radius_raises_validation_error():
        pass
-   
+
    # Performance tests - test speed/memory constraints
    def test_large_qr_generation_completes_within_time_limit():
        pass
-   
+
    # Visual regression - test visual output
    def test_squircle_shape_visual_regression():
        pass
@@ -256,13 +256,13 @@ Common debugging commands:
 
    # Run specific test with verbose output
    pytest tests/unit/test_shapes.py::test_circle_shape -v
-   
+
    # Run with debugging breakpoints
    pytest tests/unit/test_shapes.py --pdb
-   
+
    # Show test coverage
    pytest tests/unit/ --cov=segnomms --cov-report=html
-   
+
    # Run tests with specific markers
    pytest -m "not slow" tests/
 
@@ -274,7 +274,7 @@ For consistent testing environments:
 1. **Use Virtual Environments**
    Always test in isolated Python environments to avoid dependency conflicts.
 
-2. **Pin Test Dependencies**  
+2. **Pin Test Dependencies**
    Use specific versions of testing tools to ensure reproducible results.
 
 3. **Platform Consistency**
@@ -289,13 +289,13 @@ Local development setup:
 
    # Set up development environment
    make setup
-   
+
    # Run quick development tests
    make test-quick
-   
+
    # Run full test suite before committing
    make test-all
-   
+
    # Update visual baselines after intentional changes
    make test-visual --update-baselines
 
@@ -306,7 +306,7 @@ SegnoMMS maintains high quality standards:
 
 **Coverage Targets:**
 - Unit test coverage: >90%
-- Integration test coverage: >80% 
+- Integration test coverage: >80%
 - End-to-end scenario coverage: >70%
 
 **Performance Targets:**

@@ -61,13 +61,7 @@ pre-commit:
         done
 
     check-merge-conflict:
-      run: |
-        for file in {staged_files}; do
-          if grep -E '^[<>|=]{7}' "$file"; then
-            echo "Merge conflict markers found in $file"
-            exit 1
-          fi
-        done
+      run: git diff --check --cached
 
     debug-statements:
       glob: "*.py"
@@ -84,6 +78,12 @@ pre-commit:
       glob: "*.py"
       exclude: "tests/|examples/|repo/"
       run: mypy {staged_files}
+
+    # Security scanning with bandit
+    bandit:
+      glob: "*.py"
+      exclude: "tests/|examples/|repo/"
+      run: bandit -c .bandit -r {staged_files}
 
     # Repository scripts should trigger when changed
     repo-scripts:
@@ -102,25 +102,36 @@ pre-commit:
       glob: "docs/**/*.{rst,md,py}"
       run: python repo/check_doc_build.py --skip-if-missing-deps --quiet
 
-    # Documentation spell checking (optional - can be skipped with LEFTHOOK_EXCLUDE)
+    # Documentation spell checking with cspell (optional - can be skipped with LEFTHOOK_EXCLUDE)
     spell-check:
-      glob: "docs/**/*.rst"
+      glob: "docs/**/*.{rst,md}"
       run: |
-        # Install spell checker if needed
-        if ! command -v aspell &> /dev/null; then
-          echo "Installing spell checker..."
-          ./repo/setup_spell_checker.sh
+        # Install cspell if needed
+        if ! command -v npx &> /dev/null || ! npx cspell --version &> /dev/null 2>&1; then
+          echo "Installing cspell (Code Spell Checker)..."
+          ./repo/setup_cspell.sh
         fi
         # Run spell check on documentation files
-        python repo/spell_check_docs.py --files {staged_files} --quiet
+        python repo/spell_check_docs_cspell.py --files {staged_files} --quiet
 
     # Project dictionary changes should trigger spell check
     spell-check-dict:
-      glob: "repo/aspell_project_dict.txt"
+      glob: "project-words.txt"
       run: |
         echo "Project dictionary updated - running full spell check"
-        if ! command -v aspell &> /dev/null; then
-          echo "Installing spell checker..."
-          ./repo/setup_spell_checker.sh
+        if ! command -v npx &> /dev/null || ! npx cspell --version &> /dev/null 2>&1; then
+          echo "Installing cspell (Code Spell Checker)..."
+          ./repo/setup_cspell.sh
         fi
-        python repo/spell_check_docs.py --quiet
+        python repo/spell_check_docs_cspell.py --quiet
+
+    # cspell configuration changes should trigger spell check
+    spell-check-config:
+      glob: "cspell.json"
+      run: |
+        echo "cspell configuration updated - running full spell check"
+        if ! command -v npx &> /dev/null || ! npx cspell --version &> /dev/null 2>&1; then
+          echo "Installing cspell (Code Spell Checker)..."
+          ./repo/setup_cspell.sh
+        fi
+        python repo/spell_check_docs_cspell.py --quiet
