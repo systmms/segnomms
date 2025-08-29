@@ -67,17 +67,17 @@ jobs:
     - name: Build HTML documentation
       run: |
         cd docs
-        make html
+        uv run make html
 
     - name: Check for broken links
       run: |
         cd docs
-        make linkcheck || echo "Link check completed with warnings"
+        uv run make linkcheck || echo "Link check completed with warnings"
 
     - name: Generate API documentation coverage report
       run: |
         cd docs
-        make coverage-report
+        uv run make coverage-report
 
     - name: Upload documentation artifacts
       uses: actions/upload-artifact@v4
