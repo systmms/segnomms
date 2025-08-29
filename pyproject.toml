@@ -75,7 +75,6 @@ Changelog = "https://github.com/systmms/segnomms/blob/main/CHANGELOG.md"
 Documentation = "https://github.com/systmms/segnomms#readme"
 
 # Pure Python package - no binary dependencies
-pure = true
 
 [project.entry-points."segno.plugin.converter"]
 interactive_svg = "segnomms.plugin:write"
