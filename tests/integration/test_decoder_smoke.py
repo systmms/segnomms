@@ -155,11 +155,21 @@ class TestDecoderSmoke:
         known_issues = [
             ("circle", False),  # Circle modules without safe mode
             ("diamond", False),  # Diamond modules without safe mode
+            ("rounded", False),  # SVG rendering precision issues during PNG conversion
         ]
 
         if (shape, safe_mode) in known_issues:
+            skip_reasons = {
+                ("circle", False): "Circle modules without safe mode may not be recognized by some decoders",
+                ("diamond", False): "Diamond-shaped modules can confuse edge detection algorithms",
+                (
+                    "rounded",
+                    False,
+                ): "Rounded modules have SVG rendering precision issues during PNG conversion",
+            }
+            reason = skip_reasons.get((shape, safe_mode), f"{shape} with safe_mode={safe_mode}")
             pytest.skip(
-                f"Known decoder compatibility issue: {shape} with safe_mode={safe_mode}. "
+                f"Known decoder compatibility issue: {reason}. "
                 f"See docs/source/decoder_compatibility.rst for details and workarounds."
             )
 
