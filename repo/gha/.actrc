@@ -1,0 +1,7 @@
+--action-offline-mode
+-P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
+-P ubuntu-22.04=ghcr.io/catthehacker/ubuntu:act-latest
+--artifact-server-path ./.artifacts
+
+--secret-file repo/gha/.secrets
+--var-file repo/gha/.vars

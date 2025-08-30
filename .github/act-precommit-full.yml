@@ -1,0 +1,43 @@
+# GitHub Actions Workflow Testing Configuration
+# This file configures the enhanced act-precommit.sh script behavior
+
+# Custom runner images for different platforms
+runner_images:
+  ubuntu-latest: "ghcr.io/catthehacker/ubuntu:act-latest"
+  ubuntu-22.04: "ghcr.io/catthehacker/ubuntu:act-22.04"
+  ubuntu-20.04: "ghcr.io/catthehacker/ubuntu:act-20.04"
+  # Add custom runners as needed
+  # custom-runner: "myorg/custom-runner:v1.0"
+
+# Critical workflows for --critical-only mode
+critical_workflows:
+  - "ci"
+  - "test"
+  - "release"
+  - "publish"
+  - "security"
+
+# Event priority for testing (higher priority events tested first)
+event_priority:
+  - "pull_request"
+  - "push"
+  - "workflow_dispatch"
+  - "release"
+  - "workflow_call"
+
+# Default configuration values (can be overridden by CLI arguments)
+defaults:
+  parallel_jobs: 3
+  timeout: 300
+  log_level: "INFO"
+
+# Advanced configuration
+advanced:
+  # Cache workflow analysis for better performance
+  enable_caching: true
+
+  # Skip workflows that haven't changed in git
+  skip_unchanged_workflows: true
+
+  # Maximum number of workflows to test in one run
+  max_workflows: 20

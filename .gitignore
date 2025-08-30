@@ -128,6 +128,17 @@ act-runner/
 .actcache/
 artifacts/
 
+# GitHub Actions testing framework (enhanced act-precommit system)
+.act-precommit-cache/
+act-test-*.log
+/tmp/act-*.log
+
+# Enhanced act configuration files
+.github/act-precommit.yml
+.github/act-precommit.yaml
+act-precommit-config.yml
+act-precommit-config.yaml
+
 # Pre-commit
 .pre-commit-config.yaml.bak
 
@@ -142,6 +153,10 @@ site/
 *_IMPLEMENTATION.md
 *_PLAN.md
 REQUIREMENTS_*.md
+
+# Phase completion summaries (temporary analysis per CLAUDE.md policy)
+PHASE*_COMPLETION_SUMMARY.md
+ACTIONS_STATUS.md
 
 # Generated documentation reports
 doc-coverage.md
@@ -165,6 +180,17 @@ node_modules/
 # Generated security and analysis reports
 bandit-report.json
 *.security.json
+
+# Generated test and validation artifacts
+test-report.json
+minimal_release.json
+
+# Development GitHub event payloads (keep organized repo/gha/ structure)
+/*-event.json
+pull-request-event.json
+push-event.json
+release-event.json
+workflow-dispatch-event.json
 
 # Generated SVG examples and test outputs (root level)
 output.svg

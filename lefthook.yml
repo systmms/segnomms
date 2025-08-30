@@ -13,6 +13,13 @@ pre-commit:
     actionlint:
       glob: ".github/workflows/*.{yml,yaml}"
       run: actionlint {staged_files}
+    validate-gha-event-fixtures:
+      # Only run when event/test JSON files changed
+      glob: "repo/gha/{events,tests}/**/*.json"
+      # Lefthook expands {staged_files} to the matching staged files
+      run: node repo/gha/scripts/validate-event-payloads.mjs --format {staged_files}
+      # If the script reformats JSON, auto re-stage fixes
+      stage_fixed: true
     # Python code formatting - Black
     black:
       glob: "*.py"
