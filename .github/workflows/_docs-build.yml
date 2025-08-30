@@ -1,0 +1,105 @@
+name: Documentation Build (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: 'Python version to use'
+        required: false
+        type: string
+        default: "3.11"
+      fetch-depth:
+        description: 'Git fetch depth (0 for full history)'
+        required: false
+        type: number
+        default: 1
+      upload-artifacts:
+        description: 'Whether to upload documentation artifacts'
+        required: false
+        type: boolean
+        default: true
+      run-link-check:
+        description: 'Whether to run link checking'
+        required: false
+        type: boolean
+        default: true
+      run-coverage-report:
+        description: 'Whether to generate coverage report'
+        required: false
+        type: boolean
+        default: true
+      dependency-check:
+        description: 'Whether to run documentation dependency check'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  build-docs:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: ${{ inputs.fetch-depth }}
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        enable-cache: true
+        cache-dependency-glob: "**/uv.lock"
+
+    - name: Set up Python
+      run: uv python install ${{ inputs.python-version }}
+
+    - name: Cache UV and Virtual Environment
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/uv
+          .venv
+        key: uv-${{ runner.os }}-python${{ inputs.python-version }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        restore-keys: |
+          uv-${{ runner.os }}-python${{ inputs.python-version }}-
+          uv-${{ runner.os }}-
+
+    - name: Install dependencies
+      run: |
+        uv sync --extra docs
+        uv pip install -e .
+
+    - name: Check documentation dependencies
+      if: ${{ inputs.dependency-check }}
+      run: uv run python repo/check_doc_dependencies.py
+
+    - name: Build HTML documentation
+      run: |
+        cd docs
+        uv run make html
+
+    - name: Check for broken links
+      if: ${{ inputs.run-link-check }}
+      run: |
+        cd docs
+        uv run make linkcheck || echo "Link check completed with warnings"
+
+    - name: Generate API documentation coverage report
+      if: ${{ inputs.run-coverage-report }}
+      run: |
+        cd docs
+        uv run make coverage-report
+
+    - name: Upload documentation artifacts
+      if: ${{ inputs.upload-artifacts }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-html
+        path: docs/build/html/
+
+    - name: Upload documentation coverage
+      if: ${{ inputs.upload-artifacts && inputs.run-coverage-report }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-coverage
+        path: docs/doc-coverage.md

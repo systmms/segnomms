@@ -52,7 +52,7 @@ help:
 	@echo "  make benchmark     - Run comprehensive performance benchmarks"
 	@echo "  make benchmark-quick - Run quick performance benchmarks (reduced iterations)"
 	@echo "  make benchmark-regression - Check for performance regressions against baselines"
-	@echo "  make benchmark-scaling - Test algorithm scaling with QR code sizes" 
+	@echo "  make benchmark-scaling - Test algorithm scaling with QR code sizes"
 	@echo "  make benchmark-memory - Run memory profiling and leak detection"
 	@echo "  make benchmark-report - Generate comprehensive performance report"
 	@echo ""
@@ -130,10 +130,10 @@ test-all-categories: test-unit test-integration test-structural test-visual test
 .PHONY: test-docs
 test-docs:
 	@echo "Testing documentation build..."
-	@command -v sphinx-build >/dev/null 2>&1 || { echo "❌ Sphinx not found"; exit 1; }
-	@sphinx-build -M html docs/source docs/build >/dev/null 2>&1 && echo "✅ Documentation build successful" || { echo "❌ Documentation build failed"; exit 1; }
+	@cd docs && $(PYTHON) -c "import sphinx" 2>/dev/null || { echo "❌ Sphinx not available in environment"; exit 1; }
+	@cd docs && $(PYTHON) -m sphinx -M html source build >/dev/null 2>&1 && echo "✅ Documentation build successful" || { echo "❌ Documentation build failed"; exit 1; }
 	@echo "Testing documentation link checking..."
-	@sphinx-build -M linkcheck docs/source docs/build >/dev/null 2>&1 && echo "✅ Link checking successful" || { echo "❌ Link checking failed"; exit 1; }
+	@cd docs && $(PYTHON) -m sphinx -M linkcheck source build >/dev/null 2>&1 && echo "✅ Link checking successful" || { echo "❌ Link checking failed"; exit 1; }
 	@echo "Documentation tests passed!"
 
 # Test code quality (linting)
@@ -141,7 +141,7 @@ test-docs:
 test-lint:
 	@echo "Testing code quality with linters..."
 	@$(PYTHON) -c "import flake8" 2>/dev/null && $(PYTHON) -m flake8 $(PLUGIN_DIR) || echo "⚠️  flake8 not available, skipping (install with: pip install flake8)"
-	@$(PYTHON) -c "import black" 2>/dev/null && $(PYTHON) -m black --check $(PLUGIN_DIR) || echo "⚠️  black not available, skipping (install with: pip install black)"  
+	@$(PYTHON) -c "import black" 2>/dev/null && $(PYTHON) -m black --check $(PLUGIN_DIR) || echo "⚠️  black not available, skipping (install with: pip install black)"
 	@$(PYTHON) -c "import isort" 2>/dev/null && $(PYTHON) -m isort --check-only $(PLUGIN_DIR) || echo "⚠️  isort not available, skipping (install with: pip install isort)"
 	@echo "Code quality tests completed!"
 

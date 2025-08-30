@@ -97,48 +97,14 @@ jobs:
 
   documentation:
     name: Documentation Build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install uv
-      uses: astral-sh/setup-uv@v3
-      with:
-        enable-cache: true
-        cache-dependency-glob: "**/uv.lock"
-
-    - name: Set up Python
-      run: uv python install ${{ env.PYTHON_VERSION }}
-
-    - name: Cache UV and Virtual Environment
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
-        restore-keys: |
-          uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
-          uv-${{ runner.os }}-
-
-    - name: Install dependencies
-      run: |
-        uv sync --extra docs
-        uv pip install -e .
-
-    - name: Test documentation build
-      run: |
-        make test-docs
-
-    - name: Build documentation
-      run: |
-        make docs
-
-    - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: documentation
-        path: docs/build/html/
+    uses: ./.github/workflows/_docs-build.yml
+    with:
+      python-version: "3.11"
+      fetch-depth: 1
+      upload-artifacts: true
+      run-link-check: false
+      run-coverage-report: false
+      dependency-check: true
 
   compatibility:
     name: Segno Compatibility
