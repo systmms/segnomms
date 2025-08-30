@@ -49,7 +49,10 @@ pre-commit:
       stage_fixed: true
 
     end-of-file:
-      run: python -m pre_commit_hooks.end_of_file_fixer {staged_files}
+      run: |
+        python -m pre_commit_hooks.end_of_file_fixer {staged_files}
+        # Ensure files are staged after fixing
+        git add {staged_files}
       stage_fixed: true
 
     check-yaml:
@@ -108,6 +111,11 @@ pre-commit:
     doc-build:
       glob: "docs/**/*.{rst,md,py}"
       run: python repo/check_doc_build.py --skip-if-missing-deps --quiet
+
+    # Documentation reference validation (validates cross-references, toctrees, API refs)
+    doc-references:
+      glob: "docs/**/*.rst"
+      run: python repo/validate_docs_references.py
 
     # Documentation spell checking with cspell (optional - can be skipped with LEFTHOOK_EXCLUDE)
     spell-check:

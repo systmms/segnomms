@@ -1,20 +1,20 @@
 QR Decoder Compatibility Reference
 ====================================
 
-This document provides comprehensive information about QR code decoder compatibility 
-with SegnoMMS stylized QR codes, including known limitations and recommendations 
+This document provides comprehensive information about QR code decoder compatibility
+with SegnoMMS stylized QR codes, including known limitations and recommendations
 for different use cases.
 
 Overview
 --------
 
-SegnoMMS generates visually stylized QR codes that prioritize aesthetic appeal while 
-maintaining functional scanability. However, some combinations of visual styling and 
-decoder implementations may result in reduced compatibility compared to standard 
+SegnoMMS generates visually stylized QR codes that prioritize aesthetic appeal while
+maintaining functional scanability. However, some combinations of visual styling and
+decoder implementations may result in reduced compatibility compared to standard
 square-module QR codes.
 
-This reference documents tested decoder compatibility across different configurations 
-to help developers make informed decisions about styling choices for their specific 
+This reference documents tested decoder compatibility across different configurations
+to help developers make informed decisions about styling choices for their specific
 use cases.
 
 Decoder Library Compatibility Matrix
@@ -24,7 +24,7 @@ The following decoders have been tested with SegnoMMS output:
 
 **Recommended Decoders (High Compatibility):**
 - **zxingcpp** - ZXing C++ implementation with Python bindings
-- **OpenCV QRCodeDetector** - Part of opencv-python package  
+- **OpenCV QRCodeDetector** - Part of opencv-python package
 - **pyzbar** - Python wrapper for ZBar library (requires system dependencies)
 
 **Mobile and Web Decoders:**
@@ -38,10 +38,10 @@ Installation
 
     # Recommended: ZXing C++ (no system dependencies)
     pip install zxingcpp
-    
+
     # Alternative: OpenCV
     pip install opencv-python
-    
+
     # Alternative: PyZBar (requires libzbar)
     # On macOS: brew install zbar
     # On Ubuntu: sudo apt-get install libzbar0
@@ -50,7 +50,7 @@ Installation
 Known Compatibility Issues
 --------------------------
 
-Based on systematic testing, the following configurations have known decoder 
+Based on systematic testing, the following configurations have known decoder
 compatibility limitations:
 
 Shape-Related Issues
@@ -62,13 +62,13 @@ Shape-Related Issues
 - **Recommendation**: Use ``safe_mode=True`` for circle shapes in critical applications
 - **Alternative**: Use ``squircle`` shape for rounded appearance with better compatibility
 
-**Diamond Modules (safe_mode=False)** 
+**Diamond Modules (safe_mode=False)**
 - **Issue**: Diamond-shaped modules can confuse edge detection algorithms
 - **Affected Decoders**: zxingcpp, opencv
 - **Recommendation**: Use ``safe_mode=True`` or consider ``rounded`` shape instead
 - **Note**: Diamond with safe_mode=True works reliably
 
-Scale-Related Issues  
+Scale-Related Issues
 ~~~~~~~~~~~~~~~~~~~
 
 **Rounded Modules at Various Scales**
@@ -106,7 +106,7 @@ For maximum decoder compatibility, use these "safe" configurations:
         'light': '#FFFFFF',
         'error': 'M'  # Medium error correction
     }
-    
+
     # Safe rounded appearance
     safe_rounded = {
         'shape': 'squircle',
@@ -114,10 +114,10 @@ For maximum decoder compatibility, use these "safe" configurations:
         'scale': 10,
         'error': 'M'
     }
-    
+
     # Safe connected modules
     safe_connected = {
-        'shape': 'connected', 
+        'shape': 'connected',
         'safe_mode': True,
         'error': 'Q',  # Higher ECC for merging
         'scale': 12
@@ -139,7 +139,7 @@ These configurations provide good visual appeal with reasonable compatibility:
         'dark': '#1a1a2e',
         'light': '#f5f5f5'
     }
-    
+
     # Connected modules with safety
     balanced_connected = {
         'shape': 'connected',
@@ -172,19 +172,19 @@ Example Testing Code
     import segno
     from segnomms import write
     import io
-    
+
     def test_decoder_compatibility(config, test_data="Test Message"):
         """Test decoder compatibility for a configuration."""
         qr = segno.make(test_data, error=config.get('error', 'M'))
-        
+
         # Generate SVG
         output = io.StringIO()
         write(qr, output, **config)
         svg_content = output.getvalue()
-        
+
         # Convert to PNG and test with available decoders
         # (Implementation depends on your conversion setup)
-        
+
         return test_results
 
 Performance Considerations
@@ -197,7 +197,7 @@ The quality of SVG→PNG/JPEG conversion significantly affects decoder compatibi
 
 **Rendering Settings Impact:**
 - **DPI**: Higher DPI (≥150) improves fine detail preservation
-- **Antialiasing**: May blur edges; consider disabling for small QR codes  
+- **Antialiasing**: May blur edges; consider disabling for small QR codes
 - **Scale**: Larger output dimensions generally improve compatibility
 - **Format**: PNG preserves sharp edges better than JPEG
 
@@ -235,7 +235,7 @@ Common Problems and Solutions
 - Increase error correction level
 - Check contrast ratio between dark/light colors
 
-**"Detected but can't decode content"**  
+**"Detected but can't decode content"**
 - Increase error correction level (try 'H')
 - Reduce visual complexity (disable merging, use simpler shapes)
 - Test with different decoders
@@ -258,7 +258,7 @@ Decoder-Specific Notes
 - Good performance with connected modules
 - May struggle with very small scales
 
-**OpenCV QRCodeDetector** 
+**OpenCV QRCodeDetector**
 - Sensitive to edge definition
 - Works well with high-contrast configurations
 - May have issues with complex merged shapes
@@ -274,14 +274,14 @@ Future Compatibility
 Decoder Algorithm Evolution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-QR decoder algorithms continue to evolve, potentially improving compatibility 
+QR decoder algorithms continue to evolve, potentially improving compatibility
 with stylized codes:
 
 - **Machine learning approaches** may better handle non-standard shapes
-- **Improved edge detection** could handle merged modules more reliably  
+- **Improved edge detection** could handle merged modules more reliably
 - **Multi-scale analysis** might improve small QR code recognition
 
-However, compatibility with older devices and legacy decoders remains important 
+However, compatibility with older devices and legacy decoders remains important
 for broad accessibility.
 
 SegnoMMS Development
@@ -316,7 +316,7 @@ Configuration Selection Guidelines
 - Test extensively with target decoders
 - Consider multiple QR code sizes/formats
 
-**Marketing Materials** (posters, business cards)  
+**Marketing Materials** (posters, business cards)
 - Balanced styling acceptable
 - Include fallback information
 - Test under expected viewing conditions
@@ -344,26 +344,26 @@ When documenting QR codes for end users:
 Conclusion
 ----------
 
-SegnoMMS enables creation of visually appealing QR codes while maintaining good 
-decoder compatibility for most configurations. Understanding the documented limitations 
+SegnoMMS enables creation of visually appealing QR codes while maintaining good
+decoder compatibility for most configurations. Understanding the documented limitations
 allows developers to make informed decisions about styling trade-offs.
 
-For maximum compatibility, use the recommended "safe" configurations. For applications 
+For maximum compatibility, use the recommended "safe" configurations. For applications
 requiring specific styling, thorough testing with target decoders is essential.
 
-The QR code ecosystem continues to evolve, and future decoder improvements may resolve 
-some current limitations. Until then, this compatibility reference provides guidance 
+The QR code ecosystem continues to evolve, and future decoder improvements may resolve
+some current limitations. Until then, this compatibility reference provides guidance
 for reliable deployment of stylized QR codes.
 
 Related Documentation
 --------------------
 
-- :doc:`configuration_guide` - Complete configuration reference
-- :doc:`visual_styling` - Visual styling options and examples  
-- :doc:`accessibility` - Accessibility considerations for QR codes
-- :doc:`troubleshooting` - General troubleshooting guide
+- :doc:`api/index` - Complete API reference
+- :doc:`shapes` - Shape options and visual styling examples
+- :doc:`quickstart` - Getting started guide
+- :doc:`examples` - Usage examples and patterns
 
 .. note::
     This compatibility reference is based on testing with specific decoder versions.
-    Results may vary with different implementations or versions. Always test with 
+    Results may vary with different implementations or versions. Always test with
     your specific deployment environment.
