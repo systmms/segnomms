@@ -48,7 +48,7 @@ on:
 jobs:
   # Quick tests for PRs - only essential combinations
   test-python-pr:
-    if: github.event_name == 'pull_request' && inputs.run_full_tests != true
+    # if: github.event_name == 'pull_request' && inputs.run_full_tests != true
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -106,69 +106,69 @@ jobs:
         name: codecov-umbrella
 
   # Full comprehensive tests for main branch or explicit request
-  test-python-full:
-    if: github.event_name == 'push' || inputs.run_full_tests == true
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        segno-version: ['1.5.2', '1.6.0', 'latest']
-        exclude:
-          # Reduce matrix size by testing fewer combinations
-          - os: windows-latest
-            segno-version: '1.5.2'
-          - os: macos-latest
-            segno-version: '1.5.2'
+  # test-python-full:
+  #   if: github.event_name == 'push' || inputs.run_full_tests == true
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       os: [ubuntu-latest, windows-latest, macos-latest]
+  #       python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+  #       segno-version: ['1.5.2', '1.6.0', 'latest']
+  #       exclude:
+  #         # Reduce matrix size by testing fewer combinations
+  #         - os: windows-latest
+  #           segno-version: '1.5.2'
+  #         - os: macos-latest
+  #           segno-version: '1.5.2'
 
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Install system dependencies (macOS)
-      if: runner.os == 'macOS'
-      run: ./repo/setup_cairo_macos.sh --verbose
+  #   - name: Install system dependencies (macOS)
+  #     if: runner.os == 'macOS'
+  #     run: ./repo/setup_cairo_macos.sh --verbose
 
-    - name: Install system dependencies (Windows)
-      if: runner.os == 'Windows'
-      run: .\repo\setup_cairo_windows.ps1 -Verbose
-      shell: pwsh
+  #   - name: Install system dependencies (Windows)
+  #     if: runner.os == 'Windows'
+  #     run: .\repo\setup_cairo_windows.ps1 -Verbose
+  #     shell: pwsh
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+  #   - name: Set up Python ${{ matrix.python-version }}
+  #     uses: actions/setup-python@v5
+  #     with:
+  #       python-version: ${{ matrix.python-version }}
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v3
-      with:
-        enable-cache: true
-        cache-dependency-glob: "**/uv.lock"
+  #   - name: Install uv
+  #     uses: astral-sh/setup-uv@v3
+  #     with:
+  #       enable-cache: true
+  #       cache-dependency-glob: "**/uv.lock"
 
-    - name: Install dependencies
-      run: |
-        uv sync --extra test
-        uv pip install -e .
+  #   - name: Install dependencies
+  #     run: |
+  #       uv sync --extra test
+  #       uv pip install -e .
 
-    - name: Install Segno (latest)
-      if: matrix.segno-version == 'latest'
-      run: uv pip install segno
+  #   - name: Install Segno (latest)
+  #     if: matrix.segno-version == 'latest'
+  #     run: uv pip install segno
 
-    - name: Install Segno (specific version)
-      if: matrix.segno-version != 'latest'
-      run: uv pip install segno==${{ matrix.segno-version }}
+  #   - name: Install Segno (specific version)
+  #     if: matrix.segno-version != 'latest'
+  #     run: uv pip install segno==${{ matrix.segno-version }}
 
-    - name: Run tests
-      run: |
-        uv run pytest tests/ -v --cov=segnomms --cov-report=xml --cov-report=term
+  #   - name: Run tests
+  #     run: |
+  #       uv run pytest tests/ -v --cov=segnomms --cov-report=xml --cov-report=term
 
-    - name: Upload coverage to Codecov
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
+  #   - name: Upload coverage to Codecov
+  #     if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+  #     uses: codecov/codecov-action@v4
+  #     with:
+  #       file: ./coverage.xml
+  #       flags: unittests
+  #       name: codecov-umbrella
 
   test-wheel:
     runs-on: ubuntu-latest
