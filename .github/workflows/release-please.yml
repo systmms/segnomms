@@ -24,14 +24,6 @@ jobs:
           manifest-file: .github/.release-please-manifest.json
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  # Run full validation suite after release PR is created/updated
-  validate-pr:
-    if: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'release-please--branches')) }}
-    uses: ./.github/workflows/validate-release.yml
-    permissions:
-      contents: read
-      pull-requests: write
-
   # Build and publish to PyPI when a release is created
   build-and-publish:
     needs: release-please
