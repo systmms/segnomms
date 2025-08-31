@@ -159,7 +159,7 @@ except ImportError:
     _intents_available = False
 
 # Version information
-__version__ = "0.1.0"
+__version__ = "0.1.0b4"
 __author__ = "QRCodeMMS"
 
 # Export main functionality
