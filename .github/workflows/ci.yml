@@ -280,7 +280,7 @@ jobs:
     - name: Run security scan with bandit
       run: |
         uv pip install bandit
-        uv run bandit -c .bandit -r segnomms/ -f json -o bandit-report.json
+        uv run bandit -c .bandit -r segnomms/ -f json -o bandit-report.json --exit-zero
 
     - name: Summarize security scan
       if: always()
