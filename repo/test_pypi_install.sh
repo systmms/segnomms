@@ -215,7 +215,8 @@ with tempfile.NamedTemporaryFile(suffix='.svg', delete=False) as tmp:
 
 try:
     # Test the main plugin functionality
-    write(qr, temp_path, shape='square', fill='blue')
+    # Use 'dark' color kwarg (API) instead of deprecated 'fill'
+    write(qr, temp_path, shape='square', dark='blue')
 
     with open(temp_path, 'r') as f:
         svg_content = f.read()
