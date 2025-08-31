@@ -7,17 +7,10 @@
       "bump-minor-pre-major": false,
       "bump-patch-for-minor-pre-major": false,
       "draft": false,
-      "prerelease": true,
-      "prerelease-type": "beta",
+      "prerelease": false,
       "include-v-in-tag": true,
       "include-component-in-tag": false,
-      "version-file": "pyproject.toml",
       "extra-files": [
-        {
-          "type": "toml",
-          "path": "pyproject.toml",
-          "jsonpath": "$.project.version"
-        },
         {
           "type": "generic",
           "path": "segnomms/__init__.py",

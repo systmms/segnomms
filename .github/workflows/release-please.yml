@@ -119,18 +119,19 @@ jobs:
     name: Trigger Read the Docs
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
+    env:
+      RTD_TOKEN: ${{ secrets.READTHEDOCS_TOKEN }}
+      RTD_PROJECT: segnomms
+      RTD_VERSION: ${{ needs.release-please.outputs.tag_name }}
     runs-on: ubuntu-latest
     steps:
       - name: Activate RTD version for release tag
+        if: ${{ env.RTD_TOKEN != '' }}
         env:
           RTD_TOKEN: ${{ secrets.READTHEDOCS_TOKEN }}
           RTD_PROJECT: segnomms
           RTD_VERSION: ${{ needs.release-please.outputs.tag_name }}
         run: |
-          if [ -z "$RTD_TOKEN" ]; then
-            echo "READTHEDOCS_TOKEN secret is not set" >&2
-            exit 1
-          fi
           echo "Activating RTD version \"$RTD_VERSION\" for project \"$RTD_PROJECT\""
           curl -fsSL -X PATCH \
             -H "Authorization: Token $RTD_TOKEN" \
@@ -139,10 +140,7 @@ jobs:
             "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/$RTD_VERSION/"
 
       - name: Trigger RTD build for release tag
-        env:
-          RTD_TOKEN: ${{ secrets.READTHEDOCS_TOKEN }}
-          RTD_PROJECT: segnomms
-          RTD_VERSION: ${{ needs.release-please.outputs.tag_name }}
+        if: ${{ env.RTD_TOKEN != '' }}
         run: |
           echo "Triggering RTD build for tag \"$RTD_VERSION\""
           curl -fsSL -X POST \
@@ -150,23 +148,15 @@ jobs:
             "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/$RTD_VERSION/builds/"
 
       - name: Trigger RTD build for latest
-        env:
-          RTD_TOKEN: ${{ secrets.READTHEDOCS_TOKEN }}
-          RTD_PROJECT: segnomms
+        if: ${{ env.RTD_TOKEN != '' }}
         run: |
-          if [ -z "$RTD_TOKEN" ]; then
-            echo "READTHEDOCS_TOKEN secret is not set" >&2
-            exit 1
-          fi
           echo "Triggering Read the Docs build for project \"$RTD_PROJECT\" (version: latest)"
           curl -fsSL -X POST \
             -H "Authorization: Token $RTD_TOKEN" \
             "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/latest/builds/"
 
       - name: Trigger RTD build for stable (best-effort)
-        env:
-          RTD_TOKEN: ${{ secrets.READTHEDOCS_TOKEN }}
-          RTD_PROJECT: segnomms
+        if: ${{ env.RTD_TOKEN != '' }}
         run: |
           echo "Triggering Read the Docs build for project \"$RTD_PROJECT\" (version: stable)"
           # This may be inactive if 'stable' is not enabled; ignore errors
