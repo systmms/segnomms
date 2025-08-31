@@ -10,6 +10,7 @@ set -euo pipefail
 VERBOSE=false
 PACKAGE_NAME="segnomms"
 VERSION=""
+WHEEL_PATH=""
 WAIT_TIME=60  # Wait time for PyPI to update after publish
 TEST_PLUGIN_REGISTRATION=true
 TEST_BASIC_FUNCTIONALITY=true
@@ -23,6 +24,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --version=*)
             VERSION="${1#*=}"
+            shift
+            ;;
+        --wheel=*)
+            WHEEL_PATH="${1#*=}"
             shift
             ;;
         --wait=*)
@@ -119,20 +124,30 @@ install_package_from_pypi() {
     log_verbose "Upgrading pip"
     python -m pip install --upgrade pip
 
-    # Build package specification
-    local package_spec="$PACKAGE_NAME"
-    if [[ -n "$VERSION" ]]; then
-        package_spec="${PACKAGE_NAME}==${VERSION}"
-        log_info "Installing specific version: $package_spec"
+    # Prefer local wheel if provided
+    if [[ -n "$WHEEL_PATH" ]]; then
+        log_info "Installing from local wheel: $WHEEL_PATH"
+        if [[ "$VERBOSE" == "true" ]]; then
+            pip install "$WHEEL_PATH" --verbose || return 1
+        else
+            pip install "$WHEEL_PATH" || return 1
+        fi
     else
-        log_info "Installing latest version of $PACKAGE_NAME"
-    fi
+        # Build package specification
+        local package_spec="$PACKAGE_NAME"
+        if [[ -n "$VERSION" ]]; then
+            package_spec="${PACKAGE_NAME}==${VERSION}"
+            log_info "Installing specific version: $package_spec"
+        else
+            log_info "Installing latest version of $PACKAGE_NAME"
+        fi
 
-    # Install the package
-    if [[ "$VERBOSE" == "true" ]]; then
-        pip install "$package_spec" --verbose
-    else
-        pip install "$package_spec"
+        # Install the package from PyPI
+        if [[ "$VERBOSE" == "true" ]]; then
+            pip install "$package_spec" --verbose || return 1
+        else
+            pip install "$package_spec" || return 1
+        fi
     fi
 
     log_success "Package installation completed"
@@ -275,11 +290,16 @@ main() {
     # Wait for PyPI to update
     wait_for_pypi_update
 
-    # Install package from PyPI
+    # Install package (PyPI or local wheel)
     if ! install_package_from_pypi; then
         log_error "Package installation failed"
         exit 1
     fi
+
+    # Change to a temp directory so imports don't pick up the repository checkout
+    TMP_CWD=$(mktemp -d)
+    log_info "Switching to temp directory for import tests: $TMP_CWD"
+    cd "$TMP_CWD"
 
     # Get installed version info
     get_installed_version || true

@@ -196,8 +196,11 @@ jobs:
       run: |
         uv build --wheel
 
-    - name: Test wheel installation
-      run: repo/test_pypi_install.sh --no-wait
+    - name: Test wheel installation (local wheel)
+      run: |
+        WHEEL_PATH=$(ls dist/*.whl)
+        echo "Testing wheel: ${WHEEL_PATH}"
+        repo/test_pypi_install.sh --no-wait --wheel="${WHEEL_PATH}" --verbose
 
   lint:
     runs-on: ubuntu-latest
