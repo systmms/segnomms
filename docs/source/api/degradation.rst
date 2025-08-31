@@ -73,7 +73,7 @@ Shape Degradation
 Handles unsupported module shapes:
 
 * **pyramid** → **squircle**: Maintains rounded aesthetic
-* **hexagon** → **circle**: Preserves geometric simplicity  
+* **hexagon** → **circle**: Preserves geometric simplicity
 * **star** → **diamond**: Similar angular appearance
 * **complex-shape** → **square**: Safe fallback for compatibility
 
@@ -81,13 +81,13 @@ Handles unsupported module shapes:
 
    from segnomms.config import RenderingConfig
    from segnomms.degradation.manager import DegradationManager
-   
+
    # Request unsupported shape
    config = RenderingConfig.from_kwargs(shape="pyramid")
-   
+
    manager = DegradationManager()
    degraded_config, result = manager.apply_degradation(config)
-   
+
    # Check what happened
    for warning in result.warnings:
        print(f"Degraded: {warning.feature}")
@@ -107,9 +107,9 @@ Handles complex frame configurations:
        frame_shape="star",
        frame_clip_mode="gradient"
    )
-   
+
    degraded_config, result = manager.apply_degradation(config)
-   
+
    # Automatic fallbacks applied
    assert degraded_config.frame.shape == "circle"  # Rounded fallback
    assert degraded_config.frame.clip_mode == "fade"  # Supported mode
@@ -126,9 +126,9 @@ Ensures accessibility standards are maintained:
        dark="#888888",
        light="#999999"  # Very low contrast
    )
-   
+
    degraded_config, result = manager.apply_degradation(config)
-   
+
    # Colors adjusted for accessibility
    contrast_warning = next(w for w in result.warnings if "contrast" in w.feature)
    print(f"Improved contrast: {contrast_warning.fallback_value}")
@@ -148,9 +148,9 @@ Handles advanced QR features not supported in all contexts:
            mask_pattern=8   # Invalid pattern
        )
    )
-   
+
    degraded_config, result = manager.apply_degradation(config)
-   
+
    # Advanced features adjusted
    assert degraded_config.advanced_qr.symbol_count <= 4
    assert 0 <= degraded_config.advanced_qr.mask_pattern <= 7
@@ -166,22 +166,22 @@ Create custom rules for specific use cases:
    from segnomms.degradation.models import DegradationWarning, WarningLevel
    from segnomms.config import RenderingConfig
    from typing import Optional
-   
+
    class CustomShapeDegradationRule(DegradationRule):
        """Custom rule for organization-specific shape restrictions."""
-       
+
        def __init__(self):
            self.allowed_shapes = {"square", "circle", "rounded"}
            self.fallback_shape = "square"
-       
+
        def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
            """Check if shape is allowed in organization policy."""
            current_shape = str(config.geometry.shape)
-           
+
            if current_shape not in self.allowed_shapes:
                # Apply degradation
                config.geometry.shape = self.fallback_shape
-               
+
                return DegradationWarning(
                    feature="geometry.shape",
                    level=WarningLevel.WARNING,
@@ -194,13 +194,13 @@ Create custom rules for specific use cases:
                        "allowed_shapes": list(self.allowed_shapes)
                    }
                )
-           
+
            return None
-   
+
    # Use custom rule
    custom_manager = DegradationManager(rules=[CustomShapeDegradationRule()])
    config = RenderingConfig.from_kwargs(shape="pyramid")
-   
+
    degraded_config, result = custom_manager.apply_degradation(config)
    assert degraded_config.geometry.shape == "square"
 
@@ -211,11 +211,11 @@ The degradation system integrates seamlessly with the intent-based API:
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS  
+   from segnomms import SegnoMMS
    from segnomms.intents.models import IntentsConfig, StyleIntents, FrameIntents
-   
+
    renderer = SegnoMMS()
-   
+
    # Request features that will require degradation
    intents = IntentsConfig(
        style=StyleIntents(
@@ -227,19 +227,19 @@ The degradation system integrates seamlessly with the intent-based API:
            clip_mode="gradient"  # Will be degraded
        )
    )
-   
+
    result = renderer.render_with_intents("Hello World", intents)
-   
+
    # Analyze degradation results
    print(f"Generated QR with {len(result.warnings)} degradations:")
-   
+
    for warning in result.warnings:
        if warning.code == "FEATURE_DEGRADED":
            print(f"  {warning.detail}")
            print(f"    Original: {warning.context.get('original_value')}")
            print(f"    Applied: {warning.context.get('fallback_value')}")
            print(f"    Reason: {warning.context.get('reason')}")
-   
+
    # QR code still fully functional despite degradations
    assert result.scanability_prediction >= 0.9
 
@@ -253,25 +253,25 @@ Monitor degradation patterns in production:
    from collections import defaultdict
    from typing import Dict, List
    import json
-   
+
    class DegradationMonitor:
        """Monitor degradation patterns for system analysis."""
-       
+
        def __init__(self):
            self.feature_degradations = defaultdict(int)
            self.fallback_usage = defaultdict(int)
            self.user_patterns = defaultdict(list)
-       
+
        def record_degradation(self, result: RenderingResult, user_id: str = None):
            """Record degradation event for analysis."""
            for warning in result.warnings:
                if warning.code == "FEATURE_DEGRADED":
                    feature = warning.context.get('original_feature', 'unknown')
                    fallback = warning.context.get('fallback_feature', 'unknown')
-                   
+
                    self.feature_degradations[feature] += 1
                    self.fallback_usage[f"{feature}->{fallback}"] += 1
-                   
+
                    if user_id:
                        self.user_patterns[user_id].append({
                            "feature": feature,
@@ -279,17 +279,17 @@ Monitor degradation patterns in production:
                            "timestamp": warning.context.get('timestamp'),
                            "reason": warning.context.get('reason')
                        })
-       
+
        def generate_report(self) -> Dict:
            """Generate degradation analytics report."""
            total_degradations = sum(self.feature_degradations.values())
-           
+
            return {
                "summary": {
                    "total_degradations": total_degradations,
                    "unique_features": len(self.feature_degradations),
                    "most_degraded_feature": max(
-                       self.feature_degradations.items(), 
+                       self.feature_degradations.items(),
                        key=lambda x: x[1]
                    ) if total_degradations > 0 else None
                },
@@ -297,11 +297,11 @@ Monitor degradation patterns in production:
                "fallback_patterns": dict(self.fallback_usage),
                "recommendations": self._generate_recommendations()
            }
-       
+
        def _generate_recommendations(self) -> List[str]:
            """Generate recommendations based on degradation patterns."""
            recommendations = []
-           
+
            # High degradation features
            for feature, count in self.feature_degradations.items():
                if count > 100:  # Threshold for "frequent"
@@ -309,33 +309,33 @@ Monitor degradation patterns in production:
                        f"Consider implementing native support for '{feature}' "
                        f"(degraded {count} times)"
                    )
-           
+
            # Common fallback patterns
            common_fallbacks = {
                k: v for k, v in self.fallback_usage.items() if v > 50
            }
-           
+
            if common_fallbacks:
                recommendations.append(
                    "Consider promoting these fallback patterns to first-class features: "
                    f"{list(common_fallbacks.keys())}"
                )
-           
+
            return recommendations
-   
+
    # Usage in production
    monitor = DegradationMonitor()
-   
+
    # Record degradations
    result = renderer.render_with_intents(payload, intents)
    monitor.record_degradation(result, user_id="user123")
-   
+
    # Generate periodic reports
    report = monitor.generate_report()
    print(json.dumps(report, indent=2))
 
 Performance Considerations
--------------------------
+---------------------------
 
 The degradation system is designed for minimal performance impact:
 
@@ -349,7 +349,7 @@ The degradation system is designed for minimal performance impact:
    # Disable degradation for performance-critical paths
    manager = DegradationManager()
    manager.enabled = False  # Skip all degradation processing
-   
+
    # Or use selective rule application
    critical_rules = [ShapeCompatibilityRule(), ColorContrastRule()]
    fast_manager = DegradationManager(rules=critical_rules)
@@ -358,7 +358,7 @@ Best Practices
 --------------
 
 1. **Monitor Degradation Patterns**: Track which features are frequently degraded
-2. **Test Edge Cases**: Verify degradation behavior with extreme configurations  
+2. **Test Edge Cases**: Verify degradation behavior with extreme configurations
 3. **Customize Rules**: Create organization-specific degradation policies
 4. **Handle Warnings**: Always check and respond to degradation warnings
 5. **Performance Monitoring**: Monitor degradation impact on processing time

@@ -82,20 +82,22 @@ class ConnectedComponentAnalyzer(AlgorithmProcessor):
         size and density requirements.
 
         Args:
-            matrix: 2D boolean matrix representing QR code modules
-            detector: Module detector for determining module types
-            **kwargs: Additional parameters including:
-                cluster_module_types: List of module types to cluster
-                    (default: ['data'])
+            matrix: 2D boolean matrix representing QR code modules.
+            detector: Module detector for determining module types.
+            **kwargs: Additional parameters.
+
+        Keyword Args:
+            cluster_module_types (List[str]): List of module types to cluster.
+                Defaults to ``['data']``.
 
         Returns:
             List[Dict[str, Any]]: List of cluster dictionaries, each containing:
-                - positions: List of (row, col) tuples
-                - bounds: (min_row, min_col, max_row, max_col)
-                - module_count: Number of modules in cluster
-                - density: Ratio of filled modules in bounding box
-                - aspect_ratio: Width/height ratio
-                - is_rectangular: Whether cluster forms a rectangle
+            - positions: List of (row, col) tuples
+            - bounds: (min_row, min_col, max_row, max_col)
+            - module_count: Number of modules in cluster
+            - density: Ratio of filled modules in bounding box
+            - aspect_ratio: Width/height ratio
+            - is_rectangular: Whether cluster forms a rectangle
         """
         cluster_module_types = kwargs.get("cluster_module_types", ["data"])
 

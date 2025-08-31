@@ -20,71 +20,24 @@ MAX_QR_SIZE = 1000  # ~1000x1000 modules is very large but still reasonable
 
 
 def write(qr_code: Any, out: Union[TextIO, BinaryIO, str], **kwargs: Any) -> Optional[Dict[str, Any]]:
-    """Write an interactive SVG representation of the QR code.
+    """Write an interactive SVG representation of a QR code.
 
-    This is the main entry point for the segno plugin system. It generates
-    an SVG with custom shapes and interactive features.
+    This is the main entry point for the Segno plugin system. It generates
+    an SVG with custom shapes and optional interactive features.
 
     Args:
-        qr_code: Segno QR code object to render
-        out: Output destination - file path (str), text stream, or binary stream
-        **kwargs: Rendering options including:
+        qr_code: Segno QR code object to render.
+        out: Output destination — file path (str), text stream, or binary stream.
+        **kwargs: Additional rendering options.
 
-            Basic parameters:
-            * scale (int): Size of each module in pixels (default: 10)
-            * border (int): Number of modules for quiet zone (default: 4)
-            * dark (str): Color for dark modules (default: 'black')
-            * light (str): Color for light modules (default: 'white')
-            * safe_mode (bool): Force square shapes for critical QR patterns (finder, timing)
-                               to ensure scannability (default: False)
-
-            Geometry parameters:
-            * connectivity (str): '4-way' or '8-way' neighbor connectivity
-            * merge (str): 'none', 'soft', or 'aggressive' merging strategy
-            * corner_radius (float): Corner radius 0.0-1.0 (0=square, 1=circle)
-            * shape (str): 'square', 'circle', 'squircle', or 'diamond' base shape
-            * min_island_modules (int): Minimum modules for island groups (1-10)
-
-            Finder pattern parameters:
-            * finder_shape (str): 'square', 'rounded', or 'circle'
-            * finder_inner_scale (float): Inner square scale 0.1-1.0
-            * finder_stroke (float): Stroke width in modules 0-5
-
-            Phase control (auto-detected if None):
-            * enable_phase1 (bool): Enable enhanced shapes
-            * enable_phase2 (bool): Enable clustering
-            * enable_phase3 (bool): Enable smoothing
-            * enable_phase4 (bool): Enable frame and centerpiece features
-
-            Phase 4 - Frame shape parameters:
-            * frame_shape (str): 'square', 'circle', 'rounded-rect', 'squircle', 'custom'
-            * frame_corner_radius (float): Corner radius for rounded-rect (0.0-1.0)
-            * frame_clip_mode (str): 'clip' or 'fade' for edge treatment
-            * frame_custom_path (str): Custom SVG path for 'custom' frame shape
-
-            Phase 4 - Centerpiece reserve parameters:
-            * centerpiece_enabled (bool): Enable centerpiece area clearing
-            * centerpiece_shape (str): 'rect', 'circle', or 'squircle'
-            * centerpiece_size (float): Size as fraction of QR code (0.0-0.5)
-            * centerpiece_offset_x (float): X offset from center (-0.5 to 0.5)
-            * centerpiece_offset_y (float): Y offset from center (-0.5 to 0.5)
-            * centerpiece_margin (int): Module margin around centerpiece (0-10)
-
-            Phase 4 - Quiet zone enhancement:
-            * quiet_zone_style (str): 'none', 'solid', or 'gradient'
-            * quiet_zone_color (str): Color for solid quiet zone
-            * quiet_zone_gradient (dict): Gradient config with type, colors, etc.
-
-            Legacy parameters:
-            * xmldecl (bool): Include XML declaration (default: True)
-            * svgclass (str): CSS class for SVG element (default: 'interactive-qr')
-            * lineclass (str): CSS class for path elements (default: None)
-            * title (str): SVG title element (default: 'Interactive QR Code')
-            * desc (str): SVG description element (default: auto-generated)
+    Keyword Args:
+        Refer to the user guide for a complete list of supported options
+        and defaults:
+        https://segnomms.readthedocs.io/en/latest/api/main.html
 
     Raises:
-        ValueError: If an invalid shape type is specified
-        TypeError: If the output type is not supported
+        ValueError: If an invalid option combination is provided.
+        TypeError: If the output type is not supported.
 
     Example:
         >>> import segno

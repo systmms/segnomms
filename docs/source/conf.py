@@ -30,7 +30,7 @@ extensions = [
 ]
 
 templates_path = ["_templates"]
-exclude_patterns = []
+exclude_patterns: list[str] = []
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -88,3 +88,23 @@ myst_enable_extensions = [
     "tasklist",
 ]
 myst_heading_anchors = 3
+
+# --- Strict mode for CI only -------------------------------------------------
+# Enable nitpicky (treat all missing references as warnings) in CI to catch
+# broken cross-references early, but keep it off on Read the Docs to avoid
+# noisy builds.
+ON_RTD = os.environ.get("READTHEDOCS") == "True"
+ON_CI = bool(os.environ.get("CI"))
+# Allow explicit override via SPHINX_STRICT=1
+STRICT_OVERRIDE = os.environ.get("SPHINX_STRICT") in {"1", "true", "True"}
+
+nitpicky = (ON_CI or STRICT_OVERRIDE) and not ON_RTD
+
+# Common, harmless references that don't need to resolve
+nitpick_ignore = [
+    ("py:class", "typing.Any"),
+    ("py:class", "typing.Optional"),
+    ("py:class", "typing.Dict"),
+    ("py:class", "typing.List"),
+    ("py:class", "typing.Tuple"),
+]

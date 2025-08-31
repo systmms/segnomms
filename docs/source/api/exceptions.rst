@@ -1,7 +1,7 @@
 Exception Handling
 ==================
 
-SegnoMMS provides a comprehensive exception hierarchy for better error handling, debugging, and user experience. 
+SegnoMMS provides a comprehensive exception hierarchy for better error handling, debugging, and user experience.
 All exceptions inherit from :class:`~segnomms.exceptions.SegnoMMSError` and provide structured error information.
 
 Exception Hierarchy
@@ -12,7 +12,7 @@ Exception Hierarchy
    SegnoMMSError (base)
    ├── ConfigurationError
    │   ├── ValidationError
-   │   ├── IntentValidationError  
+   │   ├── IntentValidationError
    │   ├── PresetNotFoundError
    │   └── IncompatibleConfigError
    ├── RenderingError
@@ -48,7 +48,7 @@ Base Exception
 All SegnoMMS exceptions inherit from this base class and provide structured error information:
 
 * ``message``: Human-readable error message
-* ``code``: Stable error code for programmatic handling  
+* ``code``: Stable error code for programmatic handling
 * ``details``: Dictionary with additional error context
 * ``suggestion``: Suggestion for resolving the error
 
@@ -58,7 +58,7 @@ Example Usage
 .. code-block:: python
 
    from segnomms.exceptions import SegnoMMSError
-   
+
    try:
        # Some SegnoMMS operation
        result = renderer.render_with_intents(payload, intents)
@@ -68,7 +68,7 @@ Example Usage
            print(f"Suggestion: {e.suggestion}")
        if e.details:
            print(f"Details: {e.details}")
-       
+
        # Convert to dictionary for API responses
        error_dict = e.to_dict()
 
@@ -89,7 +89,7 @@ Raised when configuration values fail validation rules.
 
    from segnomms.exceptions import ValidationError
    from segnomms.config import RenderingConfig
-   
+
    try:
        config = RenderingConfig(scale=-1)  # Invalid scale
    except ValidationError as e:
@@ -110,7 +110,7 @@ Raised for invalid intent configurations in the intent-based API.
 
    from segnomms.exceptions import IntentValidationError
    from segnomms.intents.models import IntentsConfig, StyleIntents
-   
+
    try:
        intents = IntentsConfig(
            style=StyleIntents(corner_radius=5.0)  # Out of valid range
@@ -238,7 +238,7 @@ Raised when an intent feature is not supported.
 .. code-block:: python
 
    from segnomms.exceptions import UnsupportedIntentError
-   
+
    try:
        # Request unsupported feature
        intents = IntentsConfig(style=StyleIntents(module_shape="pyramid"))
@@ -293,7 +293,7 @@ Raised when color format is invalid.
 .. code-block:: python
 
    from segnomms.exceptions import InvalidColorFormatError
-   
+
    try:
        config = RenderingConfig(dark="not-a-color")
    except InvalidColorFormatError as e:
@@ -313,7 +313,7 @@ Raised when color contrast is insufficient for accessibility or scanability.
 .. code-block:: python
 
    from segnomms.exceptions import ContrastRatioError
-   
+
    try:
        # Colors with poor contrast
        config = RenderingConfig(dark="#888888", light="#999999")
@@ -390,7 +390,7 @@ Raised when a required dependency is missing.
 .. code-block:: python
 
    from segnomms.exceptions import MissingDependencyError
-   
+
    try:
        # Feature requiring optional dependency
        result = some_feature_requiring_opencv()
@@ -427,18 +427,18 @@ When working with the intent-based API, use structured error handling for differ
        ContrastRatioError,
        SegnoMMSError
    )
-   
+
    def robust_intent_processing(payload: str, intents: IntentsConfig):
        """Robust intent processing with comprehensive error handling."""
        try:
            result = renderer.render_with_intents(payload, intents)
-           
+
            # Success path - check for warnings
            if result.has_warnings:
                handle_intent_warnings(result.warnings)
-           
+
            return result
-           
+
        except IntentValidationError as e:
            # Invalid intent structure or values
            print(f"Intent validation failed at {e.intent_path}")
@@ -446,52 +446,52 @@ When working with the intent-based API, use structured error handling for differ
            print(f"Expected: {e.details.get('expected_type', 'Valid value')}")
            if e.suggestion:
                print(f"Suggestion: {e.suggestion}")
-           
+
            # Try with corrected intent
            return retry_with_fixed_intent(payload, intents, e)
-           
+
        except UnsupportedIntentError as e:
            # Feature not available - graceful degradation
            print(f"Feature '{e.feature}' not supported")
            print(f"Available alternatives: {e.alternatives}")
-           
+
            # Apply automatic fallback
            fallback_intents = apply_feature_fallback(intents, e.feature, e.alternatives)
            return renderer.render_with_intents(payload, fallback_intents)
-           
+
        except IntentDegradationError as e:
            # Degradation system failed
            print(f"Degradation failed for: {e.details.get('failed_feature')}")
            print(f"Reason: {e.message}")
-           
+
            # Use simplified configuration
            safe_intents = create_safe_fallback_intents(intents)
            return renderer.render_with_intents(payload, safe_intents)
-           
+
        except ContrastRatioError as e:
            # Accessibility issue - adjust colors
            print(f"Contrast ratio {e.ratio:.2f} below required {e.required_ratio}")
-           
+
            # Auto-adjust colors for accessibility
            adjusted_intents = improve_intent_contrast(intents, e.required_ratio)
            return renderer.render_with_intents(payload, adjusted_intents)
-           
+
        except IntentTransformationError as e:
            # Internal transformation failed
            print(f"Intent transformation failed: {e.message}")
            print(f"Failed step: {e.details.get('transformation_step', 'Unknown')}")
-           
+
            # Log for debugging and use minimal intents
            log_transformation_error(e, payload, intents)
            minimal_intents = create_minimal_intents()
            return renderer.render_with_intents(payload, minimal_intents)
-           
+
        except SegnoMMSError as e:
            # Any other SegnoMMS error
            print(f"SegnoMMS error [{e.code}]: {e.message}")
            if e.suggestion:
                print(f"Suggestion: {e.suggestion}")
-           
+
            # Log error details for analysis
            log_error_with_context(e, payload, intents)
            raise  # Re-raise for higher-level handling
@@ -509,7 +509,7 @@ Always catch the most specific exception type for better error recovery:
        ContrastRatioError,
        SegnoMMSError
    )
-   
+
    try:
        result = renderer.render_with_intents(payload, intents)
    except ValidationError as e:
@@ -526,7 +526,7 @@ Always catch the most specific exception type for better error recovery:
        log_error(e.code, e.message, e.details)
 
 Production Error Recovery Strategies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Implement robust error recovery for production systems:
 
@@ -534,30 +534,30 @@ Implement robust error recovery for production systems:
 
    from typing import Optional, Dict, Any
    import logging
-   
+
    class ProductionIntentHandler:
        """Production-ready intent handler with comprehensive error recovery."""
-       
+
        def __init__(self, renderer):
            self.renderer = renderer
            self.logger = logging.getLogger(__name__)
            self.fallback_configs = self._load_fallback_configs()
-           
+
        def process_with_recovery(
-           self, 
-           payload: str, 
+           self,
+           payload: str,
            intents: IntentsConfig,
            max_retries: int = 3
        ) -> Dict[str, Any]:
            """Process intents with automatic error recovery."""
-           
+
            for attempt in range(max_retries):
                try:
                    result = self.renderer.render_with_intents(payload, intents)
-                   
+
                    # Check for warnings that might indicate issues
                    warnings = self._analyze_warnings(result.warnings)
-                   
+
                    return {
                        "success": True,
                        "svg_content": result.svg_content,
@@ -565,19 +565,19 @@ Implement robust error recovery for production systems:
                        "metrics": result.metrics.model_dump(),
                        "attempt": attempt + 1
                    }
-                   
+
                except IntentValidationError as e:
                    self.logger.warning(f"Intent validation error on attempt {attempt + 1}: {e}")
                    intents = self._fix_validation_issues(intents, e)
-                   
+
                except UnsupportedIntentError as e:
                    self.logger.warning(f"Unsupported feature on attempt {attempt + 1}: {e.feature}")
                    intents = self._apply_feature_fallbacks(intents, e.feature, e.alternatives)
-                   
+
                except IntentDegradationError as e:
                    self.logger.error(f"Degradation failed on attempt {attempt + 1}: {e}")
                    intents = self._use_safe_fallback(attempt)
-                   
+
                except SegnoMMSError as e:
                    self.logger.error(f"SegnoMMS error on attempt {attempt + 1}: {e.code}")
                    if attempt == max_retries - 1:
@@ -589,7 +589,7 @@ Implement robust error recovery for production systems:
                            "svg_content": self._generate_error_qr(payload)
                        }
                    intents = self._use_safe_fallback(attempt)
-                   
+
            # All retries exhausted
            return {
                "success": False,
@@ -598,7 +598,7 @@ Implement robust error recovery for production systems:
                "fallback_used": True,
                "svg_content": self._generate_minimal_qr(payload)
            }
-       
+
        def _analyze_warnings(self, warnings: List[WarningInfo]) -> List[Dict[str, Any]]:
            """Analyze warnings for production monitoring."""
            analyzed = []
@@ -611,16 +611,16 @@ Implement robust error recovery for production systems:
                    "feature_impact": warning.context.get("feature_impact", "unknown")
                })
            return analyzed
-       
+
        def _fix_validation_issues(
-           self, 
-           intents: IntentsConfig, 
+           self,
+           intents: IntentsConfig,
            error: IntentValidationError
        ) -> IntentsConfig:
            """Automatically fix common validation issues."""
            # Clone intents for modification
            fixed_intents = intents.model_copy(deep=True)
-           
+
            # Common fixes based on error path
            if "corner_radius" in error.intent_path:
                # Clamp corner radius to valid range
@@ -629,18 +629,18 @@ Implement robust error recovery for production systems:
                # Use high contrast colors
                if hasattr(fixed_intents, 'style'):
                    fixed_intents.style.palette = {"fg": "#000000", "bg": "#FFFFFF"}
-           
+
            return fixed_intents
-           
+
        def _apply_feature_fallbacks(
-           self, 
-           intents: IntentsConfig, 
+           self,
+           intents: IntentsConfig,
            unsupported_feature: str,
            alternatives: List[str]
        ) -> IntentsConfig:
            """Apply automatic feature fallbacks."""
            fallback_intents = intents.model_copy(deep=True)
-           
+
            # Apply first available alternative
            if alternatives:
                # Logic to apply alternatives based on feature type
@@ -648,9 +648,9 @@ Implement robust error recovery for production systems:
                    fallback_intents.style.module_shape = alternatives[0]
                elif "frame" in unsupported_feature:
                    fallback_intents.frame.shape = alternatives[0]
-                   
+
            return fallback_intents
-           
+
        def _use_safe_fallback(self, attempt: int) -> IntentsConfig:
            """Use progressively simpler fallback configurations."""
            if attempt < len(self.fallback_configs):
@@ -658,17 +658,17 @@ Implement robust error recovery for production systems:
            else:
                # Ultimate fallback - minimal configuration
                return IntentsConfig()
-               
+
        def _generate_error_qr(self, payload: str) -> str:
            """Generate a basic QR code when all else fails."""
            try:
                return self.renderer.render_with_intents(
-                   payload, 
+                   payload,
                    IntentsConfig()  # Minimal config
                ).svg_content
            except Exception:
                return self._generate_minimal_qr(payload)
-               
+
        def _generate_minimal_qr(self, payload: str) -> str:
            """Generate the most basic QR code possible."""
            import segno
@@ -710,13 +710,13 @@ FastAPI Integration with Intent-Specific Error Handling
    from fastapi.responses import JSONResponse
    from pydantic import BaseModel
    from typing import Dict, Any, Optional
-   
+
    app = FastAPI()
-   
+
    class QRGenerationRequest(BaseModel):
        payload: str
        intents: Dict[str, Any]
-       
+
    class QRGenerationResponse(BaseModel):
        success: bool
        svg_content: Optional[str] = None
@@ -724,14 +724,14 @@ FastAPI Integration with Intent-Specific Error Handling
        error: Optional[Dict[str, Any]] = None
        metrics: Optional[Dict[str, Any]] = None
        degradation_used: bool = False
-   
+
    @app.post("/api/qr/generate", response_model=QRGenerationResponse)
    async def generate_qr(request: QRGenerationRequest):
        """Generate QR code with comprehensive error handling."""
        try:
            intents_config = IntentsConfig.model_validate(request.intents)
            result = renderer.render_with_intents(request.payload, intents_config)
-           
+
            # Success response with warnings
            return QRGenerationResponse(
                success=True,
@@ -740,7 +740,7 @@ FastAPI Integration with Intent-Specific Error Handling
                metrics=result.metrics.model_dump(),
                degradation_used=len(result.warnings) > 0
            )
-           
+
        except IntentValidationError as e:
            return JSONResponse(
                status_code=400,
@@ -756,7 +756,7 @@ FastAPI Integration with Intent-Specific Error Handling
                    }
                ).model_dump()
            )
-           
+
        except UnsupportedIntentError as e:
            # Try with fallback configuration
            try:
@@ -764,7 +764,7 @@ FastAPI Integration with Intent-Specific Error Handling
                    intents_config, e.feature, e.alternatives
                )
                result = renderer.render_with_intents(request.payload, fallback_intents)
-               
+
                return QRGenerationResponse(
                    success=True,
                    svg_content=result.svg_content,
@@ -776,7 +776,7 @@ FastAPI Integration with Intent-Specific Error Handling
                    }],
                    degradation_used=True
                )
-               
+
            except Exception:
                return JSONResponse(
                    status_code=422,
@@ -792,7 +792,7 @@ FastAPI Integration with Intent-Specific Error Handling
                        }
                    ).model_dump()
                )
-               
+
        except ContrastRatioError as e:
            return JSONResponse(
                status_code=400,
@@ -809,7 +809,7 @@ FastAPI Integration with Intent-Specific Error Handling
                    }
                ).model_dump()
            )
-           
+
        except SegnoMMSError as e:
            return JSONResponse(
                status_code=500,
@@ -827,9 +827,9 @@ Flask Integration with Error Monitoring
    from flask import Flask, request, jsonify
    import logging
    from datetime import datetime
-   
+
    app = Flask(__name__)
-   
+
    # Configure error monitoring
    error_logger = logging.getLogger('segnomms.errors')
    handler = logging.StreamHandler()
@@ -838,45 +838,45 @@ Flask Integration with Error Monitoring
    ))
    error_logger.addHandler(handler)
    error_logger.setLevel(logging.WARNING)
-   
+
    class ErrorMetrics:
        """Track error metrics for monitoring."""
        def __init__(self):
            self.error_counts = {}
            self.degradation_counts = {}
-           
+
        def record_error(self, error_type: str, error_code: str):
            key = f"{error_type}:{error_code}"
            self.error_counts[key] = self.error_counts.get(key, 0) + 1
-           
+
        def record_degradation(self, feature: str, fallback: str):
            key = f"{feature}->{fallback}"
            self.degradation_counts[key] = self.degradation_counts.get(key, 0) + 1
-   
+
    metrics = ErrorMetrics()
-   
+
    @app.route('/api/qr/generate', methods=['POST'])
    def generate_qr():
        """Generate QR with comprehensive error tracking."""
        start_time = datetime.utcnow()
        data = request.get_json()
-       
+
        try:
            payload = data.get('payload', '')
            intents_data = data.get('intents', {})
-           
+
            intents = IntentsConfig.model_validate(intents_data)
            result = renderer.render_with_intents(payload, intents)
-           
+
            # Track successful degradations for monitoring
            for warning in result.warnings:
                if warning.code == "FEATURE_DEGRADED":
                    feature = warning.context.get('original_feature', 'unknown')
                    fallback = warning.context.get('fallback_feature', 'unknown')
                    metrics.record_degradation(feature, fallback)
-           
+
            processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
-           
+
            return jsonify({
                "success": True,
                "svg": result.svg_content,
@@ -887,11 +887,11 @@ Flask Integration with Error Monitoring
                },
                "degradation_applied": len(result.warnings) > 0
            })
-           
+
        except IntentValidationError as e:
            metrics.record_error("IntentValidationError", e.code)
            error_logger.warning(f"Intent validation error: {e.intent_path} = {e.original_value}")
-           
+
            return jsonify({
                "success": False,
                "error": {
@@ -903,11 +903,11 @@ Flask Integration with Error Monitoring
                    "suggestion": e.suggestion
                }
            }), 400
-           
+
        except UnsupportedIntentError as e:
            metrics.record_error("UnsupportedIntentError", e.code)
            error_logger.info(f"Unsupported feature requested: {e.feature}")
-           
+
            return jsonify({
                "success": False,
                "error": {
@@ -919,11 +919,11 @@ Flask Integration with Error Monitoring
                    "will_be_supported": e.planned_version
                }
            }), 422
-           
+
        except Exception as e:
            metrics.record_error("UnexpectedError", type(e).__name__)
            error_logger.error(f"Unexpected error: {e}", exc_info=True)
-           
+
            return jsonify({
                "success": False,
                "error": {
@@ -931,7 +931,7 @@ Flask Integration with Error Monitoring
                    "message": "An unexpected error occurred"
                }
            }), 500
-   
+
    @app.route('/api/metrics/errors', methods=['GET'])
    def get_error_metrics():
        """Endpoint for monitoring error metrics."""
@@ -950,7 +950,7 @@ Use the ``to_dict()`` method for API responses:
 .. code-block:: python
 
    from flask import jsonify
-   
+
    try:
        result = renderer.render_with_intents(payload, intents)
        return jsonify({"success": True, "svg": result.svg_content})
@@ -975,10 +975,10 @@ Create custom handlers for different error types:
            "message": error.message,
            "details": error.details
        }
-       
+
        if error.suggestion:
            response["suggestion"] = error.suggestion
-           
+
        # Add specific handling for different error types
        if isinstance(error, UnsupportedIntentError):
            response["alternatives"] = error.alternatives
@@ -989,5 +989,5 @@ Create custom handlers for different error types:
                "required_ratio": error.required_ratio,
                "standard": error.standard
            }
-           
+
        return response

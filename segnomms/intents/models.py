@@ -381,12 +381,17 @@ class RenderingResult(BaseModel):
         """Convert to client-expected format.
 
         Returns result in the format specified by client requirements:
-        {
-            "svg": "<svg ...>...</svg>",
-            "warnings": [...],
-            "metrics": {...},
-            "usedOptions": {...}
-        }
+
+        .. code-block:: json
+
+            {
+              "svg": "<svg ...>...</svg>",
+              "warnings": [
+                {"code": "...", "path": "...", "detail": "...", "suggestion": "..."}
+              ],
+              "metrics": {"rendering_time_ms": 12.3},
+              "usedOptions": {"scale": 10}
+            }
         """
         return {
             "svg": self.svg_content,

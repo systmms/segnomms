@@ -2,8 +2,9 @@
 sphinx>=7.0.0
 sphinx-rtd-theme>=2.0.0
 sphinx-autodoc-typehints>=1.19.0
-myst-parser>=0.18.0
-linkify-it-py>=2.0.0  # Required by MyST parser for linkify extension
+# Ensure linkify plugin is installed by using the extra
+myst-parser[linkify]>=0.18.0
+linkify-it-py>=2.0.0  # Belt-and-suspenders to satisfy markdown-it linkify
 
 # Required for autodoc to import the package
 pydantic>=2.7,<3
