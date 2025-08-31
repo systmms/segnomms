@@ -140,11 +140,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **test-wheel:** install and test local wheel instead of PyPI; harden install script ([8a39e34](https://github.com/systmms/segnomms/commit/8a39e3415a113a7b34cf535a88d6fbe456bc92a1))
 * **test-wheel:** use dark='blue' in PyPI functionality test and skip wait\n\n- Replace deprecated 'fill' kwarg to match plugin API\n- Add --no-wait to wheel job step to speed local act runs ([cc477b9](https://github.com/systmms/segnomms/commit/cc477b953f3fcc5cd483857a4b3200e11671495d))
 
-## [Unreleased]
-
-## [0.1.0] - 2025-01-26
+## [0.1.0-beta] - 2025-08-26
 
 ### Added
+- Initial release of SegnoMMS
+- Custom shape support: square, circle, rounded, dot, diamond, hexagon, star, cross, and more
+- Connected module patterns for flowing QR code designs
+- Safe mode for ensuring QR code scannability
+- Interactive SVG features with CSS classes and hover effects
+- Support for different shapes per QR component (finder patterns, data modules, etc.)
+- Comprehensive test suite with visual regression testing
+- Full documentation with examples
 - Complete Pydantic v2 integration with strict MyPy compliance across 67 modules
 - Modern enum object handling with discriminated unions for shape configurations
 - TypedDict patterns for type-safe **kwargs usage in shape renderers
@@ -155,6 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Visual regression testing framework
 
 ### Changed
+- Renamed from segno-interactive-svg to segnomms
+- Updated author information to SYSTMMS
 - Modernized configuration system from Pydantic v1 to v2
 - Removed `use_enum_values=True` - enums now return objects at runtime
 - Updated build system to use `uv` and `Hatchling`
@@ -173,22 +181,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modern Python packaging with PEP 517/518 compliance
 - Automated visual regression testing
 - Cross-platform compatibility testing
-
-## [0.1.0-beta] - 2024-01-17
-
-### Added
-- Initial release of SegnoMMS
-- Custom shape support: square, circle, rounded, dot, diamond, hexagon, star, cross, and more
-- Connected module patterns for flowing QR code designs
-- Safe mode for ensuring QR code scannability
-- Interactive SVG features with CSS classes and hover effects
-- Support for different shapes per QR component (finder patterns, data modules, etc.)
-- Comprehensive test suite with visual regression testing
-- Full documentation with examples
-
-### Changed
-- Renamed from segno-interactive-svg to segnomms
-- Updated author information to SYSTMMS
 
 [0.1.0]: https://github.com/systmms/segnomms/releases/tag/v0.1.0
 [0.1.0-beta]: https://github.com/systmms/segnomms/releases/tag/v0.1.0-beta
