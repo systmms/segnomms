@@ -51,8 +51,6 @@ pre-commit:
     end-of-file:
       run: |
         python -m pre_commit_hooks.end_of_file_fixer {staged_files}
-        # Ensure files are staged after fixing
-        git add {staged_files}
       stage_fixed: true
 
     check-yaml:
