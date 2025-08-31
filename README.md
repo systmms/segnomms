@@ -85,7 +85,7 @@ write(qr, 'output.svg',
 ```python
 import segno
 from segnomms import write
-from segnomms.a11y.accessibility import create_enhanced_accessibility
+from segnomms.a11y.accessibility import AccessibilityConfig, create_enhanced_accessibility
 
 # Generate QR code with comprehensive accessibility
 qr = segno.make('Accessible QR Code')
@@ -138,14 +138,14 @@ write(qr, 'custom-accessible.svg', accessibility=custom_a11y)
 
 ## Requirements
 
-- Python >= 3.8
+- Python >= 3.9
 - Segno >= 1.5.2 (tested with 1.5.2, 1.6.0, and 1.6.6)
-- Pydantic >= 2.0.0 (for configuration validation and JSON Schema)
+- Pydantic >= 2.7,<3 (for configuration validation and JSON Schema)
 
 ### Optional Dependencies
 
 - For accessibility features: All included in base installation
-- For development: See `requirements-dev.txt`
+- For development: use `make setup` (uv) or install extras `[docs,test]` from `pyproject.toml`
 
 ## Quick Start
 

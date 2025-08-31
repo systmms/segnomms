@@ -1,8 +1,8 @@
 Intent-Based API
 ================
 
-The SegnoMMS Intent-Based API provides a high-level, declarative interface for QR code generation. Instead of 
-specifying exact technical parameters, you describe your intentions and the system translates them into 
+The SegnoMMS Intent-Based API provides a high-level, declarative interface for QR code generation. Instead of
+specifying exact technical parameters, you describe your intentions and the system translates them into
 appropriate configurations with graceful degradation and comprehensive feedback.
 
 Overview
@@ -21,11 +21,9 @@ Quick Example
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, StyleIntents
-   
-   renderer = SegnoMMS()
-   
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
+
    # Describe what you want
    intents = IntentsConfig(
        style=StyleIntents(
@@ -33,9 +31,10 @@ Quick Example
            palette={"fg": "#1a1a2e", "bg": "#ffffff"}
        )
    )
-   
+
    # Get comprehensive result
-   result = renderer.render_with_intents("Hello World", intents)
+   payload = PayloadConfig(text="Hello World")
+   result = render_with_intents(payload, intents)
    print(f"Scanability: {result.scanability_prediction}")
 
 Intent Categories
@@ -326,11 +325,9 @@ Basic Intent Usage
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, StyleIntents
-   
-   renderer = SegnoMMS()
-   
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
+
    # Simple style intent
    intents = IntentsConfig(
        style=StyleIntents(
@@ -338,9 +335,10 @@ Basic Intent Usage
            palette={"fg": "#000000", "bg": "#ffffff"}
        )
    )
-   
-   result = renderer.render_with_intents("https://example.com", intents)
-   
+
+   payload = PayloadConfig(text="https://example.com")
+   result = render_with_intents(payload, intents)
+
    # Check if any warnings were generated
    if result.has_warnings:
        for warning in result.warnings:
@@ -356,14 +354,15 @@ Pattern-Specific Styling
            module_shape="squircle",
            patterns={
                "finder": "rounded",    # Rounded finder patterns
-               "timing": "square",     # Square timing patterns  
+               "timing": "square",     # Square timing patterns
                "alignment": "circle",  # Circular alignment patterns
                "data": "squircle"      # Squircle data modules
            }
        )
    )
-   
-   result = renderer.render_with_intents("Hello World", intents)
+
+   payload = PayloadConfig(text="Hello World")
+   result = render_with_intents(payload, intents)
 
 Branding and Reserve Area
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -421,19 +420,20 @@ Analyzing Results
 
 .. code-block:: python
 
-   result = renderer.render_with_intents(payload, intents)
-   
+   from segnomms.intents import render_with_intents
+   result = render_with_intents(payload, intents)
+
    # Check transformation report
    report = result.translation_report
    print(f"Transformations: {len(report.transformation_steps)}")
    print(f"Degradations: {len(report.degradation_details)}")
-   
+
    # Compare requested vs applied
    for step in report.transformation_steps:
        if step.transformation_type == "degraded":
            print(f"{step.intent_path}: {step.original_value} → {step.transformed_value}")
            print(f"Reason: {step.reason}")
-   
+
    # Check scanability
    print(f"Scanability prediction: {result.scanability_prediction}")
    print(f"Minimum module size: {result.metrics.min_module_px}px")
@@ -444,15 +444,16 @@ Error Handling and Degradation
 
 .. code-block:: python
 
+   from segnomms.intents import render_with_intents
    from segnomms.exceptions import (
        IntentValidationError,
        UnsupportedIntentError,
        IntentDegradationError
    )
-   
+
    try:
-       result = renderer.render_with_intents(payload, intents)
-       
+       result = render_with_intents(payload, intents)
+
        # Check for degradation warnings (non-blocking)
        if result.has_warnings:
            for warning in result.warnings:
@@ -460,7 +461,7 @@ Error Handling and Degradation
                    print(f"Feature degraded: {warning.detail}")
                    print(f"Reason: {warning.context.get('reason', 'Unknown')}")
                    print(f"Suggestion: {warning.context.get('suggestion', 'None')}")
-       
+
    except IntentValidationError as e:
        print(f"Invalid intent at {e.intent_path}: {e.original_value}")
        if e.suggestion:
@@ -483,20 +484,20 @@ Advanced PayLoad Examples
        email="contact@example.com",
        text="subject=Hello&body=Thank you for scanning!"
    )
-   
+
    # WiFi network configuration
    wifi_payload = PayloadConfig(
-       wifi_ssid="MyNetwork", 
+       wifi_ssid="MyNetwork",
        wifi_password="SecurePassword123",
        text="WIFI:T:WPA;S:MyNetwork;P:SecurePassword123;;"
    )
-   
+
    # International content with ECI
    international_payload = PayloadConfig(
        text="Hello 世界! こんにちは",
        eci=26  # UTF-8 encoding
    )
-   
+
    # Phone with SMS fallback
    phone_payload = PayloadConfig(
        phone="+1-555-123-4567",
@@ -510,11 +511,9 @@ The intent processing system integrates with SegnoMMS's degradation manager to p
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, StyleIntents, FrameIntents
-   
-   renderer = SegnoMMS()
-   
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents, FrameIntents
+
    # Request advanced features that may not be available
    intents = IntentsConfig(
        style=StyleIntents(
@@ -526,9 +525,10 @@ The intent processing system integrates with SegnoMMS's degradation manager to p
            clip_mode="gradient"  # Unsupported clip mode
        )
    )
-   
-   result = renderer.render_with_intents("Hello World", intents)
-   
+
+   payload = PayloadConfig(text="Hello World")
+   result = render_with_intents(payload, intents)
+
    # Analyze degradation results
    report = result.translation_report
    for step in report.transformation_steps:
@@ -537,7 +537,7 @@ The intent processing system integrates with SegnoMMS's degradation manager to p
            print(f"Original: {step.original_value}")
            print(f"Applied: {step.transformed_value}")
            print(f"Reason: {step.reason}")
-   
+
    # Check final configuration
    print(f"Actual shape used: {result.used_options.geometry.shape}")
    print(f"Scanability maintained: {result.scanability_prediction}")
@@ -549,9 +549,9 @@ Real-time Intent Validation
 
    from segnomms.intents.processor import IntentProcessor
    from segnomms.intents.models import IntentsConfig, ValidationIntents
-   
+
    processor = IntentProcessor()
-   
+
    # Enable strict validation
    intents = IntentsConfig(
        validation=ValidationIntents(
@@ -560,7 +560,7 @@ Real-time Intent Validation
            quiet_zone=True
        )
    )
-   
+
    try:
        # Pre-validate intents before processing
        validation_result = processor.validate_intents(intents)
@@ -568,10 +568,10 @@ Real-time Intent Validation
            print("Validation errors:")
            for error in validation_result.errors:
                print(f"  - {error.path}: {error.message}")
-       
+
        # Process with validated intents
        result = processor.process_intents("Hello World", intents)
-       
+
    except IntentValidationError as e:
        # Handle validation failures
        print(f"Intent validation failed: {e.message}")
@@ -583,23 +583,23 @@ Performance Metrics Integration
 
 .. code-block:: python
 
-   result = renderer.render_with_intents(payload, intents)
-   
+   result = render_with_intents(payload, intents)
+
    # Access detailed performance metrics
    metrics = result.metrics
-   print(f"Processing time: {metrics.processing_time_ms}ms")
-   print(f"QR size: {metrics.qr_size} ({metrics.qr_version})")
-   print(f"Module count: {metrics.module_count}")
+   print(f"Rendering time: {metrics.rendering_time_ms}ms")
+   print(f"SVG generation: {metrics.svg_generation_time_ms}ms")
+   print(f"Quiet zone: {metrics.actual_quiet_zone}")
    print(f"Contrast ratio: {metrics.contrast_ratio:.2f}")
    print(f"Minimum module size: {metrics.min_module_px}px")
-   
+
    # Performance warnings
    if metrics.processing_time_ms > 1000:
        print("⚠️ Slow processing detected - consider simplifying intents")
-   
+
    if metrics.contrast_ratio < 4.5:
        print("⚠️ Contrast ratio below WCAG AA standards")
-   
+
    # Memory usage tracking
    if hasattr(metrics, 'memory_usage_mb'):
        print(f"Memory used: {metrics.memory_usage_mb:.1f}MB")
@@ -611,21 +611,21 @@ Batch Intent Processing
 
    from typing import List, Dict
    from segnomms.intents.models import IntentsConfig, RenderingResult
-   
+
    def process_batch_intents(
-       payloads: List[str], 
+       payloads: List[str],
        intents_list: List[IntentsConfig]
    ) -> Dict[str, RenderingResult]:
        """Process multiple intents with aggregated error handling."""
-       
+
        results = {}
        errors = []
-       
+
        for i, (payload, intents) in enumerate(zip(payloads, intents_list)):
            try:
-               result = renderer.render_with_intents(payload, intents)
+               result = render_with_intents(payload, intents)
                results[f"qr_{i}"] = result
-               
+
                # Collect warnings for batch analysis
                if result.has_warnings:
                    for warning in result.warnings:
@@ -634,7 +634,7 @@ Batch Intent Processing
                            "warning": warning.code,
                            "detail": warning.detail
                        })
-                       
+
            except IntentValidationError as e:
                errors.append({
                    "qr_index": i,
@@ -642,14 +642,14 @@ Batch Intent Processing
                    "detail": e.message,
                    "path": e.intent_path
                })
-               
+
        # Generate batch report
        print(f"Processed {len(results)}/{len(payloads)} QR codes successfully")
        if errors:
            print(f"Encountered {len(errors)} warnings/errors:")
            for error in errors[:5]:  # Show first 5
                print(f"  QR {error['qr_index']}: {error.get('warning', error.get('error'))}")
-       
+
        return results
 
 Best Practices
@@ -671,37 +671,37 @@ Intent Processing Flow
 
 The intent processing system follows a comprehensive pipeline with integrated degradation handling:
 
-1. **Intent Validation**: 
+1. **Intent Validation**:
    - Validate intent structure and field types
    - Check for required fields and value ranges
    - Raise IntentValidationError for invalid intents
 
-2. **Capability Discovery**: 
+2. **Capability Discovery**:
    - Query capability manifest for available features
    - Compare requested intents against system capabilities
    - Identify features requiring degradation
 
-3. **Intent Transformation**: 
+3. **Intent Transformation**:
    - Convert high-level intents to technical parameters
    - Apply feature mappings and value transformations
    - Generate intermediate configuration objects
 
-4. **Degradation Processing**: 
+4. **Degradation Processing**:
    - Apply degradation rules from rendering system
    - Capture degradation warnings and alternatives
    - Maintain scanability during feature fallbacks
 
-5. **Configuration Building**: 
+5. **Configuration Building**:
    - Create final RenderingConfig object
    - Merge degraded and non-degraded settings
    - Validate final configuration consistency
 
-6. **QR Code Generation**: 
+6. **QR Code Generation**:
    - Generate QR code using validated configuration
    - Apply advanced features (ECI, structured append, etc.)
    - Handle generation errors gracefully
 
-7. **Result Assembly**: 
+7. **Result Assembly**:
    - Build comprehensive RenderingResult
    - Include performance metrics and warnings
    - Generate transformation report for transparency
@@ -730,14 +730,16 @@ The intent processor integrates seamlessly with the degradation system:
 
    # Example of degradation flow
    original_intent = StyleIntents(module_shape="pyramid")  # Unsupported
-   
+
    # Step 1: Intent processor detects unsupported feature
    # Step 2: Queries degradation manager for alternatives
    # Step 3: Applies fallback (e.g., "squircle") with warning
    # Step 4: Captures transformation details in report
-   
-   result = renderer.render_with_intents("Hello", intents)
-   
+
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig
+   result = render_with_intents(PayloadConfig(text="Hello"), intents)
+
    # Degradation captured in transformation report
    transformation = result.translation_report.transformation_steps[0]
    assert transformation.transformation_type == "degraded"

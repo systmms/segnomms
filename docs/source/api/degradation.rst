@@ -211,10 +211,8 @@ The degradation system integrates seamlessly with the intent-based API:
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, StyleIntents, FrameIntents
-
-   renderer = SegnoMMS()
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents, FrameIntents
 
    # Request features that will require degradation
    intents = IntentsConfig(
@@ -228,7 +226,8 @@ The degradation system integrates seamlessly with the intent-based API:
        )
    )
 
-   result = renderer.render_with_intents("Hello World", intents)
+   payload = PayloadConfig(text="Hello World")
+   result = render_with_intents(payload, intents)
 
    # Analyze degradation results
    print(f"Generated QR with {len(result.warnings)} degradations:")
@@ -240,8 +239,8 @@ The degradation system integrates seamlessly with the intent-based API:
            print(f"    Applied: {warning.context.get('fallback_value')}")
            print(f"    Reason: {warning.context.get('reason')}")
 
-   # QR code still fully functional despite degradations
-   assert result.scanability_prediction >= 0.9
+   # QR code still fully functional despite degradations (check reported level)
+   print(f"Scanability: {result.scanability_prediction}")
 
 Production Monitoring
 ---------------------
@@ -324,10 +323,11 @@ Monitor degradation patterns in production:
            return recommendations
 
    # Usage in production
+   from segnomms.intents import render_with_intents
    monitor = DegradationMonitor()
 
    # Record degradations
-   result = renderer.render_with_intents(payload, intents)
+   result = render_with_intents(payload, intents)
    monitor.record_degradation(result, user_id="user123")
 
    # Generate periodic reports

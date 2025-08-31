@@ -58,6 +58,7 @@ class ShapeRendererFactory(RendererFactory):
     """
 
     def __init__(self) -> None:
+        """Initialize factory and register all default renderers."""
         self._renderers: Dict[str, Type[ShapeRenderer]] = {}
         self._register_default_renderers()
 

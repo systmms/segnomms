@@ -15,11 +15,8 @@ The intent-based API provides high-level, declarative QR code generation with bu
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, StyleIntents
-
-   # Create renderer instance
-   renderer = SegnoMMS()
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
 
    # Define your intentions
    intents = IntentsConfig(
@@ -31,7 +28,7 @@ The intent-based API provides high-level, declarative QR code generation with bu
    )
 
    # Generate QR with comprehensive error handling
-   result = renderer.render_with_intents("Hello, World!", intents)
+   result = render_with_intents(PayloadConfig(text="Hello, World!"), intents)
 
    # Check results and handle any issues
    if result.has_warnings:
@@ -95,7 +92,8 @@ The modern intent-based API makes shape configuration more intuitive:
 
 .. code-block:: python
 
-   from segnomms.intents.models import StyleIntents, FrameIntents
+   from segnomms.intents.models import PayloadConfig, StyleIntents, FrameIntents, IntentsConfig
+   from segnomms.intents import render_with_intents
 
    # Different shapes with intents
    circle_intents = IntentsConfig(
@@ -118,7 +116,7 @@ The modern intent-based API makes shape configuration more intuitive:
 
    # Generate with different configurations
    for name, intents in [("circle", circle_intents), ("connected", connected_intents), ("star", star_intents)]:
-       result = renderer.render_with_intents("Hello!", intents)
+       result = render_with_intents(PayloadConfig(text="Hello!"), intents)
        with open(f'{name}.svg', 'w') as f:
            f.write(result.svg_content)
 
@@ -151,7 +149,8 @@ The intent-based API provides color palette configuration with automatic validat
 
 .. code-block:: python
 
-   from segnomms.intents.models import StyleIntents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
+   from segnomms.intents import render_with_intents
 
    # Professional color palette
    professional_intents = IntentsConfig(
@@ -197,7 +196,7 @@ For simple cases, you can still use the write function directly:
 
    # Blue QR code on light background
    with open('colored.svg', 'w') as f:
-       write(qr, f, 
+       write(qr, f,
              shape='dot',
              dark='#1e40af',    # Dark blue
              light='#dbeafe')   # Light blue
@@ -280,27 +279,27 @@ Create professional QR codes with custom frames and logo areas:
 
    # Circle frame with logo area
    qr = segno.make("https://example.com", error='h')
-   
+
    with open('professional.svg', 'w') as f:
        write(qr, f,
              scale=20,
              border=6,
-             
+
              # Circular frame
              frame_shape='circle',
-             
+
              # Logo area in center
              centerpiece_enabled=True,
              centerpiece_shape='circle',
              centerpiece_size=0.15,
-             
+
              # Gradient background
              quiet_zone_style='gradient',
              quiet_zone_gradient={
                  'type': 'radial',
                  'colors': ['#ffffff', '#f0f0f0']
              },
-             
+
              # Smooth module shapes
              shape='squircle',
              merge='soft')
@@ -311,7 +310,7 @@ Frame Shapes
 Available frame shapes:
 
 * ``'square'`` - Standard rectangular QR code (default)
-* ``'circle'`` - Circular boundary 
+* ``'circle'`` - Circular boundary
 * ``'rounded-rect'`` - Rectangle with rounded corners
 * ``'squircle'`` - Modern superellipse shape
 * ``'custom'`` - Define your own SVG path
@@ -340,6 +339,8 @@ The intent-based API provides comprehensive error handling with specific excepti
 
 .. code-block:: python
 
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
    from segnomms.exceptions import IntentValidationError, UnsupportedIntentError
 
    try:
@@ -350,19 +351,19 @@ The intent-based API provides comprehensive error handling with specific excepti
                corner_radius=2.5        # Out of valid range
            )
        )
-       result = renderer.render_with_intents("Hello!", intents)
-       
+       result = render_with_intents(PayloadConfig(text="Hello!"), intents)
+
        # Check for degradation warnings
        if result.has_warnings:
            for warning in result.warnings:
                if warning.code == "FEATURE_DEGRADED":
                    print(f"Feature '{warning.detail}' was degraded for compatibility")
-       
+
    except IntentValidationError as e:
        print(f"Invalid configuration: {e.message}")
        print(f"Field: {e.intent_path}")
        print(f"Suggestion: {e.suggestion}")
-       
+
    except UnsupportedIntentError as e:
        print(f"Feature not supported: {e.feature}")
        print(f"Try these alternatives: {e.alternatives}")
@@ -380,7 +381,7 @@ For testing and development, use test constants to avoid magic strings:
        ModuleShape, TEST_COLORS, create_test_config,
        QR_PAYLOADS, DEFAULT_SCALE, DEFAULT_BORDER
    )
-   
+
    # Type-safe and maintainable
    qr = segno.make(QR_PAYLOADS["url"])
    config = create_test_config(
@@ -390,14 +391,14 @@ For testing and development, use test constants to avoid magic strings:
        scale=DEFAULT_SCALE,
        border=DEFAULT_BORDER
    )
-   
+
    with open('professional.svg', 'w') as f:
        write(qr, f, **config)
 
 Benefits of using constants:
 
 * **Type safety** - Prevent typos in shape names
-* **IDE support** - Autocomplete for all valid values  
+* **IDE support** - Autocomplete for all valid values
 * **Consistency** - Same colors/shapes across your project
 * **Maintainability** - Change values in one place
 
@@ -407,7 +408,7 @@ Next Steps
 ----------
 
 * **Intent-Based API**: See :doc:`api/intents` for comprehensive intent configuration options
-* **Error Handling**: Review :doc:`api/exceptions` for production error handling patterns  
+* **Error Handling**: Review :doc:`api/exceptions` for production error handling patterns
 * **Degradation System**: Learn about :doc:`api/degradation` for graceful feature fallbacks
 * **Shape Options**: See :doc:`shapes` for a complete list of available shapes
 * **Examples**: Explore :doc:`examples` for usage patterns, including Intent-Based API examples

@@ -69,9 +69,9 @@ Examples
 Manual Validation::
 
     from segnomms.validation.phase4 import Phase4Validator
-    from segnomms.config.schema import RenderingConfig
+    from segnomms.config import RenderingConfig
     import segno
-    
+
     # Create QR code and config
     qr = segno.make("Test data", error='m')
     config = RenderingConfig.from_kwargs(
@@ -80,11 +80,11 @@ Manual Validation::
         centerpiece_enabled=True,
         centerpiece_size=0.2  # May be too large for M level
     )
-    
+
     # Validate configuration
     validator = Phase4Validator(qr, config)
     warnings = validator.validate_all()
-    
+
     for warning in warnings:
         print(f"Warning: {warning}")
 
@@ -92,9 +92,9 @@ Automatic Validation::
 
     # Validation happens automatically during rendering
     from segnomms import write
-    
+
     qr = segno.make("Test", error='l')
-    
+
     # This will log warnings for unsafe configuration
     with open('output.svg', 'w') as f:
         write(qr, f,

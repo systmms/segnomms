@@ -2,6 +2,7 @@
 Degradation rules defining incompatible feature combinations.
 """
 
+import logging
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import List, Optional
@@ -41,10 +42,16 @@ class ComplexShapeWithHighErrorRule(DegradationRule):
     """Complex shapes with high error correction can impact scanability."""
 
     def __init__(self) -> None:
+        """Initialize rule for complex shapes at small module sizes."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.SHAPE_COMPLEXITY
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Detect risky complex shapes used with small scale and no safe mode.
+
+        Returns:
+            DegradationWarning if shape+scale combination is risky, else None.
+        """
         # Complex connected shapes with small modules
         complex_shapes = [
             "connected-classy",
@@ -78,10 +85,16 @@ class LowContrastRule(DegradationRule):
     """Detect low contrast between dark and light colors using enhanced palette validation."""
 
     def __init__(self) -> None:
+        """Initialize rule for detecting insufficient color contrast."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.COLOR_CONTRAST
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Check contrast ratio of dark/light colors against requirements.
+
+        Returns:
+            DegradationWarning if contrast is below minimum, else None.
+        """
         # Use enhanced palette validation if enabled
         if config.enable_palette_validation:
             ratio = config.get_contrast_ratio()
@@ -144,10 +157,16 @@ class TinyModulesWithComplexityRule(DegradationRule):
     """Very small modules with complex features."""
 
     def __init__(self) -> None:
+        """Initialize rule for tiny modules combined with complex features."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.SIZE_CONSTRAINT
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Detect complex features when scale < 5 that may harm rendering.
+
+        Returns:
+            DegradationWarning when tiny modules + complex features are present.
+        """
         if config.scale < 5:
             # Check for features that don't work well with tiny modules
             issues = []
@@ -196,10 +215,16 @@ class FadeFrameWithPatternStylingRule(DegradationRule):
     """Fade frame mode can conflict with pattern-specific colors."""
 
     def __init__(self) -> None:
+        """Initialize rule for fade frame interactions with pattern colors."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.PATTERN_CONFLICT
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Detect fade frame usage with pattern-specific colors.
+
+        Returns:
+            DegradationWarning if fade may interfere with pattern colors.
+        """
         if (
             config.frame.clip_mode == "fade"
             and config.patterns.enabled
@@ -228,10 +253,16 @@ class ExcessiveMergingRule(DegradationRule):
     """Aggressive merging with certain patterns can break scanning."""
 
     def __init__(self) -> None:
+        """Initialize rule for aggressive merging with low island thresholds."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.SCANABILITY
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Detect aggressive merge with too small min_island threshold.
+
+        Returns:
+            DegradationWarning if merging could affect functional patterns.
+        """
         if config.geometry.merge == "aggressive" and config.geometry.min_island_modules < 3:
             return DegradationWarning(
                 level=WarningLevel.WARNING,
@@ -259,10 +290,16 @@ class CenterpieceTooLargeRule(DegradationRule):
     """Centerpiece reserve area that's too large for QR version."""
 
     def __init__(self) -> None:
+        """Initialize rule for oversized centerpiece areas."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.SIZE_CONSTRAINT
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Detect centerpieces larger than safe thresholds.
+
+        Returns:
+            DegradationWarning when centerpiece size is too large, else None.
+        """
         if config.centerpiece.enabled and config.centerpiece.size > 0.3:
             return DegradationWarning(
                 level=WarningLevel.CRITICAL,
@@ -286,10 +323,16 @@ class PaletteValidationRule(DegradationRule):
     """Comprehensive palette validation using enhanced palette system."""
 
     def __init__(self) -> None:
+        """Initialize rule for comprehensive palette validation issues."""
         super().__init__()
         self.incompatibility_type = IncompatibilityType.COLOR_CONTRAST
 
     def check(self, config: RenderingConfig) -> Optional[DegradationWarning]:
+        """Check palette validation results for issues/warnings.
+
+        Returns:
+            DegradationWarning if validation indicates problematic palettes.
+        """
         if not config.enable_palette_validation:
             return None
 
@@ -326,8 +369,12 @@ class PaletteValidationRule(DegradationRule):
                         suggestion="Consider using fewer or more distinct colors",
                     )
         except Exception:
-            # If palette validation fails, don't crash - just skip
-            pass
+            # If palette validation fails, don't crash - log and skip
+            logging.getLogger(__name__).debug(
+                "Palette validation failed; skipping enhanced checks", exc_info=True
+            )
+            # Fall back to no degradation warning for palette
+            return None
 
         return None
 

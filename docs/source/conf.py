@@ -12,9 +12,16 @@ sys.path.insert(0, os.path.abspath("../.."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "SegnoMMS"
-copyright = "2024, SYSTMMS"
+copyright = "2025, SYSTMMS"
 author = "SYSTMMS"
-release = "0.1.0"
+# Keep Sphinx release in sync with the package version
+try:
+    import segnomms
+
+    release = getattr(segnomms, "__version__", "0.0.0")
+except Exception:
+    # Fallback if import fails in doc build environment
+    release = "0.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -63,7 +70,7 @@ autodoc_default_options = {
     "undoc-members": True,
     "exclude-members": "__weakref__",
 }
-autodoc_typehints = "both"
+autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 
 # Intersphinx mapping
@@ -107,4 +114,17 @@ nitpick_ignore = [
     ("py:class", "typing.Dict"),
     ("py:class", "typing.List"),
     ("py:class", "typing.Tuple"),
+    ("py:class", "ET.Element"),
+    ("py:class", "xml.etree.ElementTree.Element"),
+    ("py:class", "pydantic.main.BaseModel"),
+]
+
+# Ignore noisy annotated type references and constraint shorthands
+nitpick_ignore_regex = [
+    (r"py:.*", r"annotated_types\\..*"),
+    (r"py:class", r".*=.*"),  # e.g., ge=0, gt=0
+    (r"py:class", r"pydantic_core\\..*"),
+    (r"py:class", r"segnomms\\.core\\.models\\..*"),
+    (r"py:class", r"segnomms\\.validation\\.models\\..*"),
+    (r"py:class", r"tests\\.helpers\\..*"),
 ]

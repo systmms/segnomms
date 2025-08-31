@@ -442,6 +442,23 @@ class AdvancedClassyRenderer(ConnectedRoundedRenderer):
     """
 
     def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
+        """Render a module using classy boundary rounding rules.
+
+        Applies rounded corners only on outer boundaries based on neighbor
+        states to achieve a refined "classy" look.
+
+        Args:
+            x: X coordinate in pixels.
+            y: Y coordinate in pixels.
+            size: Module size in pixels.
+            **kwargs: Additional rendering parameters. Recognized keys:
+                - get_neighbor: Callable(dx, dy) -> bool indicating whether a
+                  neighbor exists at the given offset relative to the current
+                  module.
+
+        Returns:
+            ET.Element representing the rendered module.
+        """
         get_neighbor: Optional[Callable[[int, int], bool]] = kwargs.get("get_neighbor")
         if not get_neighbor:
             return self._basic_square(x, y, size, **kwargs)
@@ -524,6 +541,23 @@ class AdvancedClassyRoundedRenderer(ConnectedExtraRoundedRenderer):
     """
 
     def render(self, x: float, y: float, size: float, **kwargs: Any) -> ET.Element:
+        """Render a module using ultra-smooth classy rounding (Bezier curves).
+
+        Uses the same boundary detection rules as ``AdvancedClassyRenderer``
+        but renders with quadratic Bezier curves for softer transitions.
+
+        Args:
+            x: X coordinate in pixels.
+            y: Y coordinate in pixels.
+            size: Module size in pixels.
+            **kwargs: Additional rendering parameters. Recognized keys:
+                - get_neighbor: Callable(dx, dy) -> bool indicating whether a
+                  neighbor exists at the given offset relative to the current
+                  module.
+
+        Returns:
+            ET.Element representing the rendered module.
+        """
         get_neighbor: Optional[Callable[[int, int], bool]] = kwargs.get("get_neighbor")
         if not get_neighbor:
             return self._basic_square(x, y, size, **kwargs)

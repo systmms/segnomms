@@ -29,16 +29,16 @@ Example Usage
 .. code-block:: python
 
    from segnomms.core.detector import ModuleDetector
-   
+
    # Create detector with QR matrix
    detector = ModuleDetector(matrix, version=1)
-   
+
    # Check module type
    module_type = detector.get_module_type(5, 5)
-   
+
    # Get neighbor information
    def get_neighbor(dx, dy):
-       return detector.is_dark(x + dx, y + dy)
+       return detector.is_module_active(x + dx, y + dy)
 
 Matrix Manipulation
 -------------------
@@ -89,10 +89,10 @@ Creating a Custom Shape Renderer
 
    from segnomms.core.interfaces import ShapeRenderer
    import xml.etree.ElementTree as ET
-   
+
    class CustomRenderer(ShapeRenderer):
        """My custom shape renderer."""
-       
+
        def render(self, x: float, y: float, size: float, **kwargs) -> ET.Element:
            """Render the shape."""
            # Create your custom SVG element
@@ -101,11 +101,11 @@ Creating a Custom Shape Renderer
                'class': kwargs.get('css_class', 'qr-module')
            })
            return element
-       
+
        def supports_type(self, shape_type: str) -> bool:
            """Check if this renderer handles the shape type."""
            return shape_type == 'custom'
-       
+
        def _calculate_points(self, x, y, size):
            # Custom logic here
            pass
@@ -116,16 +116,16 @@ Creating a Custom Algorithm
 .. code-block:: python
 
    from segnomms.core.interfaces import AlgorithmProcessor
-   
+
    class CustomProcessor(AlgorithmProcessor):
        """Custom algorithm processor."""
-       
+
        def process(self, matrix, config):
            """Process the QR matrix."""
            # Your algorithm logic
            results = self._analyze(matrix)
            return results
-       
+
        def get_config_schema(self):
            """Return configuration schema."""
            return {

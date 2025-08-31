@@ -39,11 +39,8 @@ Modern Intent-Based API:
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, StyleIntents
-
-   # Create renderer with error handling
-   renderer = SegnoMMS()
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
 
    # Define your intentions declaratively
    intents = IntentsConfig(
@@ -54,7 +51,8 @@ Modern Intent-Based API:
    )
 
    # Generate with automatic error handling and degradation
-   result = renderer.render_with_intents("Hello, World!", intents)
+   payload = PayloadConfig(text="Hello, World!")
+   result = render_with_intents(payload, intents)
 
    # Check for any warnings
    if result.has_warnings:

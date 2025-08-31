@@ -12,6 +12,7 @@ Write Function
 --------------
 
 .. autofunction:: segnomms.write
+   :no-index:
 
 The ``write`` function is the main entry point for using the plugin. It accepts
 a Segno QR code object and writes it to the specified output with custom shapes
@@ -204,7 +205,7 @@ Basic usage::
 
     import segno
     from segnomms import write
-    
+
     qr = segno.make("Hello, World!")
     with open('output.svg', 'w') as f:
         write(qr, f)

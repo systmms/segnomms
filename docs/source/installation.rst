@@ -4,9 +4,9 @@ Installation
 Requirements
 ------------
 
-* Python 3.8 or higher
+* Python 3.9 or higher
 * Segno 1.5.2 or higher
-* Pydantic 2.0 or higher
+* Pydantic 2.7 or higher
 
 Install from PyPI
 -----------------
@@ -37,7 +37,7 @@ For development, install with extra dependencies:
 
    git clone https://github.com/systmms/segnomms.git
    cd segnomms
-   pip install -e ".[dev]"
+   pip install -e ".[docs,test]"
 
 This installs additional packages for testing and documentation:
 
@@ -58,11 +58,11 @@ You can verify the installation by running:
 
    # Create a simple QR code
    qr = segno.make("Test")
-   
+
    # Test basic functionality
    with open('test.svg', 'w') as f:
        write(qr, f)
-   
+
    # Test Phase 4 features
    with open('test_phase4.svg', 'w') as f:
        write(qr, f, frame_shape='circle', centerpiece_enabled=True)

@@ -53,16 +53,16 @@ Test both success and error paths with the intent-based API:
 
    def test_intent_error_handling():
        """Test comprehensive error handling patterns."""
+       from segnomms.intents import render_with_intents
+       from segnomms.intents.models import PayloadConfig, IntentsConfig, StyleIntents
        from segnomms.exceptions import IntentValidationError, UnsupportedIntentError
-
-       renderer = SegnoMMS()
 
        # Test validation errors
        with pytest.raises(IntentValidationError) as exc_info:
            invalid_intents = IntentsConfig(
                style=StyleIntents(corner_radius=5.0)  # Out of range
            )
-           renderer.render_with_intents("test", invalid_intents)
+           render_with_intents(PayloadConfig(text="test"), invalid_intents)
 
        assert "corner_radius" in str(exc_info.value)
 
@@ -71,7 +71,7 @@ Test both success and error paths with the intent-based API:
            unsupported_intents = IntentsConfig(
                style=StyleIntents(module_shape="pyramid")  # Unsupported
            )
-           renderer.render_with_intents("test", unsupported_intents)
+           render_with_intents(PayloadConfig(text="test"), unsupported_intents)
 
        assert exc_info.value.alternatives  # Should suggest alternatives
 

@@ -57,11 +57,12 @@ Example Usage
 
 .. code-block:: python
 
+   from segnomms.intents import render_with_intents
    from segnomms.exceptions import SegnoMMSError
 
    try:
        # Some SegnoMMS operation
-       result = renderer.render_with_intents(payload, intents)
+       result = render_with_intents(payload, intents)
    except SegnoMMSError as e:
        print(f"Error [{e.code}]: {e.message}")
        if e.suggestion:
@@ -419,6 +420,7 @@ When working with the intent-based API, use structured error handling for differ
 
 .. code-block:: python
 
+   from segnomms.intents import render_with_intents
    from segnomms.exceptions import (
        IntentValidationError,
        UnsupportedIntentError,
@@ -431,7 +433,7 @@ When working with the intent-based API, use structured error handling for differ
    def robust_intent_processing(payload: str, intents: IntentsConfig):
        """Robust intent processing with comprehensive error handling."""
        try:
-           result = renderer.render_with_intents(payload, intents)
+           result = render_with_intents(payload, intents)
 
            # Success path - check for warnings
            if result.has_warnings:
@@ -457,7 +459,7 @@ When working with the intent-based API, use structured error handling for differ
 
            # Apply automatic fallback
            fallback_intents = apply_feature_fallback(intents, e.feature, e.alternatives)
-           return renderer.render_with_intents(payload, fallback_intents)
+           return render_with_intents(payload, fallback_intents)
 
        except IntentDegradationError as e:
            # Degradation system failed
@@ -466,7 +468,7 @@ When working with the intent-based API, use structured error handling for differ
 
            # Use simplified configuration
            safe_intents = create_safe_fallback_intents(intents)
-           return renderer.render_with_intents(payload, safe_intents)
+           return render_with_intents(payload, safe_intents)
 
        except ContrastRatioError as e:
            # Accessibility issue - adjust colors
@@ -474,7 +476,7 @@ When working with the intent-based API, use structured error handling for differ
 
            # Auto-adjust colors for accessibility
            adjusted_intents = improve_intent_contrast(intents, e.required_ratio)
-           return renderer.render_with_intents(payload, adjusted_intents)
+           return render_with_intents(payload, adjusted_intents)
 
        except IntentTransformationError as e:
            # Internal transformation failed
@@ -484,7 +486,7 @@ When working with the intent-based API, use structured error handling for differ
            # Log for debugging and use minimal intents
            log_transformation_error(e, payload, intents)
            minimal_intents = create_minimal_intents()
-           return renderer.render_with_intents(payload, minimal_intents)
+           return render_with_intents(payload, minimal_intents)
 
        except SegnoMMSError as e:
            # Any other SegnoMMS error
@@ -503,6 +505,7 @@ Always catch the most specific exception type for better error recovery:
 
 .. code-block:: python
 
+   from segnomms.intents import render_with_intents
    from segnomms.exceptions import (
        ValidationError,
        UnsupportedIntentError,
@@ -511,7 +514,7 @@ Always catch the most specific exception type for better error recovery:
    )
 
    try:
-       result = renderer.render_with_intents(payload, intents)
+       result = render_with_intents(payload, intents)
    except ValidationError as e:
        # Handle validation errors specifically
        fix_validation_error(e.field, e.value, e.suggestion)
@@ -682,18 +685,20 @@ Use error codes for programmatic handling:
 
 .. code-block:: python
 
+   from segnomms.intents import render_with_intents
+
    try:
-       result = renderer.render_with_intents(payload, intents)
+       result = render_with_intents(payload, intents)
    except SegnoMMSError as e:
        if e.code == "CONTRAST_RATIO_ERROR":
            # Adjust colors automatically
            payload.dark = "#000000"
            payload.light = "#FFFFFF"
-           result = renderer.render_with_intents(payload, intents)
+           result = render_with_intents(payload, intents)
        elif e.code == "UNSUPPORTED_INTENT":
            # Remove unsupported features
            simplified_intents = simplify_intents(intents)
-           result = renderer.render_with_intents(payload, simplified_intents)
+           result = render_with_intents(payload, simplified_intents)
        else:
            # Re-raise unknown errors
            raise
@@ -710,6 +715,7 @@ FastAPI Integration with Intent-Specific Error Handling
    from fastapi.responses import JSONResponse
    from pydantic import BaseModel
    from typing import Dict, Any, Optional
+   from segnomms.intents import render_with_intents
 
    app = FastAPI()
 
@@ -730,7 +736,7 @@ FastAPI Integration with Intent-Specific Error Handling
        """Generate QR code with comprehensive error handling."""
        try:
            intents_config = IntentsConfig.model_validate(request.intents)
-           result = renderer.render_with_intents(request.payload, intents_config)
+           result = render_with_intents(request.payload, intents_config)
 
            # Success response with warnings
            return QRGenerationResponse(
@@ -763,7 +769,7 @@ FastAPI Integration with Intent-Specific Error Handling
                fallback_intents = create_fallback_from_alternatives(
                    intents_config, e.feature, e.alternatives
                )
-               result = renderer.render_with_intents(request.payload, fallback_intents)
+               result = render_with_intents(request.payload, fallback_intents)
 
                return QRGenerationResponse(
                    success=True,
@@ -853,6 +859,7 @@ Flask Integration with Error Monitoring
            key = f"{feature}->{fallback}"
            self.degradation_counts[key] = self.degradation_counts.get(key, 0) + 1
 
+   from segnomms.intents import render_with_intents
    metrics = ErrorMetrics()
 
    @app.route('/api/qr/generate', methods=['POST'])
@@ -866,7 +873,7 @@ Flask Integration with Error Monitoring
            intents_data = data.get('intents', {})
 
            intents = IntentsConfig.model_validate(intents_data)
-           result = renderer.render_with_intents(payload, intents)
+           result = render_with_intents(payload, intents)
 
            # Track successful degradations for monitoring
            for warning in result.warnings:
@@ -950,9 +957,10 @@ Use the ``to_dict()`` method for API responses:
 .. code-block:: python
 
    from flask import jsonify
+   from segnomms.intents import render_with_intents
 
    try:
-       result = renderer.render_with_intents(payload, intents)
+       result = render_with_intents(payload, intents)
        return jsonify({"success": True, "svg": result.svg_content})
    except SegnoMMSError as e:
        return jsonify({

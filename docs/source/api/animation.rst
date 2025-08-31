@@ -1,7 +1,7 @@
 Animation and Effects
 =====================
 
-The Segno Interactive SVG Plugin provides comprehensive CSS-based animation capabilities for QR codes, 
+The Segno Interactive SVG Plugin provides comprehensive CSS-based animation capabilities for QR codes,
 focusing on performance, accessibility, and visual appeal.
 
 Overview
@@ -10,14 +10,14 @@ Overview
 All animations are implemented using CSS keyframes and transitions, ensuring:
 
 * Broad browser compatibility
-* Hardware-accelerated performance  
+* Hardware-accelerated performance
 * Automatic accessibility support
 * Zero JavaScript dependencies
 
 Animation Parameters
 --------------------
 
-The following animation parameters can be passed to the :func:`~segnomms.write` function or used 
+The following animation parameters can be passed to the :func:`~segnomms.write` function or used
 with the intent-based API:
 
 Fade-In Animation
@@ -27,10 +27,10 @@ Fade-In Animation
    :type: bool
    :value: False
 
-   Enable fade-in animation for QR code modules. Modules fade from 80% scale and 0% opacity 
+   Enable fade-in animation for QR code modules. Modules fade from 80% scale and 0% opacity
    to full size and opacity.
 
-.. py:data:: animation_fade_duration  
+.. py:data:: animation_fade_duration
    :type: float
    :value: 0.5
 
@@ -41,7 +41,7 @@ Fade-In Animation
    :value: "ease"
 
    CSS timing function for animations. Options include:
-   
+
    * ``"ease"`` - Slow start and end (default)
    * ``"ease-in"`` - Slow start
    * ``"ease-out"`` - Slow end
@@ -55,7 +55,7 @@ Staggered Animation
    :type: bool
    :value: False
 
-   Enable staggered animation where modules animate with progressive delays, creating a 
+   Enable staggered animation where modules animate with progressive delays, creating a
    wave-like reveal effect.
 
 .. py:data:: animation_stagger_delay
@@ -63,7 +63,7 @@ Staggered Animation
    :value: 0.02
 
    Delay between module animations in seconds. Valid range: 0.01 to 0.5.
-   
+
    .. note::
       Total reveal time is automatically capped at 800ms to maintain scanability.
 
@@ -74,7 +74,7 @@ Pulse Effect
    :type: bool
    :value: False
 
-   Enable pulse effect on finder patterns. Creates decorative halos that pulse behind 
+   Enable pulse effect on finder patterns. Creates decorative halos that pulse behind
    the finder patterns while keeping the actual patterns static for scanability.
 
 Usage Examples
@@ -87,9 +87,9 @@ Basic Fade-In
 
    import segno
    from segnomms import write
-   
+
    qr = segno.make("Hello World")
-   
+
    # Simple fade-in animation
    with open('fade.svg', 'w') as f:
        write(qr, f,
@@ -132,11 +132,9 @@ Intent-Based API
 
 .. code-block:: python
 
-   from segnomms import SegnoMMS
-   from segnomms.intents.models import IntentsConfig, AnimationIntents
-   
-   renderer = SegnoMMS()
-   
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import PayloadConfig, IntentsConfig, AnimationIntents
+
    intents = IntentsConfig(
        animation=AnimationIntents(
            fade_in=True,
@@ -147,8 +145,9 @@ Intent-Based API
            transition_timing="ease-out"
        )
    )
-   
-   result = renderer.render_with_intents("Hello World", intents)
+
+   payload = PayloadConfig(text="Hello World")
+   result = render_with_intents(payload, intents)
 
 Technical Details
 -----------------
@@ -164,7 +163,7 @@ The stagger animation uses CSS variables for efficient scaling:
        animation-delay: calc(var(--i, 0) * var(--stagger-step));
    }
 
-Each module receives a ``--i`` CSS variable with its index, eliminating the need for 
+Each module receives a ``--i`` CSS variable with its index, eliminating the need for
 thousands of nth-child selectors.
 
 Transform Geometry
