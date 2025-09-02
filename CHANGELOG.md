@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1](https://github.com/systmms/segnomms/compare/v0.1.0...v0.1.1) (2025-09-02)
+
+
+### Documentation
+
+* add auto-generated visual gallery from test baselines ([2004b81](https://github.com/systmms/segnomms/commit/2004b81a8f8e36b56bb4f3e899af970eff233cd7))
+* fix intent examples, align reqs, add docstrings, reduce Sphinx warnings ([e955721](https://github.com/systmms/segnomms/commit/e955721ff3036b8772d218eb21d10f781f4d2bb3))
+
+
+### Miscellaneous Chores
+
+* updating changelog to appropriate beta vs real release notes ([481b7f1](https://github.com/systmms/segnomms/commit/481b7f112431755258495d05d6754a9c374c277c))
+
+
+### Continuous Integration
+
+* **deps:** bump actions/checkout from 4 to 5 ([71194d0](https://github.com/systmms/segnomms/commit/71194d0d87d045e074a26354180803303897544c))
+* **deps:** bump actions/checkout from 4 to 5 ([b8ebd1f](https://github.com/systmms/segnomms/commit/b8ebd1ff7520bca498b1bfcf7441eb5ff360c891))
+* **deps:** bump actions/configure-pages from 4 to 5 ([882d9e9](https://github.com/systmms/segnomms/commit/882d9e9b6dfe7f1124fb58fdcbf759abd2ae7c55))
+* **deps:** bump actions/configure-pages from 4 to 5 ([4bb3943](https://github.com/systmms/segnomms/commit/4bb3943e9f9cf30de08b32fc8d58799c655581ba))
+* **deps:** bump amannn/action-semantic-pull-request from 5 to 6 ([4bdfe76](https://github.com/systmms/segnomms/commit/4bdfe766fdafae283e82df8078b5c4ffb1f7dabb))
+* **deps:** bump amannn/action-semantic-pull-request from 5 to 6 ([8ee9c0e](https://github.com/systmms/segnomms/commit/8ee9c0e46c569746c3f1820e5b9bdf3359540d08))
+* **deps:** bump codecov/codecov-action from 4 to 5 ([a36ca38](https://github.com/systmms/segnomms/commit/a36ca388d6875f062609c4cd0ff54537613bb9e9))
+* **deps:** bump codecov/codecov-action from 4 to 5 ([3ce1a23](https://github.com/systmms/segnomms/commit/3ce1a23e6e648684e760eaf48ba29886994f5221))
+* removing full test validation from final release ([c377bc8](https://github.com/systmms/segnomms/commit/c377bc8dea7205a9b56f02720497adfad7c3f8ba))
+* update release configuration to disable prerelease and remove unused files ([076ebc4](https://github.com/systmms/segnomms/commit/076ebc4abcdef875b5576ddb0964eb7f4f5110b0))
+
 ## [0.1.0](https://github.com/systmms/segnomms/compare/v0.1.0...v0.1.0) (2025-08-31)
 
 
