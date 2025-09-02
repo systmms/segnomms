@@ -6,7 +6,11 @@
 import os
 import sys
 
+# Add repository root (for package imports)
 sys.path.insert(0, os.path.abspath("../.."))
+
+# Add local Sphinx extensions
+sys.path.insert(0, os.path.abspath("_ext"))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -34,6 +38,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx_autodoc_typehints",
     "myst_parser",
+    # Auto-generated visual gallery from test baselines
+    "visual_gallery",
 ]
 
 templates_path = ["_templates"]

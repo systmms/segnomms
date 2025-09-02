@@ -13,6 +13,7 @@ The Segno Interactive SVG Plugin extends `Segno <https://segno.readthedocs.io/>`
    quickstart
    api/index
    shapes
+   visual-gallery
    examples
    testing/index
    decoder_compatibility

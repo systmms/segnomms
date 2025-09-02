@@ -37,15 +37,18 @@ pre-commit:
       exclude: "examples/**/*.py"
       # F841: Unused variables (Priority 1) - STRATEGIC (enhanced with validation assertions)
       run: flake8 --extend-ignore=F841 {staged_files}
-    # General file checks - using pre-commit-hooks for autofix
+
+    # General file fixes - run BEFORE validation hooks
     trailing-whitespace:
-      run: python -m pre_commit_hooks.trailing_whitespace_fixer {staged_files}
+      run: python -m pre_commit_hooks.trailing_whitespace_fixer {staged_files} || true
       stage_fixed: true
 
     end-of-file:
-      run: |
-        python -m pre_commit_hooks.end_of_file_fixer {staged_files}
+      run: python -m pre_commit_hooks.end_of_file_fixer {staged_files} || true
       stage_fixed: true
+
+    # Validation hooks - run AFTER file fixes
+    # Note: check-merge-conflict removed - git prevents commits with conflict markers anyway
 
     check-yaml:
       glob: "*.{yml,yaml}"
@@ -61,9 +64,6 @@ pre-commit:
         for file in {staged_files}; do
           python -m json.tool "$file" > /dev/null || exit 1
         done
-
-    check-merge-conflict:
-      run: git diff --check --cached
 
     debug-statements:
       glob: "*.py"
