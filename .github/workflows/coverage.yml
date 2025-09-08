@@ -75,7 +75,7 @@ jobs:
 
     - name: Comment coverage on PR
       if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           const fs = require('fs');
@@ -146,7 +146,7 @@ jobs:
       run: repo/calculate_coverage_diff.sh
 
     - name: Comment coverage diff
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           const diff = process.env.COVERAGE_DIFF;
