@@ -199,3 +199,6 @@ accessible.svg
 accessible_config.json
 custom-*.svg
 custom-*_config.json
+
+# GitHub Spec-Kit agent configuration (may contain sensitive data)
+.claude/settings.local.json

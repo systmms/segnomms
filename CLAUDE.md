@@ -288,6 +288,119 @@ test-build:
 
 ---
 
+## 📋 GitHub Spec-Kit Integration
+
+**🎯 IMPLEMENTED:** SegnoMMS now includes GitHub Spec-Kit for spec-driven development with AI agents.
+
+### Integration Overview (as of 2025-01-25)
+
+**Spec-Kit Components Installed:**
+- ✅ **Specify CLI** - Installed via `uv tool install specify-cli`
+- ✅ **Claude Templates** - Generated slash commands for spec-driven workflow
+- ✅ **Project Constitution** - Aligned with SegnoMMS development standards
+- ✅ **Makefile Targets** - `make spec-*` commands for validation and management
+- ✅ **Pre-commit Hooks** - Validation for spec files, constitution, and templates
+
+### Spec-Driven Development Workflow
+
+**Phase 1: Constitution and Principles**
+1. **Project Constitution**: `.specify/memory/constitution.md` defines SegnoMMS development principles
+2. **Alignment with CLAUDE.md**: Constitution enforces all existing standards (Pydantic v2, Sphinx-first docs, test coverage)
+3. **Quality Gates**: Pre-commit hooks validate constitution format and completeness
+
+**Phase 2: Feature Specification**
+1. Use `/speckit.constitution` to establish or update project principles
+2. Use `/speckit.specify` to create feature specifications from natural language descriptions
+3. Use `/speckit.clarify` (optional) for structured clarification questions
+4. Specifications are validated for completeness and quality before proceeding
+
+**Phase 3: Technical Planning**
+1. Use `/speckit.plan` to generate technical implementation plans
+2. Plans must respect SegnoMMS constitution and architecture patterns
+3. Use `/speckit.checklist` (optional) to validate plan quality
+4. Use `/speckit.analyze` (optional) for cross-artifact consistency
+
+**Phase 4: Implementation**
+1. Use `/speckit.tasks` to break down plans into actionable tasks
+2. Use `/speckit.implement` to execute tasks with proper validation
+3. All implementations must pass existing quality gates (MyPy, tests, pre-commit hooks)
+4. Maintain backward compatibility with existing plugin API
+
+### Make Targets for Spec-Kit
+
+**Available Commands:**
+- `make spec-check` - Validate spec-kit installation and configuration
+- `make spec-validate` - Check existing specification files for syntax and structure
+- `make spec-clean` - Clean generated spec files (preserves templates and constitution)
+- `make spec-help` - Show complete spec-kit workflow and slash commands
+
+### Integration with Existing Standards
+
+**Documentation Policy:**
+- Specifications supplement but do NOT replace Sphinx documentation
+- Only the three allowed Markdown files remain: README.md, CHANGELOG.md, CLAUDE.md
+- Technical specifications in `specs/` directory are for development workflow only
+- All user-facing documentation must still go in `docs/source/` (Sphinx/RST)
+
+**Quality Assurance:**
+- All spec-driven features must pass comprehensive test suite
+- MyPy type checking, pre-commit hooks, and performance benchmarks apply
+- Visual regression testing still required for any shape-related features
+- Backward compatibility testing across Segno versions remains mandatory
+
+**Constitutional Compliance:**
+- Spec-kit constitution enforces Pydantic v2 + MyPy standards
+- Plugin architecture integrity cannot be compromised
+- Commercial QR service quality standards apply to all spec-driven features
+- Test-driven development remains non-negotiable
+
+### Best Practices for Spec-Kit Usage
+
+**For Feature Development:**
+1. **Start with constitution** - Ensure project principles are current and complete
+2. **Write clear specifications** - Focus on WHAT users need and WHY, avoid HOW
+3. **Validate early** - Use built-in quality checklists before proceeding to implementation
+4. **Respect existing architecture** - All technical plans must align with plugin patterns
+5. **Test comprehensively** - Maintain >90% test coverage and visual regression validation
+
+**For AI Collaboration:**
+1. **Use slash commands sequentially** - Follow the designed workflow phases
+2. **Leverage clarification tools** - Better to ask questions than make assumptions
+3. **Document decisions** - Include rationale in technical plans and specifications
+4. **Validate continuously** - Use `make spec-validate` to catch issues early
+5. **Integrate with CI/CD** - Spec changes trigger existing quality gates
+
+### Spec-Kit File Structure
+
+```
+.claude/                    # Claude-specific agent configuration
+├── commands/              # Slash command definitions
+│   ├── speckit.constitution.md
+│   ├── speckit.specify.md
+│   ├── speckit.plan.md
+│   ├── speckit.tasks.md
+│   └── speckit.implement.md
+└── settings.local.json    # Local agent settings
+
+.specify/                  # Spec-kit templates and memory
+├── memory/
+│   └── constitution.md    # Project constitution
+├── scripts/              # Helper scripts for workflow
+│   └── bash/
+└── templates/            # Spec-kit templates
+
+specs/                    # Generated specifications (created on first use)
+└── [feature-number]-[feature-name]/
+    ├── spec.md
+    ├── plan.md
+    ├── tasks.md
+    └── artifacts/
+```
+
+**This integration provides structured, AI-enhanced development while preserving all SegnoMMS quality standards.**
+
+---
+
 ## 🚧 Development Reminders
 
 - **Multiline Shell Commands Standardization**
