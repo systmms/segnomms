@@ -138,7 +138,14 @@ generate_branch_name() {
     local description="$1"
 
     # Common stop words to filter out
-    local stop_words="^(i|a|an|the|to|for|of|in|on|at|by|with|from|is|are|was|were|be|been|being|have|has|had|do|does|did|will|would|should|could|can|may|might|must|shall|this|that|these|those|my|your|our|their|want|need|add|get|set)$"
+    local stop_words_array=(
+        "i" "a" "an" "the" "to" "for" "of" "in" "on" "at" "by" "with" "from"
+        "is" "are" "was" "were" "be" "been" "being" "have" "has" "had"
+        "do" "does" "did" "will" "would" "should" "could" "can" "may" "might" "must" "shall"
+        "this" "that" "these" "those" "my" "your" "our" "their" "want" "need" "add" "get" "set"
+    )
+    # Convert array to regex pattern for grep
+    local stop_words="^($(IFS='|'; echo "${stop_words_array[*]}"))\$"
 
     # Convert to lowercase and split into words
     local clean_name=$(echo "$description" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/ /g')
@@ -202,6 +209,7 @@ if [ -z "$BRANCH_NUMBER" ]; then
                 [ -d "$dir" ] || continue
                 dirname=$(basename "$dir")
                 number=$(echo "$dirname" | grep -o '^[0-9]\+' || echo "0")
+                [[ "$number" =~ ^[0-9]+$ ]] || number=0
                 number=$((10#$number))
                 if [ "$number" -gt "$HIGHEST" ]; then HIGHEST=$number; fi
             done

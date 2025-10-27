@@ -151,7 +151,7 @@ if $JSON_MODE; then
     printf '{"FEATURE_DIR":"%s","AVAILABLE_DOCS":%s}\n' "$FEATURE_DIR" "$json_docs"
 else
     # Text output
-    echo "FEATURE_DIR:$FEATURE_DIR"
+    echo "FEATURE_DIR: $FEATURE_DIR"
     echo "AVAILABLE_DOCS:"
 
     # Show status of each potential document

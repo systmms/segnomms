@@ -39,6 +39,10 @@ get_current_branch() {
                 local dirname=$(basename "$dir")
                 if [[ "$dirname" =~ ^([0-9]{3})- ]]; then
                     local number=${BASH_REMATCH[1]}
+                    # Validate that $number contains only digits before base conversion
+                    if [[ ! "$number" =~ ^[0-9]+$ ]]; then
+                        number=0
+                    fi
                     number=$((10#$number))
                     if [[ "$number" -gt "$highest" ]]; then
                         highest=$number

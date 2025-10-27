@@ -151,7 +151,7 @@ pre-commit:
         # Check markdown syntax
         for file in {staged_files}; do
           if [[ "$file" == *.md ]]; then
-            python -c "import markdown; markdown.markdown(open('$file').read())" 2>/dev/null || {
+            python -c "import markdown; markdown.markdown(open('\"$file\"').read())" 2>/dev/null || {
               echo "❌ Markdown syntax error in $file"
               exit 1
             }
