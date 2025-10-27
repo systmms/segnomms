@@ -81,6 +81,12 @@ help:
 	@echo "  make docs-serve    - Build and serve docs at localhost:8001"
 	@echo "  make docs-help     - Show Sphinx documentation help"
 	@echo ""
+	@echo "Spec-Driven Development (GitHub Spec-Kit):"
+	@echo "  make spec-check    - Check spec-kit prerequisites and configuration"
+	@echo "  make spec-validate - Validate existing specification files"
+	@echo "  make spec-clean    - Clean spec-kit generated files"
+	@echo "  make spec-help     - Show spec-kit slash commands and workflow"
+	@echo ""
 	@echo "Utilities:"
 	@echo "  make clean         - Remove all generated files"
 	@echo "  make clean-visual  - Clean visual test outputs (preserves baselines)"
@@ -502,3 +508,71 @@ benchmark-memory:
 benchmark-report:
 	@echo "Generating comprehensive performance report..."
 	@$(PYTHON) repo/generate_performance_report.py
+
+# Spec-Driven Development targets (GitHub Spec-Kit)
+
+# Check spec-kit prerequisites and configuration
+.PHONY: spec-check
+spec-check:
+	@echo "Checking spec-kit prerequisites and configuration..."
+	@command -v uv >/dev/null 2>&1 || { echo "❌ uv is required for spec-kit. Install with: pip install uv"; exit 1; }
+	@uv tool run --from specify-cli specify check || { echo "❌ specify-cli not installed. Run: uv tool install specify-cli --from git+https://github.com/github/spec-kit.git"; exit 1; }
+	@[ -f .specify/memory/constitution.md ] || { echo "❌ Project not initialized with spec-kit. Run: make spec-init"; exit 1; }
+	@echo "✅ Spec-kit configuration validated"
+
+# Validate existing specification files
+.PHONY: spec-validate
+spec-validate:
+	@echo "Validating specification files..."
+	@if [ -d specs ]; then \
+		echo "Found specs directory - validating specification files..."; \
+		for spec in specs/*/spec.md; do \
+			if [ -f "$$spec" ]; then \
+				echo "  Validating $$spec..."; \
+				$(PYTHON) -c "import markdown; markdown.markdown(open('$$spec').read())" 2>/dev/null || echo "    ⚠️  Markdown syntax issues in $$spec"; \
+			fi; \
+		done; \
+		echo "✅ Specification validation completed"; \
+	else \
+		echo "ℹ️  No specs directory found - no specifications to validate"; \
+	fi
+
+# Clean spec-kit generated files (preserves templates and constitution)
+.PHONY: spec-clean
+spec-clean:
+	@echo "Cleaning spec-kit generated files..."
+	@rm -rf specs/*/artifacts/ 2>/dev/null || true
+	@rm -rf specs/*/checklists/ 2>/dev/null || true
+	@find specs/ -name "*.tmp" -delete 2>/dev/null || true
+	@echo "✅ Spec-kit generated files cleaned (templates and constitution preserved)"
+
+# Show spec-kit slash commands and workflow help
+.PHONY: spec-help
+spec-help:
+	@echo "GitHub Spec-Kit Integration for SegnoMMS"
+	@echo "========================================"
+	@echo ""
+	@echo "Spec-Driven Development Workflow:"
+	@echo "  1. /speckit.constitution - Create project constitution (align with CLAUDE.md)"
+	@echo "  2. /speckit.specify      - Create feature specification from description"
+	@echo "  3. /speckit.plan         - Generate technical implementation plan"
+	@echo "  4. /speckit.tasks        - Break down into actionable tasks"
+	@echo "  5. /speckit.implement    - Execute implementation with validation"
+	@echo ""
+	@echo "Optional Enhancement Commands:"
+	@echo "  /speckit.clarify         - Ask structured questions before planning"
+	@echo "  /speckit.analyze         - Cross-artifact consistency analysis"
+	@echo "  /speckit.checklist       - Generate quality validation checklists"
+	@echo ""
+	@echo "Integration Notes:"
+	@echo "  • Follows SegnoMMS documentation policy (Sphinx-first)"
+	@echo "  • Integrates with existing pre-commit hooks and quality gates"
+	@echo "  • Respects Pydantic v2 + MyPy modernization standards"
+	@echo "  • All spec-driven features must pass existing test suites"
+	@echo ""
+	@echo "Make Targets:"
+	@echo "  make spec-check          - Validate spec-kit installation and config"
+	@echo "  make spec-validate       - Check existing specification files"
+	@echo "  make spec-clean          - Clean generated spec files"
+	@echo "  make spec-help           - Show this help message"
+	@echo ""

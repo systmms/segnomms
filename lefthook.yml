@@ -142,3 +142,53 @@ pre-commit:
           ./repo/setup_cspell.sh
         fi
         python repo/spell_check_docs_cspell.py --quiet
+
+    # Spec-kit validation for specification files
+    spec-kit-validation:
+      glob: "specs/**/*.md"
+      run: |
+        echo "Specification files changed - validating..."
+        # Check markdown syntax
+        for file in {staged_files}; do
+          if [[ "$file" == *.md ]]; then
+            python -c "import markdown; markdown.markdown(open('\"$file\"').read())" 2>/dev/null || {
+              echo "❌ Markdown syntax error in $file"
+              exit 1
+            }
+          fi
+        done
+        echo "✅ Specification files validated"
+
+    # Spec-kit constitution validation
+    spec-kit-constitution:
+      glob: ".specify/memory/constitution.md"
+      run: |
+        echo "Constitution updated - validating format..."
+        # Check for required sections and version format
+        file="{staged_files}"
+        if ! grep -q "^## Core Principles" "$file"; then
+          echo "❌ Constitution missing 'Core Principles' section"
+          exit 1
+        fi
+        if ! grep -q "^## Governance" "$file"; then
+          echo "❌ Constitution missing 'Governance' section"
+          exit 1
+        fi
+        if ! grep -qE "^\*\*Version\*\*: [0-9]+\.[0-9]+\.[0-9]+" "$file"; then
+          echo "❌ Constitution missing valid version format (x.y.z)"
+          exit 1
+        fi
+        echo "✅ Constitution format validated"
+
+    # Spec-kit template consistency check
+    spec-kit-templates:
+      glob: ".specify/templates/*.md"
+      run: |
+        echo "Spec-kit templates changed - checking for placeholder consistency..."
+        for file in {staged_files}; do
+          # Check for unresolved placeholders (basic validation)
+          if grep -q '\[.*_.*\]' "$file" && ! grep -q '<!-- Example:' "$file"; then
+            echo "⚠️  Template $file may contain unresolved placeholders"
+          fi
+        done
+        echo "✅ Template consistency checked"
