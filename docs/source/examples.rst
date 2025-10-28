@@ -43,20 +43,20 @@ Changing the module colors:
    with open('transparent.svg', 'w') as f:
        write(qr, f, dark='#000000', light='transparent')
 
-Using Test Constants (Recommended)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using Constants (Recommended)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For more maintainable code, especially in testing or development:
+For more maintainable code, using the constants module:
 
 .. code-block:: python
 
-   from tests.constants import (
-       ModuleShape, TEST_COLORS, create_test_config,
+   from segnomms.constants import (
+       ModuleShape, TEST_COLORS, create_config,
        DEFAULT_SCALE, DEFAULT_BORDER
    )
 
    # Type-safe shape selection
-   config = create_test_config(
+   config = create_config(
        shape=ModuleShape.CIRCLE.value,
        dark=TEST_COLORS["blue"],
        light=TEST_COLORS["white"],
@@ -349,6 +349,16 @@ Phase 4: Advanced Frame and Centerpiece Features
 =================================================
 
 Phase 4 introduces powerful new features for creating professional QR codes with custom frame shapes, centerpiece logo areas, and enhanced styling options.
+
+.. warning::
+   Advanced features like custom frames and centerpieces can impact QR code scannability.
+   Before deploying these features in production, consult the :doc:`decoder_compatibility`
+   guide and test thoroughly with your target scanning environments.
+
+.. seealso::
+   * :doc:`decoder_compatibility` - Essential compatibility testing guidance
+   * :ref:`safe-mode` - Ensuring maximum scannability
+   * :ref:`performance-optimization` - Performance considerations for advanced features
 
 Frame Shapes
 ------------
@@ -717,9 +727,16 @@ Frame Safety Tips
 Testing and Validation
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. important::
+   **Essential for Production Deployment:**
+
+   Before deploying Phase 4 features, follow the comprehensive testing guide in
+   :doc:`decoder_compatibility`. The guide includes specific testing protocols,
+   decoder compatibility matrices, and production checklists.
+
 .. code-block:: python
 
-   # Always test scannability
+   # Always test scannability with your exact configuration
    test_data = "https://your-test-url.com"
 
    for error_level in ['L', 'M', 'Q', 'H']:
@@ -733,7 +750,15 @@ Testing and Validation
                  # Test with your target settings
                  )
 
-       # Test scanning with your target devices/apps
+       # Convert to PNG for decoder testing (see decoder_compatibility guide)
+       # Test with zxingcpp, OpenCV, pyzbar, and target mobile apps
+
+.. seealso::
+   **Testing Resources:**
+
+   * :doc:`decoder_compatibility` - Complete decoder testing guide with code examples
+   * :doc:`testing/index` - Development testing documentation
+   * :ref:`png-conversion` - Converting SVG to PNG for decoder testing
 
 Troubleshooting
 ---------------

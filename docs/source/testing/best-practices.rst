@@ -6,8 +6,8 @@ This section outlines best practices for testing SegnoMMS applications and contr
 Development Testing Principles
 -------------------------------
 
-1. **Use Test Constants**
-   Always import from ``tests.constants`` instead of using string literals for better maintainability and IDE support.
+1. **Use Constants**
+   Always import from ``segnomms.constants`` instead of using string literals for better maintainability and IDE support.
 
 2. **Follow Testing Pyramid**
    Write many unit tests, some integration tests, and few end-to-end tests for optimal coverage and speed.
@@ -29,7 +29,7 @@ Always use the centralized test constants for consistent, validated test data:
 .. code-block:: python
 
    # ✅ Good - Type-safe with validation
-   from tests.constants import ModuleShape, TEST_COLORS, QR_PAYLOADS
+   from segnomms.constants import ModuleShape, TEST_COLORS, QR_PAYLOADS
 
    def test_shape_rendering():
        qr = segno.make(QR_PAYLOADS["url"])
