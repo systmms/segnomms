@@ -21,6 +21,7 @@ jobs:
   coverage-analysis:
     name: Coverage Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
     - uses: actions/checkout@v5
@@ -59,7 +60,7 @@ jobs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.xml
+        files: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
@@ -95,6 +96,7 @@ jobs:
   coverage-diff:
     name: Coverage Diff
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     if: github.event_name == 'pull_request'
 
     steps:
@@ -135,11 +137,21 @@ jobs:
 
     - name: Run coverage for base branch
       run: |
+        # Fetch base branch and checkout
+        git fetch origin ${{ github.base_ref }}
         git checkout origin/${{ github.base_ref }}
-        uv sync
-        uv pip install -e .
-        uv run pytest tests/ --cov=segnomms --cov-report=xml:coverage-base.xml -q || true
-        BASE_COVERAGE=$(uv run coverage report --format=total 2>/dev/null || echo "0")
+
+        # Install dependencies for base branch
+        uv sync || echo "Warning: uv sync failed for base branch"
+        uv pip install -e . || echo "Warning: package install failed for base branch"
+
+        # Run tests with fallback
+        if uv run pytest tests/ --cov=segnomms --cov-report=xml:coverage-base.xml -q; then
+          BASE_COVERAGE=$(uv run coverage report --format=total 2>/dev/null || echo "0")
+        else
+          echo "Warning: Base branch tests failed, using coverage of 0"
+          BASE_COVERAGE="0"
+        fi
         echo "BASE_COVERAGE=${BASE_COVERAGE}" >> "${GITHUB_ENV}"
 
     - name: Calculate coverage diff
@@ -178,17 +190,36 @@ jobs:
   coverage-quality-gate:
     name: Coverage Quality Gate
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [coverage-analysis, coverage-diff]
     if: always()
 
     steps:
+    - uses: actions/checkout@v5
+
     - name: Check coverage requirements
       run: |
-        echo "Coverage quality gate evaluation:"
+        echo "🔍 Coverage Quality Gate Evaluation"
+        echo "=================================="
 
-        # This is a placeholder for more sophisticated quality gate logic
-        # In a real implementation, you would check the coverage results
-        # and fail the job if coverage falls below thresholds
+        # Check if coverage analysis job succeeded
+        if [[ "${{ needs.coverage-analysis.result }}" != "success" ]]; then
+          echo "❌ Coverage analysis failed"
+          exit 1
+        fi
 
-        echo "✅ Coverage quality gate passed"
+        # For PR: check if coverage diff job succeeded (if it ran)
+        if [[ "${{ github.event_name }}" == "pull_request" ]] && [[ "${{ needs.coverage-diff.result }}" == "failure" ]]; then
+          echo "❌ Coverage diff analysis failed"
+          exit 1
+        fi
 
+        echo "✅ All coverage checks passed"
+        echo ""
+        echo "📊 Coverage Quality Summary:"
+        echo "  - Coverage analysis: ${{ needs.coverage-analysis.result }}"
+        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          echo "  - Coverage diff: ${{ needs.coverage-diff.result }}"
+        fi
+        echo ""
+        echo "🎉 Coverage quality gate passed!"
