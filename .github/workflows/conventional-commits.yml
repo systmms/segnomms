@@ -33,12 +33,6 @@ jobs:
             revert
           # Ensure scope is lowercase
           requireScope: false
-          # Allow ! for breaking changes
-          allowBreakingChanges: |
-            feat
-            fix
-            perf
-            deps
           # Custom validation regex
           subjectPattern: ^(?![A-Z]).+$
           subjectPatternError: |
