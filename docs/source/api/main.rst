@@ -18,8 +18,55 @@ The ``write`` function is the main entry point for using the plugin. It accepts
 a Segno QR code object and writes it to the specified output with custom shapes
 and styling options.
 
-Parameters Reference
---------------------
+Quick Parameter Reference
+-------------------------
+
+Most commonly used parameters with valid ranges:
+
+.. list-table:: Essential Parameters Quick Reference
+   :header-rows: 1
+
+   * - Parameter
+     - Type
+     - Range/Options
+     - Description
+   * - shape
+     - str
+     - circle, square, diamond, star, connected, etc.
+     - Module shape (see :ref:`shape-reference` for full list)
+   * - scale
+     - int
+     - 1-100
+     - Module size in pixels
+   * - border
+     - int
+     - 0-20
+     - Quiet zone size in modules
+   * - dark/light
+     - str
+     - hex colors, CSS names
+     - Module colors
+   * - safe_mode
+     - bool
+     - True/False
+     - Preserve scannability with simple shapes
+   * - size_ratio
+     - float
+     - 0.1-1.0
+     - Shape size (for circle, dot, hexagon)
+   * - star_points
+     - int
+     - 3-12
+     - Star points (for star shape)
+   * - centerpiece_size
+     - float
+     - 0.0-0.5
+     - Logo area size (Phase 4 feature)
+
+For complete parameter lists with defaults and detailed descriptions, see the sections below.
+
+Detailed Parameters Reference
+-----------------------------
 
 Shape Parameters
 ~~~~~~~~~~~~~~~~
@@ -38,22 +85,22 @@ Different shapes accept different parameters:
      - size_ratio
      - float
      - 0.9
-     - Circle size relative to module
+     - Circle size relative to module (0.1-1.0)
    * - dot
      - size_ratio
      - float
      - 0.6
-     - Dot size relative to module
+     - Dot size relative to module (0.1-1.0)
    * - star
      - star_points
      - int
      - 5
-     - Number of star points
+     - Number of star points (3-12)
    * - star
      - inner_ratio
      - float
      - 0.5
-     - Inner to outer radius ratio
+     - Inner to outer radius ratio (0.1-0.9)
    * - triangle
      - direction
      - str
@@ -63,12 +110,12 @@ Different shapes accept different parameters:
      - size_ratio
      - float
      - 0.9
-     - Hexagon size relative to module
+     - Hexagon size relative to module (0.1-1.0)
    * - cross
      - thickness
      - float
      - 0.2
-     - Cross arm thickness
+     - Cross arm thickness (0.1-0.8)
    * - cross
      - sharp
      - bool
@@ -88,11 +135,11 @@ Core Parameters
    * - scale
      - int
      - 10
-     - Size of each module in pixels
+     - Size of each module in pixels (1-100)
    * - border
      - int
      - 4
-     - Quiet zone size in modules
+     - Quiet zone size in modules (0-20)
    * - dark
      - str
      - 'black'
