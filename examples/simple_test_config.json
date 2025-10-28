@@ -1,0 +1,118 @@
+{
+  "segnomms_version": "0.1.0b4",
+  "schema_version": "1.0",
+  "generation_timestamp": null,
+  "configuration": {
+    "scale": 10,
+    "border": 4,
+    "dark": "#0000FF",
+    "light": "#FFFFFF",
+    "safe_mode": false,
+    "geometry": {
+      "connectivity": "4-way",
+      "merge": "none",
+      "corner_radius": 0.0,
+      "shape": "rounded",
+      "min_island_modules": 1
+    },
+    "finder": {
+      "shape": "square",
+      "inner_scale": 0.6,
+      "stroke": 0.0
+    },
+    "patterns": {
+      "enabled": false
+    },
+    "frame": {
+      "shape": "square",
+      "corner_radius": 0.0,
+      "clip_mode": "clip",
+      "fade_distance": 10.0,
+      "scale_distance": 5.0
+    },
+    "centerpiece": {
+      "enabled": false,
+      "shape": "rect",
+      "size": 0.0,
+      "offset_x": 0.0,
+      "offset_y": 0.0,
+      "margin": 2,
+      "mode": "knockout",
+      "placement": "center"
+    },
+    "quiet_zone": {
+      "color": "#ffffff",
+      "style": "solid"
+    },
+    "style": {
+      "interactive": false,
+      "tooltips": false
+    },
+    "phase1": {
+      "enabled": true,
+      "use_enhanced_shapes": true,
+      "roundness": 0.0,
+      "size_ratio": 0.9,
+      "flow_weights": {
+        "finder": 0.5,
+        "finder_inner": 0.3,
+        "timing": 0.8,
+        "data": 1.0,
+        "alignment": 0.6,
+        "format": 0.7
+      }
+    },
+    "phase2": {
+      "enabled": false,
+      "use_cluster_rendering": false,
+      "cluster_module_types": [
+        "data"
+      ],
+      "min_cluster_size": 3,
+      "density_threshold": 0.5,
+      "aspect_ratio_tolerance": 0.3
+    },
+    "phase3": {
+      "enabled": false,
+      "use_marching_squares": false,
+      "contour_module_types": [
+        "data"
+      ],
+      "contour_mode": "bezier",
+      "contour_smoothing": 0.3,
+      "bezier_optimization": "medium",
+      "tension": 0.3,
+      "point_reduction": 0.7
+    },
+    "advanced_qr": {
+      "eci_enabled": false,
+      "auto_mask": true,
+      "structured_append": false,
+      "boost_error": true
+    },
+    "accessibility": {
+      "enabled": false,
+      "id_prefix": "qr",
+      "use_stable_ids": true,
+      "include_coordinates": false,
+      "enable_aria": true,
+      "root_role": "img",
+      "root_label": "QR Code",
+      "include_module_labels": false,
+      "include_pattern_labels": true,
+      "optimize_for_screen_readers": true,
+      "group_similar_elements": true,
+      "add_structural_markup": true,
+      "enable_keyboard_navigation": false,
+      "focus_visible_elements": [
+        "root"
+      ],
+      "target_compliance": "AA",
+      "custom_attributes": {}
+    },
+    "min_contrast_ratio": 4.5,
+    "enable_palette_validation": false,
+    "enforce_wcag_standards": false
+  },
+  "$schema": "https://segnomms.io/schemas/v1/rendering-config.json"
+}

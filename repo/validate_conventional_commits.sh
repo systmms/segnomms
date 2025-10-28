@@ -75,12 +75,12 @@ done
 # Logging functions
 log_info() {
     local timestamp=$(date '+%H:%M:%S')
-    echo "[$timestamp] ℹ️  $1" >&2
+    echo "[$timestamp] ℹ️  $1"
 }
 
 log_success() {
     local timestamp=$(date '+%H:%M:%S')
-    echo "[$timestamp] ✅ $1" >&2
+    echo "[$timestamp] ✅ $1"
 }
 
 log_error() {
@@ -90,13 +90,13 @@ log_error() {
 
 log_warn() {
     local timestamp=$(date '+%H:%M:%S')
-    echo "[$timestamp] ⚠️  $1" >&2
+    echo "[$timestamp] ⚠️  $1"
 }
 
 log_verbose() {
     if [[ "$VERBOSE" == "true" ]]; then
         local timestamp=$(date '+%H:%M:%S')
-        echo "[$timestamp] 🔍 $1" >&2
+        echo "[$timestamp] 🔍 $1"
     fi
 }
 

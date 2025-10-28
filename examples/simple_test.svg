@@ -1,0 +1,406 @@
+<svg width="330" height="330" viewBox="0 0 330 330" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="qr-code" class="interactive-qr" aria-labelledby="qr-title" aria-describedby="qr-desc">
+<title>Interactive QR Code</title><desc>QR Code with 25x25 modules</desc>  <rect x="0" y="0" width="330" height="330" class="segnomms-quiet-zone" fill="#ffffff" />
+<style type="text/css">
+&lt;![CDATA[
+
+        .qr-background {
+            pointer-events: none;
+        }
+        /* Transform geometry fixes to prevent wiggle during animations */
+        .qr-root, .qr-module, .qr-finder, .qr-timing, .qr-data,
+        .qr-alignment, .qr-format, .qr-cluster, .qr-contour {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation-fill-mode: both;
+        }
+        .qr-module {
+            transition: all 0.2s ease;
+        }
+        .qr-finder {
+            fill: currentColor;
+        }
+        .qr-finder-inner {
+            fill: var(--qr-bg-color, white);
+        }
+        .qr-timing {
+            fill: currentColor;
+        }
+        .qr-data {
+            fill: currentColor;
+        }
+        .qr-alignment {
+            fill: currentColor;
+        }
+        .qr-format {
+            fill: currentColor;
+        }
+        .qr-cluster {
+            fill: currentColor;
+            stroke: none;
+        }
+        .qr-contour {
+            fill: currentColor;
+            stroke: none;
+        }
+
+]]&gt;
+</style>
+<g id="segnomms-background" class="qr-layer-background" aria-hidden="true" />
+  <g id="segnomms-quiet-zone" class="qr-layer-quiet-zone" aria-hidden="true" />
+  <g id="segnomms-modules" class="qr-modules" role="presentation" fill="#0000FF">
+  <g class="qr-pattern-finder" data-pattern-type="finder" id="qr-finder-99" role="group" aria-label="Finder pattern 100">
+    <rect x="40" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:0" id="qr-finder-1" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="0" />
+  <rect x="50" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:1" id="qr-finder-2" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="1" />
+  <rect x="60" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:2" id="qr-finder-3" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="2" />
+  <rect x="70" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:3" id="qr-finder-4" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="3" />
+  <rect x="80" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:4" id="qr-finder-5" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="4" />
+  <rect x="90" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:5" id="qr-finder-6" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="5" />
+  <rect x="100" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:6" id="qr-finder-7" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="6" />
+  <rect x="220" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:15" id="qr-finder-16" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="18" />
+  <rect x="230" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:16" id="qr-finder-17" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="19" />
+  <rect x="240" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:17" id="qr-finder-18" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="20" />
+  <rect x="250" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:18" id="qr-finder-19" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="21" />
+  <rect x="260" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:19" id="qr-finder-20" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="22" />
+  <rect x="270" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:20" id="qr-finder-21" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="23" />
+  <rect x="280" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:21" id="qr-finder-22" title="Finder pattern module" data-module-type="finder" data-x="0" data-y="24" />
+  <rect x="40" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:22" id="qr-finder-23" title="Finder pattern module" data-module-type="finder" data-x="1" data-y="0" />
+  <rect x="100" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:23" id="qr-finder-24" title="Finder pattern module" data-module-type="finder" data-x="1" data-y="6" />
+  <rect x="220" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:30" id="qr-finder-31" title="Finder pattern module" data-module-type="finder" data-x="1" data-y="18" />
+  <rect x="280" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:31" id="qr-finder-32" title="Finder pattern module" data-module-type="finder" data-x="1" data-y="24" />
+  <rect x="40" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:32" id="qr-finder-33" title="Finder pattern module" data-module-type="finder" data-x="2" data-y="0" />
+  <rect x="60" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:33" id="qr-finder_inner-34" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="2" data-y="2" />
+  <rect x="70" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:34" id="qr-finder_inner-35" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="2" data-y="3" />
+  <rect x="80" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:35" id="qr-finder_inner-36" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="2" data-y="4" />
+  <rect x="100" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:36" id="qr-finder-37" title="Finder pattern module" data-module-type="finder" data-x="2" data-y="6" />
+  <rect x="220" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:42" id="qr-finder-43" title="Finder pattern module" data-module-type="finder" data-x="2" data-y="18" />
+  <rect x="240" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:43" id="qr-finder_inner-44" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="2" data-y="20" />
+  <rect x="250" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:44" id="qr-finder_inner-45" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="2" data-y="21" />
+  <rect x="260" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:45" id="qr-finder_inner-46" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="2" data-y="22" />
+  <rect x="280" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:46" id="qr-finder-47" title="Finder pattern module" data-module-type="finder" data-x="2" data-y="24" />
+  <rect x="40" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:47" id="qr-finder-48" title="Finder pattern module" data-module-type="finder" data-x="3" data-y="0" />
+  <rect x="60" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:48" id="qr-finder_inner-49" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="3" data-y="2" />
+  <rect x="70" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:49" id="qr-finder_inner-50" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="3" data-y="3" />
+  <rect x="80" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:50" id="qr-finder_inner-51" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="3" data-y="4" />
+  <rect x="100" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:51" id="qr-finder-52" title="Finder pattern module" data-module-type="finder" data-x="3" data-y="6" />
+  <rect x="220" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:57" id="qr-finder-58" title="Finder pattern module" data-module-type="finder" data-x="3" data-y="18" />
+  <rect x="240" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:58" id="qr-finder_inner-59" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="3" data-y="20" />
+  <rect x="250" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:59" id="qr-finder_inner-60" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="3" data-y="21" />
+  <rect x="260" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:60" id="qr-finder_inner-61" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="3" data-y="22" />
+  <rect x="280" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:61" id="qr-finder-62" title="Finder pattern module" data-module-type="finder" data-x="3" data-y="24" />
+  <rect x="40" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:62" id="qr-finder-63" title="Finder pattern module" data-module-type="finder" data-x="4" data-y="0" />
+  <rect x="60" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:63" id="qr-finder_inner-64" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="4" data-y="2" />
+  <rect x="70" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:64" id="qr-finder_inner-65" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="4" data-y="3" />
+  <rect x="80" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:65" id="qr-finder_inner-66" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="4" data-y="4" />
+  <rect x="100" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:66" id="qr-finder-67" title="Finder pattern module" data-module-type="finder" data-x="4" data-y="6" />
+  <rect x="220" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:72" id="qr-finder-73" title="Finder pattern module" data-module-type="finder" data-x="4" data-y="18" />
+  <rect x="240" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:73" id="qr-finder_inner-74" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="4" data-y="20" />
+  <rect x="250" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:74" id="qr-finder_inner-75" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="4" data-y="21" />
+  <rect x="260" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:75" id="qr-finder_inner-76" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="4" data-y="22" />
+  <rect x="280" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:76" id="qr-finder-77" title="Finder pattern module" data-module-type="finder" data-x="4" data-y="24" />
+  <rect x="40" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:77" id="qr-finder-78" title="Finder pattern module" data-module-type="finder" data-x="5" data-y="0" />
+  <rect x="100" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:78" id="qr-finder-79" title="Finder pattern module" data-module-type="finder" data-x="5" data-y="6" />
+  <rect x="220" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:85" id="qr-finder-86" title="Finder pattern module" data-module-type="finder" data-x="5" data-y="18" />
+  <rect x="280" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:86" id="qr-finder-87" title="Finder pattern module" data-module-type="finder" data-x="5" data-y="24" />
+  <rect x="40" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:87" id="qr-finder-88" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="0" />
+  <rect x="50" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:88" id="qr-finder-89" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="1" />
+  <rect x="60" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:89" id="qr-finder-90" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="2" />
+  <rect x="70" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:90" id="qr-finder-91" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="3" />
+  <rect x="80" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:91" id="qr-finder-92" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="4" />
+  <rect x="90" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:92" id="qr-finder-93" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="5" />
+  <rect x="100" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:93" id="qr-finder-94" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="6" />
+  <rect x="220" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:99" id="qr-finder-100" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="18" />
+  <rect x="230" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:100" id="qr-finder-101" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="19" />
+  <rect x="240" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:101" id="qr-finder-102" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="20" />
+  <rect x="250" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:102" id="qr-finder-103" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="21" />
+  <rect x="260" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:103" id="qr-finder-104" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="22" />
+  <rect x="270" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:104" id="qr-finder-105" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="23" />
+  <rect x="280" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:105" id="qr-finder-106" title="Finder pattern module" data-module-type="finder" data-x="6" data-y="24" />
+  <rect x="40" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:238" id="qr-finder-239" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="0" />
+  <rect x="50" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:239" id="qr-finder-240" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="1" />
+  <rect x="60" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:240" id="qr-finder-241" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="2" />
+  <rect x="70" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:241" id="qr-finder-242" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="3" />
+  <rect x="80" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:242" id="qr-finder-243" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="4" />
+  <rect x="90" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:243" id="qr-finder-244" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="5" />
+  <rect x="100" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:244" id="qr-finder-245" title="Finder pattern module" data-module-type="finder" data-x="18" data-y="6" />
+  <rect x="40" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:255" id="qr-finder-256" title="Finder pattern module" data-module-type="finder" data-x="19" data-y="0" />
+  <rect x="100" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:256" id="qr-finder-257" title="Finder pattern module" data-module-type="finder" data-x="19" data-y="6" />
+  <rect x="40" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:266" id="qr-finder-267" title="Finder pattern module" data-module-type="finder" data-x="20" data-y="0" />
+  <rect x="60" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:267" id="qr-finder_inner-268" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="20" data-y="2" />
+  <rect x="70" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:268" id="qr-finder_inner-269" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="20" data-y="3" />
+  <rect x="80" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:269" id="qr-finder_inner-270" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="20" data-y="4" />
+  <rect x="100" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:270" id="qr-finder-271" title="Finder pattern module" data-module-type="finder" data-x="20" data-y="6" />
+  <rect x="40" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:287" id="qr-finder-288" title="Finder pattern module" data-module-type="finder" data-x="21" data-y="0" />
+  <rect x="60" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:288" id="qr-finder_inner-289" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="21" data-y="2" />
+  <rect x="70" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:289" id="qr-finder_inner-290" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="21" data-y="3" />
+  <rect x="80" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:290" id="qr-finder_inner-291" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="21" data-y="4" />
+  <rect x="100" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:291" id="qr-finder-292" title="Finder pattern module" data-module-type="finder" data-x="21" data-y="6" />
+  <rect x="40" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:300" id="qr-finder-301" title="Finder pattern module" data-module-type="finder" data-x="22" data-y="0" />
+  <rect x="60" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:301" id="qr-finder_inner-302" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="22" data-y="2" />
+  <rect x="70" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:302" id="qr-finder_inner-303" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="22" data-y="3" />
+  <rect x="80" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:303" id="qr-finder_inner-304" title="Finder_Inner pattern module" data-module-type="finder_inner" data-x="22" data-y="4" />
+  <rect x="100" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:304" id="qr-finder-305" title="Finder pattern module" data-module-type="finder" data-x="22" data-y="6" />
+  <rect x="40" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:313" id="qr-finder-314" title="Finder pattern module" data-module-type="finder" data-x="23" data-y="0" />
+  <rect x="100" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:314" id="qr-finder-315" title="Finder pattern module" data-module-type="finder" data-x="23" data-y="6" />
+  <rect x="40" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:326" id="qr-finder-327" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="0" />
+  <rect x="50" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:327" id="qr-finder-328" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="1" />
+  <rect x="60" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:328" id="qr-finder-329" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="2" />
+  <rect x="70" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:329" id="qr-finder-330" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="3" />
+  <rect x="80" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:330" id="qr-finder-331" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="4" />
+  <rect x="90" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:331" id="qr-finder-332" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="5" />
+  <rect x="100" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:332" id="qr-finder-333" title="Finder pattern module" data-module-type="finder" data-x="24" data-y="6" />
+
+</g><g class="qr-pattern-timing" data-pattern-type="timing" id="qr-timing-10" role="group" aria-label="Timing pattern">
+    <rect x="120" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:94" id="qr-timing-95" title="Timing pattern module" data-module-type="timing" data-x="6" data-y="8" />
+  <rect x="140" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:95" id="qr-timing-96" title="Timing pattern module" data-module-type="timing" data-x="6" data-y="10" />
+  <rect x="160" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:96" id="qr-timing-97" title="Timing pattern module" data-module-type="timing" data-x="6" data-y="12" />
+  <rect x="180" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:97" id="qr-timing-98" title="Timing pattern module" data-module-type="timing" data-x="6" data-y="14" />
+  <rect x="200" y="100" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:98" id="qr-timing-99" title="Timing pattern module" data-module-type="timing" data-x="6" data-y="16" />
+  <rect x="100" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:114" id="qr-timing-115" title="Timing pattern module" data-module-type="timing" data-x="8" data-y="6" />
+  <rect x="100" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:144" id="qr-timing-145" title="Timing pattern module" data-module-type="timing" data-x="10" data-y="6" />
+  <rect x="100" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:171" id="qr-timing-172" title="Timing pattern module" data-module-type="timing" data-x="12" data-y="6" />
+  <rect x="100" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:195" id="qr-timing-196" title="Timing pattern module" data-module-type="timing" data-x="14" data-y="6" />
+  <rect x="100" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:217" id="qr-timing-218" title="Timing pattern module" data-module-type="timing" data-x="16" data-y="6" />
+
+</g><g class="qr-pattern-alignment" data-pattern-type="alignment" id="qr-alignment-16" role="group" aria-label="Alignment pattern 17">
+    <rect x="200" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:223" id="qr-alignment-224" title="Alignment pattern module" data-module-type="alignment" data-x="16" data-y="16" />
+  <rect x="210" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:224" id="qr-alignment-225" title="Alignment pattern module" data-module-type="alignment" data-x="16" data-y="17" />
+  <rect x="220" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:225" id="qr-alignment-226" title="Alignment pattern module" data-module-type="alignment" data-x="16" data-y="18" />
+  <rect x="230" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:226" id="qr-alignment-227" title="Alignment pattern module" data-module-type="alignment" data-x="16" data-y="19" />
+  <rect x="240" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:227" id="qr-alignment-228" title="Alignment pattern module" data-module-type="alignment" data-x="16" data-y="20" />
+  <rect x="200" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:234" id="qr-alignment-235" title="Alignment pattern module" data-module-type="alignment" data-x="17" data-y="16" />
+  <rect x="240" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:235" id="qr-alignment-236" title="Alignment pattern module" data-module-type="alignment" data-x="17" data-y="20" />
+  <rect x="200" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:249" id="qr-alignment-250" title="Alignment pattern module" data-module-type="alignment" data-x="18" data-y="16" />
+  <rect x="240" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:251" id="qr-alignment-252" title="Alignment pattern module" data-module-type="alignment" data-x="18" data-y="20" />
+  <rect x="200" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:261" id="qr-alignment-262" title="Alignment pattern module" data-module-type="alignment" data-x="19" data-y="16" />
+  <rect x="240" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:262" id="qr-alignment-263" title="Alignment pattern module" data-module-type="alignment" data-x="19" data-y="20" />
+  <rect x="200" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:279" id="qr-alignment-280" title="Alignment pattern module" data-module-type="alignment" data-x="20" data-y="16" />
+  <rect x="210" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:280" id="qr-alignment-281" title="Alignment pattern module" data-module-type="alignment" data-x="20" data-y="17" />
+  <rect x="220" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:281" id="qr-alignment-282" title="Alignment pattern module" data-module-type="alignment" data-x="20" data-y="18" />
+  <rect x="230" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:282" id="qr-alignment-283" title="Alignment pattern module" data-module-type="alignment" data-x="20" data-y="19" />
+  <rect x="240" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:283" id="qr-alignment-284" title="Alignment pattern module" data-module-type="alignment" data-x="20" data-y="20" />
+
+</g><g class="qr-pattern-format" data-pattern-type="format" id="qr-format-18" role="group" aria-label="Format information">
+    <rect x="120" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:7" id="qr-format-8" title="Format pattern module" data-module-type="format" data-x="0" data-y="8" />
+  <rect x="120" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:24" id="qr-format-25" title="Format pattern module" data-module-type="format" data-x="1" data-y="8" />
+  <rect x="120" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:37" id="qr-format-38" title="Format pattern module" data-module-type="format" data-x="2" data-y="8" />
+  <rect x="120" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:79" id="qr-format-80" title="Format pattern module" data-module-type="format" data-x="5" data-y="8" />
+  <rect x="120" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:106" id="qr-format-107" title="Format pattern module" data-module-type="format" data-x="7" data-y="8" />
+  <rect x="60" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:111" id="qr-format-112" title="Format pattern module" data-module-type="format" data-x="8" data-y="2" />
+  <rect x="70" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:112" id="qr-format-113" title="Format pattern module" data-module-type="format" data-x="8" data-y="3" />
+  <rect x="80" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:113" id="qr-format-114" title="Format pattern module" data-module-type="format" data-x="8" data-y="4" />
+  <rect x="120" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:115" id="qr-format-116" title="Format pattern module" data-module-type="format" data-x="8" data-y="8" />
+  <rect x="210" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:121" id="qr-format-122" title="Format pattern module" data-module-type="format" data-x="8" data-y="17" />
+  <rect x="220" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:122" id="qr-format-123" title="Format pattern module" data-module-type="format" data-x="8" data-y="18" />
+  <rect x="230" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:123" id="qr-format-124" title="Format pattern module" data-module-type="format" data-x="8" data-y="19" />
+  <rect x="260" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:124" id="qr-format-125" title="Format pattern module" data-module-type="format" data-x="8" data-y="22" />
+  <rect x="270" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:125" id="qr-format-126" title="Format pattern module" data-module-type="format" data-x="8" data-y="23" />
+  <rect x="280" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:126" id="qr-format-127" title="Format pattern module" data-module-type="format" data-x="8" data-y="24" />
+  <rect x="120" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:271" id="qr-format-272" title="Format pattern module" data-module-type="format" data-x="20" data-y="8" />
+  <rect x="120" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:292" id="qr-format-293" title="Format pattern module" data-module-type="format" data-x="21" data-y="8" />
+  <rect x="120" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:305" id="qr-format-306" title="Format pattern module" data-module-type="format" data-x="22" data-y="8" />
+
+</g><g class="qr-pattern-version" data-pattern-type="version" />
+  <g class="qr-pattern-data" data-pattern-type="data" id="qr-data-199-1" role="group" aria-label="Data modules">
+    <rect x="130" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:8" id="qr-data-9" data-module-type="data" data-x="0" data-y="9" />
+  <rect x="140" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:9" id="qr-data-10" data-module-type="data" data-x="0" data-y="10" />
+  <rect x="150" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:10" id="qr-data-11" data-module-type="data" data-x="0" data-y="11" />
+  <rect x="160" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:11" id="qr-data-12" data-module-type="data" data-x="0" data-y="12" />
+  <rect x="170" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:12" id="qr-data-13" data-module-type="data" data-x="0" data-y="13" />
+  <rect x="190" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:13" id="qr-data-14" data-module-type="data" data-x="0" data-y="15" />
+  <rect x="200" y="40" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:14" id="qr-data-15" data-module-type="data" data-x="0" data-y="16" />
+  <rect x="160" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:25" id="qr-data-26" data-module-type="data" data-x="1" data-y="12" />
+  <rect x="170" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:26" id="qr-data-27" data-module-type="data" data-x="1" data-y="13" />
+  <rect x="180" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:27" id="qr-data-28" data-module-type="data" data-x="1" data-y="14" />
+  <rect x="190" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:28" id="qr-data-29" data-module-type="data" data-x="1" data-y="15" />
+  <rect x="200" y="50" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:29" id="qr-data-30" data-module-type="data" data-x="1" data-y="16" />
+  <rect x="150" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:38" id="qr-data-39" data-module-type="data" data-x="2" data-y="11" />
+  <rect x="160" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:39" id="qr-data-40" data-module-type="data" data-x="2" data-y="12" />
+  <rect x="180" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:40" id="qr-data-41" data-module-type="data" data-x="2" data-y="14" />
+  <rect x="200" y="60" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:41" id="qr-data-42" data-module-type="data" data-x="2" data-y="16" />
+  <rect x="130" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:52" id="qr-data-53" data-module-type="data" data-x="3" data-y="9" />
+  <rect x="140" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:53" id="qr-data-54" data-module-type="data" data-x="3" data-y="10" />
+  <rect x="150" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:54" id="qr-data-55" data-module-type="data" data-x="3" data-y="11" />
+  <rect x="160" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:55" id="qr-data-56" data-module-type="data" data-x="3" data-y="12" />
+  <rect x="170" y="70" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:56" id="qr-data-57" data-module-type="data" data-x="3" data-y="13" />
+  <rect x="130" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:67" id="qr-data-68" data-module-type="data" data-x="4" data-y="9" />
+  <rect x="150" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:68" id="qr-data-69" data-module-type="data" data-x="4" data-y="11" />
+  <rect x="170" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:69" id="qr-data-70" data-module-type="data" data-x="4" data-y="13" />
+  <rect x="190" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:70" id="qr-data-71" data-module-type="data" data-x="4" data-y="15" />
+  <rect x="200" y="80" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:71" id="qr-data-72" data-module-type="data" data-x="4" data-y="16" />
+  <rect x="140" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:80" id="qr-data-81" data-module-type="data" data-x="5" data-y="10" />
+  <rect x="150" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:81" id="qr-data-82" data-module-type="data" data-x="5" data-y="11" />
+  <rect x="160" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:82" id="qr-data-83" data-module-type="data" data-x="5" data-y="12" />
+  <rect x="180" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:83" id="qr-data-84" data-module-type="data" data-x="5" data-y="14" />
+  <rect x="200" y="90" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:84" id="qr-data-85" data-module-type="data" data-x="5" data-y="16" />
+  <rect x="130" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:107" id="qr-data-108" data-module-type="data" data-x="7" data-y="9" />
+  <rect x="170" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:108" id="qr-data-109" data-module-type="data" data-x="7" data-y="13" />
+  <rect x="190" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:109" id="qr-data-110" data-module-type="data" data-x="7" data-y="15" />
+  <rect x="200" y="110" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:110" id="qr-data-111" data-module-type="data" data-x="7" data-y="16" />
+  <rect x="130" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:116" id="qr-data-117" data-module-type="data" data-x="8" data-y="9" />
+  <rect x="160" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:117" id="qr-data-118" data-module-type="data" data-x="8" data-y="12" />
+  <rect x="170" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:118" id="qr-data-119" data-module-type="data" data-x="8" data-y="13" />
+  <rect x="180" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:119" id="qr-data-120" data-module-type="data" data-x="8" data-y="14" />
+  <rect x="190" y="120" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:120" id="qr-data-121" data-module-type="data" data-x="8" data-y="15" />
+  <rect x="40" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:127" id="qr-data-128" data-module-type="data" data-x="9" data-y="0" />
+  <rect x="50" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:128" id="qr-data-129" data-module-type="data" data-x="9" data-y="1" />
+  <rect x="80" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:129" id="qr-data-130" data-module-type="data" data-x="9" data-y="4" />
+  <rect x="120" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:130" id="qr-data-131" data-module-type="data" data-x="9" data-y="8" />
+  <rect x="140" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:131" id="qr-data-132" data-module-type="data" data-x="9" data-y="10" />
+  <rect x="150" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:132" id="qr-data-133" data-module-type="data" data-x="9" data-y="11" />
+  <rect x="160" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:133" id="qr-data-134" data-module-type="data" data-x="9" data-y="12" />
+  <rect x="170" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:134" id="qr-data-135" data-module-type="data" data-x="9" data-y="13" />
+  <rect x="180" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:135" id="qr-data-136" data-module-type="data" data-x="9" data-y="14" />
+  <rect x="190" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:136" id="qr-data-137" data-module-type="data" data-x="9" data-y="15" />
+  <rect x="200" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:137" id="qr-data-138" data-module-type="data" data-x="9" data-y="16" />
+  <rect x="210" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:138" id="qr-data-139" data-module-type="data" data-x="9" data-y="17" />
+  <rect x="230" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:139" id="qr-data-140" data-module-type="data" data-x="9" data-y="19" />
+  <rect x="260" y="130" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:140" id="qr-data-141" data-module-type="data" data-x="9" data-y="22" />
+  <rect x="40" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:141" id="qr-data-142" data-module-type="data" data-x="10" data-y="0" />
+  <rect x="50" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:142" id="qr-data-143" data-module-type="data" data-x="10" data-y="1" />
+  <rect x="60" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:143" id="qr-data-144" data-module-type="data" data-x="10" data-y="2" />
+  <rect x="110" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:145" id="qr-data-146" data-module-type="data" data-x="10" data-y="7" />
+  <rect x="130" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:146" id="qr-data-147" data-module-type="data" data-x="10" data-y="9" />
+  <rect x="170" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:147" id="qr-data-148" data-module-type="data" data-x="10" data-y="13" />
+  <rect x="220" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:148" id="qr-data-149" data-module-type="data" data-x="10" data-y="18" />
+  <rect x="230" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:149" id="qr-data-150" data-module-type="data" data-x="10" data-y="19" />
+  <rect x="240" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:150" id="qr-data-151" data-module-type="data" data-x="10" data-y="20" />
+  <rect x="250" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:151" id="qr-data-152" data-module-type="data" data-x="10" data-y="21" />
+  <rect x="270" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:152" id="qr-data-153" data-module-type="data" data-x="10" data-y="23" />
+  <rect x="280" y="140" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:153" id="qr-data-154" data-module-type="data" data-x="10" data-y="24" />
+  <rect x="40" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:154" id="qr-data-155" data-module-type="data" data-x="11" data-y="0" />
+  <rect x="50" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:155" id="qr-data-156" data-module-type="data" data-x="11" data-y="1" />
+  <rect x="80" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:156" id="qr-data-157" data-module-type="data" data-x="11" data-y="4" />
+  <rect x="90" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:157" id="qr-data-158" data-module-type="data" data-x="11" data-y="5" />
+  <rect x="110" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:158" id="qr-data-159" data-module-type="data" data-x="11" data-y="7" />
+  <rect x="120" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:159" id="qr-data-160" data-module-type="data" data-x="11" data-y="8" />
+  <rect x="130" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:160" id="qr-data-161" data-module-type="data" data-x="11" data-y="9" />
+  <rect x="140" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:161" id="qr-data-162" data-module-type="data" data-x="11" data-y="10" />
+  <rect x="170" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:162" id="qr-data-163" data-module-type="data" data-x="11" data-y="13" />
+  <rect x="190" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:163" id="qr-data-164" data-module-type="data" data-x="11" data-y="15" />
+  <rect x="230" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:164" id="qr-data-165" data-module-type="data" data-x="11" data-y="19" />
+  <rect x="240" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:165" id="qr-data-166" data-module-type="data" data-x="11" data-y="20" />
+  <rect x="270" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:166" id="qr-data-167" data-module-type="data" data-x="11" data-y="23" />
+  <rect x="280" y="150" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:167" id="qr-data-168" data-module-type="data" data-x="11" data-y="24" />
+  <rect x="50" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:168" id="qr-data-169" data-module-type="data" data-x="12" data-y="1" />
+  <rect x="60" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:169" id="qr-data-170" data-module-type="data" data-x="12" data-y="2" />
+  <rect x="80" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:170" id="qr-data-171" data-module-type="data" data-x="12" data-y="4" />
+  <rect x="120" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:172" id="qr-data-173" data-module-type="data" data-x="12" data-y="8" />
+  <rect x="160" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:173" id="qr-data-174" data-module-type="data" data-x="12" data-y="12" />
+  <rect x="190" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:174" id="qr-data-175" data-module-type="data" data-x="12" data-y="15" />
+  <rect x="210" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:175" id="qr-data-176" data-module-type="data" data-x="12" data-y="17" />
+  <rect x="220" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:176" id="qr-data-177" data-module-type="data" data-x="12" data-y="18" />
+  <rect x="240" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:177" id="qr-data-178" data-module-type="data" data-x="12" data-y="20" />
+  <rect x="250" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:178" id="qr-data-179" data-module-type="data" data-x="12" data-y="21" />
+  <rect x="260" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:179" id="qr-data-180" data-module-type="data" data-x="12" data-y="22" />
+  <rect x="270" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:180" id="qr-data-181" data-module-type="data" data-x="12" data-y="23" />
+  <rect x="280" y="160" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:181" id="qr-data-182" data-module-type="data" data-x="12" data-y="24" />
+  <rect x="40" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:182" id="qr-data-183" data-module-type="data" data-x="13" data-y="0" />
+  <rect x="60" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:183" id="qr-data-184" data-module-type="data" data-x="13" data-y="2" />
+  <rect x="70" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:184" id="qr-data-185" data-module-type="data" data-x="13" data-y="3" />
+  <rect x="120" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:185" id="qr-data-186" data-module-type="data" data-x="13" data-y="8" />
+  <rect x="140" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:186" id="qr-data-187" data-module-type="data" data-x="13" data-y="10" />
+  <rect x="150" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:187" id="qr-data-188" data-module-type="data" data-x="13" data-y="11" />
+  <rect x="160" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:188" id="qr-data-189" data-module-type="data" data-x="13" data-y="12" />
+  <rect x="180" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:189" id="qr-data-190" data-module-type="data" data-x="13" data-y="14" />
+  <rect x="190" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:190" id="qr-data-191" data-module-type="data" data-x="13" data-y="15" />
+  <rect x="230" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:191" id="qr-data-192" data-module-type="data" data-x="13" data-y="19" />
+  <rect x="260" y="170" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:192" id="qr-data-193" data-module-type="data" data-x="13" data-y="22" />
+  <rect x="40" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:193" id="qr-data-194" data-module-type="data" data-x="14" data-y="0" />
+  <rect x="70" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:194" id="qr-data-195" data-module-type="data" data-x="14" data-y="3" />
+  <rect x="110" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:196" id="qr-data-197" data-module-type="data" data-x="14" data-y="7" />
+  <rect x="120" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:197" id="qr-data-198" data-module-type="data" data-x="14" data-y="8" />
+  <rect x="160" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:198" id="qr-data-199" data-module-type="data" data-x="14" data-y="12" />
+  <rect x="190" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:199" id="qr-data-200" data-module-type="data" data-x="14" data-y="15" />
+  <rect x="210" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:200" id="qr-data-201" data-module-type="data" data-x="14" data-y="17" />
+  <rect x="230" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:201" id="qr-data-202" data-module-type="data" data-x="14" data-y="19" />
+  <rect x="240" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:202" id="qr-data-203" data-module-type="data" data-x="14" data-y="20" />
+  <rect x="250" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:203" id="qr-data-204" data-module-type="data" data-x="14" data-y="21" />
+  <rect x="270" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:204" id="qr-data-205" data-module-type="data" data-x="14" data-y="23" />
+  <rect x="280" y="180" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:205" id="qr-data-206" data-module-type="data" data-x="14" data-y="24" />
+  <rect x="40" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:206" id="qr-data-207" data-module-type="data" data-x="15" data-y="0" />
+  <rect x="60" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:207" id="qr-data-208" data-module-type="data" data-x="15" data-y="2" />
+  <rect x="90" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:208" id="qr-data-209" data-module-type="data" data-x="15" data-y="5" />
+  <rect x="120" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:209" id="qr-data-210" data-module-type="data" data-x="15" data-y="8" />
+  <rect x="190" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:210" id="qr-data-211" data-module-type="data" data-x="15" data-y="15" />
+  <rect x="220" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:211" id="qr-data-212" data-module-type="data" data-x="15" data-y="18" />
+  <rect x="230" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:212" id="qr-data-213" data-module-type="data" data-x="15" data-y="19" />
+  <rect x="280" y="190" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:213" id="qr-data-214" data-module-type="data" data-x="15" data-y="24" />
+  <rect x="40" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:214" id="qr-data-215" data-module-type="data" data-x="16" data-y="0" />
+  <rect x="80" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:215" id="qr-data-216" data-module-type="data" data-x="16" data-y="4" />
+  <rect x="90" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:216" id="qr-data-217" data-module-type="data" data-x="16" data-y="5" />
+  <rect x="110" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:218" id="qr-data-219" data-module-type="data" data-x="16" data-y="7" />
+  <rect x="130" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:219" id="qr-data-220" data-module-type="data" data-x="16" data-y="9" />
+  <rect x="140" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:220" id="qr-data-221" data-module-type="data" data-x="16" data-y="10" />
+  <rect x="180" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:221" id="qr-data-222" data-module-type="data" data-x="16" data-y="14" />
+  <rect x="190" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:222" id="qr-data-223" data-module-type="data" data-x="16" data-y="15" />
+  <rect x="250" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:228" id="qr-data-229" data-module-type="data" data-x="16" data-y="21" />
+  <rect x="260" y="200" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:229" id="qr-data-230" data-module-type="data" data-x="16" data-y="22" />
+  <rect x="120" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:230" id="qr-dark-231" title="Dark pattern module" data-module-type="dark" data-x="17" data-y="8" />
+  <rect x="140" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:231" id="qr-data-232" data-module-type="data" data-x="17" data-y="10" />
+  <rect x="180" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:232" id="qr-data-233" data-module-type="data" data-x="17" data-y="14" />
+  <rect x="190" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:233" id="qr-data-234" data-module-type="data" data-x="17" data-y="15" />
+  <rect x="260" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:236" id="qr-data-237" data-module-type="data" data-x="17" data-y="22" />
+  <rect x="280" y="210" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:237" id="qr-data-238" data-module-type="data" data-x="17" data-y="24" />
+  <rect x="140" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:245" id="qr-data-246" data-module-type="data" data-x="18" data-y="10" />
+  <rect x="150" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:246" id="qr-data-247" data-module-type="data" data-x="18" data-y="11" />
+  <rect x="160" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:247" id="qr-data-248" data-module-type="data" data-x="18" data-y="12" />
+  <rect x="190" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:248" id="qr-data-249" data-module-type="data" data-x="18" data-y="15" />
+  <rect x="220" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:250" id="qr-alignment_center-251" title="Alignment_Center pattern module" data-module-type="alignment_center" data-x="18" data-y="18" />
+  <rect x="260" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:252" id="qr-data-253" data-module-type="data" data-x="18" data-y="22" />
+  <rect x="270" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:253" id="qr-data-254" data-module-type="data" data-x="18" data-y="23" />
+  <rect x="280" y="220" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:254" id="qr-data-255" data-module-type="data" data-x="18" data-y="24" />
+  <rect x="130" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:257" id="qr-data-258" data-module-type="data" data-x="19" data-y="9" />
+  <rect x="140" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:258" id="qr-data-259" data-module-type="data" data-x="19" data-y="10" />
+  <rect x="150" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:259" id="qr-data-260" data-module-type="data" data-x="19" data-y="11" />
+  <rect x="190" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:260" id="qr-data-261" data-module-type="data" data-x="19" data-y="15" />
+  <rect x="250" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:263" id="qr-data-264" data-module-type="data" data-x="19" data-y="21" />
+  <rect x="270" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:264" id="qr-data-265" data-module-type="data" data-x="19" data-y="23" />
+  <rect x="280" y="230" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:265" id="qr-data-266" data-module-type="data" data-x="19" data-y="24" />
+  <rect x="130" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:272" id="qr-data-273" data-module-type="data" data-x="20" data-y="9" />
+  <rect x="140" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:273" id="qr-data-274" data-module-type="data" data-x="20" data-y="10" />
+  <rect x="150" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:274" id="qr-data-275" data-module-type="data" data-x="20" data-y="11" />
+  <rect x="160" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:275" id="qr-data-276" data-module-type="data" data-x="20" data-y="12" />
+  <rect x="170" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:276" id="qr-data-277" data-module-type="data" data-x="20" data-y="13" />
+  <rect x="180" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:277" id="qr-data-278" data-module-type="data" data-x="20" data-y="14" />
+  <rect x="190" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:278" id="qr-data-279" data-module-type="data" data-x="20" data-y="15" />
+  <rect x="250" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:284" id="qr-data-285" data-module-type="data" data-x="20" data-y="21" />
+  <rect x="260" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:285" id="qr-data-286" data-module-type="data" data-x="20" data-y="22" />
+  <rect x="270" y="240" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:286" id="qr-data-287" data-module-type="data" data-x="20" data-y="23" />
+  <rect x="140" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:293" id="qr-data-294" data-module-type="data" data-x="21" data-y="10" />
+  <rect x="180" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:294" id="qr-data-295" data-module-type="data" data-x="21" data-y="14" />
+  <rect x="210" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:295" id="qr-data-296" data-module-type="data" data-x="21" data-y="17" />
+  <rect x="220" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:296" id="qr-data-297" data-module-type="data" data-x="21" data-y="18" />
+  <rect x="230" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:297" id="qr-data-298" data-module-type="data" data-x="21" data-y="19" />
+  <rect x="260" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:298" id="qr-data-299" data-module-type="data" data-x="21" data-y="22" />
+  <rect x="280" y="250" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:299" id="qr-data-300" data-module-type="data" data-x="21" data-y="24" />
+  <rect x="130" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:306" id="qr-data-307" data-module-type="data" data-x="22" data-y="9" />
+  <rect x="140" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:307" id="qr-data-308" data-module-type="data" data-x="22" data-y="10" />
+  <rect x="150" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:308" id="qr-data-309" data-module-type="data" data-x="22" data-y="11" />
+  <rect x="190" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:309" id="qr-data-310" data-module-type="data" data-x="22" data-y="15" />
+  <rect x="230" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:310" id="qr-data-311" data-module-type="data" data-x="22" data-y="19" />
+  <rect x="250" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:311" id="qr-data-312" data-module-type="data" data-x="22" data-y="21" />
+  <rect x="280" y="260" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:312" id="qr-data-313" data-module-type="data" data-x="22" data-y="24" />
+  <rect x="130" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:315" id="qr-data-316" data-module-type="data" data-x="23" data-y="9" />
+  <rect x="140" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:316" id="qr-data-317" data-module-type="data" data-x="23" data-y="10" />
+  <rect x="150" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:317" id="qr-data-318" data-module-type="data" data-x="23" data-y="11" />
+  <rect x="170" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:318" id="qr-data-319" data-module-type="data" data-x="23" data-y="13" />
+  <rect x="180" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:319" id="qr-data-320" data-module-type="data" data-x="23" data-y="14" />
+  <rect x="190" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:320" id="qr-data-321" data-module-type="data" data-x="23" data-y="15" />
+  <rect x="200" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:321" id="qr-data-322" data-module-type="data" data-x="23" data-y="16" />
+  <rect x="210" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:322" id="qr-data-323" data-module-type="data" data-x="23" data-y="17" />
+  <rect x="220" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:323" id="qr-data-324" data-module-type="data" data-x="23" data-y="18" />
+  <rect x="250" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:324" id="qr-data-325" data-module-type="data" data-x="23" data-y="21" />
+  <rect x="280" y="270" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:325" id="qr-data-326" data-module-type="data" data-x="23" data-y="24" />
+  <rect x="150" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:333" id="qr-data-334" data-module-type="data" data-x="24" data-y="11" />
+  <rect x="160" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:334" id="qr-data-335" data-module-type="data" data-x="24" data-y="12" />
+  <rect x="180" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:335" id="qr-data-336" data-module-type="data" data-x="24" data-y="14" />
+  <rect x="190" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:336" id="qr-data-337" data-module-type="data" data-x="24" data-y="15" />
+  <rect x="220" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:337" id="qr-data-338" data-module-type="data" data-x="24" data-y="18" />
+  <rect x="250" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:338" id="qr-data-339" data-module-type="data" data-x="24" data-y="21" />
+  <rect x="260" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:339" id="qr-data-340" data-module-type="data" data-x="24" data-y="22" />
+  <rect x="270" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:340" id="qr-data-341" data-module-type="data" data-x="24" data-y="23" />
+  <rect x="280" y="280" width="10" height="10" rx="3.0" ry="3.0" class="qr-module" style="--i:341" id="qr-data-342" data-module-type="data" data-x="24" data-y="24" />
+
+</g>
+</g><g id="segnomms-frame-effects" class="frame-effects" pointer-events="none" />
+  </svg>

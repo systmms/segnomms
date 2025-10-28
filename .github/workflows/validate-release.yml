@@ -131,13 +131,15 @@ jobs:
 
       - name: Install from wheel
         run: |
+          # Create virtual environment and install wheel
+          uv venv
           uv pip install dist/*.whl
 
       - name: Test import and basic usage
         run: |
           # Use the wheel we just downloaded, not PyPI
-          python -c "import segnomms; print(f'Version: {segnomms.__version__}')"
-          python -c "
+          uv run python -c "import segnomms; print(f'Version: {segnomms.__version__}')"
+          uv run python -c "
           import segno
           from segnomms import write
           qr = segno.make('Test')
@@ -150,7 +152,7 @@ jobs:
           # Install segno if needed
           uv pip install segno
           cd examples
-          python simple_example.py
+          uv run python simple_example.py
 
   # Security and quality checks
   quality-checks:
