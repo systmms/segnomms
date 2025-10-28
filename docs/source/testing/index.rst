@@ -17,7 +17,7 @@ Overview
 The SegnoMMS test suite is organized into multiple categories for systematic validation of all functionality:
 
 * **Unit tests** - Test individual components in isolation
-* **Integration tests** - Test component interaction and end-to-end workflows  
+* **Integration tests** - Test component interaction and end-to-end workflows
 * **Structural tests** - SVG structure and format validation
 * **Visual regression tests** - Visual output validation and QR functionality
 * **Performance tests** - Benchmarks and profiling
@@ -74,7 +74,7 @@ Test Directory Structure
    ├── unit/                        # Unit tests for individual components
    ├── integration/                 # Integration tests for component interaction
    ├── structural/                  # SVG structure and format validation
-   ├── visual/                      # Visual regression and QR functionality tests  
+   ├── visual/                      # Visual regression and QR functionality tests
    ├── perf/                        # Performance benchmarks and profiling
    ├── helpers/                     # Test utilities and custom assertions
    ├── fixtures/                    # Test data and configuration fixtures
@@ -83,7 +83,7 @@ Test Directory Structure
 Development Testing Best Practices
 -----------------------------------
 
-1. **Use Test Constants**: Import from ``tests.constants`` instead of string literals for better maintainability
+1. **Use Constants**: Import from ``segnomms.constants`` instead of string literals for better maintainability
 2. **Follow Naming Conventions**: Use descriptive test names that explain the expected behavior
 3. **Test Edge Cases**: Include boundary conditions and error scenarios
 4. **Mock External Dependencies**: Isolate unit tests from external systems

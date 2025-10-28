@@ -1,7 +1,7 @@
-Using Test Constants
-====================
+Using Constants
+===============
 
-This guide shows how to use the centralized test constants in SegnoMMS to write more maintainable and reliable tests.
+This guide shows how to use the centralized constants in SegnoMMS to write more maintainable and reliable code, whether in tests, examples, or applications.
 
 Why Use Constants?
 ------------------
@@ -17,12 +17,12 @@ Using string literals in tests creates several problems:
 The Constants Module
 --------------------
 
-The ``tests/constants.py`` module provides:
+The ``segnomms.constants`` module provides:
 
 * Enum re-exports for type safety
-* Predefined test data sets
-* Common configurations
-* Utility functions
+* Predefined data sets for common use cases
+* Common default values
+* Utility functions for configuration
 
 Migration Examples
 ------------------
@@ -52,21 +52,21 @@ After: Using Constants
 
 .. code-block:: python
 
-   from tests.constants import ModuleShape, create_test_config, TEST_COLORS
+   from segnomms.constants import ModuleShape, create_config, TEST_COLORS
 
    # ✅ Type-safe enum values
    def test_circle_shape():
-       config = create_test_config(shape=ModuleShape.CIRCLE.value)
+       config = create_config(shape=ModuleShape.CIRCLE.value)
        write(qr, output, **config)
 
    # ✅ IDE autocomplete prevents typos
    def test_squircle_shape():
-       config = create_test_config(shape=ModuleShape.SQUIRCLE.value)
+       config = create_config(shape=ModuleShape.SQUIRCLE.value)
        write(qr, output, **config)
 
    # ✅ Consistent test data
    def test_colors():
-       config = create_test_config(
+       config = create_config(
            dark=TEST_COLORS["black"],
            light=TEST_COLORS["white"]
        )
@@ -80,11 +80,11 @@ Testing All Shapes
 
 .. code-block:: python
 
-   from tests.constants import VALID_SHAPES
+   from segnomms.constants import VALID_SHAPES
 
    @pytest.mark.parametrize("shape", VALID_SHAPES)
    def test_all_shapes(shape):
-       config = create_test_config(shape=shape)
+       config = create_config(shape=shape)
        write(qr, output, **config)
        # Test assertions...
 
@@ -93,18 +93,18 @@ Testing Shape Categories
 
 .. code-block:: python
 
-   from tests.constants import BASIC_SHAPES, CONNECTED_SHAPES
+   from segnomms.constants import BASIC_SHAPES, CONNECTED_SHAPES
 
    def test_basic_shapes_only():
        for shape in BASIC_SHAPES:
            # Basic shapes should work with safe mode
-           config = create_test_config(shape=shape, safe_mode=True)
+           config = create_config(shape=shape, safe_mode=True)
            write(qr, output, **config)
 
    def test_connected_shapes():
        for shape in CONNECTED_SHAPES:
            # Connected shapes need special handling
-           config = create_test_config(
+           config = create_config(
                shape=shape,
                merge=MergeStrategy.SOFT.value,
                connectivity=ConnectivityMode.EIGHT_WAY.value
@@ -116,11 +116,11 @@ Using Predefined Test Cases
 
 .. code-block:: python
 
-   from tests.constants import SHAPE_TEST_CASES
+   from segnomms.constants import SHAPE_TEST_CASES
 
    @pytest.mark.parametrize("test_case", SHAPE_TEST_CASES)
    def test_shape_configurations(test_case):
-       config = create_test_config(
+       config = create_config(
            shape=test_case["shape"],
            corner_radius=test_case["corner_radius"]
        )
@@ -135,7 +135,7 @@ Testing with Common Payloads
 
 .. code-block:: python
 
-   from tests.constants import QR_PAYLOADS
+   from segnomms.constants import QR_PAYLOADS
 
    def test_url_encoding():
        qr = segno.make(QR_PAYLOADS["url"])
@@ -154,10 +154,10 @@ Best Practices
 .. code-block:: python
 
    # Import specific constants
-   from tests.constants import ModuleShape, DEFAULT_SCALE
+   from segnomms.constants import ModuleShape, DEFAULT_SCALE
 
    # Or import categories
-   from tests.constants import VALID_SHAPES, COLOR_TEST_CASES
+   from segnomms.constants import VALID_SHAPES, COLOR_TEST_CASES
 
 2. Use Enum Values
 ~~~~~~~~~~~~~~~~~~
@@ -184,7 +184,7 @@ When adding new test cases, add them to the constants module:
    ]
 
    # In your test
-   from tests.constants import NEW_FEATURE_TEST_CASES
+   from segnomms.constants import NEW_FEATURE_TEST_CASES
 
 4. Type Hints
 ~~~~~~~~~~~~~
@@ -193,11 +193,11 @@ Use type hints with enums for better IDE support:
 
 .. code-block:: python
 
-   from tests.constants import ModuleShape
+   from segnomms.constants import ModuleShape
 
    def create_qr_with_shape(shape: str) -> str:
        # shape should be ModuleShape.XXX.value
-       config = create_test_config(shape=shape)
+       config = create_config(shape=shape)
        # ...
 
 Available Constants
@@ -208,7 +208,7 @@ Shapes
 
 .. code-block:: python
 
-   from tests.constants import (
+   from segnomms.constants import (
        VALID_SHAPES,        # All valid shape names
        BASIC_SHAPES,        # Simple geometric shapes
        CONNECTED_SHAPES,    # Shapes that support merging
@@ -220,7 +220,7 @@ Colors
 
 .. code-block:: python
 
-   from tests.constants import (
+   from segnomms.constants import (
        TEST_COLORS,         # Named color constants
        COLOR_TEST_CASES,    # Common color combinations
        DEFAULT_DARK,        # Standard dark color
@@ -232,7 +232,7 @@ Payloads
 
 .. code-block:: python
 
-   from tests.constants import (
+   from segnomms.constants import (
        QR_PAYLOADS,         # Common test content (url, simple, unicode, etc.)
        ERROR_LEVELS         # QR error correction levels
    )
@@ -242,8 +242,8 @@ Configuration Helpers
 
 .. code-block:: python
 
-   from tests.constants import (
-       create_test_config,  # Build consistent configs
+   from segnomms.constants import (
+       create_config,  # Build consistent configs
        DEFAULT_SCALE,       # Standard scale value (10)
        DEFAULT_BORDER,      # Standard border size (4)
        DEFAULT_TEST_CONFIG, # Minimal default configuration
@@ -271,7 +271,7 @@ SegnoMMS also provides test helper classes for advanced testing scenarios:
 
    def test_qr_scanability():
        qr = segno.make("Test content")
-       config = create_test_config(shape=ModuleShape.CIRCLE.value)
+       config = create_config(shape=ModuleShape.CIRCLE.value)
 
        # Generate SVG
        output = StringIO()
@@ -332,7 +332,7 @@ When updating existing tests:
 * Replace string literals with enum values
 * Use predefined test data sets
 * Replace magic numbers with named constants
-* Use ``create_test_config()`` for consistency
+* Use ``create_config()`` for consistency
 * Add new test cases to constants module
 * Remove duplicate test data definitions
 * Add type hints where helpful
@@ -361,9 +361,9 @@ After
 
 .. code-block:: python
 
-   from tests.constants import (
+   from segnomms.constants import (
        BASIC_SHAPES,
-       create_test_config,
+       create_config,
        ModuleShape,
        TEST_COLORS
    )
@@ -371,18 +371,18 @@ After
    def test_various_shapes():
        # ✅ Type-safe shapes, consistent config
        for shape in BASIC_SHAPES:
-           config = create_test_config(shape=shape)
+           config = create_config(shape=shape)
            write(qr, output, **config)
 
        # ✅ Named constants
-       squircle_config = create_test_config(
+       squircle_config = create_config(
            shape=ModuleShape.SQUIRCLE.value,
            corner_radius=0.3
        )
        write(qr, output, **squircle_config)
 
        # ✅ Predefined test data
-       color_config = create_test_config(
+       color_config = create_config(
            dark=TEST_COLORS["brand_primary"],
            light=TEST_COLORS["brand_secondary"]
        )

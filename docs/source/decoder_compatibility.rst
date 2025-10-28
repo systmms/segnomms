@@ -355,6 +355,149 @@ The QR code ecosystem continues to evolve, and future decoder improvements may r
 some current limitations. Until then, this compatibility reference provides guidance
 for reliable deployment of stylized QR codes.
 
+Phase 4 Advanced Features Compatibility
+----------------------------------------
+
+Phase 4 features (frames, centerpieces, gradients) introduce additional compatibility
+considerations beyond basic shape styling. These features can significantly impact
+scannability and require careful testing.
+
+Frame Shape Compatibility
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Frame shapes affect decoder recognition by altering the QR code's boundary detection:
+
+.. list-table:: Frame Shape Decoder Compatibility
+   :header-rows: 1
+
+   * - Frame Shape
+     - ZXing C++
+     - OpenCV
+     - PyZBar
+     - Mobile Apps
+     - Recommended Settings
+   * - square (none)
+     - ✅ Excellent
+     - ✅ Excellent
+     - ✅ Excellent
+     - ✅ Excellent
+     - Standard settings
+   * - rounded-rect
+     - ✅ Very Good
+     - ✅ Very Good
+     - ✅ Good
+     - ⚠️ Variable
+     - corner_radius ≤ 0.2, border ≥ 4
+   * - circle
+     - ⚠️ Good
+     - ⚠️ Good
+     - ⚠️ Fair
+     - ❌ Poor
+     - border ≥ 5, clip_mode='clip'
+   * - squircle
+     - ⚠️ Good
+     - ⚠️ Fair
+     - ❌ Poor
+     - ❌ Poor
+     - border ≥ 5, simple shapes only
+   * - custom
+     - ❌ Variable
+     - ❌ Variable
+     - ❌ Poor
+     - ❌ Poor
+     - Extensive testing required
+
+**Production Recommendations:**
+
+* **High Compatibility**: Use no frame or ``rounded-rect`` with small corner radius
+* **Testing Required**: Circle and squircle frames need thorough validation
+* **Avoid in Production**: Custom frames without comprehensive decoder testing
+
+Centerpiece (Logo Area) Compatibility
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Centerpiece areas impact error correction capability and pattern recognition:
+
+.. list-table:: Centerpiece Size Compatibility by Error Level
+   :header-rows: 1
+
+   * - Error Level
+     - Max Safe Size
+     - Recommended Size
+     - Notes
+   * - L (7%)
+     - 0.05
+     - 0.03
+     - Very limited logo space
+   * - M (15%)
+     - 0.12
+     - 0.08
+     - Suitable for small logos
+   * - Q (25%)
+     - 0.18
+     - 0.12
+     - Good logo visibility
+   * - H (30%)
+     - 0.25
+     - 0.15
+     - Maximum logo area
+
+**Centerpiece Shape Compatibility:**
+
+* **Rectangle**: Best compatibility, most predictable
+* **Circle**: Good with most decoders, test mobile apps
+* **Squircle**: Variable compatibility, requires testing
+
+**Critical Guidelines:**
+
+* Always use ``centerpiece_margin ≥ 2`` for safety buffer
+* Test centerpiece + frame combinations thoroughly
+* Consider fallback QR codes for critical applications
+* Use highest error correction level (H) for large centerpieces
+
+Combined Features Compatibility Risk
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When combining multiple Phase 4 features, compatibility risks multiply:
+
+.. warning::
+   **High Risk Combinations (Extensive Testing Required):**
+
+   * Circle frame + large centerpiece + gradient background
+   * Custom frame + squircle centerpiece
+   * Fade clip mode + connected shapes + centerpiece
+
+   **Lower Risk Combinations:**
+
+   * Rounded-rect frame + small rect centerpiece + solid background
+   * No frame + small circle centerpiece + simple shapes
+
+PNG Conversion for Phase 4 Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Phase 4 features require special attention during PNG conversion:
+
+.. code-block:: python
+
+   # Recommended settings for Phase 4 features
+   conversion_settings = {
+       'dpi': 300,          # Higher DPI for frame clarity
+       'width': 600,        # Larger size for centerpiece detail
+       'height': 600,
+       'background': 'white',
+       'antialias': False,  # Sharp edges for frame detection
+       'format': 'PNG'
+   }
+
+**Testing Protocol for Phase 4:**
+
+1. **Generate test QR codes** with your exact Phase 4 configuration
+2. **Convert to PNG** using recommended settings
+3. **Test with multiple libraries** (zxingcpp, OpenCV, pyzbar)
+4. **Validate on mobile devices** your users will actually use
+5. **Test edge cases** (low light, angled scanning, small sizes)
+6. **Implement fallbacks** if any decoder fails
+
 Related Documentation
 --------------------
 

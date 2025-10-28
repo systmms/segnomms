@@ -80,6 +80,8 @@ Note:
 
 """
 
+# Import constants module for convenient access (but don't pollute main namespace)
+from . import constants
 from .algorithms.clustering import ConnectedComponentAnalyzer
 from .config import (
     AdvancedQRConfig,
@@ -168,6 +170,8 @@ __all__ = [
     "write",
     "write_advanced",
     "generate_interactive_svg",
+    # Constants module
+    "constants",
     # Core classes
     "ModuleDetector",
     "RenderingConfig",

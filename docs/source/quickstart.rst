@@ -377,14 +377,14 @@ For testing and development, use test constants to avoid magic strings:
 
 .. code-block:: python
 
-   from tests.constants import (
-       ModuleShape, TEST_COLORS, create_test_config,
+   from segnomms.constants import (
+       ModuleShape, TEST_COLORS, create_config,
        QR_PAYLOADS, DEFAULT_SCALE, DEFAULT_BORDER
    )
 
    # Type-safe and maintainable
    qr = segno.make(QR_PAYLOADS["url"])
-   config = create_test_config(
+   config = create_config(
        shape=ModuleShape.SQUIRCLE.value,
        dark=TEST_COLORS["brand_primary"],
        light=TEST_COLORS["white"],
