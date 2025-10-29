@@ -116,7 +116,7 @@ jobs:
 
       - name: Install build tools
         run: |
-          uv pip install build twine wheel check-wheel-contents
+          uv pip install --system build twine wheel check-wheel-contents
 
       - name: Build package
         run: python -m build

@@ -286,9 +286,9 @@ directory = "htmlcov"
 [tool.coverage.xml]
 output = "coverage.xml"
 
-[tool.uv]
+[dependency-groups]
 # Development dependencies for SegnoMMS
-dev-dependencies = [
+dev = [
     # Build tools
     "build>=1.0.0",
     "twine>=4.0.0", # For deploying to package registries
