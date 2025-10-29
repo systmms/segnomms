@@ -5,6 +5,7 @@ Tests the performance of generating QR codes with various configurations.
 """
 
 import json
+import os
 import time
 from pathlib import Path
 from typing import Any, Dict, List
@@ -92,7 +93,7 @@ class TestExampleGenerationPerformance:
 
         for shape in shapes:
             # Warm up
-            write(qr, "/dev/null", shape=shape, scale=10)
+            write(qr, os.devnull, shape=shape, scale=10)
 
             # Measure
             times = []
@@ -100,7 +101,7 @@ class TestExampleGenerationPerformance:
                 start_time = time.time()
                 write(
                     qr,
-                    "/dev/null",
+                    os.devnull,
                     shape=shape,
                     scale=10,
                     border=2,
@@ -135,7 +136,7 @@ class TestExampleGenerationPerformance:
 
             write(
                 qr,
-                "/dev/null",
+                os.devnull,
                 shape="rounded",
                 scale=scale,
                 border=2,
@@ -200,7 +201,7 @@ class TestExampleGenerationPerformance:
 
                 write(
                     qr,
-                    "/dev/null",
+                    os.devnull,
                     shape="rounded",
                     scale=10,
                     border=2,

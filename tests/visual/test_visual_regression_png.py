@@ -6,6 +6,7 @@ visual changes in QR code generation.
 """
 
 import io
+import sys
 
 import numpy as np
 import pytest
@@ -15,6 +16,10 @@ from tests.helpers.test_case_generator import Case, Category, TestCaseGenerator
 from tests.helpers.test_output_manager import OutputManager
 
 
+@pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="PNG conversion requires cairosvg/rsvg-convert which are not available on Windows",
+)
 class TestVisualRegressionPNG:
     """PNG-based visual regression tests."""
 
@@ -186,6 +191,10 @@ class TestVisualRegressionPNG:
             self._generate_and_test_case(test_case)
 
 
+@pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="PNG conversion requires cairosvg/rsvg-convert which are not available on Windows",
+)
 class TestVisualRegressionSpecific:
     """Specific visual regression tests for particular features."""
 

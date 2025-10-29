@@ -99,7 +99,11 @@ def svg_to_png_for_decode(svg_content: str, output_path: Path):
             output_height=800,
             dpi=150,  # Higher DPI for sharper edges
         )
-    except ImportError:
+    except (ImportError, OSError) as e:
+        # Handle both ImportError and OSError (Cairo library not found on Windows)
+        if "cairo" in str(e).lower():
+            pytest.skip(f"Cairo library not available: {e}")
+
         # Fallback to conftest method
         from .conftest import svg_to_png
 

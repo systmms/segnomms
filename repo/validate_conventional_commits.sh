@@ -75,12 +75,12 @@ done
 # Logging functions
 log_info() {
     local timestamp=$(date '+%H:%M:%S')
-    echo "[$timestamp] ℹ️  $1"
+    echo "[$timestamp] ℹ️  $1" >&2
 }
 
 log_success() {
     local timestamp=$(date '+%H:%M:%S')
-    echo "[$timestamp] ✅ $1"
+    echo "[$timestamp] ✅ $1" >&2
 }
 
 log_error() {
@@ -90,13 +90,13 @@ log_error() {
 
 log_warn() {
     local timestamp=$(date '+%H:%M:%S')
-    echo "[$timestamp] ⚠️  $1"
+    echo "[$timestamp] ⚠️  $1" >&2
 }
 
 log_verbose() {
     if [[ "$VERBOSE" == "true" ]]; then
         local timestamp=$(date '+%H:%M:%S')
-        echo "[$timestamp] 🔍 $1"
+        echo "[$timestamp] 🔍 $1" >&2
     fi
 }
 
@@ -147,6 +147,24 @@ get_commits() {
     fi
 
     echo "$commits"
+}
+
+# Check if commit should be excluded from validation
+should_exclude_commit() {
+    local commit_msg="$1"
+
+    # Exclude GitHub merge commits (pattern: "Merge <hash> into <hash>")
+    if echo "$commit_msg" | grep -qE '^Merge [0-9a-f]{40} into [0-9a-f]{40}$'; then
+        return 0
+    fi
+
+    # Exclude other common merge patterns
+    if echo "$commit_msg" | grep -qE '^Merge (branch|pull request)'; then
+        return 0
+    fi
+
+    # Don't exclude this commit
+    return 1
 }
 
 # Validate a single commit message
@@ -246,22 +264,31 @@ validate_commits() {
     local invalid_commits=""
     local total_commits=0
     local valid_commits=0
+    local excluded_commits=0
 
     while IFS= read -r commit; do
         if [[ -n "$commit" ]]; then
             ((total_commits++))
 
-            if validate_commit "$commit" "$pattern"; then
+            if should_exclude_commit "$commit"; then
+                ((excluded_commits++))
+                log_verbose "⏭️ Excluded: $commit"
+            elif validate_commit "$commit" "$pattern"; then
                 ((valid_commits++))
                 log_verbose "✅ Valid: $commit"
             else
-                invalid_commits="${invalid_commits}${commit}\n"
+                if [[ -n "$invalid_commits" ]]; then
+                    invalid_commits="${invalid_commits}"$'\n'"${commit}"
+                else
+                    invalid_commits="${commit}"
+                fi
                 log_verbose "❌ Invalid: $commit"
             fi
         fi
     done <<< "$commits"
 
-    log_info "Validation summary: $valid_commits/$total_commits commits valid"
+    local invalid_count=$((total_commits - valid_commits - excluded_commits))
+    log_info "Validation summary: $valid_commits valid, $excluded_commits excluded, $invalid_count invalid out of $total_commits total"
 
     # Format and display results
     if format_results "$invalid_commits"; then

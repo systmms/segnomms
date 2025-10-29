@@ -132,9 +132,9 @@ class TestConfigurationExport:
         assert result["export_config"] is True
         assert len(result["config_files_created"]) == 1
 
-        # Load configuration
+        # Load configuration with explicit UTF-8 encoding for Windows compatibility
         config_file = result["config_files_created"][0]
-        with open(config_file, "r") as f:
+        with open(config_file, "r", encoding="utf-8") as f:
             config_data = json.load(f)
 
         # Check metadata

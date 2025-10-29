@@ -14,18 +14,52 @@ jobs:
   test-matrix:
     name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }} with Segno ${{ matrix.segno-version }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        segno-version: ["1.5.2", "1.6.0", "latest"]
-        exclude:
-          # Reduce matrix size for faster CI
+        # Core test combinations for faster feedback
+        include:
+          # Ubuntu: Test all Python versions with latest Segno (most common scenario)
+          - os: ubuntu-latest
+            python-version: "3.9"
+            segno-version: "latest"
+          - os: ubuntu-latest
+            python-version: "3.10"
+            segno-version: "latest"
+          - os: ubuntu-latest
+            python-version: "3.11"
+            segno-version: "latest"
+          - os: ubuntu-latest
+            python-version: "3.12"
+            segno-version: "latest"
+          - os: ubuntu-latest
+            python-version: "3.13"
+            segno-version: "latest"
+
+          # Ubuntu: Test compatibility with older Segno versions on key Python versions
+          - os: ubuntu-latest
+            python-version: "3.11"
+            segno-version: "1.6.0"
+          - os: ubuntu-latest
+            python-version: "3.11"
+            segno-version: "1.5.2"
+
+          # Cross-platform: Test latest Python on other OS with latest Segno
           - os: windows-latest
-            segno-version: "1.5.2"
+            python-version: "3.12"
+            segno-version: "latest"
           - os: macos-latest
-            segno-version: "1.5.2"
+            python-version: "3.12"
+            segno-version: "latest"
+
+          # Cross-platform: Test oldest supported Python
+          - os: windows-latest
+            python-version: "3.9"
+            segno-version: "latest"
+          - os: macos-latest
+            python-version: "3.9"
+            segno-version: "latest"
     steps:
       - uses: actions/checkout@v5
 
@@ -41,6 +75,7 @@ jobs:
           cache-dependency-glob: "**/uv.lock"
 
       - name: Install dependencies
+        shell: bash
         run: |
           uv sync --extra test
           if [ "${{ matrix.segno-version }}" = "latest" ]; then
@@ -66,6 +101,7 @@ jobs:
   validate-package:
     name: Validate Package Build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
 
@@ -74,10 +110,14 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
       - name: Install build tools
         run: |
-          python -m pip install --upgrade pip
-          pip install build twine wheel check-wheel-contents
+          uv pip install --system build twine wheel check-wheel-contents
 
       - name: Build package
         run: python -m build
@@ -106,6 +146,7 @@ jobs:
   test-install:
     name: Test Package Installation
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: validate-package
     strategy:
       matrix:
@@ -158,6 +199,7 @@ jobs:
   quality-checks:
     name: Quality and Security Checks
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
 
@@ -203,6 +245,7 @@ jobs:
   validate-status:
     name: Validation Status
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [test-matrix, validate-package, test-install, quality-checks]
     if: always()
     steps:

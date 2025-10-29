@@ -310,35 +310,39 @@ class TestRenderingIntegration:
         qr = segno.make("Test accessibility integration")
         config = create_enhanced_accessibility()
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as f:
-            try:
-                write(qr, f.name, scale=8, accessibility=config)
+        # Create temporary file with Windows-compatible cleanup
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False)
+        temp_filename = temp_file.name
+        temp_file.close()  # Close file handle immediately for Windows compatibility
 
-                # Read and parse the generated SVG
-                with open(f.name, "r") as svg_file:
-                    svg_content = svg_file.read()
+        try:
+            write(qr, temp_filename, scale=8, accessibility=config)
 
-                # Check for accessibility features
-                assert 'id="qr-root"' in svg_content
-                assert 'role="img"' in svg_content
-                assert "aria-label=" in svg_content
+            # Read and parse the generated SVG
+            with open(temp_filename, "r") as svg_file:
+                svg_content = svg_file.read()
 
-                # Check for pattern groups
-                assert "qr-pattern-finder" in svg_content
-                assert "qr-pattern-timing" in svg_content
-                assert "qr-pattern-data" in svg_content
+            # Check for accessibility features
+            assert 'id="qr-root"' in svg_content
+            assert 'role="img"' in svg_content
+            assert "aria-label=" in svg_content
 
-                # Check for module IDs
-                assert 'id="qr-finder-' in svg_content
-                assert 'id="qr-data-' in svg_content
+            # Check for pattern groups
+            assert "qr-pattern-finder" in svg_content
+            assert "qr-pattern-timing" in svg_content
+            assert "qr-pattern-data" in svg_content
 
-                # Check for ARIA roles in groups
-                assert 'role="group"' in svg_content
-                assert 'aria-label="Finder pattern' in svg_content
+            # Check for module IDs
+            assert 'id="qr-finder-' in svg_content
+            assert 'id="qr-data-' in svg_content
 
-            finally:
-                if os.path.exists(f.name):
-                    os.unlink(f.name)
+            # Check for ARIA roles in groups
+            assert 'role="group"' in svg_content
+            assert 'aria-label="Finder pattern' in svg_content
+
+        finally:
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
 
     def test_pattern_group_routing(self):
         """Test that modules are correctly routed to pattern groups."""
@@ -353,32 +357,36 @@ class TestRenderingIntegration:
         qr = segno.make("Pattern routing test")
         config = AccessibilityConfig(enabled=True, enable_aria=True, include_pattern_labels=True)
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as f:
-            try:
-                write(qr, f.name, scale=8, accessibility=config)
+        # Create temporary file with Windows-compatible cleanup
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False)
+        temp_filename = temp_file.name
+        temp_file.close()  # Close file handle immediately for Windows compatibility
 
-                # Read the SVG content as text for pattern matching
-                with open(f.name, "r") as svg_file:
-                    svg_content = svg_file.read()
+        try:
+            write(qr, temp_filename, scale=8, accessibility=config)
 
-                # Check for pattern groups by searching text content
-                assert "qr-pattern-finder" in svg_content
-                assert "qr-pattern-timing" in svg_content
-                assert "qr-pattern-data" in svg_content
+            # Read the SVG content as text for pattern matching
+            with open(temp_filename, "r") as svg_file:
+                svg_content = svg_file.read()
 
-                # Check for accessibility attributes in pattern groups
-                assert 'role="group"' in svg_content
-                assert 'aria-label="Finder pattern' in svg_content
-                assert 'aria-label="Timing pattern"' in svg_content
-                assert 'aria-label="Data modules"' in svg_content
+            # Check for pattern groups by searching text content
+            assert "qr-pattern-finder" in svg_content
+            assert "qr-pattern-timing" in svg_content
+            assert "qr-pattern-data" in svg_content
 
-                # Check that modules exist
-                assert 'id="qr-finder-' in svg_content
-                assert 'id="qr-data-' in svg_content
+            # Check for accessibility attributes in pattern groups
+            assert 'role="group"' in svg_content
+            assert 'aria-label="Finder pattern' in svg_content
+            assert 'aria-label="Timing pattern"' in svg_content
+            assert 'aria-label="Data modules"' in svg_content
 
-            finally:
-                if os.path.exists(f.name):
-                    os.unlink(f.name)
+            # Check that modules exist
+            assert 'id="qr-finder-' in svg_content
+            assert 'id="qr-data-' in svg_content
+
+        finally:
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
 
     def test_cluster_accessibility(self):
         """Test accessibility for clustered rendering."""
@@ -393,34 +401,38 @@ class TestRenderingIntegration:
         qr = segno.make("Cluster accessibility test")
         config = AccessibilityConfig(enabled=True, enable_aria=True, use_stable_ids=True)
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as f:
-            try:
-                write(
-                    qr,
-                    f.name,
-                    scale=8,
-                    merge="soft",  # Enable clustering
-                    accessibility_enabled=config.enabled,
-                    accessibility_enable_aria=config.enable_aria,
-                    accessibility_use_stable_ids=config.use_stable_ids,
-                )
+        # Create temporary file with Windows-compatible cleanup
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False)
+        temp_filename = temp_file.name
+        temp_file.close()  # Close file handle immediately for Windows compatibility
 
-                with open(f.name, "r") as svg_file:
-                    svg_content = svg_file.read()
+        try:
+            write(
+                qr,
+                temp_filename,
+                scale=8,
+                merge="soft",  # Enable clustering
+                accessibility_enabled=config.enabled,
+                accessibility_enable_aria=config.enable_aria,
+                accessibility_use_stable_ids=config.use_stable_ids,
+            )
 
-                # If cluster elements are present, they should have IDs
-                # Note: qr-cluster may appear in CSS but not mean cluster elements exist
-                if 'id="qr-cluster-' in svg_content:
-                    # At least one cluster element with proper ID exists
-                    assert "qr-cluster" in svg_content
+            with open(temp_filename, "r") as svg_file:
+                svg_content = svg_file.read()
 
-                # Root should still have proper accessibility
-                assert 'id="qr-root"' in svg_content
-                assert 'role="img"' in svg_content
+            # If cluster elements are present, they should have IDs
+            # Note: qr-cluster may appear in CSS but not mean cluster elements exist
+            if 'id="qr-cluster-' in svg_content:
+                # At least one cluster element with proper ID exists
+                assert "qr-cluster" in svg_content
 
-            finally:
-                if os.path.exists(f.name):
-                    os.unlink(f.name)
+            # Root should still have proper accessibility
+            assert 'id="qr-root"' in svg_content
+            assert 'role="img"' in svg_content
+
+        finally:
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
 
     def test_coordinate_based_ids(self):
         """Test coordinate-based ID generation."""
@@ -433,30 +445,34 @@ class TestRenderingIntegration:
 
         qr = segno.make("Coordinate ID test")
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as f:
-            try:
-                write(
-                    qr,
-                    f.name,
-                    scale=8,
-                    accessibility_enabled=True,
-                    accessibility_id_prefix="coord",
-                    accessibility_include_coordinates=True,
-                    accessibility_use_stable_ids=True,
-                )
+        # Create temporary file with Windows-compatible cleanup
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False)
+        temp_filename = temp_file.name
+        temp_file.close()  # Close file handle immediately for Windows compatibility
 
-                with open(f.name, "r") as svg_file:
-                    svg_content = svg_file.read()
+        try:
+            write(
+                qr,
+                temp_filename,
+                scale=8,
+                accessibility_enabled=True,
+                accessibility_id_prefix="coord",
+                accessibility_include_coordinates=True,
+                accessibility_use_stable_ids=True,
+            )
 
-                # Check for coordinate-based IDs
-                # Note: The exact pattern might not be present due to current implementation
-                # but we should at least have proper IDs with the correct prefix
-                assert 'id="coord-root"' in svg_content
-                assert "coord-" in svg_content  # Should have elements with coord prefix
+            with open(temp_filename, "r") as svg_file:
+                svg_content = svg_file.read()
 
-            finally:
-                if os.path.exists(f.name):
-                    os.unlink(f.name)
+            # Check for coordinate-based IDs
+            # Note: The exact pattern might not be present due to current implementation
+            # but we should at least have proper IDs with the correct prefix
+            assert 'id="coord-root"' in svg_content
+            assert "coord-" in svg_content  # Should have elements with coord prefix
+
+        finally:
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
 
     def test_accessibility_validation_integration(self):
         """Test accessibility validation in the full rendering pipeline."""
@@ -475,31 +491,35 @@ class TestRenderingIntegration:
             enabled=True, enable_aria=True, root_label="Test QR Code", target_compliance="AA"
         )
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False) as f:
-            try:
-                write(qr, f.name, scale=8, accessibility=good_config)
+        # Create temporary file with Windows-compatible cleanup
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".svg", delete=False)
+        temp_filename = temp_file.name
+        temp_file.close()  # Close file handle immediately for Windows compatibility
 
-                # Parse and validate the SVG
-                tree = ET.parse(f.name)
-                root = tree.getroot()
+        try:
+            write(qr, temp_filename, scale=8, accessibility=good_config)
 
-                # Should have proper root accessibility
-                assert root.get("id") is not None
-                assert root.get("role") == "img"
-                assert root.get("aria-label") is not None
+            # Parse and validate the SVG
+            tree = ET.parse(temp_filename)
+            root = tree.getroot()
 
-                # Should have title element (handle namespace)
-                namespace = {"svg": "http://www.w3.org/2000/svg"}
-                title = root.find(".//svg:title", namespace)
-                if title is None:
-                    # Fallback to no namespace (for some parsers)
-                    title = root.find(".//title")
-                assert title is not None
-                assert title.text is not None
+            # Should have proper root accessibility
+            assert root.get("id") is not None
+            assert root.get("role") == "img"
+            assert root.get("aria-label") is not None
 
-            finally:
-                if os.path.exists(f.name):
-                    os.unlink(f.name)
+            # Should have title element (handle namespace)
+            namespace = {"svg": "http://www.w3.org/2000/svg"}
+            title = root.find(".//svg:title", namespace)
+            if title is None:
+                # Fallback to no namespace (for some parsers)
+                title = root.find(".//title")
+            assert title is not None
+            assert title.text is not None
+
+        finally:
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
 
     def test_accessibility_report_generation(self):
         """Test accessibility report generation after rendering."""
