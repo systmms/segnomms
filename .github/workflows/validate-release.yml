@@ -75,6 +75,7 @@ jobs:
           cache-dependency-glob: "**/uv.lock"
 
       - name: Install dependencies
+        shell: bash
         run: |
           uv sync --extra test
           if [ "${{ matrix.segno-version }}" = "latest" ]; then
