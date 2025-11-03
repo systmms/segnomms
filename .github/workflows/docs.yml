@@ -132,7 +132,7 @@ jobs:
 
     steps:
     - name: Download documentation artifacts
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: documentation-html
         path: docs-html/

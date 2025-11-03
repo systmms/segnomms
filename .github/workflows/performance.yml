@@ -167,7 +167,7 @@ jobs:
         uv pip install -e .
 
     - name: Download performance artifacts
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: performance-results
         path: tests/perf/
