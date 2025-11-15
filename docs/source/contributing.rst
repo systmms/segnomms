@@ -19,11 +19,26 @@ Development Setup
 
       make setup
 
-3. **Install pre-commit hooks:**
+3. **Install git hooks (Lefthook):**
 
    .. code-block:: bash
 
-      pre-commit install
+      lefthook install
+
+   Lefthook manages git hooks for code quality checks including:
+
+   - **actionlint**: GitHub Actions workflow validation
+   - **black**: Python code formatting
+   - **isort**: Import sorting
+   - **flake8**: Python linting
+   - **mypy**: Type checking
+   - **bandit**: Security analysis
+
+   Hooks run automatically on commit. To run manually:
+
+   .. code-block:: bash
+
+      lefthook run pre-commit
 
 Development Workflow
 --------------------
@@ -36,6 +51,17 @@ Code Quality Standards
 - **isort:** All imports must be properly sorted and organized
 - **flake8:** All code must pass linting checks
 - **Tests:** All existing tests must pass before committing
+
+Discovering Available Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use ``make help`` to discover all available Makefile targets:
+
+.. code-block:: bash
+
+   make help
+
+This displays all commands organized by category (setup, testing, documentation, etc.)
 
 Running Tests
 ~~~~~~~~~~~~~
@@ -55,6 +81,15 @@ Running Tests
    # Run quick tests during development
    make test-quick
 
+**Test Script Discoverability Policy:**
+
+All permanent test scripts must have corresponding Makefile targets to ensure
+discoverability. When creating new test scripts:
+
+- **Permanent scripts** (regression tests, compatibility tests, benchmarks): Add a Makefile target
+- **Temporary scripts** (one-off debugging): No Makefile target needed
+- Use ``make help`` to verify your script is discoverable
+
 Documentation
 ~~~~~~~~~~~~~
 
@@ -68,9 +103,10 @@ Git Commit Standards
 
 **NEVER use ``--no-verify`` flag with git commits.**
 
-- Pre-commit hooks exist to maintain code quality and consistency
+- Lefthook git hooks exist to maintain code quality and consistency
 - All formatting, linting, and type checking issues must be resolved before committing
-- If pre-commit hooks fail, fix the underlying issues rather than bypassing them
+- If git hooks fail, fix the underlying issues rather than bypassing them
+- Commits must follow `Conventional Commits <https://www.conventionalcommits.org/>`_ format
 
 Submitting Changes
 ------------------
