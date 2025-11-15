@@ -1,7 +1,7 @@
 Quick Start Guide
 =================
 
-This guide will help you get started with the Segno Interactive SVG Plugin.
+This guide will help you get started with SegnoMMS.
 
 Getting Started
 ---------------

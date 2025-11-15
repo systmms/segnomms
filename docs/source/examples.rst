@@ -1,7 +1,7 @@
 Examples
 ========
 
-This section provides comprehensive examples of using the Segno Interactive SVG Plugin.
+This section provides comprehensive examples of using SegnoMMS.
 
 .. note::
    For testing and development, consider using the test constants module for more maintainable code.

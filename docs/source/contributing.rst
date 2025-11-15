@@ -10,7 +10,7 @@ Development Setup
 
    .. code-block:: bash
 
-      git clone https://github.com/your-org/segnomms.git
+      git clone https://github.com/systmms/segnomms.git
       cd segnomms
 
 2. **Set up development environment:**

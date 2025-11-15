@@ -1,7 +1,7 @@
 Animation and Effects
 =====================
 
-The Segno Interactive SVG Plugin provides comprehensive CSS-based animation capabilities for QR codes,
+SegnoMMS provides comprehensive CSS-based animation capabilities for QR codes,
 focusing on performance, accessibility, and visual appeal.
 
 Overview

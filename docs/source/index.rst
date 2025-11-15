@@ -1,9 +1,9 @@
-.. Segno Interactive SVG Plugin documentation master file
+.. SegnoMMS documentation master file
 
-Welcome to Segno Interactive SVG Plugin
-=======================================
+Welcome to SegnoMMS
+===================
 
-The Segno Interactive SVG Plugin extends `Segno <https://segno.readthedocs.io/>`_ with advanced SVG rendering capabilities, providing various shape options and interactive features for QR codes.
+SegnoMMS extends `Segno <https://segno.readthedocs.io/>`_ with advanced SVG rendering capabilities, providing various shape options and interactive features for QR codes.
 
 .. toctree::
    :maxdepth: 2
