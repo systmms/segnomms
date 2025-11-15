@@ -25,9 +25,9 @@ SegnoMMS plugin structure:
 
 **Purpose**: Create validation scripts for documentation fixes
 
-- [ ] T001 Create contradiction check script in `scripts/check_doc_contradictions.sh`
-- [ ] T002 [P] Create code example extraction script in `scripts/extract_code_examples.py`
-- [ ] T003 [P] Create comprehensive validation script in `scripts/verify_documentation_fixes.py`
+- [X] T001 Create contradiction check script in `scripts/check_doc_contradictions.sh`
+- [X] T002 [P] Create code example extraction script in `scripts/extract_code_examples.py`
+- [X] T003 [P] Create comprehensive validation script in `scripts/verify_documentation_fixes.py`
 
 ---
 
@@ -47,14 +47,14 @@ SegnoMMS plugin structure:
 
 ### Implementation for User Story 1
 
-- [ ] T004 [P] [US1] Fix package name in `docs/source/index.rst` - replace "Segno Interactive SVG Plugin" with "SegnoMMS"
-- [ ] T005 [P] [US1] Fix repository URL in `docs/source/contributing.rst` - change `your-org/segnomms` to `systmms/segnomms`
-- [ ] T006 [P] [US1] Fix author attribution in `segnomms/__init__.py` - change `__author__` from "QRCodeMMS" to "SYSTMMS"
-- [ ] T007 [P] [US1] Fix Segno version in `docs/source/installation.rst` - ensure states ">= 1.5.2"
-- [ ] T008 [P] [US1] Fix Segno version in `README.md` - ensure states ">= 1.5.2"
-- [ ] T009 [P] [US1] Fix Segno version in `docs/source/conf.py` - ensure consistent ">= 1.5.2" reference
-- [ ] T010 [P] [US1] Fix Segno version in `segnomms/__init__.py` - update docstring to state ">= 1.5.2"
-- [ ] T011 [US1] Validate contradiction fixes using `scripts/check_doc_contradictions.sh`
+- [X] T004 [P] [US1] Fix package name in `docs/source/index.rst` - replace "Segno Interactive SVG Plugin" with "SegnoMMS"
+- [X] T005 [P] [US1] Fix repository URL in `docs/source/contributing.rst` - change `your-org/segnomms` to `systmms/segnomms`
+- [X] T006 [P] [US1] Fix author attribution in `segnomms/__init__.py` - change `__author__` from "QRCodeMMS" to "SYSTMMS"
+- [X] T007 [P] [US1] Fix Segno version in `docs/source/installation.rst` - ensure states ">= 1.5.2"
+- [X] T008 [P] [US1] Fix Segno version in `README.md` - ensure states ">= 1.5.2"
+- [X] T009 [P] [US1] Fix Segno version in `docs/source/conf.py` - ensure consistent ">= 1.5.2" reference
+- [X] T010 [P] [US1] Fix Segno version in `segnomms/__init__.py` - update docstring to state ">= 1.5.2"
+- [X] T011 [US1] Validate contradiction fixes using `scripts/check_doc_contradictions.sh`
 
 **Checkpoint**: Critical fixes complete - users can now find package, clone repo, and see consistent naming
 
@@ -68,12 +68,12 @@ SegnoMMS plugin structure:
 
 ### Implementation for User Story 2
 
-- [ ] T012 [P] [US2] Add Python 3.14 classifier to `pyproject.toml` - add "Programming Language :: Python :: 3.14"
-- [ ] T013 [P] [US2] Document Python 3.14 support in `README.md` features section
-- [ ] T014 [P] [US2] Add uv installation prerequisites to `docs/source/installation.rst` before uv sync documentation
-- [ ] T015 [P] [US2] Remove pip extras `[docs,test]` references from `README.md` development section
-- [ ] T016 [P] [US2] Clarify uv requirement for dev dependencies in `README.md`
-- [ ] T017 [US2] Test fresh installation following updated README.md instructions
+- [X] T012 [P] [US2] Add Python 3.14 classifier to `pyproject.toml` - add "Programming Language :: Python :: 3.14"
+- [X] T013 [P] [US2] Document Python 3.14 support in `README.md` features section
+- [X] T014 [P] [US2] Add uv installation prerequisites to `docs/source/installation.rst` before uv sync documentation
+- [X] T015 [P] [US2] Remove pip extras `[docs,test]` references from `README.md` development section
+- [X] T016 [P] [US2] Clarify uv requirement for dev dependencies in `README.md`
+- [X] T017 [US2] Test fresh installation following updated README.md instructions
 
 **Checkpoint**: Dependency instructions clear - developers know exactly how to install for dev/production
 
@@ -87,11 +87,11 @@ SegnoMMS plugin structure:
 
 ### Implementation for User Story 3
 
-- [ ] T018 [P] [US3] Standardize RenderingConfig import in `docs/source/quickstart.rst` to `from segnomms.config import RenderingConfig`
-- [ ] T019 [P] [US3] Standardize RenderingConfig import in `README.md` to `from segnomms.config import RenderingConfig`
-- [ ] T020 [P] [US3] Verify AccessibilityConfig import path in `README.md` - test `from segnomms.a11y.accessibility import AccessibilityConfig`
-- [ ] T021 [P] [US3] Fix AccessibilityConfig import if incorrect in `README.md`
-- [ ] T022 [US3] Extract and test all import statements using `scripts/extract_code_examples.py`
+- [X] T018 [P] [US3] Standardize RenderingConfig import in `docs/source/quickstart.rst` to `from segnomms.config import RenderingConfig`
+- [X] T019 [P] [US3] Standardize RenderingConfig import in `README.md` to `from segnomms.config import RenderingConfig`
+- [X] T020 [P] [US3] Verify AccessibilityConfig import path in `README.md` - test `from segnomms.a11y.accessibility import AccessibilityConfig`
+- [X] T021 [P] [US3] Fix AccessibilityConfig import if incorrect in `README.md`
+- [X] T022 [US3] Extract and test all import statements using `scripts/extract_code_examples.py`
 
 **Checkpoint**: Import paths consistent - developers can copy examples without trial-and-error
 
