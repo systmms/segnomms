@@ -105,10 +105,10 @@ SegnoMMS plugin structure:
 
 ### Implementation for User Story 4
 
-- [ ] T023 [P] [US4] Document Lefthook setup in `docs/source/contributing.rst` - replace pre-commit references
-- [ ] T024 [P] [US4] Add `make help` reference to `docs/source/contributing.rst` for Makefile target discovery
-- [ ] T025 [P] [US4] Document test script discoverability policy in `docs/source/contributing.rst` - permanent scripts need Makefile targets
-- [ ] T026 [US4] Verify Lefthook installation instructions work
+- [X] T023 [P] [US4] Document Lefthook setup in `docs/source/contributing.rst` - replace pre-commit references
+- [X] T024 [P] [US4] Add `make help` reference to `docs/source/contributing.rst` for Makefile target discovery
+- [X] T025 [P] [US4] Document test script discoverability policy in `docs/source/contributing.rst` - permanent scripts need Makefile targets
+- [X] T026 [US4] Verify Lefthook installation instructions work
 
 **Checkpoint**: Contributor workflow clear - new contributors can set up environment without confusion
 
@@ -122,14 +122,14 @@ SegnoMMS plugin structure:
 
 ### Implementation for User Story 5
 
-- [ ] T027 [US5] Create `docs/source/api/constants.rst` with Sphinx autodoc directives
-- [ ] T028 [US5] Document ModuleShape enum in `docs/source/api/constants.rst`
-- [ ] T029 [US5] Document TEST_COLORS constant in `docs/source/api/constants.rst`
-- [ ] T030 [US5] Document QR_PAYLOADS constant in `docs/source/api/constants.rst`
-- [ ] T031 [US5] Document DEFAULT_SCALE constant in `docs/source/api/constants.rst`
-- [ ] T032 [US5] Document DEFAULT_BORDER constant in `docs/source/api/constants.rst`
-- [ ] T033 [US5] Add constants module reference to `docs/source/api/index.rst`
-- [ ] T034 [US5] Build Sphinx docs and verify constants module appears in API section
+- [X] T027 [US5] Create `docs/source/api/constants.rst` with Sphinx autodoc directives
+- [X] T028 [US5] Document ModuleShape enum in `docs/source/api/constants.rst`
+- [X] T029 [US5] Document TEST_COLORS constant in `docs/source/api/constants.rst`
+- [X] T030 [US5] Document QR_PAYLOADS constant in `docs/source/api/constants.rst`
+- [X] T031 [US5] Document DEFAULT_SCALE constant in `docs/source/api/constants.rst`
+- [X] T032 [US5] Document DEFAULT_BORDER constant in `docs/source/api/constants.rst`
+- [X] T033 [US5] Add constants module reference to `docs/source/api/index.rst`
+- [X] T034 [US5] Build Sphinx docs and verify constants module appears in API section
 
 **Checkpoint**: Constants module fully documented - developers can find all symbols in API reference
 
