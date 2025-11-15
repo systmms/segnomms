@@ -98,7 +98,7 @@ jobs:
       run: make benchmark-report
 
     - name: Upload performance artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: performance-results
         path: |
@@ -250,7 +250,7 @@ jobs:
 
     - name: Upload memory profiling results
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: memory-profiling-results
         path: |
