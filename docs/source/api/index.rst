@@ -8,6 +8,7 @@ This section contains the complete API reference for SegnoMMS.
 
    main
    config
+   constants
    intents
    shapes
    animation
