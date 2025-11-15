@@ -34,7 +34,7 @@ Unit Tests (tests/unit/)
 **Test Categories:**
 
 * **Configuration Tests** - Pydantic model validation, schema generation, serialization
-* **Core Algorithm Tests** - Matrix detection, neighbor analysis, clustering algorithms  
+* **Core Algorithm Tests** - Matrix detection, neighbor analysis, clustering algorithms
 * **Shape Rendering Tests** - All 14+ shape renderers with parameter validation
 * **Color System Tests** - Palette validation, contrast checking, accessibility compliance
 * **Plugin Interface Tests** - Segno integration, parameter passing, output validation
@@ -47,7 +47,7 @@ Integration Tests (tests/integration/)
 **Focus Areas:**
 
 * Plugin integration with Segno
-* Configuration processing pipelines  
+* Configuration processing pipelines
 * Shape rendering with different backends
 * Frame effects and clipping operations
 * Export format generation and validation
@@ -173,14 +173,14 @@ Performance Tests (tests/perf/)
 .. code-block:: bash
 
    make benchmark           # Full benchmark suite
-   make benchmark-quick     # Quick benchmarks  
+   make benchmark-quick     # Quick benchmarks
    make benchmark-memory    # Memory profiling
    make benchmark-report    # Generate performance report
 
 **Performance Targets:**
 
 * **Small QR codes** (21x21): < 10ms generation time
-* **Large QR codes** (177x177): < 100ms generation time  
+* **Large QR codes** (177x177): < 100ms generation time
 * **Memory usage**: < 50MB peak for typical workloads
 * **Batch processing**: Linear scaling with batch size
 
@@ -306,14 +306,14 @@ The test suite is fully integrated with GitHub Actions for automated testing:
    # Example GitHub Actions workflow
    name: Test Suite
    on: [push, pull_request]
-   
+
    jobs:
      test:
        runs-on: ubuntu-latest
        strategy:
          matrix:
            python-version: [3.8, 3.9, 3.10, 3.11, 3.12]
-       
+
        steps:
          - uses: actions/checkout@v4
          - name: Set up Python
@@ -343,10 +343,10 @@ Local Development Testing
 
       # Fast unit tests during development
       make test-quick
-      
+
       # Test specific module
       pytest tests/unit/test_shapes.py -v
-      
+
       # Test with coverage
       pytest tests/unit/ --cov=segnomms --cov-report=html
 
@@ -356,7 +356,7 @@ Local Development Testing
 
       # Full test suite before committing
       make test-all
-      
+
       # Include performance benchmarks
       make benchmark-quick
 
@@ -366,7 +366,7 @@ Local Development Testing
 
       # Update visual baselines after intentional changes
       make test-visual --update-baselines
-      
+
       # Review visual diffs
       make test-visual --show-diffs
 
@@ -403,9 +403,8 @@ Troubleshooting Common Issues
 
    .. code-block:: bash
 
-      # Install all test dependencies
+      # Install all development dependencies (including tests)
       make setup
-      pip install -e .[dev]
 
 2. **Platform-Specific Issues:**
    - Use Docker for consistent environment

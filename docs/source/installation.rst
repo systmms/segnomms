@@ -37,14 +37,21 @@ For development, install with extra dependencies:
 
    git clone https://github.com/systmms/segnomms.git
    cd segnomms
-   pip install -e ".[docs,test]"
+   make setup
 
-This installs additional packages for testing and documentation:
+This installs the package with all development dependencies using uv, including:
 
 * pytest and pytest-cov for testing
 * black, isort, flake8, mypy for code quality
 * pillow, lxml, beautifulsoup4 for testing utilities
 * sphinx and sphinx-rtd-theme for documentation
+
+Alternatively, if you prefer to use uv directly:
+
+.. code-block:: bash
+
+   uv sync
+   uv pip install -e .
 
 Verify Installation
 -------------------

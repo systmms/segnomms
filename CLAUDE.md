@@ -401,7 +401,22 @@ specs/                    # Generated specifications (created on first use)
 
 ---
 
+## 🧹 Recent Repository Maintenance (2025-01-15)
+
+**Completed:**
+- ✅ **Documentation Policy Enforcement** - Removed unauthorized Markdown files (CONTRIBUTING.md, ACTIONS_STATUS.md, PHASE3_COMPLETION_SUMMARY.md)
+- ✅ **Dependency Management Cleanup** - Removed duplicate `[project.optional-dependencies]` in favor of `[dependency-groups]`
+- ✅ **Generated Artifacts Cleanup** - Removed tracked event JSON files, verified .gitignore patterns
+- ✅ **Documentation Updates** - Updated installation docs to use `uv sync` / `make setup` instead of deprecated pip install patterns
+
+**Status:**
+- Repository now fully compliant with Sphinx-first documentation policy (only 3 MD files: README.md, CHANGELOG.md, CLAUDE.md)
+- Single source of truth for dependencies in `[dependency-groups]`
+- All generated artifacts properly gitignored
+
 ## 🚧 Development Reminders
 
-- **Multiline Shell Commands Standardization**
-  - Move multiline shell commands in GitHub Actions to a repo/ script
+- **Multiline Shell Commands Standardization** (In Progress)
+  - Most workflows properly externalize scripts to `repo/` directory ✓
+  - Some workflows still have inline shell commands (46 instances across 6 workflow files)
+  - Complete extraction when workflows are next updated
