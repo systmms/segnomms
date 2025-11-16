@@ -151,6 +151,54 @@ Code Review Process
 3. Address any review feedback
 4. Maintain clean commit history
 
+Spec-Kit Workflow (Feature Development)
+-----------------------------------------
+
+SegnoMMS uses GitHub Spec-Kit for spec-driven feature development with AI agents.
+
+**Available Slash Commands:**
+
+.. code-block:: bash
+
+   # Create/update project constitution
+   /speckit.constitution
+
+   # Create feature specification from natural language
+   /speckit.specify
+
+   # Clarify underspecified areas in spec
+   /speckit.clarify
+
+   # Generate technical implementation plan
+   /speckit.plan
+
+   # Generate actionable task list
+   /speckit.tasks
+
+   # Execute implementation plan
+   /speckit.implement
+
+   # Analyze cross-artifact consistency
+   /speckit.analyze
+
+**Workflow Phases:**
+
+1. **Constitution**: Define project principles (already established)
+2. **Specification**: Describe WHAT users need and WHY
+3. **Planning**: Generate HOW to implement (technical plan)
+4. **Tasks**: Break down into actionable work items
+5. **Implementation**: Execute tasks with validation
+
+**Validation:**
+
+.. code-block:: bash
+
+   make spec-check      # Validate spec-kit installation
+   make spec-validate   # Check specification files
+   make spec-help       # Show complete workflow guide
+
+All spec-driven features must pass existing quality gates (MyPy, tests, pre-commit hooks).
+
 Getting Help
 ------------
 

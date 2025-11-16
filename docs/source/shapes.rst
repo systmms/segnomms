@@ -18,7 +18,7 @@ Basic shapes are simple geometric forms that render each module independently:
 
 * **square** - Traditional square modules (default)
 * **circle** - Circular modules
-* **dot** - Small circular dots  
+* **dot** - Small circular dots
 * **diamond** - Diamond/rhombus shapes
 * **star** - Star shapes with configurable points
 * **triangle** - Triangular modules with directional options
@@ -237,8 +237,8 @@ The ``safe_mode`` parameter (default: True) affects how shapes are applied:
 
    # Safe mode ON - special patterns use simple squares
    write(qr, f, shape='star', safe_mode=True)
-   
-   # Safe mode OFF - all modules use the selected shape  
+
+   # Safe mode OFF - all modules use the selected shape
    write(qr, f, shape='star', safe_mode=False)
 
 When ``safe_mode=True``:
@@ -251,19 +251,54 @@ When ``safe_mode=True``:
 
 This ensures maximum scannability while still providing visual interest.
 
+Safe Mode Scope Reference
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Protected Patterns (always use simple squares when safe_mode=True):**
+
+* **Finder patterns** - Three large corner squares essential for QR detection
+* **Timing patterns** - Alternating modules that help determine grid alignment
+* **Alignment patterns** - Small squares for correcting distortion (larger QR codes)
+* **Format information** - Encodes error correction level and mask pattern
+
+**Unprotected Patterns (use selected shape regardless of safe_mode):**
+
+* **Data modules** - The payload-carrying modules that encode your content
+* **Version information** - Encodes QR version number (for versions 7+)
+
+**Why These Patterns Are Protected:**
+
+The protected patterns are critical for QR code detection and decoding. Finder patterns
+must maintain their distinctive appearance for scanners to locate the QR code. Timing
+patterns help calculate module positions. Altering these with non-standard shapes can
+significantly impact scannability, especially with older or less sophisticated decoders.
+
 Visual Examples
 ---------------
 
-For visual examples of all shapes, see the generated examples:
+To generate visual examples of all shapes for comparison:
 
-1. Run the example generator::
+.. code-block:: bash
 
-       cd docs
-       python generate_shape_examples.py
+   # Generate example QR codes with different shapes
+   python -c "
+   import segno
+   from segnomms import write
 
-2. Open ``shape_examples.html`` in your browser
+   shapes = ['square', 'circle', 'dot', 'diamond', 'rounded', 'connected']
+   for shape in shapes:
+       qr = segno.make('https://example.com')
+       write(qr, f'{shape}_example.svg', shape=shape, scale=10)
+       print(f'Generated {shape}_example.svg')
+   "
 
-3. Compare shapes with safe mode on/off
+This will create SVG files for each shape type that you can view in your browser
+to compare their visual appearance.
+
+.. note::
+   For production use, test your specific shape configuration with target QR code
+   scanners to ensure compatibility. See :doc:`decoder_compatibility` for detailed
+   testing guidance.
 
 Shape Selection Guide
 ---------------------
@@ -285,3 +320,11 @@ Shape Selection Guide
 
 **Technical/Minimal**
    Try ``cross`` with ``sharp=True``
+
+Related Documentation
+---------------------
+
+- :doc:`quickstart` - Getting started guide with basic shape usage
+- :doc:`decoder_compatibility` - How different shapes affect scanner compatibility
+- :doc:`examples` - Advanced usage patterns and integration examples
+- :doc:`api/index` - Complete API reference for shape parameters

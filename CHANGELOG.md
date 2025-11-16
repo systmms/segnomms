@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Enum fields now return enum objects instead of strings
 * Safe mode now protects fewer module types, allowing more design flexibility while preserving QR code functionality.
 
-### refactor\
+### refactor
 
 * remove use_enum_values to enable enum objects at runtime ([f14221c](https://github.com/systmms/segnomms/commit/f14221cd1cee644976ab5750afdf279d32dc3644))
 

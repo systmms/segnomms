@@ -1,6 +1,12 @@
 Installation
 ============
 
+.. warning::
+   **Beta Software Notice**: SegnoMMS is currently in beta (v0.1.x). While the core
+   functionality is stable and extensively tested, APIs may change between minor versions.
+   We recommend pinning to specific versions (e.g., ``segnomms==0.1.0``) for production
+   use and reviewing the changelog before upgrading.
+
 Requirements
 ------------
 

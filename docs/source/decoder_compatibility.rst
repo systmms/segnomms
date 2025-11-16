@@ -17,6 +17,36 @@ This reference documents tested decoder compatibility across different configura
 to help developers make informed decisions about styling choices for their specific
 use cases.
 
+Error Correction Level Reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+QR codes use Reed-Solomon error correction to recover from damage or scanning issues.
+Higher error correction levels allow more data recovery but reduce available data capacity:
+
+.. list-table:: Error Correction Levels
+   :header-rows: 1
+   :widths: 20 30 50
+
+   * - Level
+     - Recovery Capacity
+     - Recommended Use
+   * - **L** (Low)
+     - ~7% damage recovery
+     - Clean environments, maximum data capacity needed
+   * - **M** (Medium)
+     - ~15% damage recovery
+     - Standard usage, good balance (default)
+   * - **Q** (Quartile)
+     - ~25% damage recovery
+     - Stylized QR codes, moderate visual effects
+   * - **H** (High)
+     - ~30% damage recovery
+     - Heavy styling, logos, outdoor use, critical applications
+
+**For stylized QR codes**, use at least Level M. For connected shapes, merged modules,
+or centerpiece overlays, Level Q or H is strongly recommended to compensate for the
+visual modifications that may affect scanning.
+
 Decoder Library Compatibility Matrix
 ------------------------------------
 
@@ -54,7 +84,7 @@ Based on systematic testing, the following configurations have known decoder
 compatibility limitations:
 
 Shape-Related Issues
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 **Circle Modules (safe_mode=False)**
 - **Issue**: Circle modules without safe mode may not be recognized by some decoders
@@ -69,7 +99,7 @@ Shape-Related Issues
 - **Note**: Diamond with safe_mode=True works reliably
 
 Scale-Related Issues
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 **Rounded Modules at Various Scales**
 - **Issue**: Rounded modules may lose definition at certain scales during SVG→bitmap conversion
@@ -79,7 +109,7 @@ Scale-Related Issues
 - **Recommendation**: Test specific scale + decoder combinations for critical applications
 
 Error Correction Level Issues
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Low Error Correction (Level L)**
 - **Issue**: Connected shapes with ECC Level L may have insufficient error correction
@@ -89,7 +119,7 @@ Error Correction Level Issues
 - **Explanation**: Visual styling reduces available error correction capacity
 
 Compatibility Recommendations
-----------------------------
+-----------------------------
 
 High Compatibility Configurations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,7 +154,7 @@ For maximum decoder compatibility, use these "safe" configurations:
     }
 
 Balanced Styling Configurations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 These configurations provide good visual appeal with reasonable compatibility:
 
@@ -165,7 +195,7 @@ When deploying SegnoMMS QR codes, follow this testing approach:
 5. **Document compatibility** for your specific use case
 
 Example Testing Code
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -429,7 +459,7 @@ Example Testing Code
         batch_test_configurations(test_configs)
 
 Performance Considerations
--------------------------
+--------------------------
 
 SVG to Bitmap Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -455,7 +485,7 @@ The quality of SVG→PNG/JPEG conversion significantly affects decoder compatibi
     }
 
 Mobile Camera Considerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Mobile QR code scanning has additional constraints:
 
@@ -513,7 +543,7 @@ Future Compatibility
 --------------------
 
 Decoder Algorithm Evolution
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 QR decoder algorithms continue to evolve, potentially improving compatibility
 with stylized codes:
@@ -526,7 +556,7 @@ However, compatibility with older devices and legacy decoders remains important
 for broad accessibility.
 
 SegnoMMS Development
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Future SegnoMMS versions may include:
 
@@ -550,7 +580,7 @@ Before deploying stylized QR codes in production:
 5. **Monitor scanning success rates** if possible
 
 Configuration Selection Guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Critical Applications** (payment, authentication)
 - Use high compatibility configurations
@@ -740,7 +770,7 @@ Phase 4 features require special attention during PNG conversion:
 6. **Implement fallbacks** if any decoder fails
 
 Related Documentation
---------------------
+---------------------
 
 - :doc:`api/index` - Complete API reference
 - :doc:`shapes` - Shape options and visual styling examples
