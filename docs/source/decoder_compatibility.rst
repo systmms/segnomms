@@ -172,9 +172,29 @@ Example Testing Code
     import segno
     from segnomms import write
     import io
+    from pathlib import Path
+    from typing import Dict, List, Optional
 
-    def test_decoder_compatibility(config, test_data="Test Message"):
-        """Test decoder compatibility for a configuration."""
+    def test_decoder_compatibility(
+        config: Dict,
+        test_data: str = "Test Message",
+        output_dir: Optional[Path] = None
+    ) -> Dict[str, any]:
+        """
+        Test decoder compatibility for a configuration.
+
+        Args:
+            config: Dictionary of configuration options for write()
+            test_data: Data to encode in the QR code
+            output_dir: Optional directory for saving test files
+
+        Returns:
+            Dictionary with test results from all available decoders
+        """
+        import tempfile
+        import shutil
+
+        # Create QR code with specified error level
         qr = segno.make(test_data, error=config.get('error', 'M'))
 
         # Generate SVG
@@ -182,10 +202,231 @@ Example Testing Code
         write(qr, output, **config)
         svg_content = output.getvalue()
 
-        # Convert to PNG and test with available decoders
-        # (Implementation depends on your conversion setup)
+        # Prepare output directory
+        if output_dir is None:
+            output_dir = Path(tempfile.mkdtemp(prefix='qr_test_'))
+        else:
+            output_dir = Path(output_dir)
+            output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Save SVG
+        svg_path = output_dir / "test.svg"
+        with open(svg_path, 'w') as f:
+            f.write(svg_content)
+
+        # Convert SVG to PNG for testing
+        # Using cairosvg for reliable conversion
+        try:
+            import cairosvg
+            png_path = output_dir / "test.png"
+            cairosvg.svg2png(
+                bytestring=svg_content.encode('utf-8'),
+                write_to=str(png_path),
+                dpi=200,
+                output_width=400,
+                output_height=400
+            )
+        except ImportError:
+            return {
+                'error': 'cairosvg not installed',
+                'suggestion': 'pip install cairosvg',
+                'config': config
+            }
+
+        # Test with available decoders
+        test_results = {
+            'config': config,
+            'test_data': test_data,
+            'svg_path': str(svg_path),
+            'png_path': str(png_path),
+            'decoders': {}
+        }
+
+        # Test with zxingcpp
+        try:
+            import zxingcpp
+            from PIL import Image
+
+            img = Image.open(png_path)
+            result = zxingcpp.read_barcode(img)
+
+            test_results['decoders']['zxingcpp'] = {
+                'available': True,
+                'detected': result is not None,
+                'decoded': result.text if result else None,
+                'matches': result.text == test_data if result else False,
+                'error': None
+            }
+        except ImportError:
+            test_results['decoders']['zxingcpp'] = {
+                'available': False,
+                'error': 'zxingcpp not installed'
+            }
+        except Exception as e:
+            test_results['decoders']['zxingcpp'] = {
+                'available': True,
+                'detected': False,
+                'error': str(e)
+            }
+
+        # Test with OpenCV
+        try:
+            import cv2
+
+            img = cv2.imread(str(png_path))
+            detector = cv2.QRCodeDetector()
+            data, bbox, _ = detector.detectAndDecode(img)
+
+            test_results['decoders']['opencv'] = {
+                'available': True,
+                'detected': bbox is not None,
+                'decoded': data if data else None,
+                'matches': data == test_data if data else False,
+                'error': None
+            }
+        except ImportError:
+            test_results['decoders']['opencv'] = {
+                'available': False,
+                'error': 'opencv-python not installed'
+            }
+        except Exception as e:
+            test_results['decoders']['opencv'] = {
+                'available': True,
+                'detected': False,
+                'error': str(e)
+            }
+
+        # Test with pyzbar
+        try:
+            from pyzbar import pyzbar
+            from PIL import Image
+
+            img = Image.open(png_path)
+            results = pyzbar.decode(img)
+
+            if results:
+                decoded_data = results[0].data.decode('utf-8')
+                test_results['decoders']['pyzbar'] = {
+                    'available': True,
+                    'detected': True,
+                    'decoded': decoded_data,
+                    'matches': decoded_data == test_data,
+                    'error': None
+                }
+            else:
+                test_results['decoders']['pyzbar'] = {
+                    'available': True,
+                    'detected': False,
+                    'decoded': None,
+                    'matches': False,
+                    'error': 'No QR code detected'
+                }
+        except ImportError:
+            test_results['decoders']['pyzbar'] = {
+                'available': False,
+                'error': 'pyzbar not installed (requires system libzbar)'
+            }
+        except Exception as e:
+            test_results['decoders']['pyzbar'] = {
+                'available': True,
+                'detected': False,
+                'error': str(e)
+            }
+
+        # Calculate summary
+        available_decoders = [name for name, result in test_results['decoders'].items()
+                            if result.get('available', False)]
+        successful_decoders = [name for name, result in test_results['decoders'].items()
+                              if result.get('matches', False)]
+
+        test_results['summary'] = {
+            'total_decoders': len(available_decoders),
+            'successful_decoders': len(successful_decoders),
+            'success_rate': len(successful_decoders) / len(available_decoders)
+                           if available_decoders else 0.0,
+            'all_passed': len(successful_decoders) == len(available_decoders)
+                         and len(available_decoders) > 0
+        }
 
         return test_results
+
+
+    def print_test_results(results: Dict) -> None:
+        """Pretty print decoder test results."""
+        print(f"\n{'='*60}")
+        print("QR Decoder Compatibility Test Results")
+        print(f"{'='*60}")
+        print(f"Configuration: {results['config']}")
+        print(f"Test Data: {results['test_data']}")
+        print(f"\nDecoder Results:")
+        print(f"{'-'*60}")
+
+        for decoder_name, decoder_result in results['decoders'].items():
+            if not decoder_result.get('available', False):
+                print(f"  {decoder_name}: ❌ Not available - {decoder_result.get('error', 'Unknown')}")
+            elif decoder_result.get('matches', False):
+                print(f"  {decoder_name}: ✅ SUCCESS - Decoded correctly")
+            elif decoder_result.get('detected', False):
+                print(f"  {decoder_name}: ⚠️  MISMATCH - Decoded as '{decoder_result.get('decoded')}'")
+            else:
+                error = decoder_result.get('error', 'Detection failed')
+                print(f"  {decoder_name}: ❌ FAILED - {error}")
+
+        print(f"\n{'-'*60}")
+        summary = results['summary']
+        print(f"Summary: {summary['successful_decoders']}/{summary['total_decoders']} decoders succeeded")
+        print(f"Success Rate: {summary['success_rate']*100:.1f}%")
+        print(f"Overall: {'✅ PASS' if summary['all_passed'] else '❌ FAIL'}")
+        print(f"{'='*60}\n")
+
+
+    def batch_test_configurations(configs: List[Dict], test_data: str = "https://example.com") -> None:
+        """Test multiple configurations and report results."""
+        all_results = []
+
+        for i, config in enumerate(configs, 1):
+            print(f"\n[{i}/{len(configs)}] Testing configuration...")
+            results = test_decoder_compatibility(config, test_data)
+            print_test_results(results)
+            all_results.append(results)
+
+        # Print aggregate summary
+        print(f"\n{'='*60}")
+        print("AGGREGATE TEST RESULTS")
+        print(f"{'='*60}")
+
+        total_configs = len(all_results)
+        passed_configs = sum(1 for r in all_results if r['summary']['all_passed'])
+
+        print(f"Total Configurations Tested: {total_configs}")
+        print(f"Fully Compatible: {passed_configs}")
+        print(f"Partial Compatibility: {total_configs - passed_configs}")
+        print(f"Overall Compatibility Rate: {passed_configs/total_configs*100:.1f}%")
+        print(f"{'='*60}\n")
+
+
+    # Example Usage
+    if __name__ == "__main__":
+        # Test individual configuration
+        config = {
+            'shape': 'circle',
+            'safe_mode': True,
+            'scale': 10,
+            'error': 'M'
+        }
+
+        results = test_decoder_compatibility(config, "https://example.com")
+        print_test_results(results)
+
+        # Test multiple configurations
+        test_configs = [
+            {'shape': 'square', 'scale': 10, 'error': 'M'},
+            {'shape': 'circle', 'safe_mode': True, 'scale': 10, 'error': 'M'},
+            {'shape': 'rounded', 'safe_mode': True, 'scale': 15, 'error': 'M'},
+            {'shape': 'connected', 'safe_mode': True, 'scale': 12, 'error': 'H'},
+        ]
+
+        batch_test_configurations(test_configs)
 
 Performance Considerations
 -------------------------

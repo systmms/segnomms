@@ -143,10 +143,10 @@ SegnoMMS plugin structure:
 
 ### Implementation for User Story 6
 
-- [ ] T035 [P] [US6] Add complete FastAPI integration example to `docs/source/examples.rst` with all imports
-- [ ] T036 [P] [US6] Add complete decoder compatibility test script to `docs/source/decoder_compatibility.rst`
-- [ ] T037 [US6] Test FastAPI example extracts and runs successfully
-- [ ] T038 [US6] Test decoder test script extracts and runs successfully
+- [X] T035 [P] [US6] Add complete FastAPI integration example to `docs/source/examples.rst` with all imports
+- [X] T036 [P] [US6] Add complete decoder compatibility test script to `docs/source/decoder_compatibility.rst`
+- [X] T037 [US6] Test FastAPI example extracts and runs successfully
+- [X] T038 [US6] Test decoder test script extracts and runs successfully
 
 **Checkpoint**: Examples work - developers can copy and run code successfully
 

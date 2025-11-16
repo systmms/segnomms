@@ -1122,6 +1122,13 @@ FastAPI with Intent-Based Error Handling
    from fastapi.responses import JSONResponse, Response
    from pydantic import BaseModel
    from typing import Dict, Any, Optional, List
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import IntentsConfig, StyleIntents
+   from segnomms.exceptions import (
+       IntentValidationError,
+       UnsupportedIntentError,
+       ContrastRatioError
+   )
 
    app = FastAPI()
 
