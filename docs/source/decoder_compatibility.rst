@@ -203,13 +203,13 @@ Example Testing Code
     from segnomms import write
     import io
     from pathlib import Path
-    from typing import Dict, List, Optional
+    from typing import Any, Dict, List, Optional
 
     def test_decoder_compatibility(
         config: Dict,
         test_data: str = "Test Message",
         output_dir: Optional[Path] = None
-    ) -> Dict[str, any]:
+    ) -> Dict[str, Any]:
         """
         Test decoder compatibility for a configuration.
 
