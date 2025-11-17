@@ -1,5 +1,5 @@
 Visual Baselines
-==============
+================
 
 This page is auto-generated from the visual regression baselines in ``tests/visual/baseline``.
 

@@ -357,8 +357,8 @@ Phase 4 introduces powerful new features for creating professional QR codes with
 
 .. seealso::
    * :doc:`decoder_compatibility` - Essential compatibility testing guidance
-   * :ref:`safe-mode` - Ensuring maximum scannability
-   * :ref:`performance-optimization` - Performance considerations for advanced features
+   * :doc:`quickstart` - Getting started with safe defaults
+   * :doc:`decoder_compatibility` - Performance and compatibility considerations
 
 Frame Shapes
 ------------
@@ -758,7 +758,6 @@ Testing and Validation
 
    * :doc:`decoder_compatibility` - Complete decoder testing guide with code examples
    * :doc:`testing/index` - Development testing documentation
-   * :ref:`png-conversion` - Converting SVG to PNG for decoder testing
 
 Troubleshooting
 ---------------

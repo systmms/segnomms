@@ -110,11 +110,15 @@ def validate_doc_references(docs_source: Path, file_references: List[Tuple[str, 
     for ref, source_file in file_references:
         # Convert reference to file path, considering relative paths
         if not ref.endswith(".rst"):
-            if "/" in ref:
-                # Absolute reference from docs root
-                ref_path = docs_source / f"{ref}.rst"
+            if ref.startswith("/"):
+                # Absolute reference from docs root (strip leading slash)
+                ref_path = docs_source / f"{ref[1:]}.rst"
+            elif "/" in ref:
+                # Relative reference with path - resolve relative to source file
+                source_dir = source_file.parent
+                ref_path = (source_dir / f"{ref}.rst").resolve()
             else:
-                # Relative reference - resolve relative to source file
+                # Simple relative reference - resolve relative to source file
                 source_dir = source_file.parent
                 ref_path = source_dir / f"{ref}.rst"
         else:
