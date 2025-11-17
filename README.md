@@ -9,6 +9,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/systmms/segnomms/actions/workflows/test.yml/badge.svg)](https://github.com/systmms/segnomms/actions/workflows/test.yml)
 
+> **⚠️ Beta Software Notice**: SegnoMMS is currently in beta. While the core functionality is stable and extensively tested, APIs may change between minor versions. We recommend pinning to specific versions for production use and reviewing the [CHANGELOG](CHANGELOG.md) before upgrading.
+
 Advanced QR code generation plugin for [Segno](https://github.com/heuer/segno) with custom shapes, styling, interactivity, and **comprehensive Pydantic integration** for type-safe configuration management. Powers the QR code generation at [qrcodemms.com](https://www.qrcodemms.com).
 
 ## Features
@@ -138,14 +140,14 @@ write(qr, 'custom-accessible.svg', accessibility=custom_a11y)
 
 ## Requirements
 
-- Python >= 3.9
+- Python >= 3.9 (tested through Python 3.14)
 - Segno >= 1.5.2 (tested with 1.5.2, 1.6.0, and 1.6.6)
 - Pydantic >= 2.7,<3 (for configuration validation and JSON Schema)
 
 ### Optional Dependencies
 
 - For accessibility features: All included in base installation
-- For development: use `make setup` (uv) or install extras `[docs,test]` from `pyproject.toml`
+- For development: use `make setup` (uv) or `uv sync` to install all development dependencies
 
 ## Quick Start
 
@@ -337,7 +339,25 @@ This plugin is free for both personal and commercial use. You can use it in comm
 
 ### Setting Up the Development Environment
 
-This project uses Nix for reproducible development environments:
+**Recommended: Using uv (fast, no additional setup)**
+
+```bash
+git clone https://github.com/systmms/segnomms.git
+cd segnomms
+make setup  # Uses uv for fast dependency installation
+```
+
+**Alternative: Using pip**
+
+```bash
+git clone https://github.com/systmms/segnomms.git
+cd segnomms
+pip install -e .
+```
+
+**Optional: Using Nix for reproducible environments**
+
+For advanced users who prefer Nix-based development environments:
 
 1. Install [Nix](https://nixos.org/download.html) and [direnv](https://direnv.net/)
 2. Run the setup script:
@@ -345,6 +365,28 @@ This project uses Nix for reproducible development environments:
    ./repo/setup-dev-env.sh
    ```
 3. The environment will activate automatically when entering the project directory
+
+Note: Nix setup is optional and not required for most development workflows.
+
+### Development Commands
+
+Use `make help` to discover all available commands:
+
+```bash
+make help           # Show all available commands
+make test           # Run full test suite
+make test-quick     # Quick unit tests during development
+make lint           # Run all linting checks
+make docs           # Build Sphinx documentation
+make benchmark      # Run performance benchmarks
+```
+
+Key commands organized by category:
+- **Setup**: `make setup`, `make clean`
+- **Testing**: `make test`, `make test-unit`, `make test-integration`, `make test-visual`
+- **Quality**: `make lint`, `make format`
+- **Documentation**: `make docs`, `make docs-serve`
+- **Performance**: `make benchmark`, `make benchmark-memory`
 
 ### GitHub Actions Testing
 

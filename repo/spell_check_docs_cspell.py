@@ -344,15 +344,14 @@ def main() -> int:
             print("✅ All documentation files passed spell check!")
         return 0
     else:
-        print(f"⚠️  {files_with_errors} file(s) have potential spelling errors")
+        print(f"❌ {files_with_errors} file(s) have spelling errors")
         if not args.quiet:
             print()
-            print("💡 Tips:")
-            print("   • Review the reported words for actual typos")
-            print("   • Technical terms can be added to project-words.txt")
-            print("   • Consider context - some 'errors' might be intentional")
-            print("   • Use 'npm run spell-check' to check all files")
-        return 0  # Don't fail CI for spelling warnings
+            print("💡 To fix:")
+            print("   • Correct actual typos in your documentation")
+            print("   • Add legitimate technical terms to project-words.txt")
+            print("   • Review the errors above and fix or whitelist as appropriate")
+        return 1  # Fail CI for spelling errors
 
 
 if __name__ == "__main__":

@@ -74,7 +74,7 @@ Example:
             write(qr, f, **config.to_kwargs())
 
 Note:
-    This plugin requires Segno 1.5.0 or higher and Pydantic 2.0 or higher.
+    This plugin requires Segno >= 1.5.2 and Pydantic >= 2.7.
     The Intent-Based API provides superior error handling and is recommended
     for production applications.
 
@@ -162,7 +162,7 @@ except ImportError:
 
 # Version information
 __version__ = "0.1.0b4"
-__author__ = "QRCodeMMS"
+__author__ = "SYSTMMS"
 
 # Export main functionality
 __all__ = [

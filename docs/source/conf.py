@@ -134,3 +134,11 @@ nitpick_ignore_regex = [
     (r"py:class", r"segnomms\\.validation\\.models\\..*"),
     (r"py:class", r"tests\\.helpers\\..*"),
 ]
+
+# --- Linkcheck configuration -------------------------------------------------
+# Ignore placeholder URLs in documentation examples
+linkcheck_ignore = [
+    r"https?://example\.com.*",  # RFC 2606 placeholder domain
+    r"https?://example\.org.*",  # RFC 2606 placeholder domain
+    r"https?://example\.net.*",  # RFC 2606 placeholder domain
+]

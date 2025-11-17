@@ -1,13 +1,14 @@
 API Reference
 =============
 
-This section contains the complete API reference for the Segno Interactive SVG Plugin.
+This section contains the complete API reference for SegnoMMS.
 
 .. toctree::
    :maxdepth: 2
 
    main
    config
+   constants
    intents
    shapes
    animation

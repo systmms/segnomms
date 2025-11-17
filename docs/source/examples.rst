@@ -1,7 +1,7 @@
 Examples
 ========
 
-This section provides comprehensive examples of using the Segno Interactive SVG Plugin.
+This section provides comprehensive examples of using SegnoMMS.
 
 .. note::
    For testing and development, consider using the test constants module for more maintainable code.
@@ -357,8 +357,8 @@ Phase 4 introduces powerful new features for creating professional QR codes with
 
 .. seealso::
    * :doc:`decoder_compatibility` - Essential compatibility testing guidance
-   * :ref:`safe-mode` - Ensuring maximum scannability
-   * :ref:`performance-optimization` - Performance considerations for advanced features
+   * :doc:`quickstart` - Getting started with safe defaults
+   * :doc:`decoder_compatibility` - Performance and compatibility considerations
 
 Frame Shapes
 ------------
@@ -758,7 +758,6 @@ Testing and Validation
 
    * :doc:`decoder_compatibility` - Complete decoder testing guide with code examples
    * :doc:`testing/index` - Development testing documentation
-   * :ref:`png-conversion` - Converting SVG to PNG for decoder testing
 
 Troubleshooting
 ---------------
@@ -1122,6 +1121,13 @@ FastAPI with Intent-Based Error Handling
    from fastapi.responses import JSONResponse, Response
    from pydantic import BaseModel
    from typing import Dict, Any, Optional, List
+   from segnomms.intents import render_with_intents
+   from segnomms.intents.models import IntentsConfig, StyleIntents
+   from segnomms.exceptions import (
+       IntentValidationError,
+       UnsupportedIntentError,
+       ContrastRatioError
+   )
 
    app = FastAPI()
 

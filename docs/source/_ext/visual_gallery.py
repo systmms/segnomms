@@ -117,7 +117,7 @@ def _generate_rst(
 ) -> str:
     lines: List[str] = []
     lines.append("Visual Baselines")
-    lines.append("==============")
+    lines.append("=" * len("Visual Baselines"))
     lines.append("")
     lines.append(
         "This page is auto-generated from the visual regression baselines in ``tests/visual/baseline``."

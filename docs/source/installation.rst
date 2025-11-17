@@ -1,17 +1,23 @@
 Installation
 ============
 
+.. warning::
+   **Beta Software Notice**: SegnoMMS is currently in beta (v0.1.x). While the core
+   functionality is stable and extensively tested, APIs may change between minor versions.
+   We recommend pinning to specific versions (e.g., ``segnomms==0.1.0``) for production
+   use and reviewing the changelog before upgrading.
+
 Requirements
 ------------
 
-* Python 3.9 or higher
-* Segno 1.5.2 or higher
-* Pydantic 2.7 or higher
+* Python >= 3.9
+* Segno >= 1.5.2
+* Pydantic >= 2.7
 
 Install from PyPI
 -----------------
 
-The easiest way to install the Segno Interactive SVG Plugin is via pip:
+The easiest way to install SegnoMMS is via pip:
 
 .. code-block:: bash
 
@@ -31,7 +37,16 @@ To install from source:
 Development Installation
 ------------------------
 
-For development, install with extra dependencies:
+For development, install with extra dependencies.
+
+**Prerequisites**: Install `uv <https://github.com/astral-sh/uv>`_ for ultra-fast dependency management:
+
+.. code-block:: bash
+
+   # Install uv (if not already installed)
+   pip install uv
+
+Then clone and setup:
 
 .. code-block:: bash
 

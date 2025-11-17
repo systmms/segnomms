@@ -50,16 +50,14 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       run: uv python install ${{ matrix.python-version }}
 
-    - name: Cache UV and Virtual Environment
+    - name: Cache Virtual Environment
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        path: .venv
+        key: venv-${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
         restore-keys: |
-          uv-${{ runner.os }}-python${{ matrix.python-version }}-
-          uv-${{ runner.os }}-
+          venv-${{ runner.os }}-python${{ matrix.python-version }}-
+          venv-${{ runner.os }}-
 
     - name: Install dependencies
       run: |
@@ -90,7 +88,7 @@ jobs:
       if: matrix.python-version == '3.11'
       uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.xml
+        files: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
@@ -121,16 +119,14 @@ jobs:
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
 
-    - name: Cache UV and Virtual Environment
+    - name: Cache Virtual Environment
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        path: .venv
+        key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
         restore-keys: |
-          uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
-          uv-${{ runner.os }}-
+          venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
+          venv-${{ runner.os }}-
 
     - name: Install dependencies
       run: |
@@ -158,16 +154,14 @@ jobs:
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
 
-    - name: Cache UV and Virtual Environment
+    - name: Cache Virtual Environment
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        path: .venv
+        key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
         restore-keys: |
-          uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
-          uv-${{ runner.os }}-
+          venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
+          venv-${{ runner.os }}-
 
     - name: Cache APT packages
       uses: awalsh128/cache-apt-pkgs-action@v1
@@ -211,16 +205,14 @@ jobs:
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
 
-    - name: Cache UV and Virtual Environment
+    - name: Cache Virtual Environment
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        path: .venv
+        key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
         restore-keys: |
-          uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
-          uv-${{ runner.os }}-
+          venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
+          venv-${{ runner.os }}-
 
     - name: Cache APT packages
       uses: awalsh128/cache-apt-pkgs-action@v1
@@ -261,16 +253,14 @@ jobs:
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
 
-    - name: Cache UV and Virtual Environment
+    - name: Cache Virtual Environment
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        path: .venv
+        key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
         restore-keys: |
-          uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
-          uv-${{ runner.os }}-
+          venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
+          venv-${{ runner.os }}-
 
     - name: Install dependencies
       run: |

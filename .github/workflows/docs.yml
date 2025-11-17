@@ -3,11 +3,8 @@ name: Documentation
 on:
   push:
     branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
     paths:
     - 'docs/**'
-    - 'segnomms/**/*.py'
     - 'README.md'
     - 'CHANGELOG.md'
     - 'repo/check_doc_*.py'
@@ -19,6 +16,23 @@ on:
     - 'repo/generate_example_qrs.py'
     - 'repo/docs_quality_gate.sh'
     - '.github/workflows/docs.yml'
+    - '.github/workflows/_docs-build.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+    - 'docs/**'
+    - 'README.md'
+    - 'CHANGELOG.md'
+    - 'repo/check_doc_*.py'
+    - 'repo/spell_check_docs_cspell.py'
+    - 'project-words.txt'
+    - 'cspell.json'
+    - 'repo/setup_cspell.sh'
+    - 'repo/test_readme_examples.py'
+    - 'repo/generate_example_qrs.py'
+    - 'repo/docs_quality_gate.sh'
+    - '.github/workflows/docs.yml'
+    - '.github/workflows/_docs-build.yml'
   release:
     types: [published]
   workflow_dispatch:
@@ -54,20 +68,18 @@ jobs:
     - name: Set up Python
       run: uv python install ${{ env.PYTHON_VERSION }}
 
-    - name: Cache UV and Virtual Environment
+    - name: Cache Virtual Environment
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cache/uv
-          .venv
-        key: uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
+        path: .venv
+        key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
         restore-keys: |
-          uv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
-          uv-${{ runner.os }}-
+          venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-
+          venv-${{ runner.os }}-
 
     - name: Install dependencies
       run: |
-        uv sync --extra test
+        uv sync --group dev
         uv pip install -e .
 
     - name: Install system dependencies for SVG processing
@@ -148,35 +160,6 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-
-    - name: Comment documentation URL on PR
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v8
-      with:
-        script: |
-          const { owner, repo } = context.repo;
-          const pr_number = context.issue.number;
-
-          const body = `## 📚 Documentation Preview
-
-          The documentation has been built successfully!
-
-          **Preview URL:** https://segnomms.systmms.dev/
-
-          ### Documentation Coverage
-          - Built from commit: ${{ github.sha }}
-          - All examples tested and validated
-          - Spelling checked for common errors
-
-          📁 Full documentation artifacts are available in this workflow run.
-          `;
-
-          await github.rest.issues.createComment({
-            issue_number: pr_number,
-            owner: owner,
-            repo: repo,
-            body: body
-          });
 
   documentation-quality-gate:
     name: Documentation Quality Gate

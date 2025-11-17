@@ -33,7 +33,7 @@ Most commonly used parameters with valid ranges:
    * - shape
      - str
      - circle, square, diamond, star, connected, etc.
-     - Module shape (see :ref:`shape-reference` for full list)
+     - Module shape (see :doc:`/shapes` for full list)
    * - scale
      - int
      - 1-100
