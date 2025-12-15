@@ -183,7 +183,7 @@ jobs:
 
     - name: Upload visual test artifacts
       if: failure()
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: visual-test-results
         path: |
@@ -233,7 +233,7 @@ jobs:
         make test-examples
 
     - name: Upload example artifacts
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: generated-examples
         path: examples-generated/
@@ -278,7 +278,7 @@ jobs:
 
     - name: Upload security scan results
       if: always()
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: security-scan-results
         path: bandit-report.json
