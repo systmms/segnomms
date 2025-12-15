@@ -51,7 +51,7 @@ jobs:
       run: uv python install ${{ matrix.python-version }}
 
     - name: Cache Virtual Environment
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: .venv
         key: venv-${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
@@ -120,7 +120,7 @@ jobs:
       run: uv python install ${{ env.PYTHON_VERSION }}
 
     - name: Cache Virtual Environment
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: .venv
         key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
@@ -155,7 +155,7 @@ jobs:
       run: uv python install ${{ env.PYTHON_VERSION }}
 
     - name: Cache Virtual Environment
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: .venv
         key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
@@ -206,7 +206,7 @@ jobs:
       run: uv python install ${{ env.PYTHON_VERSION }}
 
     - name: Cache Virtual Environment
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: .venv
         key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
@@ -254,7 +254,7 @@ jobs:
       run: uv python install ${{ env.PYTHON_VERSION }}
 
     - name: Cache Virtual Environment
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: .venv
         key: venv-${{ runner.os }}-python${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock', 'pyproject.toml') }}
