@@ -90,14 +90,14 @@ jobs:
 
     - name: Upload documentation artifacts
       if: ${{ inputs.upload-artifacts }}
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: documentation-html
         path: docs/build/html/
 
     - name: Upload documentation coverage
       if: ${{ inputs.upload-artifacts && inputs.run-coverage-report }}
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: documentation-coverage
         path: docs/doc-coverage.md
