@@ -401,6 +401,57 @@ specs/                    # Generated specifications (created on first use)
 
 ---
 
+## 💡 Ideas Backlog (`.specify/ideas/`)
+
+**Purpose**: Long-term feature ideas and refactoring opportunities that aren't ready for formal spec-kit workflows.
+
+### How It Works
+
+The `.specify/ideas/` directory contains markdown files for feature ideas that:
+- Are identified during code reviews or development
+- Need further investigation before formal specification
+- Represent "someday/maybe" improvements
+- Track refactoring opportunities
+
+### Workflow
+
+1. **Adding Ideas**: Create a new file `.specify/ideas/[topic].md` with:
+   - Problem statement
+   - Proposed solution
+   - Files affected
+   - Success criteria
+   - Notes section for ongoing learnings
+
+2. **Promoting to Spec-Kit**: When ready to implement:
+   - Use `/speckit.specify` to create a formal spec from the idea
+   - Reference the original idea file in the spec
+   - Move or archive the idea file after implementation
+
+3. **Maintaining Ideas**: Update idea files as:
+   - New information is discovered
+   - Related work is completed
+   - Priorities change
+
+### Current Ideas
+
+| File | Topic | Priority |
+|------|-------|----------|
+| `processor-split.md` | Split 2,007-line IntentProcessor monolith | High |
+| `pattern-style-config-refactor.md` | Refactor 28-field PatternStyleConfig to Dict pattern | High |
+| `test-quality-audit.md` | Audit test coverage and edge cases | Foundation |
+| `documentation-improvements.md` | Architecture docs, magic number rationale | Medium |
+
+### Recommended Sequence
+
+1. Test Quality Audit (establish baseline before refactoring)
+2. Documentation (preserve knowledge before changes)
+3. PatternStyleConfig Refactor (smaller scope)
+4. IntentProcessor Split (larger scope)
+
+**Note**: This is an informal extension to spec-kit, not part of the official workflow.
+
+---
+
 ## 🧹 Recent Repository Maintenance (2025-01-15)
 
 **Completed:**
