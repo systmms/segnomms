@@ -22,15 +22,20 @@ Current documentation gaps:
 Add to Sphinx docs (`docs/source/internals/pipeline.rst`):
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    SegnoMMS Pipeline                         │
-├─────────────────────────────────────────────────────────────┤
-│  User Input → IntentProcessor → RenderingConfig             │
-│       ↓                                                      │
-│  QR Matrix → Phase 1 (Shapes) → Phase 2 (Clusters)          │
-│       ↓              ↓                 ↓                     │
-│  Phase 3 (Contours) → Phase 4 (Visual) → SVG Output         │
-└─────────────────────────────────────────────────────────────┘
+                    SegnoMMS Pipeline
+
+User Input → IntentProcessor ┬→ RenderingConfig (used by all phases)
+                             └→ QR Matrix
+                                   ↓
+                            Phase 1 (Enhanced Shapes)
+                                   ↓
+                            Phase 2 (Clustering)
+                                   ↓
+                            Phase 3 (Contours)
+                                   ↓
+                            Phase 4 (Visual Enhancement)
+                                   ↓
+                              SVG Output
 ```
 
 Include:
@@ -63,11 +68,15 @@ Create `docs/source/internals/constants.rst`:
 | `corner_radius` | 0.3 | Default matches common design expectations |
 | `kappa` (squircle) | 0.37 | Mathematical: approximates superellipse n=4 |
 
-### 4. Developer Onboarding Guide
+### 4. Developer Onboarding Guides
 
-Create `docs/source/development/architecture.rst`:
+Create the following tutorial files in `docs/source/development/`:
+- `architecture.rst` - High-level module overview
+- `adding-shapes.rst` - Shape renderer tutorial (content below)
+- `adding-intents.rst` - Intent type tutorial (content below)
 
 #### How to Add a New Shape Renderer
+*(Content for `adding-shapes.rst`)*
 
 ```python
 # 1. Create renderer class in segnomms/shapes/basic.py
@@ -94,6 +103,7 @@ class ModuleShape(str, Enum):
 ```
 
 #### How to Add a New Intent Type
+*(Content for `adding-intents.rst`)*
 
 1. Add model in `segnomms/intents/models.py`
 2. Add processor method in `segnomms/intents/processor.py`
