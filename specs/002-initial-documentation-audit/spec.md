@@ -185,7 +185,7 @@ A developer or organization considering SegnoMMS needs clear indication that thi
 
 - **FR-023**: All code blocks in RST files MUST have proper language tags for syntax highlighting
 - **FR-024**: Documentation MUST use Sphinx cross-references (`:doc:`, `:ref:`) for internal navigation where appropriate
-- **FR-025**: CHANGELOG.md MUST have backslash typo fixed (line 18: `### refactor\`)
+- **FR-025**: ~~CHANGELOG.md backslash typo~~ DEFERRED: Managed by release-please; will be corrected in next automated release
 - **FR-026**: README.md introduction MUST include prominent beta status notice for version 0.1.0b4
 - **FR-027**: contributing.rst MUST document test script discoverability policy (all permanent test scripts need Makefile targets)
 
@@ -208,6 +208,20 @@ A developer or organization considering SegnoMMS needs clear indication that thi
 - **SC-005**: Contributors can set up development environment following contributing.rst in under 10 minutes without encountering incorrect tool references
 - **SC-006**: Sphinx documentation builds without warnings or broken cross-references
 - **SC-007**: All permanent test scripts have corresponding Makefile targets (verified by comparing scripts/ directory with Makefile)
+
+### Measurement Methodology
+
+**For SC-003 (Install time <5 min)**:
+- Timer starts when developer opens README.md
+- Timer ends when `python -c "import segnomms"` succeeds
+- Environment: Fresh Python 3.11+ virtual environment with pip available
+- Network: Standard broadband connection
+
+**For SC-005 (Dev setup time <10 min)**:
+- Timer starts when contributor opens contributing.rst
+- Timer ends when `make test-quick` passes
+- Environment: Fresh clone with uv installed
+- Prerequisites: Git, Python 3.11+, uv already installed
 
 ## SegnoMMS Integration Requirements *(mandatory for SegnoMMS features)*
 

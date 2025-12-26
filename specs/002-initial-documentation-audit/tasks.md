@@ -28,6 +28,8 @@ SegnoMMS plugin structure:
 - [X] T001 Create contradiction check script in `scripts/check_doc_contradictions.sh`
 - [X] T002 [P] Create code example extraction script in `scripts/extract_code_examples.py`
 - [X] T003 [P] Create comprehensive validation script in `scripts/verify_documentation_fixes.py`
+- [X] T003b [P] Create cross-reference validation script in `scripts/validate_docs_references.py`
+- [X] T003c Add Makefile targets for documentation validation scripts (`docs-validate`)
 
 ---
 
@@ -110,6 +112,8 @@ SegnoMMS plugin structure:
 - [X] T025 [P] [US4] Document test script discoverability policy in `docs/source/contributing.rst` - permanent scripts need Makefile targets
 - [X] T026 [US4] Verify Lefthook installation instructions work
 
+**Note**: FR-012 (spec-kit workflow documentation) is addressed in Phase 11 T051 as a cross-cutting concern affecting multiple contributor workflows.
+
 **Checkpoint**: Contributor workflow clear - new contributors can set up environment without confusion
 
 ---
@@ -163,12 +167,12 @@ SegnoMMS plugin structure:
 - [X] T039 [P] [US7] Add Sphinx cross-references to `docs/source/shapes.rst` using `:doc:` and `:ref:`
 - [X] T040 [P] [US7] Document safe mode scope in `docs/source/shapes.rst` - explicit list of protected vs unprotected patterns
 - [X] T041 [P] [US7] Add ECC level table to `docs/source/decoder_compatibility.rst` (L=7%, M=15%, Q=25%, H=30%)
-- [X] T042 [P] [US7] Create comprehensive Phase 4 feature reference in one location (choose appropriate RST file)
-- [X] T043 [P] [US7] Fix or remove shape gallery references in `docs/source/shapes.rst`
-- [X] T044 [P] [US7] Fix or remove Nix environment references in `README.md`
+- [X] T042 [P] [US7] Create comprehensive Phase 4 feature reference in `docs/source/advanced.rst` (or new `docs/source/phase4.rst` if advanced.rst doesn't exist)
+- [X] T043 [P] [US7] Remove outdated shape gallery generator references from `docs/source/shapes.rst` (generator script not maintained)
+- [X] T044 [P] [US7] Remove incomplete Nix environment references from `README.md` (Nix setup not officially supported)
 - [X] T045 [P] [US7] Document performance testing framework in `docs/source/testing/` (create directory if needed)
 - [X] T046 [P] [US7] Audit code blocks in all RST files for proper language tags (python, bash, css)
-- [X] T047 [US7] Validate cross-references resolve using `python repo/validate_docs_references.py`
+- [X] T047 [US7] Validate cross-references resolve using `scripts/validate_docs_references.py`
 
 **Checkpoint**: Navigation improved - developers can find related docs and understand all features
 
@@ -197,12 +201,11 @@ SegnoMMS plugin structure:
 - [X] T051 [P] Document spec-kit workflow in `docs/source/contributing.rst`
 - [X] T052 [P] Remove all "segno-interactive-svg" references from documentation (comprehensive grep)
 - [X] T053 [P] Add "Development Commands" section to `README.md` referencing `make help`
-- [X] T054 [P] Fix CHANGELOG.md backslash typo on line 18 (`### refactor\` → `### refactor`)
-- [X] T055 [P] Final audit of code block language tags across all RST files
+- [X] T054 [P] Final audit of code block language tags across all RST files
 - [X] T056 [P] Final audit of Sphinx cross-references across all RST files
 - [X] T057 Build Sphinx documentation and verify zero warnings: `make docs 2>&1 | grep -i warning`
 - [X] T058 Run comprehensive validation script: `python scripts/verify_documentation_fixes.py`
-- [X] T059 Verify all 27 functional requirements (FR-001 through FR-027) addressed
+- [X] T059 Verify all 26 active functional requirements addressed (FR-025 deferred)
 - [X] T060 Verify all 7 success criteria (SC-001 through SC-007) met
 
 ---
@@ -316,7 +319,7 @@ Run story-specific validation from quickstart.md:
 - **US4**: Follow contributing.rst from scratch
 - **US5**: `make docs` and check API section
 - **US6**: Extract and run examples
-- **US7**: `python repo/validate_docs_references.py`
+- **US7**: `scripts/validate_docs_references.py`
 - **US8**: Review README.md and installation.rst intro
 
 ### Final Validation (Phase 11)
@@ -330,7 +333,7 @@ make docs 2>&1 | tee build.log
 grep -i "warning\|error" build.log
 
 # Cross-reference validation
-python repo/validate_docs_references.py
+python scripts/validate_docs_references.py
 
 # Success criteria verification
 # SC-001: Zero contradictions ✓
@@ -384,5 +387,5 @@ git commit -m "docs(polish): add spec-kit workflow, cross-references, code block
 - **Most tasks are parallelizable** - documentation files rarely conflict
 - Commit after each user story or logical group
 - Stop at any checkpoint to validate story independently
-- Feature has **60 total tasks** covering all **27 functional requirements**
+- Feature has **60 total tasks** covering **26 active functional requirements** (FR-025 deferred to release-please)
 - **No tests** to write - validation via Sphinx build and example execution
