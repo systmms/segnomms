@@ -114,9 +114,17 @@ Testing Shape Categories
 Using Predefined Test Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+You can create your own test case dictionaries or iterate over available shapes:
+
 .. code-block:: python
 
-   from segnomms.constants import SHAPE_TEST_CASES
+   from segnomms.constants import VALID_SHAPES, BASIC_SHAPES, create_config
+
+   # Define your own test cases using available constants
+   SHAPE_TEST_CASES = [
+       {"shape": shape, "corner_radius": 0.3}
+       for shape in BASIC_SHAPES
+   ]
 
    @pytest.mark.parametrize("test_case", SHAPE_TEST_CASES)
    def test_shape_configurations(test_case):
@@ -125,10 +133,6 @@ Using Predefined Test Cases
            corner_radius=test_case["corner_radius"]
        )
        write(qr, output, **config)
-
-       # Use test case metadata for assertions
-       if test_case["supports_merging"]:
-           assert "merge" in result
 
 Testing with Common Payloads
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,7 +161,7 @@ Best Practices
    from segnomms.constants import ModuleShape, DEFAULT_SCALE
 
    # Or import categories
-   from segnomms.constants import VALID_SHAPES, COLOR_TEST_CASES
+   from segnomms.constants import VALID_SHAPES, TEST_COLORS
 
 2. Use Enum Values
 ~~~~~~~~~~~~~~~~~~
@@ -177,14 +181,18 @@ When adding new test cases, add them to the constants module:
 
 .. code-block:: python
 
-   # In tests/constants.py
-   NEW_FEATURE_TEST_CASES = [
-       {"config": {...}, "expected": ...},
-       {"config": {...}, "expected": ...},
+   # In your test file, define test cases using existing constants
+   from segnomms.constants import VALID_SHAPES, TEST_COLORS, create_config
+
+   FEATURE_TEST_CASES = [
+       {"shape": shape, "dark": TEST_COLORS["black"]}
+       for shape in VALID_SHAPES[:3]  # Test first few shapes
    ]
 
-   # In your test
-   from segnomms.constants import NEW_FEATURE_TEST_CASES
+   @pytest.mark.parametrize("test_case", FEATURE_TEST_CASES)
+   def test_feature(test_case):
+       config = create_config(**test_case)
+       # ... test implementation
 
 4. Type Hints
 ~~~~~~~~~~~~~
@@ -212,7 +220,7 @@ Shapes
        VALID_SHAPES,        # All valid shape names
        BASIC_SHAPES,        # Simple geometric shapes
        CONNECTED_SHAPES,    # Shapes that support merging
-       SHAPE_TEST_CASES     # Predefined shape configurations
+       FINDER_SHAPES        # Finder pattern shapes
    )
 
 Colors
@@ -221,8 +229,7 @@ Colors
 .. code-block:: python
 
    from segnomms.constants import (
-       TEST_COLORS,         # Named color constants
-       COLOR_TEST_CASES,    # Common color combinations
+       TEST_COLORS,         # Named color constants for testing
        DEFAULT_DARK,        # Standard dark color
        DEFAULT_LIGHT        # Standard light color
    )
@@ -233,8 +240,7 @@ Payloads
 .. code-block:: python
 
    from segnomms.constants import (
-       QR_PAYLOADS,         # Common test content (url, simple, unicode, etc.)
-       ERROR_LEVELS         # QR error correction levels
+       QR_PAYLOADS          # Common test content (url, simple, unicode, etc.)
    )
 
 Configuration Helpers
@@ -243,11 +249,9 @@ Configuration Helpers
 .. code-block:: python
 
    from segnomms.constants import (
-       create_config,  # Build consistent configs
+       create_config,       # Build consistent configs
        DEFAULT_SCALE,       # Standard scale value (10)
-       DEFAULT_BORDER,      # Standard border size (4)
-       DEFAULT_TEST_CONFIG, # Minimal default configuration
-       FULL_TEST_CONFIG     # Complete configuration example
+       DEFAULT_BORDER       # Standard border size (4)
    )
 
 Test Helpers
