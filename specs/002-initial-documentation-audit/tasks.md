@@ -28,7 +28,7 @@ SegnoMMS plugin structure:
 - [X] T001 Create contradiction check script in `scripts/check_doc_contradictions.sh`
 - [X] T002 [P] Create code example extraction script in `scripts/extract_code_examples.py`
 - [X] T003 [P] Create comprehensive validation script in `scripts/verify_documentation_fixes.py`
-- [X] T003b [P] Create cross-reference validation script in `scripts/validate_docs_references.py`
+- [X] T003b [P] Create cross-reference validation script in `repo/validate_docs_references.py`
 - [X] T003c Add Makefile targets for documentation validation scripts (`docs-validate`)
 
 ---
@@ -172,7 +172,7 @@ SegnoMMS plugin structure:
 - [X] T044 [P] [US7] Remove incomplete Nix environment references from `README.md` (Nix setup not officially supported)
 - [X] T045 [P] [US7] Document performance testing framework in `docs/source/testing/` (create directory if needed)
 - [X] T046 [P] [US7] Audit code blocks in all RST files for proper language tags (python, bash, css)
-- [X] T047 [US7] Validate cross-references resolve using `scripts/validate_docs_references.py`
+- [X] T047 [US7] Validate cross-references resolve using `repo/validate_docs_references.py`
 
 **Checkpoint**: Navigation improved - developers can find related docs and understand all features
 
@@ -319,7 +319,7 @@ Run story-specific validation from quickstart.md:
 - **US4**: Follow contributing.rst from scratch
 - **US5**: `make docs` and check API section
 - **US6**: Extract and run examples
-- **US7**: `scripts/validate_docs_references.py`
+- **US7**: `repo/validate_docs_references.py`
 - **US8**: Review README.md and installation.rst intro
 
 ### Final Validation (Phase 11)
@@ -333,7 +333,7 @@ make docs 2>&1 | tee build.log
 grep -i "warning\|error" build.log
 
 # Cross-reference validation
-python scripts/validate_docs_references.py
+python repo/validate_docs_references.py
 
 # Success criteria verification
 # SC-001: Zero contradictions ✓
