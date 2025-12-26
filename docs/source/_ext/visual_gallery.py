@@ -184,6 +184,9 @@ def _generate_rst(
         lines.append("No baselines found.")
         lines.append("Ensure tests/visual/baseline exists and is checked into the repository.")
 
+    # Remove trailing empty strings to avoid extra blank line at EOF
+    while lines and lines[-1] == "":
+        lines.pop()
     return "\n".join(lines) + "\n"
 
 

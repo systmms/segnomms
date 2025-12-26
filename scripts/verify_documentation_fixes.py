@@ -81,8 +81,15 @@ def main() -> int:
         results["SC-005"] = False
 
     # SC-006: Sphinx builds without warnings
+    # Use a more precise grep pattern that looks for actual Sphinx warnings
+    # (format: "filename:line: WARNING:" or "filename:line: ERROR:")
+    # Avoids false positives from config strings like "suppress_warnings"
+    sphinx_cmd = (
+        "make docs 2>&1 | tee /tmp/sphinx_build.log && "
+        '! grep -E "^.*:[0-9]+: (WARNING|ERROR):" /tmp/sphinx_build.log'
+    )
     results["SC-006"] = run_command(
-        'make docs 2>&1 | tee /tmp/sphinx_build.log && ! grep -i "warning\\|error" /tmp/sphinx_build.log',
+        sphinx_cmd,
         "SC-006: Sphinx documentation builds without warnings",
     )
 

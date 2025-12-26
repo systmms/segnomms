@@ -37,11 +37,58 @@ def extract_python_imports(file_path: Path) -> List[Tuple[int, str]]:
     return imports
 
 
+# Optional dependencies used in documentation examples
+# These are framework integrations that readers should install separately
+OPTIONAL_DEPENDENCIES = frozenset(
+    {
+        "django",
+        "fastapi",
+        "flask",
+        "starlette",
+        "uvicorn",
+        "pydub",  # Audio processing
+        "qrcode",  # Alternative QR library
+        "pyzbar",  # QR code decoder library
+    }
+)
+
+
+def is_optional_import(import_statement: str) -> bool:
+    """Check if import is for an optional framework dependency."""
+    # Extract module name from import statement
+    # "from django.http import HttpResponse" -> "django"
+    # "import fastapi" -> "fastapi"
+    stmt = import_statement.lower()
+    if stmt.startswith("from "):
+        module = stmt.split()[1].split(".")[0]
+    elif stmt.startswith("import "):
+        module = stmt.split()[1].split(".")[0].split(",")[0]
+    else:
+        return False
+    return module in OPTIONAL_DEPENDENCIES
+
+
+def is_incomplete_import(import_statement: str) -> bool:
+    """Check if import statement is incomplete (multiline continuation)."""
+    # Incomplete if ends with ( or , or \ without closing
+    stripped = import_statement.strip()
+    if stripped.endswith(("(", ",", "\\")):
+        return True
+    # Incomplete if has unbalanced parentheses
+    if stripped.count("(") > stripped.count(")"):
+        return True
+    return False
+
+
 def test_import(import_statement: str) -> bool:
     """Test if an import statement works."""
     try:
-        exec(import_statement, {})
+        # Using exec to dynamically test Python import statements
+        exec(import_statement, {})  # noqa: S102 - exec needed for dynamic import testing
         return True
+    except SyntaxError as e:
+        print(f"  Error (syntax): {e}")
+        return False
     except Exception as e:
         print(f"  Error: {e}")
         return False
@@ -91,13 +138,25 @@ def main() -> int:
 
     passed = 0
     failed = 0
+    skipped_optional = 0
+    skipped_incomplete = 0
+    skipped_tests = 0
 
     print("Testing imports:\n")
     for stmt, locations in sorted(unique_imports.items()):
         print(f"Testing: {stmt}")
         print(f"  Found in {len(locations)} location(s)")
 
-        if test_import(stmt):
+        if is_incomplete_import(stmt):
+            print("  ⊘ SKIP (incomplete multiline import)")
+            skipped_incomplete += 1
+        elif is_optional_import(stmt):
+            print("  ⊘ SKIP (optional framework dependency)")
+            skipped_optional += 1
+        elif stmt.startswith("from tests."):
+            print("  ⊘ SKIP (internal test helper)")
+            skipped_tests += 1
+        elif test_import(stmt):
             print("  ✓ PASS")
             passed += 1
         else:
@@ -108,16 +167,24 @@ def main() -> int:
         print()
 
     # Summary
+    total_skipped = skipped_optional + skipped_incomplete + skipped_tests
     print("=== Summary ===")
     print(f"Total unique imports: {len(unique_imports)}")
     print(f"Passed: {passed}")
+    print(f"Skipped: {total_skipped}")
+    if skipped_optional > 0:
+        print(f"  - Optional framework dependencies: {skipped_optional}")
+    if skipped_incomplete > 0:
+        print(f"  - Incomplete multiline imports: {skipped_incomplete}")
+    if skipped_tests > 0:
+        print(f"  - Internal test helpers: {skipped_tests}")
     print(f"Failed: {failed}")
 
     if failed > 0:
         print(f"\n❌ {failed} import(s) failed")
         return 1
     else:
-        print("\n✅ All imports passed!")
+        print("\n✅ All required imports passed!")
         return 0
 
 
