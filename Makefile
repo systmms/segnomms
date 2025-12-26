@@ -1,4 +1,4 @@
-# Makefile for Segno Interactive SVG Plugin
+# Makefile for SegnoMMS
 
 # Use uv for all Python operations
 UV := uv
@@ -16,7 +16,7 @@ all: install
 # Display help
 .PHONY: help
 help:
-	@echo "Segno Interactive SVG Plugin - Make targets:"
+	@echo "SegnoMMS - Make targets:"
 	@echo ""
 	@echo "Installation & Build:"
 	@echo "  make install       - Install the plugin with uv in development mode"
@@ -79,6 +79,7 @@ help:
 	@echo "  make docs          - Build Sphinx documentation"
 	@echo "  make docs-clean    - Clean documentation build"
 	@echo "  make docs-serve    - Build and serve docs at localhost:8001"
+	@echo "  make docs-validate - Validate documentation (contradictions, refs, examples)"
 	@echo "  make docs-help     - Show Sphinx documentation help"
 	@echo ""
 	@echo "Spec-Driven Development (GitHub Spec-Kit):"
@@ -414,10 +415,21 @@ docs-help:
 	@echo "Available documentation targets:"
 	$(MAKE) -C docs help
 
+.PHONY: docs-validate
+docs-validate:
+	@echo "Validating documentation..."
+	@./scripts/check_doc_contradictions.sh
+	@echo ""
+	@echo "Validating cross-references..."
+	@$(PYTHON) repo/validate_docs_references.py
+	@echo ""
+	@echo "Running comprehensive validation..."
+	@$(PYTHON) scripts/verify_documentation_fixes.py
+
 # Package info
 .PHONY: info
 info:
-	@echo "Segno Interactive SVG Plugin"
+	@echo "SegnoMMS"
 	@echo "Version: 0.1.0"
 	@echo "Python: $(shell $(PYTHON) --version)"
 	@echo "Location: $(shell pwd)"
