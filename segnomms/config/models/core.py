@@ -7,6 +7,7 @@ other configuration models into a comprehensive configuration system.
 from __future__ import annotations
 
 import logging
+import warnings
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -36,6 +37,69 @@ from .visual import (
 
 # Set up logger for configuration warnings
 logger = logging.getLogger(__name__)
+
+# Deprecated option mappings for backward compatibility
+# Format: {deprecated_name: current_name}
+DEPRECATED_CENTERPIECE_OPTIONS: dict[str, str] = {
+    "reserve_center": "centerpiece_enabled",
+    "reserve_shape": "centerpiece_shape",
+    "reserve_size": "centerpiece_size",
+    "reserve_offset_x": "centerpiece_offset_x",
+    "reserve_offset_y": "centerpiece_offset_y",
+    "reserve_margin": "centerpiece_margin",
+}
+
+DEPRECATED_QR_OPTIONS: dict[str, str] = {
+    "qr_eci": "eci_enabled",  # Maps to eci_enabled in AdvancedQRConfig
+    "qr_encoding": "encoding",
+    "qr_mask": "mask_pattern",
+    "qr_symbol_count": "symbol_count",
+    "qr_boost_error": "boost_error",
+    "multi_symbol": "structured_append",
+}
+
+
+def _handle_deprecated_options(kwargs: dict[str, Any], mappings: dict[str, str]) -> None:
+    """Handle deprecated option names, emitting warnings and checking conflicts.
+
+    This function:
+    1. Emits DeprecationWarning for each deprecated option used
+    2. Raises ValueError if both deprecated and current names are used with different values
+    3. Warns if both are used with the same value (redundant usage)
+    4. Maps the deprecated name to the current name in kwargs
+
+    Args:
+        kwargs: The kwargs dict (modified in place)
+        mappings: Dict mapping deprecated names to current names
+    """
+    for deprecated_name, current_name in mappings.items():
+        if deprecated_name in kwargs:
+            deprecated_value = kwargs[deprecated_name]
+
+            # Emit deprecation warning
+            warnings.warn(
+                f"Option '{deprecated_name}' is deprecated, use '{current_name}' instead. "
+                f"This option will be removed in a future version.",
+                DeprecationWarning,
+                stacklevel=4,  # Caller -> from_kwargs -> _handle_deprecated_options
+            )
+
+            # Check for conflict with current name
+            if current_name in kwargs:
+                current_value = kwargs[current_name]
+                if deprecated_value != current_value:
+                    raise ValueError(
+                        f"Conflicting values for '{deprecated_name}' and '{current_name}': "
+                        f"received {deprecated_value!r} and {current_value!r}. "
+                        f"Use only '{current_name}' with value {current_value!r}."
+                    )
+                # Same value - just warn about redundancy (already warned about deprecation)
+                # Remove the deprecated key to avoid processing it twice
+                del kwargs[deprecated_name]
+            else:
+                # Map deprecated to current
+                kwargs[current_name] = deprecated_value
+                del kwargs[deprecated_name]
 
 
 class RenderingConfig(BaseModel):
@@ -223,6 +287,11 @@ class RenderingConfig(BaseModel):
                 centerpiece_size=0.15
             )
         """
+        # Handle deprecated option names before processing
+        # This modifies kwargs in place, mapping deprecated names to current names
+        _handle_deprecated_options(kwargs, DEPRECATED_CENTERPIECE_OPTIONS)
+        _handle_deprecated_options(kwargs, DEPRECATED_QR_OPTIONS)
+
         # Start with basic parameters
         config_data = {
             key: kwargs.get(key, cls.model_fields[key].default)

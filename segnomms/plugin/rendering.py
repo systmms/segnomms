@@ -16,7 +16,7 @@ from ..core.matrix import MatrixManipulator
 from ..degradation import DegradationManager
 from ..shapes.factory import get_shape_factory
 from ..svg import InteractiveSVGBuilder, PathClipper
-from ..validation.phase4 import Phase4Validator
+from ..validation.phase4 import CompositionValidator
 from .patterns import _get_pattern_specific_render_kwargs, _get_pattern_specific_style
 
 # Maximum QR code size to prevent DoS attacks
@@ -53,7 +53,7 @@ class QRCodeRenderer:
         self.logger = logging.getLogger(__name__)
 
         # Initialize optional components
-        self.phase4_validator = self._init_phase4_validator()
+        self.composition_validator = self._init_composition_validator()
         self.path_clipper: Optional[Any] = None
         self.centerpiece_metadata: Optional[Dict[str, Any]] = None
 
@@ -90,8 +90,8 @@ class QRCodeRenderer:
                 f"QR codes, please contact support."
             )
 
-    def _init_phase4_validator(self) -> Optional[Phase4Validator]:
-        """Initialize Phase 4 validator if needed."""
+    def _init_composition_validator(self) -> Optional[CompositionValidator]:
+        """Initialize composition validator if needed."""
         if self.config.frame.shape == "square" and not self.config.centerpiece.enabled:
             return None
 
@@ -102,7 +102,7 @@ class QRCodeRenderer:
             # Fallback if version parsing fails
             numeric_version = 3
 
-        validator = Phase4Validator(numeric_version, self.qr_code.error, len(self.matrix))
+        validator = CompositionValidator(numeric_version, self.qr_code.error, len(self.matrix))
 
         # Validate Phase 4 features
         validation_result = validator.validate_all(self.config)

@@ -25,9 +25,9 @@
 
 **Purpose**: Verify prerequisites and prepare for implementation
 
-- [ ] T001 Verify current branch is `003-naming-consistency` and working tree is clean
-- [ ] T002 [P] Review existing imports of `Phase4Validator` across codebase with `grep -r "Phase4Validator" segnomms/`
-- [ ] T003 [P] Review existing `__all__` contents in segnomms/plugin/__init__.py
+- [x] T001 Verify current branch is `003-naming-consistency` and working tree is clean
+- [x] T002 [P] Review existing imports of `Phase4Validator` across codebase with `grep -r "Phase4Validator" segnomms/`
+- [x] T003 [P] Review existing `__all__` contents in segnomms/plugin/__init__.py
 
 ---
 
@@ -37,8 +37,8 @@
 
 **⚠️ CRITICAL**: This phase provides shared infrastructure for deprecation warnings
 
-- [ ] T004 Add `import warnings` to segnomms/config/models/core.py (if not already present)
-- [ ] T005 Verify existing test infrastructure supports `pytest.warns()` pattern
+- [x] T004 Add `import warnings` to segnomms/config/models/core.py (if not already present)
+- [x] T005 Verify existing test infrastructure supports `pytest.warns()` pattern
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -52,22 +52,22 @@
 
 ### Implementation for User Story 1
 
-- [ ] T006 [US1] Create docs/source/developer/ directory if it doesn't exist
-- [ ] T007 [US1] Create naming convention guide in docs/source/developer/naming-conventions.rst with:
+- [x] T006 [US1] Create docs/source/developer/ directory if it doesn't exist
+- [x] T007 [US1] Create naming convention guide in docs/source/developer/naming-conventions.rst with:
   - Bare name pattern (Segno-inherited: `eci`, `boost_error`)
   - `*_enabled` suffix pattern (state booleans: `centerpiece_enabled`)
   - `use_*` prefix pattern (strategy selection: `use_marching_squares`)
   - Bare name pattern for UI behaviors (`interactive`, `tooltips`)
   - Deprecated `enable_*` pattern note
-- [ ] T008 [US1] Add naming-conventions to docs/source/index.rst toctree
-- [ ] T009 [US1] Build docs with `make docs` to verify RST syntax is valid
-- [ ] T009a [US1] Create naming audit script in repo/audit_boolean_naming.py that:
+- [x] T008 [US1] Add naming-conventions to docs/source/index.rst toctree
+- [x] T009 [US1] Build docs with `make docs` to verify RST syntax is valid
+- [x] T009a [US1] Create naming audit script in repo/audit_boolean_naming.py that:
   - Scans all Pydantic config models for boolean fields
   - Checks each field name against documented convention patterns
   - Reports violations with file:line references
   - Returns non-zero exit code if violations found
-- [ ] T009b [US1] Add `audit-naming` target to Makefile for discoverability
-- [ ] T009c [US1] Run audit script to verify current codebase (document known exceptions)
+- [x] T009b [US1] Add `audit-naming` target to Makefile for discoverability
+- [x] T009c [US1] Run audit script to verify current codebase (document known exceptions)
 
 **Checkpoint**: User Story 1 complete - developers can now reference naming conventions
 
@@ -81,19 +81,19 @@
 
 ### Tests for User Story 2
 
-- [ ] T010 [P] [US2] Create test for Phase4Validator deprecation alias in tests/unit/test_composition_validator.py:
+- [x] T010 [P] [US2] Create test for Phase4Validator deprecation alias in tests/unit/test_composition_validator.py:
   - Test `CompositionValidator` can be imported and instantiated
   - Test `Phase4Validator` still works as alias
   - Test deprecation warning emitted when using `Phase4Validator`
 
 ### Implementation for User Story 2
 
-- [ ] T011 [US2] Rename class `Phase4Validator` to `CompositionValidator` in segnomms/validation/phase4.py:31-46
-- [ ] T012 [US2] Add backward-compatible alias in segnomms/validation/phase4.py:
+- [x] T011 [US2] Rename class `Phase4Validator` to `CompositionValidator` in segnomms/validation/phase4.py:31-46
+- [x] T012 [US2] Add backward-compatible alias in segnomms/validation/phase4.py:
   - After class definition: `Phase4Validator = CompositionValidator`
   - This allows existing `from segnomms.validation.phase4 import Phase4Validator` to work
   - Note: Direct alias does NOT emit warning; warning handled by `__getattr__` in `__init__.py`
-- [ ] T013 [US2] Add deprecation warning in segnomms/validation/__init__.py using `__getattr__`:
+- [x] T013 [US2] Add deprecation warning in segnomms/validation/__init__.py using `__getattr__`:
   ```python
   def __getattr__(name: str):
       if name == "Phase4Validator":
@@ -109,14 +109,14 @@
       raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
   ```
   - This emits warning when importing via `from segnomms.validation import Phase4Validator`
-- [ ] T014 [P] [US2] Update all internal imports from `Phase4Validator` to `CompositionValidator` across segnomms/
-- [ ] T015 [US2] Update docstring in segnomms/validation/phase4.py to reflect new class name and purpose
-- [ ] T016 [US2] Fix Phase 1 description in docs/source/api/config.rst from "Clustering" to "Enhanced 8-neighbor context detection for context-aware shape selection"
-- [ ] T017 [US2] Fix Phase 2 description in docs/source/api/config.rst from "Shape Rendering" to "Connected component clustering for unified module group rendering"
-- [ ] T018 [US2] Fix Phase 3 description in docs/source/api/config.rst from "SVG Assembly" to "Marching squares algorithm with Bezier curve smoothing for organic contours"
-- [ ] T019 [US2] Add CompositionValidator section to docs/source/api/config.rst clearly stating it's a validation system, not a processing phase
-- [ ] T020 [US2] Run `make docs` to verify documentation builds without errors
-- [ ] T021 [US2] Run tests with `pytest tests/unit/test_composition_validator.py -v` to verify rename works
+- [x] T014 [P] [US2] Update all internal imports from `Phase4Validator` to `CompositionValidator` across segnomms/
+- [x] T015 [US2] Update docstring in segnomms/validation/phase4.py to reflect new class name and purpose
+- [x] T016 [US2] Fix Phase 1 description in docs/source/api/config.rst from "Clustering" to "Enhanced 8-neighbor context detection for context-aware shape selection"
+- [x] T017 [US2] Fix Phase 2 description in docs/source/api/config.rst from "Shape Rendering" to "Connected component clustering for unified module group rendering"
+- [x] T018 [US2] Fix Phase 3 description in docs/source/api/config.rst from "SVG Assembly" to "Marching squares algorithm with Bezier curve smoothing for organic contours"
+- [x] T019 [US2] Add CompositionValidator section to docs/source/api/config.rst clearly stating it's a validation system, not a processing phase
+- [x] T020 [US2] Run `make docs` to verify documentation builds without errors
+- [x] T021 [US2] Run tests with `pytest tests/unit/test_composition_validator.py -v` to verify rename works
 
 **Checkpoint**: User Story 2 complete - Phase terminology is now clear and consistent
 
@@ -130,18 +130,18 @@
 
 ### Tests for User Story 3
 
-- [ ] T022 [P] [US3] Create test file tests/unit/test_deprecation_warnings.py with:
+- [x] T022 [P] [US3] Create test file tests/unit/test_deprecation_warnings.py with:
   - Test each `reserve_*` option emits DeprecationWarning
   - Test each `qr_*` option emits DeprecationWarning
   - Test conflict detection raises ValueError for different values
   - Test same-value duplicates only emit warning (no error)
-- [ ] T023 [P] [US3] Create integration test tests/integration/test_backward_compatibility.py:
+- [x] T023 [P] [US3] Create integration test tests/integration/test_backward_compatibility.py:
   - Test deprecated options still produce correct QR output
   - Test mixed deprecated/current options work when values match
 
 ### Implementation for User Story 3
 
-- [ ] T024 [US3] Define `DEPRECATED_CENTERPIECE_OPTIONS` mapping dict in segnomms/config/models/core.py:
+- [x] T024 [US3] Define `DEPRECATED_CENTERPIECE_OPTIONS` mapping dict in segnomms/config/models/core.py:
   ```python
   DEPRECATED_CENTERPIECE_OPTIONS = {
       "reserve_center": "centerpiece_enabled",
@@ -152,10 +152,10 @@
       "reserve_margin": "centerpiece_margin",
   }
   ```
-- [ ] T025 [US3] Define `DEPRECATED_QR_OPTIONS` mapping dict in segnomms/config/models/core.py:
+- [x] T025 [US3] Define `DEPRECATED_QR_OPTIONS` mapping dict in segnomms/config/models/core.py:
   ```python
   DEPRECATED_QR_OPTIONS = {
-      "qr_eci": "eci",  # Bare name for Segno-inherited concept
+      "qr_eci": "eci_enabled",
       "qr_encoding": "encoding",
       "qr_mask": "mask_pattern",
       "qr_symbol_count": "symbol_count",
@@ -163,22 +163,22 @@
       "multi_symbol": "structured_append",
   }
   ```
-- [ ] T026 [US3] Create helper function `_handle_deprecated_options(kwargs, mappings)` in segnomms/config/models/core.py that:
+- [x] T026 [US3] Create helper function `_handle_deprecated_options(kwargs, mappings)` in segnomms/config/models/core.py that:
   - Iterates through deprecated mappings
   - Emits `warnings.warn()` with `DeprecationWarning` and `stacklevel=2`
   - Raises `ValueError` if both deprecated and current provided with different values
   - Warns if both provided with same value
   - Maps deprecated to current name in kwargs
-- [ ] T027 [US3] Call `_handle_deprecated_options()` at start of `from_kwargs()` in segnomms/config/models/core.py for both mapping dicts
-- [ ] T028 [US3] Create migration guide docs/source/migration/ directory
-- [ ] T029 [US3] Create docs/source/migration/deprecated-options.rst with:
+- [x] T027 [US3] Call `_handle_deprecated_options()` at start of `from_kwargs()` in segnomms/config/models/core.py for both mapping dicts
+- [x] T028 [US3] Create migration guide docs/source/migration/ directory
+- [x] T029 [US3] Create docs/source/migration/deprecated-options.rst with:
   - Full table of deprecated → current mappings
   - Code examples showing migration
   - Conflict handling explanation
   - Deprecation policy reference (pre-1.0.0 vs post-1.0.0)
-- [ ] T030 [US3] Add migration guide to docs/source/index.rst toctree
-- [ ] T031 [US3] Run `pytest tests/unit/test_deprecation_warnings.py -v` to verify warnings work
-- [ ] T032 [US3] Run `pytest tests/integration/test_backward_compatibility.py -v` to verify backward compat
+- [x] T030 [US3] Add migration guide to docs/source/index.rst toctree
+- [x] T031 [US3] Run `pytest tests/unit/test_deprecation_warnings.py -v` to verify warnings work
+- [x] T032 [US3] Run `pytest tests/integration/test_backward_compatibility.py -v` to verify backward compat
 
 **Checkpoint**: User Story 3 complete - deprecated options now emit clear warnings
 
@@ -192,23 +192,23 @@
 
 ### Tests for User Story 4
 
-- [ ] T033 [P] [US4] Create test in tests/unit/test_plugin_exports.py:
+- [x] T033 [P] [US4] Create test in tests/unit/test_plugin_exports.py:
   - Test `__all__` contains only public names (no underscore prefix)
   - Test star import works and only exposes public API
   - Test internal functions still accessible via direct import
 
 ### Implementation for User Story 4
 
-- [ ] T034 [US4] Remove `_export_configuration` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T035 [US4] Remove `_generate_config_hash` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T036 [US4] Remove `_get_pattern_specific_style` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T037 [US4] Remove `_get_pattern_specific_render_kwargs` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T038 [US4] Remove `_render_cluster` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T039 [US4] Remove `_get_enhanced_render_kwargs` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T040 [US4] Remove `_format_svg_string` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T041 [US4] Remove `_detect_and_remove_islands` from `__all__` in segnomms/plugin/__init__.py
-- [ ] T042 [US4] Verify `__all__` now contains only: `write`, `write_advanced`, `register_with_segno`, `generate_interactive_svg`, `MAX_QR_SIZE`
-- [ ] T043 [US4] Run `pytest tests/unit/test_plugin_exports.py -v` to verify exports are correct
+- [x] T034 [US4] Remove `_export_configuration` from `__all__` in segnomms/plugin/__init__.py
+- [x] T035 [US4] Remove `_generate_config_hash` from `__all__` in segnomms/plugin/__init__.py
+- [x] T036 [US4] Remove `_get_pattern_specific_style` from `__all__` in segnomms/plugin/__init__.py
+- [x] T037 [US4] Remove `_get_pattern_specific_render_kwargs` from `__all__` in segnomms/plugin/__init__.py
+- [x] T038 [US4] Remove `_render_cluster` from `__all__` in segnomms/plugin/__init__.py
+- [x] T039 [US4] Remove `_get_enhanced_render_kwargs` from `__all__` in segnomms/plugin/__init__.py
+- [x] T040 [US4] Remove `_format_svg_string` from `__all__` in segnomms/plugin/__init__.py
+- [x] T041 [US4] Remove `_detect_and_remove_islands` from `__all__` in segnomms/plugin/__init__.py
+- [x] T042 [US4] Verify `__all__` now contains only: `write`, `write_advanced`, `register_with_segno`, `generate_interactive_svg`, `MAX_QR_SIZE`
+- [x] T043 [US4] Run `pytest tests/unit/test_plugin_exports.py -v` to verify exports are correct
 
 **Checkpoint**: User Story 4 complete - public API boundaries are now clear
 
@@ -218,10 +218,10 @@
 
 **Purpose**: Final validation and cleanup
 
-- [ ] T044 Run full test suite with `pytest tests/ -v` to ensure no regressions
-- [ ] T045 Run MyPy type checking with `mypy segnomms/` to verify type safety
-- [ ] T046 Run pre-commit hooks with `pre-commit run --all-files` to verify formatting
-- [ ] T047 Build documentation with `make docs` and verify all new pages render correctly
+- [x] T044 Run full test suite with `pytest tests/ -v` to ensure no regressions
+- [x] T045 Run MyPy type checking with `mypy segnomms/` to verify type safety
+- [x] T046 Run pre-commit hooks with `pre-commit run --all-files` to verify formatting
+- [x] T047 Build documentation with `make docs` and verify all new pages render correctly
 - [ ] T048 Review all changes with `git diff` before committing
 - [ ] T049 Create commit with conventional commit format: `refactor(naming): standardize naming conventions and add deprecation warnings`
 

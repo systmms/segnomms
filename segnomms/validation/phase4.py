@@ -1,7 +1,11 @@
-"""Validation for Phase 4 frame and centerpiece features.
+"""Composition validation for frame and centerpiece features.
 
-This module provides validation logic for the new Phase 4 features including
+This module provides validation logic for QR code composition features including
 frame shapes, centerpiece reserves, and quiet zone enhancements.
+
+Note: The CompositionValidator class was previously named Phase4Validator.
+The Phase4Validator name is retained as a deprecated alias for backward
+compatibility.
 """
 
 import logging
@@ -28,21 +32,26 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
-class Phase4Validator:
-    """Validation for Phase 4 frame and centerpiece features.
+class CompositionValidator:
+    """Validates QR code composition including frames and centerpieces.
 
     This class provides comprehensive validation for frame shapes, centerpiece
-    reserves, and their interaction with existing QR code features.
+    reserves, and their interaction with existing QR code features. It validates
+    that composition choices maintain QR code scannability.
+
+    Note:
+        This class was previously named Phase4Validator. The old name is
+        retained as a deprecated alias for backward compatibility.
 
     Example:
-        >>> validator = Phase4Validator(
+        >>> validator = CompositionValidator(
         ...     qr_version=7, error_level='M', matrix_size=45
         ... )
         >>> # Or using Pydantic model
         >>> config = Phase4ValidatorConfig(
         ...     qr_version=7, error_level='m', matrix_size=45
         ... )
-        >>> validator = Phase4Validator(**config.model_dump())
+        >>> validator = CompositionValidator(**config.model_dump())
     """
 
     def __init__(
@@ -511,3 +520,10 @@ class Phase4Validator:
             recommendations=recommendations,
             valid=len(errors) == 0,
         )
+
+
+# Deprecated alias for backward compatibility
+# Direct imports from this module (e.g., from segnomms.validation.phase4 import Phase4Validator)
+# will work without warning. The warning is emitted via __getattr__ in the package __init__.py
+# when importing from the package level (e.g., from segnomms.validation import Phase4Validator).
+Phase4Validator = CompositionValidator

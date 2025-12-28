@@ -68,6 +68,7 @@ help:
 	@echo ""
 	@echo "Development:"
 	@echo "  make setup         - Complete setup with uv (all dependencies)"
+	@echo "  make audit-naming  - Audit boolean config options for naming convention compliance"
 	@echo "  make shell-help    - Show shell functions usage"
 	@echo "  make watch         - Watch for changes and rebuild (requires fswatch)"
 	@echo "  make lint          - Run Python linters"
@@ -360,6 +361,12 @@ watch:
 	@command -v fswatch >/dev/null 2>&1 || { echo "fswatch is required but not installed. Install with: brew install fswatch"; exit 1; }
 	@echo "Watching for changes..."
 	fswatch -o $(PLUGIN_DIR) | xargs -n1 -I{} make test-quick
+
+# Audit boolean naming conventions
+.PHONY: audit-naming
+audit-naming:
+	@echo "Auditing boolean configuration naming conventions..."
+	@$(PYTHON) repo/audit_boolean_naming.py
 
 # Lint Python code
 .PHONY: lint
