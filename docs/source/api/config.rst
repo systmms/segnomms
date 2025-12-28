@@ -176,7 +176,7 @@ that ensures your configuration choices maintain QR code scannability.
    The ``CompositionValidator`` was previously named ``Phase4Validator``. The old
    name is retained as a deprecated alias for backward compatibility.
 
-.. autoclass:: segnomms.validation.phase4.CompositionValidator
+.. autoclass:: segnomms.validation.composition.CompositionValidator
    :members: validate_all, validate_frame_safety, validate_centerpiece_safety
    :undoc-members:
 

@@ -37,14 +37,14 @@ Represents the mapping between deprecated option names and their current equival
 #### QR Advanced Aliases
 | Deprecated | Current | Category |
 |------------|---------|----------|
-| `qr_eci` | `eci` | qr_advanced |
+| `qr_eci` | `eci_enabled` | qr_advanced |
 | `qr_encoding` | `encoding` | qr_advanced |
 | `qr_mask` | `mask_pattern` | qr_advanced |
 | `qr_symbol_count` | `symbol_count` | qr_advanced |
 | `qr_boost_error` | `boost_error` | qr_advanced |
 | `multi_symbol` | `structured_append` | qr_advanced |
 
-**Note**: `qr_eci` maps to bare `eci` following the convention that Segno-inherited concepts use bare names.
+**Note**: `qr_eci` maps to `eci_enabled` which is the boolean toggle in `AdvancedQRConfig`.
 
 ---
 

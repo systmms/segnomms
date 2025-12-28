@@ -10,7 +10,7 @@ import warnings
 from typing import TYPE_CHECKING
 
 from .composition import CompositionValidator
-from .models import CompositionValidatorConfig, Phase4ValidatorConfig, ValidationResult
+from .models import CompositionValidatorConfig, ValidationResult
 
 if TYPE_CHECKING:
     # For type checking, Phase4Validator is the same as CompositionValidator

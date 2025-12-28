@@ -1,4 +1,4 @@
-"""Test suite for CompositionValidator class (formerly CompositionValidator)."""
+"""Test suite for CompositionValidator class (formerly Phase4Validator)."""
 
 import pytest
 

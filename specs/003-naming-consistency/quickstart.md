@@ -53,7 +53,7 @@ qr.save("output.svg", kind="svg",
 | `reserve_offset_x` | `centerpiece_offset_x` |
 | `reserve_offset_y` | `centerpiece_offset_y` |
 | `reserve_margin` | `centerpiece_margin` |
-| `qr_eci` | `eci` |
+| `qr_eci` | `eci_enabled` |
 | `qr_encoding` | `encoding` |
 | `qr_mask` | `mask_pattern` |
 | `qr_symbol_count` | `symbol_count` |

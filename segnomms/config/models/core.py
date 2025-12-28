@@ -96,9 +96,9 @@ def _handle_deprecated_options(kwargs: dict[str, Any], mappings: dict[str, str])
                 current_value = kwargs[current_name]
                 if deprecated_value != current_value:
                     raise ValueError(
-                        f"Conflicting values for '{deprecated_name}' and '{current_name}': "
-                        f"received {deprecated_value!r} and {current_value!r}. "
-                        f"Use only '{current_name}' with value {current_value!r}."
+                        f"Conflicting options provided: '{deprecated_name}' (value: {deprecated_value!r}) "
+                        f"and '{current_name}' (value: {current_value!r}). "
+                        f"Please provide only one of these options."
                     )
                 # Same value - just warn about redundancy (already warned about deprecation)
                 # Remove the deprecated key to avoid processing it twice

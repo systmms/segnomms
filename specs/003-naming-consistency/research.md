@@ -86,14 +86,14 @@ Based on `.specify/ideas/project-naming.md` ecosystem research:
 **`qr_*` → Direct Names (Lines 333-346)**:
 | Deprecated | Current |
 |------------|---------|
-| `qr_eci` | `eci` |
+| `qr_eci` | `eci_enabled` |
 | `qr_encoding` | `encoding` |
 | `qr_mask` | `mask_pattern` |
 | `qr_symbol_count` | `symbol_count` |
 | `qr_boost_error` | `boost_error` |
 | `multi_symbol` | `structured_append` |
 
-**Note**: `qr_eci` maps to bare `eci` (not `eci_enabled`) following the convention that Segno-inherited concepts use bare names.
+**Note**: `qr_eci` maps to `eci_enabled` which is the boolean toggle in `AdvancedQRConfig`.
 
 **Implementation Approach**:
 1. Use `warnings.warn()` with `DeprecationWarning` category
