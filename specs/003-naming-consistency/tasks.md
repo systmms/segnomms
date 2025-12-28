@@ -222,8 +222,8 @@
 - [x] T045 Run MyPy type checking with `mypy segnomms/` to verify type safety
 - [x] T046 Run pre-commit hooks with `pre-commit run --all-files` to verify formatting
 - [x] T047 Build documentation with `make docs` and verify all new pages render correctly
-- [ ] T048 Review all changes with `git diff` before committing
-- [ ] T049 Create commit with conventional commit format: `refactor(naming): standardize naming conventions and add deprecation warnings`
+- [x] T048 Review all changes with `git diff` before committing
+- [x] T049 Create commit with conventional commit format: `refactor(naming): standardize naming conventions and add deprecation warnings`
 
 ---
 
