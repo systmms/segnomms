@@ -19,13 +19,15 @@ from segnomms.config import (
     RenderingConfig,
     StyleConfig,
 )
-from segnomms.plugin import (
-    _detect_and_remove_islands,
-    _format_svg_string,
-    _generate_config_hash,
-    _get_enhanced_render_kwargs,
+from segnomms.plugin.export import _generate_config_hash
+from segnomms.plugin.patterns import (
     _get_pattern_specific_render_kwargs,
     _get_pattern_specific_style,
+)
+from segnomms.plugin.rendering import (
+    _detect_and_remove_islands,
+    _format_svg_string,
+    _get_enhanced_render_kwargs,
     _render_cluster,
 )
 from tests.constants import (
