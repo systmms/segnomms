@@ -217,3 +217,67 @@ than a processing phase.
    result = validator.validate_all()
 
 The old import continues to work but emits a ``DeprecationWarning``.
+
+phase4 Module Rename
+--------------------
+
+The ``segnomms.validation.phase4`` module has been renamed to
+``segnomms.validation.composition``. This module-level rename reflects the
+transition from internal development phase naming to descriptive functionality.
+
+**Before (deprecated):**
+
+.. code-block:: python
+
+   from segnomms.validation.phase4 import Phase4Validator
+
+   validator = Phase4Validator(
+       qr_version=5, error_level='M', matrix_size=37
+   )
+
+**After (current):**
+
+.. code-block:: python
+
+   from segnomms.validation.composition import CompositionValidator
+
+   # Or use the package-level import (recommended):
+   from segnomms.validation import CompositionValidator
+
+   validator = CompositionValidator(
+       qr_version=5, error_level='M', matrix_size=37
+   )
+
+Importing from the old module path emits a ``DeprecationWarning`` at import time.
+
+Phase4ValidatorConfig Rename
+----------------------------
+
+The configuration class ``Phase4ValidatorConfig`` has been renamed to
+``CompositionValidatorConfig`` for consistency with the validator class.
+
+**Before (deprecated):**
+
+.. code-block:: python
+
+   from segnomms.validation.models import Phase4ValidatorConfig
+
+   config = Phase4ValidatorConfig(
+       qr_version=5,
+       error_level='M',
+       matrix_size=37
+   )
+
+**After (current):**
+
+.. code-block:: python
+
+   from segnomms.validation.models import CompositionValidatorConfig
+
+   config = CompositionValidatorConfig(
+       qr_version=5,
+       error_level='M',
+       matrix_size=37
+   )
+
+The old class name continues to work but emits a ``DeprecationWarning``.

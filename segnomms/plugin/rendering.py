@@ -16,7 +16,7 @@ from ..core.matrix import MatrixManipulator
 from ..degradation import DegradationManager
 from ..shapes.factory import get_shape_factory
 from ..svg import InteractiveSVGBuilder, PathClipper
-from ..validation.phase4 import CompositionValidator
+from ..validation.composition import CompositionValidator
 from .patterns import _get_pattern_specific_render_kwargs, _get_pattern_specific_style
 
 # Maximum QR code size to prevent DoS attacks

@@ -1,4 +1,4 @@
-"""Additional tests for Phase4Validator to improve coverage.
+"""Additional tests for CompositionValidator to improve coverage.
 
 This test suite covers the missing code paths identified in the coverage report.
 """
@@ -18,25 +18,25 @@ from segnomms.config import (
     RenderingConfig,
     StyleConfig,
 )
-from segnomms.validation.phase4 import Phase4Validator
+from segnomms.validation.composition import CompositionValidator
 
 
-class TestPhase4ValidatorAdditional:
-    """Additional test cases to improve Phase4Validator coverage."""
+class TestCompositionValidatorAdditional:
+    """Additional test cases to improve CompositionValidator coverage."""
 
     @pytest.fixture
     def validator(self):
         """Create a standard validator."""
-        return Phase4Validator(qr_version=5, error_level="M", matrix_size=37)
+        return CompositionValidator(qr_version=5, error_level="M", matrix_size=37)
 
     @pytest.fixture
     def validator_low_error(self):
         """Create validator with low error correction."""
-        return Phase4Validator(qr_version=5, error_level="L", matrix_size=37)
+        return CompositionValidator(qr_version=5, error_level="L", matrix_size=37)
 
     def test_centerpiece_size_within_limits(self, validator):
         """Test centerpiece size validation within safe limits."""
-        with patch("segnomms.validation.phase4.CenterpieceGeometry") as mock_geom:
+        with patch("segnomms.validation.composition.CenterpieceGeometry") as mock_geom:
             # Mock a safe size that allows the centerpiece
             mock_instance = Mock()
             mock_instance.calculate_safe_reserve_size.return_value = 0.25  # 25%
@@ -54,7 +54,7 @@ class TestPhase4ValidatorAdditional:
 
     def test_centerpiece_offset_x_bounds_error(self, validator):
         """Test centerpiece X offset bounds validation."""
-        with patch("segnomms.validation.phase4.CenterpieceGeometry") as mock_geom:
+        with patch("segnomms.validation.composition.CenterpieceGeometry") as mock_geom:
             mock_instance = Mock()
             mock_instance.calculate_safe_reserve_size.return_value = 0.30
             mock_geom.return_value = mock_instance
@@ -71,7 +71,7 @@ class TestPhase4ValidatorAdditional:
 
     def test_centerpiece_offset_y_bounds_error(self, validator):
         """Test centerpiece Y offset bounds validation."""
-        with patch("segnomms.validation.phase4.CenterpieceGeometry") as mock_geom:
+        with patch("segnomms.validation.composition.CenterpieceGeometry") as mock_geom:
             mock_instance = Mock()
             mock_instance.calculate_safe_reserve_size.return_value = 0.30
             mock_geom.return_value = mock_instance
@@ -88,7 +88,7 @@ class TestPhase4ValidatorAdditional:
 
     def test_centerpiece_large_margin_warning(self, validator, caplog):
         """Test warning for large centerpiece margin."""
-        with patch("segnomms.validation.phase4.CenterpieceGeometry") as mock_geom:
+        with patch("segnomms.validation.composition.CenterpieceGeometry") as mock_geom:
             mock_instance = Mock()
             mock_instance.calculate_safe_reserve_size.return_value = 0.30
             mock_geom.return_value = mock_instance
@@ -106,8 +106,8 @@ class TestPhase4ValidatorAdditional:
         """Test contrast ratio validation with low contrast colors."""
         config = RenderingConfig(dark="#555555", light="#AAAAAA")  # Low contrast
 
-        with patch("segnomms.validation.phase4.validate_qr_contrast") as mock_validate:
-            with patch("segnomms.validation.phase4.suggest_color_improvements") as mock_suggest:
+        with patch("segnomms.validation.composition.validate_qr_contrast") as mock_validate:
+            with patch("segnomms.validation.composition.suggest_color_improvements") as mock_suggest:
                 # Mock contrast validation failure
                 mock_validate.return_value = (False, 1.5, "Insufficient contrast")
                 mock_suggest.return_value = ["Use darker foreground", "Use lighter background"]
@@ -157,7 +157,7 @@ class TestPhase4ValidatorAdditional:
     def test_large_qr_small_modules_warning(self):
         """Test warning for large QR with small modules."""
         # Create validator for large QR
-        validator = Phase4Validator(qr_version=15, error_level="M", matrix_size=77)
+        validator = CompositionValidator(qr_version=15, error_level="M", matrix_size=77)
         config = RenderingConfig(scale=3)  # Small modules
 
         warnings = validator.validate_module_size_scanability(config)
@@ -178,7 +178,7 @@ class TestPhase4ValidatorAdditional:
         """Test automated scanability when no harness available."""
         config = RenderingConfig()
 
-        with patch("segnomms.validation.phase4.get_scanability_harness") as mock_harness:
+        with patch("segnomms.validation.composition.get_scanability_harness") as mock_harness:
             mock_harness.return_value = None
 
             errors = validator.run_automated_scanability_test(config)
@@ -190,7 +190,7 @@ class TestPhase4ValidatorAdditional:
         """Test automated scanability test when it fails."""
         config = RenderingConfig()
 
-        with patch("segnomms.validation.phase4.get_scanability_harness") as mock_harness:
+        with patch("segnomms.validation.composition.get_scanability_harness") as mock_harness:
             # Mock harness that returns failure
             mock_harness_instance = Mock()
             mock_harness_instance.validate_scanability_threshold.return_value = (
@@ -210,7 +210,7 @@ class TestPhase4ValidatorAdditional:
         """Test automated scanability test when it passes."""
         config = RenderingConfig()
 
-        with patch("segnomms.validation.phase4.get_scanability_harness") as mock_harness:
+        with patch("segnomms.validation.composition.get_scanability_harness") as mock_harness:
             # Mock harness that returns success
             mock_harness_instance = Mock()
             mock_harness_instance.validate_scanability_threshold.return_value = (
@@ -229,7 +229,7 @@ class TestPhase4ValidatorAdditional:
         """Test automated scanability test with exception."""
         config = RenderingConfig()
 
-        with patch("segnomms.validation.phase4.get_scanability_harness") as mock_harness:
+        with patch("segnomms.validation.composition.get_scanability_harness") as mock_harness:
             # Mock harness that raises exception
             mock_harness_instance = Mock()
             mock_harness_instance.validate_scanability_threshold.side_effect = Exception("Test error")
@@ -277,7 +277,7 @@ class TestPhase4ValidatorAdditional:
 
     def test_recommendations_large_qr_circle_frame(self):
         """Test recommendations for large QR with circle frame."""
-        validator = Phase4Validator(qr_version=15, error_level="M", matrix_size=77)
+        validator = CompositionValidator(qr_version=15, error_level="M", matrix_size=77)
         config = RenderingConfig(frame=FrameConfig(shape="circle"))
 
         recommendations = validator.get_recommendations(config)
@@ -319,7 +319,7 @@ class TestPhase4ValidatorAdditional:
         """Test validate_all with scanability testing enabled."""
         config = RenderingConfig(dark="#000000", light="#FFFFFF")
 
-        with patch("segnomms.validation.phase4.get_scanability_harness") as mock_harness:
+        with patch("segnomms.validation.composition.get_scanability_harness") as mock_harness:
             # Mock successful scanability test
             mock_harness_instance = Mock()
             mock_harness_instance.validate_scanability_threshold.return_value = (
@@ -347,7 +347,7 @@ class TestPhase4ValidatorAdditional:
             geometry=GeometryConfig(merge=MergeStrategy.SOFT),
         )
 
-        with patch("segnomms.validation.phase4.validate_qr_contrast") as mock_contrast:
+        with patch("segnomms.validation.composition.validate_qr_contrast") as mock_contrast:
             mock_contrast.return_value = (True, 4.5, "Good contrast")
 
             result = validator.validate_all(config, min_contrast_ratio=3.0)

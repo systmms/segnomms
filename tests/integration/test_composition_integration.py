@@ -1,4 +1,4 @@
-"""Integration tests for Phase 4 features."""
+"""Integration tests for composition features (frames and centerpieces)."""
 
 import xml.etree.ElementTree as ET
 
@@ -10,8 +10,8 @@ from segnomms.config import RenderingConfig
 from segnomms.plugin import generate_interactive_svg
 
 
-class TestPhase4Integration:
-    """Integration tests for Phase 4 frame and centerpiece features."""
+class TestCompositionIntegration:
+    """Integration tests for frame and centerpiece features."""
 
     @pytest.fixture
     def test_qr(self):

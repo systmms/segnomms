@@ -168,7 +168,7 @@ SegnoMMS features comprehensive **Pydantic-powered configuration** with automati
 
 ```python
 from segnomms.config.models.core import RenderingConfig
-from segnomms.validation.models import Phase4ValidatorConfig
+from segnomms.validation.models import CompositionValidatorConfig
 from segnomms.algorithms.models import ClusteringConfig
 from pydantic import ValidationError
 
@@ -181,7 +181,7 @@ config = RenderingConfig.from_kwargs(
 )
 
 # Component-specific validation models
-validator_config = Phase4ValidatorConfig(
+validator_config = CompositionValidatorConfig(
     qr_version=7,
     error_level='M',
     matrix_size=45
@@ -235,8 +235,8 @@ print(f"Cluster size: {cluster.width}x{cluster.height}")
 print(f"Fill ratio: {cluster.fill_ratio}")
 
 # Comprehensive validation results
-from segnomms.validation.phase4 import Phase4Validator
-validator = Phase4Validator(qr_version=1, error_level='M', matrix_size=21)
+from segnomms.validation import CompositionValidator
+validator = CompositionValidator(qr_version=1, error_level='M', matrix_size=21)
 result = validator.validate_all(config)
 print(f"Valid: {result.valid}")
 print(f"Issues: {result.total_issues}")

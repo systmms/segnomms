@@ -9,8 +9,8 @@ from __future__ import annotations
 import warnings
 from typing import TYPE_CHECKING
 
-from .models import Phase4ValidatorConfig, ValidationResult
-from .phase4 import CompositionValidator
+from .composition import CompositionValidator
+from .models import CompositionValidatorConfig, Phase4ValidatorConfig, ValidationResult
 
 if TYPE_CHECKING:
     # For type checking, Phase4Validator is the same as CompositionValidator
@@ -18,8 +18,9 @@ if TYPE_CHECKING:
 
 __all__ = [
     "CompositionValidator",
+    "CompositionValidatorConfig",
     "Phase4Validator",  # Deprecated alias, kept for backward compatibility
-    "Phase4ValidatorConfig",
+    "Phase4ValidatorConfig",  # Deprecated alias, kept for backward compatibility
     "ValidationResult",
 ]
 
@@ -38,4 +39,12 @@ def __getattr__(name: str) -> object:
             stacklevel=2,
         )
         return CompositionValidator
+    if name == "Phase4ValidatorConfig":
+        warnings.warn(
+            "Phase4ValidatorConfig is deprecated, use CompositionValidatorConfig instead. "
+            "Phase4ValidatorConfig will be removed in a future version.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return CompositionValidatorConfig
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

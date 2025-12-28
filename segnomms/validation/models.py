@@ -9,19 +9,23 @@ from typing import Any, Dict, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, field_validator
 
 
-class Phase4ValidatorConfig(BaseModel):
-    """Configuration for Phase4Validator initialization.
+class CompositionValidatorConfig(BaseModel):
+    """Configuration for CompositionValidator initialization.
 
-    This model validates the parameters needed to initialize a Phase4Validator
+    This model validates the parameters needed to initialize a CompositionValidator
     instance, ensuring proper QR code version, error level, and matrix size.
 
+    Note:
+        This class was previously named Phase4ValidatorConfig. The old name is
+        retained as a deprecated alias for backward compatibility.
+
     Example:
-        >>> config = Phase4ValidatorConfig(
+        >>> config = CompositionValidatorConfig(
         ...     qr_version=7,
         ...     error_level='M',
         ...     matrix_size=45
         ... )
-        >>> validator = Phase4Validator(**config.model_dump())
+        >>> validator = CompositionValidator(**config.model_dump())
     """
 
     model_config = ConfigDict(str_strip_whitespace=True)
@@ -109,3 +113,7 @@ class ValidationResult(BaseModel):
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format."""
         return self.model_dump()
+
+
+# Deprecated alias for backward compatibility
+Phase4ValidatorConfig = CompositionValidatorConfig

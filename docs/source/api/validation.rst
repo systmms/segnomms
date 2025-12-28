@@ -1,23 +1,28 @@
 Validation
 ==========
 
-This module provides validation for Phase 4 QR code features to ensure scannability and safety.
+This module provides validation for QR code composition features to ensure scannability and safety.
 
-Phase 4 Validator
------------------
+Composition Validator
+---------------------
 
-.. automodule:: segnomms.validation.phase4
+.. automodule:: segnomms.validation.composition
    :members:
    :undoc-members:
    :show-inheritance:
 
-The ``Phase4Validator`` class validates frame shapes and centerpiece configurations
+The ``CompositionValidator`` class validates frame shapes and centerpiece configurations
 to prevent settings that might make QR codes unscannable.
+
+.. note::
+
+   The ``CompositionValidator`` class was previously named ``Phase4Validator``.
+   The old name is retained as a deprecated alias for backward compatibility.
 
 Validation Classes
 ------------------
 
-.. autoclass:: segnomms.validation.phase4.Phase4Validator
+.. autoclass:: segnomms.validation.composition.CompositionValidator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -68,7 +73,7 @@ Examples
 
 Manual Validation::
 
-    from segnomms.validation.phase4 import Phase4Validator
+    from segnomms.validation import CompositionValidator
     from segnomms.config import RenderingConfig
     import segno
 
@@ -82,10 +87,12 @@ Manual Validation::
     )
 
     # Validate configuration
-    validator = Phase4Validator(qr, config)
-    warnings = validator.validate_all()
+    validator = CompositionValidator(
+        qr_version=qr.version, error_level='M', matrix_size=qr.symbol_size()[0]
+    )
+    result = validator.validate_all(config)
 
-    for warning in warnings:
+    for warning in result.warnings:
         print(f"Warning: {warning}")
 
 Automatic Validation::
