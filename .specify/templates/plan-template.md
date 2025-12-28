@@ -113,7 +113,7 @@ segnomms/                    # Main plugin package
 │   └── composite.py        # Multi-layer composition
 ├── validation/             # Quality assurance
 │   ├── models.py           # Validation rule definitions
-│   └── phase4.py           # Final output validation
+│   └── composition.py      # Composition validation (CompositionValidator)
 ├── plugin/                 # Segno plugin interface
 │   ├── interface.py        # Plugin entry point and API
 │   ├── config.py           # Plugin configuration management

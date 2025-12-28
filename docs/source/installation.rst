@@ -85,8 +85,8 @@ You can verify the installation by running:
    with open('test.svg', 'w') as f:
        write(qr, f)
 
-   # Test Phase 4 features
-   with open('test_phase4.svg', 'w') as f:
+   # Test composition features
+   with open('test_composition.svg', 'w') as f:
        write(qr, f, frame_shape='circle', centerpiece_enabled=True)
 
    print("Installation successful!")

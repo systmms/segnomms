@@ -358,11 +358,11 @@ class TestCompositionIntegration:
         assert any("rect" in child.tag and "quiet-zone" in child.get("class", "") for child in children)
         assert any(child.get("id") == "segnomms-modules" for child in children)
 
-    def test_no_phase4_features_baseline(self, test_qr, tmp_path):
-        """Test that SVG without Phase 4 features still works correctly."""
+    def test_no_composition_features_baseline(self, test_qr, tmp_path):
+        """Test that SVG without composition features still works correctly."""
         output_file = tmp_path / "baseline.svg"
 
-        write(test_qr, str(output_file), scale=10, border=4, shape="square")  # No Phase 4 features
+        write(test_qr, str(output_file), scale=10, border=4, shape="square")  # No composition features
 
         assert output_file.exists()
 

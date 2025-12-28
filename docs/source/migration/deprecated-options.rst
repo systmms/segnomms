@@ -281,3 +281,46 @@ The configuration class ``Phase4ValidatorConfig`` has been renamed to
    )
 
 The old class name continues to work but emits a ``DeprecationWarning``.
+
+enable_phase4 Parameter Rename
+------------------------------
+
+The ``enable_phase4`` parameter has been renamed to ``enable_composition`` for
+consistency with the CompositionValidator naming.
+
+.. note::
+
+   Both ``enable_phase4`` and ``enable_composition`` are currently no-op
+   parameters. Composition features (frames, centerpieces) are controlled
+   by their individual parameters: ``frame_shape``, ``frame_*``,
+   ``centerpiece_enabled``, ``centerpiece_*``, etc.
+
+**Before (deprecated):**
+
+.. code-block:: python
+
+   from segnomms import write
+
+   write(
+       qr,
+       output,
+       enable_phase4=True,
+       frame_shape="circle",
+       centerpiece_enabled=True,
+   )
+
+**After (current):**
+
+.. code-block:: python
+
+   from segnomms import write
+
+   write(
+       qr,
+       output,
+       enable_composition=True,  # Optional, composition features controlled by other params
+       frame_shape="circle",
+       centerpiece_enabled=True,
+   )
+
+The deprecated parameter emits a ``DeprecationWarning`` but continues to work.

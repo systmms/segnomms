@@ -58,6 +58,13 @@ DEPRECATED_QR_OPTIONS: dict[str, str] = {
     "multi_symbol": "structured_append",
 }
 
+# Deprecated phase naming (Phase 4 is now called "Composition")
+# Note: enable_composition is currently a no-op; composition features are
+# controlled by individual parameters (frame_*, centerpiece_*)
+DEPRECATED_PHASE_PARAMETERS: dict[str, str] = {
+    "enable_phase4": "enable_composition",
+}
+
 
 def _handle_deprecated_options(kwargs: dict[str, Any], mappings: dict[str, str]) -> None:
     """Handle deprecated option names, emitting warnings and checking conflicts.
@@ -291,6 +298,7 @@ class RenderingConfig(BaseModel):
         # This modifies kwargs in place, mapping deprecated names to current names
         _handle_deprecated_options(kwargs, DEPRECATED_CENTERPIECE_OPTIONS)
         _handle_deprecated_options(kwargs, DEPRECATED_QR_OPTIONS)
+        _handle_deprecated_options(kwargs, DEPRECATED_PHASE_PARAMETERS)
 
         # Start with basic parameters
         config_data = {

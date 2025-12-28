@@ -60,6 +60,78 @@ class TestDeprecatedOptionsProduceCorrectOutput:
         assert svg_content.startswith("<?xml") or svg_content.startswith("<svg")
         assert "</svg>" in svg_content
 
+    def test_enable_phase4_produces_valid_svg(self) -> None:
+        """Test that enable_phase4 option still works with deprecation warning.
+
+        Note: enable_phase4 (now enable_composition) is a no-op parameter;
+        composition features are controlled by individual parameters like
+        frame_*, centerpiece_*, etc.
+        """
+        from segnomms import write
+
+        qr = segno.make("Test QR Code")
+        buffer = io.StringIO()
+
+        # Use deprecated option - should work but emit warning
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            write(
+                qr,
+                buffer,
+                enable_phase4=True,  # Deprecated
+                frame_shape="circle",  # Actual composition feature
+                scale=10,
+            )
+
+            # Check deprecation warning was emitted
+            deprecation_warnings = [
+                warning
+                for warning in w
+                if issubclass(warning.category, DeprecationWarning)
+                and "enable_phase4" in str(warning.message)
+            ]
+            assert len(deprecation_warnings) >= 1, (
+                f"Expected deprecation warning for enable_phase4, "
+                f"got warnings: {[str(x.message) for x in w]}"
+            )
+
+        svg_content = buffer.getvalue()
+        assert svg_content.startswith("<?xml") or svg_content.startswith("<svg")
+        assert "</svg>" in svg_content
+
+    def test_enable_composition_no_deprecation_warning(self) -> None:
+        """Test that enable_composition does not emit deprecation warning."""
+        from segnomms import write
+
+        qr = segno.make("Test QR Code")
+        buffer = io.StringIO()
+
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            write(
+                qr,
+                buffer,
+                enable_composition=True,  # Current name
+                frame_shape="circle",
+                scale=10,
+            )
+
+            # Should not have deprecation warning for enable_composition
+            composition_warnings = [
+                warning
+                for warning in w
+                if issubclass(warning.category, DeprecationWarning)
+                and "enable_composition" in str(warning.message)
+            ]
+            assert len(composition_warnings) == 0, (
+                f"Did not expect deprecation warning for enable_composition, "
+                f"got warnings: {[str(x.message) for x in w]}"
+            )
+
+        svg_content = buffer.getvalue()
+        assert svg_content.startswith("<?xml") or svg_content.startswith("<svg")
+        assert "</svg>" in svg_content
+
 
 class TestMixedOptionsCompatibility:
     """Test that mixing deprecated and current options works correctly."""

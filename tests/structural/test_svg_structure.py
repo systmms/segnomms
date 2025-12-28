@@ -158,7 +158,7 @@ class TestSVGStructure:
                 break
 
         # For frame effects, we should have some frame-related structure
-        # Note: This might not always be present if phase4 validation failed
+        # Note: This might not always be present if composition validation failed
         # So we make this a soft check
         if len(frame_indicators) == 0:
             # No frame structure found - this is acceptable if validation failed

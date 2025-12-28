@@ -76,12 +76,12 @@ compatibility    & mapping     enforcement    pipeline
 - **shapes/[new_shape].py**: Rendering implementation
 - **svg/composite.py**: Multi-layer composition integration
 - **svg/accessibility.py**: Accessibility feature support
-- **validation/phase4.py**: Output validation rules
+- **validation/composition.py**: Output validation rules (CompositionValidator)
 - **tests/visual/**: Visual regression baselines
 
 **Dependencies**:
 ```python
-shapes.factory → shapes.[renderer] → svg.composite → validation.phase4
+shapes.factory → shapes.[renderer] → svg.composite → validation.composition
       ↓               ↓                   ↓              ↓
   registration    rendering          composition     validation
      system        logic             & assembly      & testing
@@ -166,7 +166,7 @@ infrastructure    collection     & testing    validation
 **Required Changes**:
 1. **svg/[feature].py**: SVG feature implementation
 2. **svg/core.py**: Assembly integration
-3. **validation/phase4.py**: Output validation
+3. **validation/composition.py**: Composition validation (CompositionValidator)
 4. **tests/structural/**: SVG structure tests
 5. **tests/visual/**: Visual output validation
 6. **a11y/accessibility.py**: Accessibility compliance
