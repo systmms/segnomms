@@ -471,3 +471,9 @@ The `.specify/ideas/` directory contains markdown files for feature ideas that:
   - Most workflows properly externalize scripts to `repo/` directory ✓
   - Some workflows still have inline shell commands (46 instances across 6 workflow files)
   - Complete extraction when workflows are next updated
+
+## Active Technologies
+- Python 3.9+ (see pyproject.toml for compatibility matrix) + Segno >=1.5.2, Pydantic >=2.7,<3, typing-extensions >=4.8 (003-naming-consistency)
+
+## Recent Changes
+- 003-naming-consistency: Added Python 3.9+ (see pyproject.toml for compatibility matrix) + Segno >=1.5.2, Pydantic >=2.7,<3, typing-extensions >=4.8
