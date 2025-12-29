@@ -32,12 +32,12 @@ from segnomms.config import (
 )
 from segnomms.plugin import (
     MAX_QR_SIZE,
-    _export_configuration,
     generate_interactive_svg,
     register_with_segno,
     write,
     write_advanced,
 )
+from segnomms.plugin.export import _export_configuration
 
 
 @pytest.fixture
