@@ -184,11 +184,19 @@ class TestCompositionValidatorAdditional:
         can't test harness failure behavior.
         """
         # Import to check if harness is available
-        from tests.helpers.scanning_harness import get_scanability_harness
+        from tests.helpers.scanning_harness import (
+            OPENCV_AVAILABLE,
+            PYZBAR_AVAILABLE,
+            get_scanability_harness,
+        )
+
+        # Skip if no actual QR decoding libraries (PIL alone isn't enough)
+        if not (PYZBAR_AVAILABLE or OPENCV_AVAILABLE):
+            pytest.skip("QR decoding libraries (pyzbar or opencv) not available")
 
         harness = get_scanability_harness()
         if harness is None:
-            pytest.skip("Scanning libraries not available for harness testing")
+            pytest.skip("Scanning harness not available")
 
         config = RenderingConfig()
 
@@ -215,11 +223,19 @@ class TestCompositionValidatorAdditional:
         available. Without them, get_scanability_harness() returns None.
         """
         # Import to check if harness is available
-        from tests.helpers.scanning_harness import get_scanability_harness
+        from tests.helpers.scanning_harness import (
+            OPENCV_AVAILABLE,
+            PYZBAR_AVAILABLE,
+            get_scanability_harness,
+        )
+
+        # Skip if no actual QR decoding libraries (PIL alone isn't enough)
+        if not (PYZBAR_AVAILABLE or OPENCV_AVAILABLE):
+            pytest.skip("QR decoding libraries (pyzbar or opencv) not available")
 
         harness = get_scanability_harness()
         if harness is None:
-            pytest.skip("Scanning libraries not available for harness testing")
+            pytest.skip("Scanning harness not available")
 
         config = RenderingConfig()
 
@@ -245,11 +261,19 @@ class TestCompositionValidatorAdditional:
         available. Without them, get_scanability_harness() returns None.
         """
         # Import to check if harness is available
-        from tests.helpers.scanning_harness import get_scanability_harness
+        from tests.helpers.scanning_harness import (
+            OPENCV_AVAILABLE,
+            PYZBAR_AVAILABLE,
+            get_scanability_harness,
+        )
+
+        # Skip if no actual QR decoding libraries (PIL alone isn't enough)
+        if not (PYZBAR_AVAILABLE or OPENCV_AVAILABLE):
+            pytest.skip("QR decoding libraries (pyzbar or opencv) not available")
 
         harness = get_scanability_harness()
         if harness is None:
-            pytest.skip("Scanning libraries not available for harness testing")
+            pytest.skip("Scanning harness not available")
 
         config = RenderingConfig()
 
@@ -346,11 +370,19 @@ class TestCompositionValidatorAdditional:
         available. Without them, get_scanability_harness() returns None.
         """
         # Import to check if harness is available
-        from tests.helpers.scanning_harness import get_scanability_harness
+        from tests.helpers.scanning_harness import (
+            OPENCV_AVAILABLE,
+            PYZBAR_AVAILABLE,
+            get_scanability_harness,
+        )
+
+        # Skip if no actual QR decoding libraries (PIL alone isn't enough)
+        if not (PYZBAR_AVAILABLE or OPENCV_AVAILABLE):
+            pytest.skip("QR decoding libraries (pyzbar or opencv) not available")
 
         harness = get_scanability_harness()
         if harness is None:
-            pytest.skip("Scanning libraries not available for harness testing")
+            pytest.skip("Scanning harness not available")
 
         config = RenderingConfig(dark="#000000", light="#FFFFFF")
 
