@@ -1,13 +1,16 @@
 name: Validate Release
 
+# This workflow is used for pre-release validation. It provides comprehensive
+# testing across multiple Python versions, OS, and Segno versions.
+#
+# Triggers:
+# - workflow_call: Used by release workflows
+# - workflow_dispatch: Manual trigger for pre-release validation
+#
+# Note: PR testing is handled by ci.yml to avoid duplicate runs.
 on:
   workflow_call:
-  pull_request:
-    paths:
-      - 'segnomms/**'
-      - 'pyproject.toml'
-      - 'tests/**'
-      - '.github/workflows/validate-release.yml'
+  workflow_dispatch:
 
 jobs:
   # Run standard Python tests across multiple versions and OS
