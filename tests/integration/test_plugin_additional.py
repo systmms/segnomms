@@ -23,11 +23,13 @@ from segnomms.config import (
     RenderingConfig,
 )
 from segnomms.plugin import (
-    _export_configuration,
-    _get_pattern_specific_render_kwargs,
-    _get_pattern_specific_style,
     generate_interactive_svg,
     write_advanced,
+)
+from segnomms.plugin.export import _export_configuration
+from segnomms.plugin.patterns import (
+    _get_pattern_specific_render_kwargs,
+    _get_pattern_specific_style,
 )
 
 

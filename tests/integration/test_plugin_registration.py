@@ -177,7 +177,7 @@ class TestPluginIntegration:
             enable_phase1=True,
             enable_phase2=True,
             enable_phase3=True,
-            enable_phase4=True,
+            enable_composition=True,
             style_interactive=True,
             frame_shape="rounded-square",
             centerpiece_enabled=True,

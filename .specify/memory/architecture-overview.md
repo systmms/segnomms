@@ -95,7 +95,7 @@ CoreConfig
 
 **`validation/`** - Quality Assurance
 - `models.py` - Validation rule definitions
-- `phase4.py` - Final output validation
+- `composition.py` - Composition validation (CompositionValidator)
 
 ### Supporting Systems
 

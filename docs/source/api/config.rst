@@ -28,7 +28,7 @@ Example Usage
 .. code-block:: python
 
    from segnomms.config import RenderingConfig
-   
+
    # Create configuration from kwargs
    config = RenderingConfig.from_kwargs(
        shape='connected',
@@ -37,7 +37,7 @@ Example Usage
        light='#dbeafe',
        safe_mode=False
    )
-   
+
    # Access configuration values
    print(config.shape)      # 'connected'
    print(config.scale)      # 20
@@ -121,24 +121,36 @@ SVG Parameters
 Phase Configuration
 -------------------
 
-The plugin uses a three-phase rendering approach:
+The plugin uses a three-phase processing pipeline for QR code rendering:
 
-Phase 1 - Clustering
-~~~~~~~~~~~~~~~~~~~~
+Phase 1 - Enhanced Context Detection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enhanced 8-neighbor context detection for context-aware shape selection.
+This phase analyzes the connectivity of each module with its 8 surrounding
+neighbors to determine optimal shape rendering.
 
 .. autoclass:: segnomms.config.models.phases.Phase1Config
    :members:
    :undoc-members:
 
-Phase 2 - Shape Rendering
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Phase 2 - Connected Component Clustering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Connected component clustering for unified module group rendering.
+This phase groups adjacent modules into clusters that can be rendered
+as unified shapes rather than individual modules.
 
 .. autoclass:: segnomms.config.models.phases.Phase2Config
    :members:
    :undoc-members:
 
-Phase 3 - SVG Assembly
-~~~~~~~~~~~~~~~~~~~~~~
+Phase 3 - Marching Squares Contour Generation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Marching squares algorithm with Bezier curve smoothing for organic contours.
+This phase generates smooth, organic contours around clustered modules using
+the marching squares algorithm combined with Bezier curve interpolation.
 
 .. autoclass:: segnomms.config.models.phases.Phase3Config
    :members:
@@ -151,10 +163,27 @@ Plugin Configuration
    :members:
    :undoc-members:
 
-Phase 4 Configuration
----------------------
+Composition Validation
+----------------------
 
-Phase 4 introduces advanced features for professional QR code generation.
+The ``CompositionValidator`` class validates the composition of QR code visual
+elements including frames, centerpieces, and their interactions. Unlike the
+three processing phases above, the composition validator is a validation system
+that ensures your configuration choices maintain QR code scannability.
+
+.. note::
+
+   The ``CompositionValidator`` was previously named ``Phase4Validator``. The old
+   name is retained as a deprecated alias for backward compatibility.
+
+.. autoclass:: segnomms.validation.composition.CompositionValidator
+   :members: validate_all, validate_frame_safety, validate_centerpiece_safety
+   :undoc-members:
+
+Frame and Centerpiece Configuration
+------------------------------------
+
+This section describes the configuration options for advanced visual features.
 
 Frame Configuration
 ~~~~~~~~~~~~~~~~~~~
@@ -185,7 +214,7 @@ finder patterns and timing patterns.
 **Size Guidelines by Error Correction Level:**
 
 * **L Level (7% recovery)**: Max 5% centerpiece - very conservative
-* **M Level (15% recovery)**: Max 8% centerpiece - good for small logos  
+* **M Level (15% recovery)**: Max 8% centerpiece - good for small logos
 * **Q Level (25% recovery)**: Max 15% centerpiece - medium logos
 * **H Level (30% recovery)**: Max 20% centerpiece - large logos
 
@@ -261,20 +290,20 @@ Direct configuration object creation::
    from segnomms.config import (
        RenderingConfig, FrameConfig, CenterpieceConfig, QuietZoneConfig
    )
-   
+
    # Create individual config objects
    frame_config = FrameConfig(
        shape='squircle',
        clip_mode='fade'
    )
-   
+
    centerpiece_config = CenterpieceConfig(
        enabled=True,
        shape='circle',
        size=0.14,
        margin=3
    )
-   
+
    quiet_zone_config = QuietZoneConfig(
        style='gradient',
        gradient={
@@ -282,7 +311,7 @@ Direct configuration object creation::
            'colors': ['#f8f9fa', '#e9ecef']
        }
    )
-   
+
    # Combine into main config
    config = RenderingConfig(
        scale=18,

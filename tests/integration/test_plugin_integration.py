@@ -32,12 +32,12 @@ from segnomms.config import (
 )
 from segnomms.plugin import (
     MAX_QR_SIZE,
-    _export_configuration,
     generate_interactive_svg,
     register_with_segno,
     write,
     write_advanced,
 )
+from segnomms.plugin.export import _export_configuration
 
 
 @pytest.fixture
@@ -158,7 +158,7 @@ class TestWriteFunction:
             enable_phase1=True,
             enable_phase2=True,
             enable_phase3=False,
-            enable_phase4=True,
+            enable_composition=True,
         )
 
         assert os.path.exists(output_file)
@@ -288,14 +288,14 @@ class TestGenerateInteractiveSVG:
 
         # Check for interactive features
         style_element = tree.find(".//style")
-        # Style element may be missing if phase4 validation failed - validate or assert None
+        # Style element may be missing if composition validation failed - validate or assert None
         if style_element is not None:
             assert style_element.tag == "style"  # Validate style element
         # Just check that we got valid SVG
 
         # Check for definitions (gradients, patterns, etc.)
         defs = tree.find(".//defs")
-        # defs may be missing if phase4 validation failed - validate or assert None
+        # defs may be missing if composition validation failed - validate or assert None
         if defs is not None:
             assert defs.tag == "defs"  # Validate defs element
         # Just check that we got valid SVG with proper tag
@@ -442,8 +442,8 @@ class TestIntegrationPipeline:
             enable_phase1=True,
             enable_phase2=True,
             enable_phase3=True,
-            enable_phase4=True,
-            # Phase 4 features
+            enable_composition=True,
+            # Composition features
             frame_shape="circle",
             frame_clip_mode="fade",
             centerpiece_enabled=True,
@@ -472,7 +472,7 @@ class TestIntegrationPipeline:
         # Style element may be missing due to validation warnings
         # Just verify we got a valid QR code structure
 
-        # Check for frame elements - defs may be missing if phase4 validation failed
+        # Check for frame elements - defs may be missing if composition validation failed
         # Just verify we got a valid SVG structure
         assert tree.tag.endswith("svg")
 

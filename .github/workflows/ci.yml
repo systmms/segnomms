@@ -283,21 +283,62 @@ jobs:
         name: security-scan-results
         path: bandit-report.json
 
+  test-wheel:
+    name: Wheel Build Test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: true
+        cache-dependency-glob: "**/uv.lock"
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies for building
+      run: |
+        uv sync
+        uv pip install -e .
+
+    - name: Build package wheel
+      run: |
+        uv build --wheel
+
+    - name: Test wheel installation
+      run: |
+        WHEEL_PATH=$(ls dist/*.whl)
+        echo "Testing wheel: ${WHEEL_PATH}"
+        repo/test_pypi_install.sh --no-wait --wheel="${WHEEL_PATH}" --verbose
+
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [test, documentation, compatibility, visual-regression, examples, security]
+    needs: [test, documentation, compatibility, visual-regression, examples, security, test-wheel]
     if: always()
     steps:
     - uses: actions/checkout@v6
 
     - name: Evaluate quality gate
+      env:
+        TEST_RESULT: ${{ needs.test.result }}
+        DOCS_RESULT: ${{ needs.documentation.result }}
+        COMPAT_RESULT: ${{ needs.compatibility.result }}
+        VISUAL_RESULT: ${{ needs.visual-regression.result }}
+        EXAMPLES_RESULT: ${{ needs.examples.result }}
+        SECURITY_RESULT: ${{ needs.security.result }}
+        WHEEL_RESULT: ${{ needs.test-wheel.result }}
       run: |
         ./repo/quality_gate_checker.sh \
-          --test="${{ needs.test.result }}" \
-          --docs="${{ needs.documentation.result }}" \
-          --compatibility="${{ needs.compatibility.result }}" \
-          --visual="${{ needs.visual-regression.result }}" \
-          --examples="${{ needs.examples.result }}" \
-          --security="${{ needs.security.result }}" \
+          --test="${TEST_RESULT}" \
+          --docs="${DOCS_RESULT}" \
+          --compatibility="${COMPAT_RESULT}" \
+          --visual="${VISUAL_RESULT}" \
+          --examples="${EXAMPLES_RESULT}" \
+          --security="${SECURITY_RESULT}" \
+          --wheel="${WHEEL_RESULT}" \
           --verbose

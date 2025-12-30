@@ -17,6 +17,7 @@ COMPATIBILITY_STATUS=""
 VISUAL_STATUS=""
 EXAMPLES_STATUS=""
 SECURITY_STATUS=""
+WHEEL_STATUS=""
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -53,6 +54,10 @@ while [[ $# -gt 0 ]]; do
             SECURITY_STATUS="${1#*=}"
             shift
             ;;
+        --wheel=*)
+            WHEEL_STATUS="${1#*=}"
+            shift
+            ;;
         --verbose)
             VERBOSE=true
             shift
@@ -73,6 +78,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --visual=STATUS            Visual regression test result"
             echo "  --examples=STATUS          Example generation result"
             echo "  --security=STATUS          Security scan result"
+            echo "  --wheel=STATUS             Wheel build test result"
             echo ""
             echo "Flags:"
             echo "  --verbose                  Enable verbose output"
@@ -234,6 +240,10 @@ check_optional_jobs() {
         optional_jobs+=("Security Scan:$SECURITY_STATUS")
     fi
 
+    if [[ -n "$WHEEL_STATUS" ]]; then
+        optional_jobs+=("Wheel Build:$WHEEL_STATUS")
+    fi
+
     if [[ ${#optional_jobs[@]} -gt 0 ]]; then
         log_info "Checking optional jobs..."
 
@@ -263,6 +273,10 @@ check_optional_jobs() {
                         log_warn "Security scan encountered issues"
                         log_info "Review security findings in the scan report"
                         ;;
+                    "Wheel Build")
+                        log_warn "Wheel build test failed"
+                        log_info "Package may not install correctly from PyPI"
+                        ;;
                 esac
             fi
         done
@@ -277,7 +291,7 @@ check_optional_jobs() {
 generate_summary() {
     local critical_failures="$1"
     local warning_count="$2"
-    local total_jobs=$((3 + $(([[ -n "$VISUAL_STATUS" ]] && echo 1) || echo 0) + $(([[ -n "$EXAMPLES_STATUS" ]] && echo 1) || echo 0) + $(([[ -n "$SECURITY_STATUS" ]] && echo 1) || echo 0)))
+    local total_jobs=$((3 + $(([[ -n "$VISUAL_STATUS" ]] && echo 1) || echo 0) + $(([[ -n "$EXAMPLES_STATUS" ]] && echo 1) || echo 0) + $(([[ -n "$SECURITY_STATUS" ]] && echo 1) || echo 0) + $(([[ -n "$WHEEL_STATUS" ]] && echo 1) || echo 0)))
     local successful_jobs=$((total_jobs - critical_failures - warning_count))
 
     echo ""
@@ -297,11 +311,12 @@ generate_summary() {
         echo "    - Documentation Build: $(get_status_description "$DOCS_STATUS")"
         echo "    - Segno Compatibility: $(get_status_description "$COMPATIBILITY_STATUS")"
 
-        if [[ -n "$VISUAL_STATUS" ]] || [[ -n "$EXAMPLES_STATUS" ]] || [[ -n "$SECURITY_STATUS" ]]; then
+        if [[ -n "$VISUAL_STATUS" ]] || [[ -n "$EXAMPLES_STATUS" ]] || [[ -n "$SECURITY_STATUS" ]] || [[ -n "$WHEEL_STATUS" ]]; then
             echo "  Optional Jobs (warnings only):"
             [[ -n "$VISUAL_STATUS" ]] && echo "    - Visual Regression: $(get_status_description "$VISUAL_STATUS")"
             [[ -n "$EXAMPLES_STATUS" ]] && echo "    - Example Generation: $(get_status_description "$EXAMPLES_STATUS")"
             [[ -n "$SECURITY_STATUS" ]] && echo "    - Security Scan: $(get_status_description "$SECURITY_STATUS")"
+            [[ -n "$WHEEL_STATUS" ]] && echo "    - Wheel Build: $(get_status_description "$WHEEL_STATUS")"
         fi
         echo ""
     fi
@@ -321,6 +336,7 @@ evaluate_quality_gate() {
     [[ -n "$VISUAL_STATUS" ]] && { validate_status "$VISUAL_STATUS" "Visual Regression" || return 1; }
     [[ -n "$EXAMPLES_STATUS" ]] && { validate_status "$EXAMPLES_STATUS" "Example Generation" || return 1; }
     [[ -n "$SECURITY_STATUS" ]] && { validate_status "$SECURITY_STATUS" "Security Scan" || return 1; }
+    [[ -n "$WHEEL_STATUS" ]] && { validate_status "$WHEEL_STATUS" "Wheel Build" || return 1; }
 
     # Check critical jobs
     local critical_failures

@@ -1,4 +1,4 @@
-"""Test suite for Phase4Validator class."""
+"""Test suite for CompositionValidator class (formerly Phase4Validator)."""
 
 import pytest
 
@@ -9,26 +9,26 @@ from segnomms.config import (
     QuietZoneConfig,
     RenderingConfig,
 )
-from segnomms.validation.phase4 import Phase4Validator
+from segnomms.validation.composition import CompositionValidator
 
 
-class TestPhase4Validator:
-    """Test cases for the Phase4Validator class."""
+class TestCompositionValidator:
+    """Test cases for the CompositionValidator class."""
 
     @pytest.fixture
     def validator_small(self):
         """Create validator for small QR code."""
-        return Phase4Validator(qr_version=1, error_level="L", matrix_size=21)
+        return CompositionValidator(qr_version=1, error_level="L", matrix_size=21)
 
     @pytest.fixture
     def validator_medium(self):
         """Create validator for medium QR code."""
-        return Phase4Validator(qr_version=5, error_level="M", matrix_size=37)
+        return CompositionValidator(qr_version=5, error_level="M", matrix_size=37)
 
     @pytest.fixture
     def validator_large(self):
         """Create validator for large QR code."""
-        return Phase4Validator(qr_version=10, error_level="H", matrix_size=57)
+        return CompositionValidator(qr_version=10, error_level="H", matrix_size=57)
 
     def test_validate_frame_safety_square(self, validator_medium):
         """Test square frame validation (should always pass)."""
@@ -165,7 +165,7 @@ class TestPhase4Validator:
         config.frame.shape = "circle"
 
         # Create validator with large matrix
-        large_validator = Phase4Validator(qr_version=15, error_level="H", matrix_size=77)
+        large_validator = CompositionValidator(qr_version=15, error_level="H", matrix_size=77)
         recommendations = large_validator.get_recommendations(config)
 
         assert len(recommendations) > 0

@@ -16,34 +16,16 @@ Modules:
     - patterns: Pattern-specific processing utilities
 """
 
-# Import utility functions that were previously exposed
-from .export import _export_configuration, _generate_config_hash
-
-# Import main API functions for backward compatibility
+# Import main API functions
 from .interface import register_with_segno, write, write_advanced
-from .patterns import _get_pattern_specific_render_kwargs, _get_pattern_specific_style
-from .rendering import (
-    MAX_QR_SIZE,
-    _detect_and_remove_islands,
-    _format_svg_string,
-    _get_enhanced_render_kwargs,
-    _render_cluster,
-    generate_interactive_svg,
-)
+from .rendering import MAX_QR_SIZE, generate_interactive_svg
 
-# Keep the same public API
+# Public API only - internal functions are still importable via direct import
+# from their respective modules (e.g., from segnomms.plugin.export import _export_configuration)
 __all__ = [
     "write",
     "write_advanced",
     "register_with_segno",
     "generate_interactive_svg",
-    "_export_configuration",
-    "_generate_config_hash",
-    "_get_pattern_specific_style",
-    "_get_pattern_specific_render_kwargs",
-    "_render_cluster",
-    "_get_enhanced_render_kwargs",
-    "_format_svg_string",
-    "_detect_and_remove_islands",
     "MAX_QR_SIZE",
 ]

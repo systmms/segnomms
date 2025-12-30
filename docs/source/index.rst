@@ -17,6 +17,8 @@ SegnoMMS extends `Segno <https://segno.readthedocs.io/>`_ with advanced SVG rend
    examples
    testing/index
    decoder_compatibility
+   developer/index
+   migration/index
    contributing
 
 Features
