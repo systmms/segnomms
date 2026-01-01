@@ -140,7 +140,7 @@ write(qr, 'custom-accessible.svg', accessibility=custom_a11y)
 
 ## Requirements
 
-- Python >= 3.9 (tested through Python 3.14)
+- Python >= 3.10 (tested through Python 3.14)
 - Segno >= 1.5.2 (tested with 1.5.2, 1.6.0, and 1.6.6)
 - Pydantic >= 2.7,<3 (for configuration validation and JSON Schema)
 

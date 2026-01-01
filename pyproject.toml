@@ -20,7 +20,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -30,7 +29,7 @@ classifiers = [
     "Topic :: Multimedia :: Graphics",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "segno>=1.5.2", # Tested compatibility: 1.5.2, 1.6.0, 1.6.6
     "pydantic>=2.7,<3", # For configuration validation and JSON schema with enum objects
@@ -59,7 +58,7 @@ path = "segnomms/__init__.py"
 
 [tool.black]
 line-length = 110
-target-version = ['py39']
+target-version = ['py310']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -100,7 +99,7 @@ exclude = [
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
-python_version = "3.9"
+python_version = "3.10"
 strict = true
 warn_return_any = true
 warn_unused_configs = true
@@ -267,7 +266,7 @@ dev = [
     "twine>=4.0.0", # For deploying to package registries
     "keyrings.google-artifactregistry-auth>=1.0.0", # For Google Artifact Registry
     # Testing - Core
-    "pytest>=8.0.0",
+    "pytest>=9.0.0",
     "pytest-cov>=4.0.0",
     "coverage[toml]>=7.0.0",
     # Testing - Enhanced
@@ -281,7 +280,7 @@ dev = [
     "PyYAML>=6.0.0",
     # Code quality
     "flake8>=6.0.0",
-    "black>=23.0.0",
+    "black>=25.0.0",
     "isort>=5.0.0",
     "mypy>=1.0.0",
     "pre-commit-hooks>=4.0.0", # For trailing whitespace and other file formatting

@@ -473,7 +473,7 @@ The `.specify/ideas/` directory contains markdown files for feature ideas that:
   - Complete extraction when workflows are next updated
 
 ## Active Technologies
-- Python 3.9+ (see pyproject.toml for compatibility matrix) + Segno >=1.5.2, Pydantic >=2.7,<3, typing-extensions >=4.8 (003-naming-consistency)
+- Python 3.10+ (see pyproject.toml for compatibility matrix) + Segno >=1.5.2, Pydantic >=2.7,<3, typing-extensions >=4.8
 
 ## Recent Changes
-- 003-naming-consistency: Added Python 3.9+ (see pyproject.toml for compatibility matrix) + Segno >=1.5.2, Pydantic >=2.7,<3, typing-extensions >=4.8
+- Version update: Dropped Python 3.9 (EOL Oct 2025), added Python 3.14, updated to pytest >=9.0.0, black >=25.0.0
