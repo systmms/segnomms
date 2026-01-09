@@ -5,6 +5,143 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0](https://github.com/systmms/segnomms/compare/v0.1.0...v1.0.0) (2026-01-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Minimum Python version is now 3.10
+
+### Features
+
+* add public constants module for user-facing documentation ([c30f019](https://github.com/systmms/segnomms/commit/c30f019347f7617fc419b7dc60c412ddc1cf97a6))
+* **deps:** drop Python 3.9, add Python 3.14, upgrade dev tools ([b5929d5](https://github.com/systmms/segnomms/commit/b5929d55f6ea4f8f88f3133581c01b8c3327615c))
+* integrate GitHub Spec-Kit and validate basic module shapes ([a7832fc](https://github.com/systmms/segnomms/commit/a7832fc6b4e584653b8ba47bb1e3efdad65a7a97))
+* integrate GitHub Spec-Kit for spec-driven development ([4a030e2](https://github.com/systmms/segnomms/commit/4a030e2a7f42e27953201ae84839d4f555dd34bd))
+
+
+### Bug Fixes
+
+* **ci:** resolve conventional commits validation script logging bug ([2cd251c](https://github.com/systmms/segnomms/commit/2cd251c3517a9d2b0f774ec984c443f48e93a080))
+* **ci:** resolve package validation and deprecated UV configuration issues ([4a3d792](https://github.com/systmms/segnomms/commit/4a3d792d9fcb32b14db50721bbe51cf3c0717a37))
+* **ci:** resolve Windows PowerShell bash syntax error in dependency installation ([a5d6554](https://github.com/systmms/segnomms/commit/a5d6554a85da2a2a4306e528488056ced2f4c315))
+* **ci:** resolve Windows-specific test failures across multiple test suites ([11ab0d7](https://github.com/systmms/segnomms/commit/11ab0d7d4a9752cacc2b555b99f926b7a2eaa962))
+* **ci:** skip PNG visual regression tests on Windows ([3e87309](https://github.com/systmms/segnomms/commit/3e8730999effb32ee35b73dc32505d8ab9500024))
+* correct log output in conventional commits validation script ([a577fa7](https://github.com/systmms/segnomms/commit/a577fa7f3b693ebb67e6f4493b900334f6fc5ce0))
+* **docs:** correct validate_docs_references.py path in tasks.md ([b10b0b5](https://github.com/systmms/segnomms/commit/b10b0b585081950293d0f37578d1581ae765be2b))
+* **docs:** correct validation scripts and non-existent constant references ([de031da](https://github.com/systmms/segnomms/commit/de031da8d3c8e6dd3bc543a12932a269a88a3c94))
+* **docs:** correct validation scripts and non-existent constant references ([912903f](https://github.com/systmms/segnomms/commit/912903fee285ce66f78e448a6d5c0d139a4aa6bf))
+* **docs:** prevent visual-gallery.rst from showing as modified after docs build ([b8b0b16](https://github.com/systmms/segnomms/commit/b8b0b163096901e046f34eda54a6d58ce3d6e64d))
+* **naming:** address PR review feedback from Copilot and Gemini ([6997d57](https://github.com/systmms/segnomms/commit/6997d5788ef48c66360e229d0642a762c034a476))
+* resolve CI installation and validation failures ([82dee7e](https://github.com/systmms/segnomms/commit/82dee7efcf6f41f5b3d934e240475057df784a4e))
+* resolve CI workflow configuration errors ([399428f](https://github.com/systmms/segnomms/commit/399428fc036f44f48b1c44896e5971ae2041ff9c))
+* resolve CI/CD workflow failures and optimize performance ([20093a9](https://github.com/systmms/segnomms/commit/20093a9b136a679e891e1ecd01b803019ed3eadf))
+* resolve CI/CD workflow failures and optimize performance ([bf6e84d](https://github.com/systmms/segnomms/commit/bf6e84dd8011b71c36a81be5bcb959bcdda1e6b6))
+* resolve documentation display and formatting issues ([bd265c4](https://github.com/systmms/segnomms/commit/bd265c494eef229d48e0b16b3def721154b0bf01))
+* **security:** prevent code injection in spec-kit markdown validation ([d46c5ab](https://github.com/systmms/segnomms/commit/d46c5ab9b3a8cf776bd138884058180630126070))
+* **tests:** check for actual QR decoding libraries before scanability tests ([856d8f5](https://github.com/systmms/segnomms/commit/856d8f57b167d3e9d2deb79ee21ed88933ab8088))
+* **tests:** update integration test imports for internal plugin functions ([ee898fd](https://github.com/systmms/segnomms/commit/ee898fd894a41d1453f03c7d2758903a8a4ee1b4))
+* **tests:** update plugin internal function imports in test_plugin_core ([59f6d55](https://github.com/systmms/segnomms/commit/59f6d552ae509d11adf0d08a5ff0d5706c355c26))
+* **tests:** use realistic values in composition validator tests ([ddb0988](https://github.com/systmms/segnomms/commit/ddb0988ea9f30422805df5709361df4071ef4af5))
+
+
+### Documentation
+
+* add auto-generated visual gallery from test baselines ([2004b81](https://github.com/systmms/segnomms/commit/2004b81a8f8e36b56bb4f3e899af970eff233cd7))
+* add comprehensive Phase 4 compatibility guidance and cross-links ([4b967c5](https://github.com/systmms/segnomms/commit/4b967c5cd644f6280244fae0163ba1cacd7d60c3))
+* add spec-kit analysis for basic module shapes feature ([7f29f99](https://github.com/systmms/segnomms/commit/7f29f99e568347c19e3c2d10be49fa7a5b589c51))
+* add trailing newline to visual-gallery.rst ([7179022](https://github.com/systmms/segnomms/commit/7179022f17fc4e0c5316417410039d9d71a35385))
+* add trailing newline to visual-gallery.rst ([ff998a3](https://github.com/systmms/segnomms/commit/ff998a388adf9509e429e0b3ef7e9140262b5523))
+* add trailing newline to visual-gallery.rst ([689fe8a](https://github.com/systmms/segnomms/commit/689fe8a792d7cd7577eca19290e8274b9bec28d8))
+* add validation scripts for documentation audit ([9f0c881](https://github.com/systmms/segnomms/commit/9f0c88126760453b8d71b310a84a64a8aa268b53))
+* comprehensive documentation audit with 27 fixes across 8 user stories ([cc18c5c](https://github.com/systmms/segnomms/commit/cc18c5c42be1223af5885d862c48e41c4594a304))
+* **critical:** add Python 3.14 support and clarify uv dependency workflow ([224a017](https://github.com/systmms/segnomms/commit/224a01705dce22f8905dc3fed87ae9f2d937dd7d))
+* **critical:** fix contradictions in package name, repo URL, author, and Segno version ([e29b85a](https://github.com/systmms/segnomms/commit/e29b85aee48e00abf543b6a36e56abd3792bc25e))
+* enhance parameter reference with ranges and quick lookup ([62c8725](https://github.com/systmms/segnomms/commit/62c8725d96f86d47f40038fa0716dd4f645d199a))
+* fix intent examples, align reqs, add docstrings, reduce Sphinx warnings ([e955721](https://github.com/systmms/segnomms/commit/e955721ff3036b8772d218eb21d10f781f4d2bb3))
+* fix invalid type annotation any to Any ([8a2a49a](https://github.com/systmms/segnomms/commit/8a2a49a45d2f1209b711977dc308345bc1eb28fa))
+* fix Python version and improve README compatibility ([19cebe7](https://github.com/systmms/segnomms/commit/19cebe7c340275c1822e289a5436bfc531e6cf96))
+* **high:** add complete constants module API documentation ([ce7e6d0](https://github.com/systmms/segnomms/commit/ce7e6d040045f47d726eafd646e6d2f652e55991))
+* **high:** document Lefthook workflow and test script discoverability ([fd26728](https://github.com/systmms/segnomms/commit/fd26728b6ff42aafadc70148f8691a5836c6551f))
+* **ideas:** add project naming consistency review backlog ([951ff14](https://github.com/systmms/segnomms/commit/951ff141e804277d0b95952f9271f0eca9660e14))
+* improve documentation display and formatting ([bbd060f](https://github.com/systmms/segnomms/commit/bbd060ffffb6fea1958db4ede6a4bb0fcaf0f317))
+* **makefile:** fix package name and add docs-validate target ([af59059](https://github.com/systmms/segnomms/commit/af59059a433b798a2039779f23db842b7fb31836))
+* **medium:** add complete working examples for FastAPI and decoder testing ([57a8143](https://github.com/systmms/segnomms/commit/57a814371726e4366fe39b9dc867ac85b0c3e52f))
+* **polish:** complete navigation, beta notices, and final validation ([8787cff](https://github.com/systmms/segnomms/commit/8787cff957a4ccf7e0468e9399795aba71711d44))
+* **spec:** add initial documentation audit specification ([7bf23ad](https://github.com/systmms/segnomms/commit/7bf23adf1f4b58b5697953c87b507c01a6171441))
+* **spec:** complete implementation plan for documentation audit ([7433bdf](https://github.com/systmms/segnomms/commit/7433bdfaf592031102cc4b20ef8a6fd9a8d7005b))
+* **spec:** generate implementation tasks for documentation audit ([c0eadc5](https://github.com/systmms/segnomms/commit/c0eadc539fe7e1c5233da443924d5801f9adb836))
+* **specs:** add naming consistency specification and implementation plan ([051cb51](https://github.com/systmms/segnomms/commit/051cb51ca453faaf768b242ede7525d6b099baaa))
+* **specs:** mark all naming consistency tasks as complete ([db854d6](https://github.com/systmms/segnomms/commit/db854d694d9221910f9ba6afbe185df33bad11c7))
+* **specs:** update documentation audit status to complete ([e86ba00](https://github.com/systmms/segnomms/commit/e86ba0032875fe7e95ba84f0c4c28444e0fc528b))
+* update task completion status for User Stories 1-3 ([5a6be24](https://github.com/systmms/segnomms/commit/5a6be249911c3e23188bdb9560b05baf707287c5))
+* update task completion status for User Stories 4-5 ([79e4aa3](https://github.com/systmms/segnomms/commit/79e4aa30ed356c60f42642544609bd0ac0047ca1))
+
+
+### Miscellaneous Chores
+
+* +1 line to visual-gallery ([701dea7](https://github.com/systmms/segnomms/commit/701dea7061be6260ce9aab2c08f9551e51c71131))
+* add ideas backlog for future refactoring opportunities ([d58f349](https://github.com/systmms/segnomms/commit/d58f349e57299603bb88c39b7579818e35eb0a6a))
+* enforce repository policies and cleanup dependencies ([7b87a8a](https://github.com/systmms/segnomms/commit/7b87a8ac08dee1e73cb1b9f5059eb5355b5f171f))
+* **spec:** renumber feature from 001 to 002 ([e63bebe](https://github.com/systmms/segnomms/commit/e63bebe559660bfe287a2906a75a781e4d662b29))
+* updating changelog to appropriate beta vs real release notes ([481b7f1](https://github.com/systmms/segnomms/commit/481b7f112431755258495d05d6754a9c374c277c))
+
+
+### Code Refactoring
+
+* **naming:** complete phase4 naming consistency audit fixes ([3363f86](https://github.com/systmms/segnomms/commit/3363f868f4918269842ec8a4eb66cea2148a4c45))
+* **naming:** rename phase4.py to composition.py for naming consistency ([e2047e9](https://github.com/systmms/segnomms/commit/e2047e9f390c6a33324f830ec089c61475a4ec9e))
+* **naming:** standardize naming conventions and add deprecation warnings ([0eb9225](https://github.com/systmms/segnomms/commit/0eb9225b83349ba5294b28bd63a589434b0d8bc4))
+* **naming:** standardize naming conventions and add deprecation warnings ([82c1ad9](https://github.com/systmms/segnomms/commit/82c1ad9ac81d375d313e29a6a121ffd045e41d74))
+
+
+### Continuous Integration
+
+* consolidate workflows and add wheel build job ([1c10544](https://github.com/systmms/segnomms/commit/1c10544deed491aa74d671ecb97df3528cbdf85a))
+* **deps:** bump actions/cache from 4 to 5 ([2eb7894](https://github.com/systmms/segnomms/commit/2eb7894a214f701403afcab5b69030525425f297))
+* **deps:** bump actions/checkout from 4 to 5 ([07db66c](https://github.com/systmms/segnomms/commit/07db66c42f9d1d9767ab0d3c5e6d5d62d30a2600))
+* **deps:** bump actions/checkout from 4 to 5 ([71194d0](https://github.com/systmms/segnomms/commit/71194d0d87d045e074a26354180803303897544c))
+* **deps:** bump actions/checkout from 4 to 5 ([b8ebd1f](https://github.com/systmms/segnomms/commit/b8ebd1ff7520bca498b1bfcf7441eb5ff360c891))
+* **deps:** bump actions/checkout from 5 to 6 ([2cc6d08](https://github.com/systmms/segnomms/commit/2cc6d08988da2bcb51e7dde009773e26d54d5c31))
+* **deps:** bump actions/configure-pages from 4 to 5 ([805e799](https://github.com/systmms/segnomms/commit/805e79932af97c70d71446ff0a05f17619ab4b20))
+* **deps:** bump actions/configure-pages from 4 to 5 ([882d9e9](https://github.com/systmms/segnomms/commit/882d9e9b6dfe7f1124fb58fdcbf759abd2ae7c55))
+* **deps:** bump actions/configure-pages from 4 to 5 ([4bb3943](https://github.com/systmms/segnomms/commit/4bb3943e9f9cf30de08b32fc8d58799c655581ba))
+* **deps:** bump actions/download-artifact from 4 to 5 ([13cfe85](https://github.com/systmms/segnomms/commit/13cfe853a7fcc59b9908a852a4610d322af89686))
+* **deps:** bump actions/download-artifact from 4 to 5 ([f3acc0b](https://github.com/systmms/segnomms/commit/f3acc0b0dbe1f85b3afc00a04c8123adcb835172))
+* **deps:** bump actions/download-artifact from 4 to 5 ([de6a7e1](https://github.com/systmms/segnomms/commit/de6a7e1dfaa315890ccf207f6364e577285521b4))
+* **deps:** bump actions/download-artifact from 5 to 6 ([60e2289](https://github.com/systmms/segnomms/commit/60e2289b12cfeb6fe62765bb21c0fb5c6ae77731))
+* **deps:** bump actions/download-artifact from 5 to 6 ([f7f98f9](https://github.com/systmms/segnomms/commit/f7f98f9920684f6aaa327470bc2c9c9c4977f6a1))
+* **deps:** bump actions/download-artifact from 6 to 7 ([a6c71ed](https://github.com/systmms/segnomms/commit/a6c71edbd20bf318538f42c7dd96adf378f63e67))
+* **deps:** bump actions/github-script from 7 to 8 ([a20969e](https://github.com/systmms/segnomms/commit/a20969e892ce70a00662a1e0373a6760203ddac8))
+* **deps:** bump actions/github-script from 7 to 8 ([b896116](https://github.com/systmms/segnomms/commit/b896116fbec85cbc0cc9c133fdd70a001de883e5))
+* **deps:** bump actions/github-script from 7 to 8 ([0cc786f](https://github.com/systmms/segnomms/commit/0cc786fe8aad36397e2615a91e4eb60a9308c6ea))
+* **deps:** bump actions/setup-node from 4 to 6 ([27d8fd2](https://github.com/systmms/segnomms/commit/27d8fd23dc3e95006a4184616faa96221890a65b))
+* **deps:** bump actions/setup-node from 4 to 6 ([18200cc](https://github.com/systmms/segnomms/commit/18200ccf9f75751bd6fd9960d65ec7705c59e30d))
+* **deps:** bump actions/setup-node from 4 to 6 ([7ea2f50](https://github.com/systmms/segnomms/commit/7ea2f500fafe08cc6df1adcc3f98283487f007c0))
+* **deps:** bump actions/setup-python from 5 to 6 ([9464646](https://github.com/systmms/segnomms/commit/946464627c6ab0b2b6ee8f0ac40c19f74b4b299e))
+* **deps:** bump actions/setup-python from 5 to 6 ([0d87cc6](https://github.com/systmms/segnomms/commit/0d87cc6ab97e36b0f9daf1a90dcb841f44982dd4))
+* **deps:** bump actions/setup-python from 5 to 6 ([2d5cb42](https://github.com/systmms/segnomms/commit/2d5cb42811bbe84767edeb8b3d112447287a38d3))
+* **deps:** bump actions/upload-artifact from 4 to 5 ([970c1fa](https://github.com/systmms/segnomms/commit/970c1fa958aba6b7b7c313e87174c974999ca6ae))
+* **deps:** bump actions/upload-artifact from 4 to 5 ([dda9cf0](https://github.com/systmms/segnomms/commit/dda9cf04263d9cc4af1bcc74d399103b04561f88))
+* **deps:** bump actions/upload-artifact from 5 to 6 ([ab3a899](https://github.com/systmms/segnomms/commit/ab3a89915642e96a1f90dedfc6e52a9e371eeb35))
+* **deps:** bump actions/upload-pages-artifact from 3 to 4 ([83b7c9c](https://github.com/systmms/segnomms/commit/83b7c9ceb69b3174c58eadbdd94f18966925b620))
+* **deps:** bump actions/upload-pages-artifact from 3 to 4 ([55e244c](https://github.com/systmms/segnomms/commit/55e244c4ec3cc3fb78ad572d8b8a5c5d2ddc4142))
+* **deps:** bump actions/upload-pages-artifact from 3 to 4 ([a6b72c7](https://github.com/systmms/segnomms/commit/a6b72c742bfd78a6e884f6290a7683b79543a400))
+* **deps:** bump amannn/action-semantic-pull-request from 5 to 6 ([89610a4](https://github.com/systmms/segnomms/commit/89610a4dca6bb6984130abe21d7a658fc58a65c5))
+* **deps:** bump amannn/action-semantic-pull-request from 5 to 6 ([4bdfe76](https://github.com/systmms/segnomms/commit/4bdfe766fdafae283e82df8078b5c4ffb1f7dabb))
+* **deps:** bump amannn/action-semantic-pull-request from 5 to 6 ([8ee9c0e](https://github.com/systmms/segnomms/commit/8ee9c0e46c569746c3f1820e5b9bdf3359540d08))
+* **deps:** bump astral-sh/setup-uv from 3 to 7 ([bc878b3](https://github.com/systmms/segnomms/commit/bc878b32290ea1429edd6090d5ad11cdd02ff867))
+* **deps:** bump astral-sh/setup-uv from 3 to 7 ([daf813f](https://github.com/systmms/segnomms/commit/daf813f398e5876bcfc1aa46e23466142c928c95))
+* **deps:** bump astral-sh/setup-uv from 3 to 7 ([7bead40](https://github.com/systmms/segnomms/commit/7bead405a7c20d53e65da97adf724ea2a0012333))
+* **deps:** bump codecov/codecov-action from 4 to 5 ([aba1a8f](https://github.com/systmms/segnomms/commit/aba1a8fe6ee99078d8398f287304de701fc60e59))
+* **deps:** bump codecov/codecov-action from 4 to 5 ([a36ca38](https://github.com/systmms/segnomms/commit/a36ca388d6875f062609c4cd0ff54537613bb9e9))
+* **deps:** bump codecov/codecov-action from 4 to 5 ([3ce1a23](https://github.com/systmms/segnomms/commit/3ce1a23e6e648684e760eaf48ba29886994f5221))
+* **docs:** fix documentation CI/CD issues and improve quality enforcement ([791ca73](https://github.com/systmms/segnomms/commit/791ca73a210a7f6fcd0e4210f4415647c3336cdf))
+* fix dependency installation and codecov action parameters ([1a2bee9](https://github.com/systmms/segnomms/commit/1a2bee96cca1d4147a89161a22719a6c383ca5e8))
+* fix docs build dependency installation flag ([3661be6](https://github.com/systmms/segnomms/commit/3661be6ffaeeba03aa2eef0b966924483f14eb3c))
+* removing full test validation from final release ([c377bc8](https://github.com/systmms/segnomms/commit/c377bc8dea7205a9b56f02720497adfad7c3f8ba))
+* update release configuration to disable prerelease and remove unused files ([076ebc4](https://github.com/systmms/segnomms/commit/076ebc4abcdef875b5576ddb0964eb7f4f5110b0))
+
 ## [0.1.0](https://github.com/systmms/segnomms/compare/v0.1.0...v0.1.0) (2025-08-31)
 
 
