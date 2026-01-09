@@ -10,7 +10,7 @@ Installation
 Requirements
 ------------
 
-* Python >= 3.9
+* Python >= 3.10
 * Segno >= 1.5.2
 * Pydantic >= 2.7
 

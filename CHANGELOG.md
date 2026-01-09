@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * consolidate documentation builds with reusable workflow ([23368df](https://github.com/systmms/segnomms/commit/23368dfa49a5f8eb742efb05d40fcecd2563a56a))
 * enhance lefthook with automatic fix staging ([1856098](https://github.com/systmms/segnomms/commit/185609875aaece77c945de0f2cf21be6b90c7587))
 * F401 unused imports rule elimination - 80%+ rule reduction achieved ([a2bead2](https://github.com/systmms/segnomms/commit/a2bead2dff39b9f4e9ce339dfd61df45cd56f622))
-* hierarchical flake8 config - 90% rule reduction achieved\! ([2f4e001](https://github.com/systmms/segnomms/commit/2f4e001485ddde28d40f19dfeaa254e4b9908499))
+* hierarchical flake8 config - 90% rule reduction achieved! ([2f4e001](https://github.com/systmms/segnomms/commit/2f4e001485ddde28d40f19dfeaa254e4b9908499))
 * implement string-compatible enums with case-insensitive handling ([a646926](https://github.com/systmms/segnomms/commit/a64692674bfc81d83ccbe0f627bfb02151263428))
 * integrate MyPy type checking into pre-commit hooks ([9b4dadc](https://github.com/systmms/segnomms/commit/9b4dadce1c4f81aff6943b9b1d0a6d379f090b06))
 * migrate from aspell to cspell with comprehensive GitHub Actions testing infrastructure ([0f549a9](https://github.com/systmms/segnomms/commit/0f549a95f296e32e7de9750e80d6a0357429454c))

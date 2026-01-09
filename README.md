@@ -1,7 +1,7 @@
 # SegnoMMS
 
 <div align="center">
-  <img src="logo.png" alt="SegnoMMS Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/systmms/segnomms/main/logo.png" alt="SegnoMMS Logo" width="200"/>
 </div>
 
 [![PyPI version](https://badge.fury.io/py/segnomms.svg)](https://badge.fury.io/py/segnomms)
