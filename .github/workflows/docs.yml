@@ -94,7 +94,7 @@ jobs:
       run: uv run python repo/generate_example_qrs.py
 
     - name: Upload example outputs
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: documentation-examples
         path: example-outputs/
