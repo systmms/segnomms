@@ -299,6 +299,6 @@ dev = [
     "beautifulsoup4>=4.0.0",
     "lxml>=4.0.0", # For XML/SVG parsing in tests
     "psutil>=5.0.0", # For performance benchmarking
-    "types-psutil>=7.0.0.20250822",
+    "types-psutil>=7.2.2.20260408",
     "bandit>=1.8.6",
 ]
