@@ -4,27 +4,27 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'segnomms/**/*.py'
-      - 'tests/**/*.py'
+      - 'segnomms/**'
+      - 'tests/**'
       - 'pyproject.toml'
       - 'uv.lock'
+      - 'Makefile'
+      - '.bandit'
+      - 'repo/**'
       - '.github/workflows/ci.yml'
-      - 'repo/setup_apt_fallback.sh'
-      - 'repo/quality_gate_checker.sh'
-      - 'repo/test_segno_compatibility.py'
-      - 'repo/generate_example_qrs.py'
+      - '.github/workflows/_docs-build.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
-      - 'segnomms/**/*.py'
-      - 'tests/**/*.py'
+      - 'segnomms/**'
+      - 'tests/**'
       - 'pyproject.toml'
       - 'uv.lock'
+      - 'Makefile'
+      - '.bandit'
+      - 'repo/**'
       - '.github/workflows/ci.yml'
-      - 'repo/setup_apt_fallback.sh'
-      - 'repo/quality_gate_checker.sh'
-      - 'repo/test_segno_compatibility.py'
-      - 'repo/generate_example_qrs.py'
+      - '.github/workflows/_docs-build.yml'
 
 env:
   PYTHON_VERSION: "3.11"

@@ -4,15 +4,21 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'segnomms/**/*.py'
-      - 'tests/**/*.py'
+      - 'segnomms/**'
+      - 'tests/**'
       - 'pyproject.toml'
+      - 'uv.lock'
+      - 'repo/**'
+      - '.github/workflows/coverage.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
-      - 'segnomms/**/*.py'
-      - 'tests/**/*.py'
+      - 'segnomms/**'
+      - 'tests/**'
       - 'pyproject.toml'
+      - 'uv.lock'
+      - 'repo/**'
+      - '.github/workflows/coverage.yml'
 
 env:
   PYTHON_VERSION: "3.11"
