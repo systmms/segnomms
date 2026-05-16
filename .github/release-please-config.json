@@ -13,8 +13,7 @@
       "extra-files": [
         {
           "type": "generic",
-          "path": "segnomms/__init__.py",
-          "glob": "__version__ = \"{version}\""
+          "path": "segnomms/__init__.py"
         }
       ]
     }
