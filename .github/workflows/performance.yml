@@ -8,6 +8,9 @@ on:
       - 'segnomms/core/**'
       - 'tests/perf/**'
       - 'pyproject.toml'
+      - 'uv.lock'
+      - 'Makefile'
+      - '.github/workflows/performance.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
@@ -15,6 +18,9 @@ on:
       - 'segnomms/core/**'
       - 'tests/perf/**'
       - 'pyproject.toml'
+      - 'uv.lock'
+      - 'Makefile'
+      - '.github/workflows/performance.yml'
   workflow_dispatch:
     inputs:
       benchmark_type:

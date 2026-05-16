@@ -27,7 +27,7 @@ jobs:
           echo "     * feat!: major version bump (0.1.0 → 1.0.0)"
           echo ""
           echo "3. Release Validation (validate-release.yml):"
-          echo "   - Tests on Python 3.8-3.12 across Linux/Mac/Windows"
+          echo "   - Tests on Python 3.10-3.14 across Linux/Mac/Windows"
           echo "   - Cross-platform compatibility testing"
           echo "   - Package build validation"
           echo "   - Security and quality checks"
