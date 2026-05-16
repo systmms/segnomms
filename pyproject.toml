@@ -34,7 +34,6 @@ dependencies = [
     "segno>=1.5.2", # Tested compatibility: 1.5.2, 1.6.0, 1.6.6
     "pydantic>=2.7,<3", # For configuration validation and JSON schema with enum objects
     "typing-extensions>=4.8; python_version<'3.11'", # For modern typing features
-    "myst-parser>=0.18.0",
 ]
 
 # Development dependencies have been migrated to [dependency-groups]
@@ -289,6 +288,7 @@ dev = [
     "sphinx>=7.0.0",
     "sphinx-rtd-theme>=2.0.0",
     "sphinx-autodoc-typehints>=1.19.0",
+    "myst-parser>=0.18.0", # Sphinx Markdown extension, used in docs/source/conf.py
     # Visual testing helpers
     "pillow>=10.0.0",
     "numpy>=1.20.0",
