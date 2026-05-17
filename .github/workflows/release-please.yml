@@ -48,7 +48,7 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          uv pip install build twine
+          uv pip install --system build twine
 
       - name: Build package
         run: python -m build
@@ -145,7 +145,8 @@ jobs:
             -H "Authorization: Token $RTD_TOKEN" \
             -H "Content-Type: application/json" \
             -d '{"active": true, "hidden": false}' \
-            "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/$RTD_VERSION/"
+            "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/$RTD_VERSION/" \
+          || echo "::warning::RTD activate failed (project or version may not be set up yet); not blocking the release"
 
       - name: Trigger RTD build for release tag
         if: ${{ env.RTD_TOKEN != '' }}
@@ -153,7 +154,8 @@ jobs:
           echo "Triggering RTD build for tag \"$RTD_VERSION\""
           curl -fsSL -X POST \
             -H "Authorization: Token $RTD_TOKEN" \
-            "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/$RTD_VERSION/builds/"
+            "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/$RTD_VERSION/builds/" \
+          || echo "::warning::RTD build trigger for $RTD_VERSION failed; not blocking the release"
 
       - name: Trigger RTD build for latest
         if: ${{ env.RTD_TOKEN != '' }}
@@ -161,7 +163,8 @@ jobs:
           echo "Triggering Read the Docs build for project \"$RTD_PROJECT\" (version: latest)"
           curl -fsSL -X POST \
             -H "Authorization: Token $RTD_TOKEN" \
-            "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/latest/builds/"
+            "https://readthedocs.org/api/v3/projects/$RTD_PROJECT/versions/latest/builds/" \
+          || echo "::warning::RTD build trigger for latest failed; not blocking the release"
 
       - name: Trigger RTD build for stable (best-effort)
         if: ${{ env.RTD_TOKEN != '' }}
