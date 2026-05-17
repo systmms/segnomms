@@ -23,6 +23,10 @@ on:
 env:
   PYTHON_VERSION: "3.11"
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   coverage-analysis:
     name: Coverage Analysis
@@ -186,12 +190,16 @@ jobs:
           ${diff > 5 ? '🎉 **Great!** Coverage improved significantly!' : ''}
           `;
 
-          await github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: body
-          });
+          try {
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+          } catch (error) {
+            console.log('Could not post coverage diff comment:', error.message);
+          }
 
   coverage-quality-gate:
     name: Coverage Quality Gate
