@@ -9,7 +9,7 @@ import os
 import statistics
 import time
 from dataclasses import dataclass
-from typing import Callable, List, Tuple
+from typing import Any, Callable, Dict, List, Literal, Optional, Tuple
 from unittest.mock import Mock
 
 import psutil
@@ -53,7 +53,13 @@ class PerformanceBenchmarker:
         self.warmup_iterations = warmup_iterations
         self.process = psutil.Process(os.getpid())
 
-    def benchmark_function(self, func: Callable, *args, name: str = None, **kwargs) -> BenchmarkResult:
+    def benchmark_function(
+        self,
+        func: Callable[..., Any],
+        *args: Any,
+        name: Optional[str] = None,
+        **kwargs: Any,
+    ) -> BenchmarkResult:
         """
         Benchmark a function with comprehensive timing and memory tracking.
 
@@ -128,14 +134,14 @@ class TestAlgorithmBenchmarks:
     """Comprehensive benchmarks for critical SegnoMMS algorithms."""
 
     @pytest.fixture(scope="class")
-    def benchmarker(self):
+    def benchmarker(self) -> PerformanceBenchmarker:
         """Create a benchmarker for the test class."""
         return PerformanceBenchmarker(iterations=10, warmup_iterations=3)
 
     @pytest.fixture(scope="class")
-    def qr_matrices(self):
+    def qr_matrices(self) -> Dict[str, List[List[bool]]]:
         """Create QR matrices of various sizes for benchmarking."""
-        matrices = {}
+        matrices: Dict[str, List[List[bool]]] = {}
 
         # Small QR (Version 1: 21x21)
         size_small = 21
@@ -152,9 +158,9 @@ class TestAlgorithmBenchmarks:
         return matrices
 
     @pytest.fixture(scope="class")
-    def mock_detectors(self, qr_matrices):
+    def mock_detectors(self, qr_matrices: Dict[str, List[List[bool]]]) -> Dict[str, Mock]:
         """Create mock detectors for each matrix size."""
-        detectors = {}
+        detectors: Dict[str, Mock] = {}
         for size_name, matrix in qr_matrices.items():
             detector = Mock(spec=ModuleDetector)
             detector.get_module_type.return_value = "data"
@@ -165,7 +171,12 @@ class TestAlgorithmBenchmarks:
 
     @pytest.mark.slow
     @pytest.mark.benchmark
-    def test_matrix_manipulator_benchmarks(self, benchmarker, qr_matrices, mock_detectors):
+    def test_matrix_manipulator_benchmarks(
+        self,
+        benchmarker: PerformanceBenchmarker,
+        qr_matrices: Dict[str, List[List[bool]]],
+        mock_detectors: Dict[str, Mock],
+    ) -> None:
         """Benchmark MatrixManipulator operations across different QR sizes."""
         results = []
 
@@ -201,12 +212,17 @@ class TestAlgorithmBenchmarks:
 
     @pytest.mark.slow
     @pytest.mark.benchmark
-    def test_clustering_algorithm_benchmarks(self, benchmarker, qr_matrices, mock_detectors):
+    def test_clustering_algorithm_benchmarks(
+        self,
+        benchmarker: PerformanceBenchmarker,
+        qr_matrices: Dict[str, List[List[bool]]],
+        mock_detectors: Dict[str, Mock],
+    ) -> None:
         """Benchmark ConnectedComponentAnalyzer performance."""
         results = []
 
         # Test different connectivity modes
-        connectivity_modes = ["4-way", "8-way"]
+        connectivity_modes: List[Literal["4-way", "8-way"]] = ["4-way", "8-way"]
 
         for mode in connectivity_modes:
             analyzer = ConnectedComponentAnalyzer(
@@ -226,7 +242,7 @@ class TestAlgorithmBenchmarks:
 
     @pytest.mark.slow
     @pytest.mark.benchmark
-    def test_path_clipper_benchmarks(self, benchmarker):
+    def test_path_clipper_benchmarks(self, benchmarker: PerformanceBenchmarker) -> None:
         """Benchmark PathClipper operations."""
         results = []
         clipper = PathClipper(frame_shape="square", width=200, height=200, border=10)
@@ -241,7 +257,7 @@ class TestAlgorithmBenchmarks:
 
         for scenario_name, coordinates in coordinate_sets:
             # Benchmark scale factor calculation
-            def benchmark_scale_factors():
+            def benchmark_scale_factors() -> List[float]:
                 return [clipper.get_scale_factor(x, y, scale_distance=25) for x, y in coordinates]
 
             result = benchmarker.benchmark_function(
@@ -273,7 +289,7 @@ class TestAlgorithmBenchmarks:
 
     @pytest.mark.slow
     @pytest.mark.benchmark
-    def test_intent_processor_benchmarks(self, benchmarker):
+    def test_intent_processor_benchmarks(self, benchmarker: PerformanceBenchmarker) -> None:
         """Benchmark IntentProcessor operations."""
         results = []
         processor = IntentProcessor()
@@ -336,7 +352,7 @@ class TestAlgorithmBenchmarks:
 
     @pytest.mark.slow
     @pytest.mark.benchmark
-    def test_configuration_creation_benchmarks(self, benchmarker):
+    def test_configuration_creation_benchmarks(self, benchmarker: PerformanceBenchmarker) -> None:
         """Benchmark RenderingConfig creation and validation."""
         results = []
 
@@ -397,7 +413,7 @@ class TestAlgorithmBenchmarks:
         self._report_benchmark_results("RenderingConfig", results)
         self._assert_performance_thresholds(results)
 
-    def _report_benchmark_results(self, algorithm_name: str, results: List[BenchmarkResult]):
+    def _report_benchmark_results(self, algorithm_name: str, results: List[BenchmarkResult]) -> None:
         """Report benchmark results in a formatted way."""
         print(f"\n{'=' * 60}")
         print(f"BENCHMARK RESULTS: {algorithm_name}")
@@ -420,7 +436,7 @@ class TestAlgorithmBenchmarks:
             if result.success_rate < 1.0:
                 print("  ❌ WARNING: Failures detected")
 
-    def _assert_performance_thresholds(self, results: List[BenchmarkResult]):
+    def _assert_performance_thresholds(self, results: List[BenchmarkResult]) -> None:
         """Assert that performance meets minimum thresholds."""
         for result in results:
             # All operations should complete successfully
@@ -428,21 +444,28 @@ class TestAlgorithmBenchmarks:
                 result.success_rate >= 0.9
             ), f"{result.name} has low success rate: {result.success_rate * 100:.1f}%"
 
-            # Performance thresholds (adjust based on requirements)
+            # Performance thresholds — use median_time, not mean_time. Median is
+            # robust to single-iteration outliers from CI scheduling noise on
+            # shared GitHub Actions runners; mean can be dragged ~10x by one
+            # bad iteration in a 10-sample run.
             if "small" in result.name:
                 # Small QR operations should be very fast
-                assert result.mean_time < 0.1, f"{result.name} too slow for small QR: {result.mean_time:.3f}s"
+                assert (
+                    result.median_time < 0.1
+                ), f"{result.name} too slow for small QR: {result.median_time:.3f}s"
             elif "medium" in result.name:
                 # Medium QR operations should be reasonably fast
                 assert (
-                    result.mean_time < 0.5
-                ), f"{result.name} too slow for medium QR: {result.mean_time:.3f}s"
+                    result.median_time < 0.5
+                ), f"{result.name} too slow for medium QR: {result.median_time:.3f}s"
             elif "large" in result.name:
                 # Large QR operations can be slower but should complete in reasonable time
-                assert result.mean_time < 2.0, f"{result.name} too slow for large QR: {result.mean_time:.3f}s"
+                assert (
+                    result.median_time < 2.0
+                ), f"{result.name} too slow for large QR: {result.median_time:.3f}s"
             else:
                 # General operations should be fast
-                assert result.mean_time < 1.0, f"{result.name} too slow: {result.mean_time:.3f}s"
+                assert result.median_time < 1.0, f"{result.name} too slow: {result.median_time:.3f}s"
 
             # Memory usage should be reasonable based on QR size
             if "small" in result.name:
@@ -472,7 +495,7 @@ class TestAlgorithmBenchmarks:
 class TestScalabilityBenchmarks:
     """Test how algorithms scale with input size."""
 
-    def test_matrix_manipulator_scaling(self):
+    def test_matrix_manipulator_scaling(self) -> None:
         """Test how MatrixManipulator scales with QR code size."""
         benchmarker = PerformanceBenchmarker(iterations=5)
 
@@ -496,7 +519,7 @@ class TestScalabilityBenchmarks:
         # Analyze scaling behavior
         self._analyze_scaling_behavior("MatrixManipulator", results)
 
-    def test_clustering_scaling(self):
+    def test_clustering_scaling(self) -> None:
         """Test how clustering scales with QR code size."""
         benchmarker = PerformanceBenchmarker(iterations=5)
         analyzer = ConnectedComponentAnalyzer()
@@ -518,14 +541,20 @@ class TestScalabilityBenchmarks:
 
         self._analyze_scaling_behavior("ConnectedComponentAnalyzer", results)
 
-    def _matrix_operations_combined(self, matrix, detector):
+    def _matrix_operations_combined(
+        self, matrix: List[List[bool]], detector: ModuleDetector
+    ) -> Tuple[Any, Any]:
         """Combine multiple matrix operations for realistic benchmark."""
+        from segnomms.config.models.visual import CenterpieceConfig
+
         manipulator = MatrixManipulator(matrix, detector)
         bounds = manipulator.get_module_bounds()
-        centerpiece_bounds = manipulator.get_centerpiece_bounds()
+        centerpiece_bounds = manipulator.get_centerpiece_bounds(CenterpieceConfig())
         return bounds, centerpiece_bounds
 
-    def _analyze_scaling_behavior(self, algorithm_name: str, results: List[Tuple]):
+    def _analyze_scaling_behavior(
+        self, algorithm_name: str, results: List[Tuple[int, int, BenchmarkResult]]
+    ) -> None:
         """Analyze and report scaling behavior."""
         print(f"\n{'=' * 60}")
         print(f"SCALING ANALYSIS: {algorithm_name}")
