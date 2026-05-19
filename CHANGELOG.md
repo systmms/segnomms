@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2](https://github.com/systmms/segnomms/compare/v0.2.1...v0.2.2) (2026-05-19)
+
+
+### Bug Fixes
+
+* **ci:** allow coverage comments on dependabot PRs ([ff93d2d](https://github.com/systmms/segnomms/commit/ff93d2db88d0a658844c45095b9c9007d0b3b4bf))
+* **ci:** allow coverage comments on dependabot PRs ([e3b4b4f](https://github.com/systmms/segnomms/commit/e3b4b4f3e58f0f1f3aa533e6b519d04765b5a6d9))
+* **tests:** use median_time in perf thresholds; fix type annotations ([5fe9be4](https://github.com/systmms/segnomms/commit/5fe9be46401d716153d5f06db7d5481bafcc0fc9))
+* **tests:** use median_time in perf thresholds; fix type annotations ([7a42d70](https://github.com/systmms/segnomms/commit/7a42d70ed39cf07e740994532a0c1cefb7d4f234))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump the npm_and_yarn group across 2 directories with 4 updates ([7b28a3a](https://github.com/systmms/segnomms/commit/7b28a3a13ad8b6a5e8725c4df017dbffd77ddff7))
+
+
+### Continuous Integration
+
+* **deps:** bump pillow from 12.1.1 to 12.2.0 in the uv group across 1 directory ([bf93e4d](https://github.com/systmms/segnomms/commit/bf93e4de88ec3ae00443b29031bce28f2c04e3ad))
+* **deps:** bump pillow in the uv group across 1 directory ([286888a](https://github.com/systmms/segnomms/commit/286888acf9ff40258565d9a7237b9b4408edbd2c))
+
 ## [0.2.1](https://github.com/systmms/segnomms/compare/v0.2.0...v0.2.1) (2026-05-17)
 
 
