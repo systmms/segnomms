@@ -161,7 +161,7 @@ except ImportError:
     _intents_available = False
 
 # Version information
-__version__ = "0.2.1"  # x-release-please-version
+__version__ = "0.2.2"  # x-release-please-version
 __author__ = "SYSTMMS"
 
 # Export main functionality
